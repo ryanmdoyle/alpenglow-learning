@@ -17,6 +17,7 @@
     "helmet": "^3.21.2",
     "http-errors": "^1.7.3",
     "mongodb": "^3.5.2",
+    "mongoose": "^5.8.11",
     "nodemon": "^2.0.2",
     "path": "^0.12.7",
     "pug": "^2.0.4"
