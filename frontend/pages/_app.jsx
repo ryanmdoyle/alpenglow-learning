@@ -1,25 +1,50 @@
 // import App from 'next/app'
-import { css } from '@emotion/core';
+import { ThemeProvider } from 'emotion-theming';
+import { Global, css } from '@emotion/core';
 
-const header = css`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 50px;
-  margin-bottom: 50px;
-  background-color: purple;
-`;
+import global from '../styles/global';
+import { theme } from '../styles/theme';
+
+const layout = css`
+  height: 100vh;
+  max-width: 100vw;
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  grid-template-areas:
+    "nav main";
+  overflow: hidden;
+
+nav {
+  grid-area: nav;
+  border-right: 1px solid var(--grey);
+  height: 100vh;
+  box-shadow: var(--shadowMedium);
+}
+
+main {
+  grid-area: main;
+  min-height: 100vh;
+  max-width: 100%;
+} 
+`
 
 function MyApp({ Component, pageProps }) {
   return (
-    <>
-      <header css={header} />
-      <div css={css`margin-top: 50px;`}>
-      <Component {...pageProps} />
+    <ThemeProvider theme={theme}>
+      <Global styles={global} />
+      <div css={layout}>
+        <nav>
+
+        </nav>
+        <main>
+          <Component {...pageProps} />
+        </main>
       </div>
-    </>
-  ) 
+    </ThemeProvider>
+  )
 }
 
 // Only uncomment this method if you have blocking data requirements for

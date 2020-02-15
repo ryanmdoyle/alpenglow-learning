@@ -25,24 +25,45 @@ const courseContainer = css`
   }
 `;
 
+// const past = theme => (`background-color: ${theme.past}`); //handle themes this way
 
 const courses = () => {
   return (
     <content>
       <section css={courseContainer}>
-        <h2 css={css`margin: 0.2rem 0;`}>Course Name</h2>
-        <p css={css`margin: 0.6rem 0;`}>Essential</p>
+        <h4 css={css`margin: 0.2rem 0;`}>Course Name</h4>
+        <h5 css={css`margin: 0.6rem 0;`}>Essential</h5>
         <div css={playlistsContainer}>
-          <PlaylistBox css={css`background-color: red;`} />
-          <PlaylistBox css={css`background-color: white; border: 2px solid gray;`} />
+          <PlaylistBox bg={'green'} />
+          <PlaylistBox status='complete' />
           <PlaylistBox />
           <PlaylistBox />
           <PlaylistBox />
         </div>
-        <p css={css`margin: 0.6rem 0;`}>Core</p>
+        <h5 css={css`margin: 0.6rem 0;`}>Core</h5>
         <div css={playlistsContainer}>
           <PlaylistBox />
           <PlaylistBox />
+          <PlaylistBox />
+          <PlaylistBox />
+          <PlaylistBox />
+        </div>
+      </section>
+      <section css={courseContainer}>
+        <h4 css={css`margin: 0.2rem 0;`}>Course Name</h4>
+        <h5 css={css`margin: 0.6rem 0;`}>Essential</h5>
+        <div css={playlistsContainer}>
+          <PlaylistBox bg={'green'} />
+          <PlaylistBox />
+          <PlaylistBox />
+          <PlaylistBox />
+          <PlaylistBox />
+          <PlaylistBox />
+          <PlaylistBox />
+          <PlaylistBox />
+        </div>
+        <h5 css={css`margin: 0.6rem 0;`}>Core</h5>
+        <div css={playlistsContainer}>
           <PlaylistBox />
           <PlaylistBox />
           <PlaylistBox />
