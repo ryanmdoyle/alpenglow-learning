@@ -4,6 +4,7 @@ import { jsx, css } from '@emotion/core';
 
 
 import PlaylistBox from '../components/PlaylistBox';
+import PlaylistBox_Green from '../components/styled/PlaylistBox_Green';
 
 const playlistsContainer = css`
   box-sizing: border-box;
@@ -35,8 +36,8 @@ const courses = () => {
         <h5 css={css`margin: 0.6rem 0;`}>Essential</h5>
         <div css={playlistsContainer}>
           <PlaylistBox bg={'green'} />
-          <PlaylistBox status='complete' />
           <PlaylistBox />
+          <PlaylistBox_Green />
           <PlaylistBox />
           <PlaylistBox />
         </div>
