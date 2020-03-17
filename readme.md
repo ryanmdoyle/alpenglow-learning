@@ -1,4 +1,4 @@
-# 👨🏾‍🏫 Student Learning Dashboard 👩🏻‍🎓
+# 🏔️ Alpineglow Learning Platform 👨🏾‍🏫👩🏻‍🎓
 This project is for a teacher/student dashboard that will be for creating and managing independent playlists for students.
 
 ## Purpose
