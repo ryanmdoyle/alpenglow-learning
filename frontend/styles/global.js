@@ -14,6 +14,12 @@ const global = css`
     --red: #D93A2B;
     --green: #008C3E;
     --purple: #AA72DB;
+    --pink: #F2AEBB;
+    --pinkMuted: #EDBCAF;
+    --blueLight: #BBCDF2;
+    --blueMedium: #324E73;
+    --blueDark: #1F2A40;
+    --borderRadius: 5px;
   }
 
   html {

@@ -5,6 +5,9 @@ import { Global, css } from '@emotion/core';
 import global from '../styles/global';
 import { theme } from '../styles/theme';
 
+import SiteTitle from '../components/SiteTitle';
+import NavItem from '../components/NavItem';
+
 const layout = css`
   height: 100vh;
   max-width: 100vw;
@@ -22,12 +25,16 @@ nav {
   border-right: 1px solid var(--grey);
   height: 100vh;
   box-shadow: var(--shadowMedium);
+  background-color: var(--blueDark);
 }
 
 main {
   grid-area: main;
   min-height: 100vh;
-  max-width: 100%;
+  width: 100%;
+  h1, h2, h2, h3 {
+    color: var(--blueDark);
+  }
 } 
 `
 
@@ -37,7 +44,13 @@ function MyApp({ Component, pageProps }) {
       <Global styles={global} />
       <div css={layout}>
         <nav>
-
+          <SiteTitle />
+          <ul css={css`list-style:none;margin:1rem 0.2rem;padding:0;`}>
+            <NavItem title='Math'/>
+            <NavItem title='Science'/>
+            <NavItem title=''/>
+            <NavItem title=''/>
+          </ul>
         </nav>
         <main>
           <Component {...pageProps} />

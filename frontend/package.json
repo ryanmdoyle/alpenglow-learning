@@ -1,5 +1,5 @@
 {
-  "name": "student-learning-dashboard",
+  "name": "alpineglow-learning-dashboard",
   "version": "0.0.1",
   "description": "Dashboard for creating and managing playlists for independent student learning.",
   "main": "pages/index.js",

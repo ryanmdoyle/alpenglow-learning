@@ -15,10 +15,10 @@ const playlistsContainer = css`
 
 const courseContainer = css`
   box-sizing: border-box;
-  width: 100%;
-  margin: 1rem 0;
+  width: calc( 100% - 2rem);
+  margin: 1rem 1rem;
   padding: 1rem;
-  border-radius: 5px;
+  border-radius: var(--borderRadius);
   transition: box-shadow 0.15s;
   :hover {
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
