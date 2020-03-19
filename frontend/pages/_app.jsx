@@ -12,7 +12,7 @@ const layout = css`
   height: 100vh;
   max-width: 100vw;
   display: grid;
-  grid-template-columns: 250px 1fr;
+  grid-template-columns: 300px 1fr;
   grid-template-rows: 1fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
@@ -30,12 +30,13 @@ nav {
 
 main {
   grid-area: main;
-  min-height: 100vh;
+  height: 100vh;
   width: 100%;
+  overflow-y: scroll;
   h1, h2, h2, h3 {
     color: var(--blueDark);
   }
-} 
+}
 `
 
 function MyApp({ Component, pageProps }) {
@@ -46,10 +47,8 @@ function MyApp({ Component, pageProps }) {
         <nav>
           <SiteTitle />
           <ul css={css`list-style:none;margin:1rem 0.2rem;padding:0;`}>
-            <NavItem title='Math'/>
-            <NavItem title='Science'/>
-            <NavItem title=''/>
-            <NavItem title=''/>
+            <NavItem title='Course View'/>
+            <NavItem title='Grades'/>
           </ul>
         </nav>
         <main>

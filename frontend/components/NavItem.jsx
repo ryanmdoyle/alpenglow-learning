@@ -7,6 +7,17 @@ const item = css`
   color: var(--blueLight);
   border: 1px solid var(--blueLight);
   border-radius: var(--borderRadius);
+  transition: background-color 0.2s, color 0.2s;
+
+  p {
+    margin: 0;
+  }
+
+  :hover {
+    background-color: var(--blueLight);
+    color: var(--blueDark);
+    transition: background-color 0.2s, color 0.2s;
+  }
 `;
 
 const NavItem = ({title}) => {

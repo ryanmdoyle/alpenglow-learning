@@ -15,6 +15,8 @@ const global = css`
     --green: #008C3E;
     --purple: #AA72DB;
     --pink: #F2AEBB;
+    --pink50: rgba(242,174,187,0.5);
+    --pink25: rgba(242,174,187,0.25);
     --pinkMuted: #EDBCAF;
     --blueLight: #BBCDF2;
     --blueMedium: #324E73;
@@ -55,18 +57,18 @@ const global = css`
 
   h1 {
     margin-top: 0;
-    font-size: 4.209em;
+    font-size: 3.052em;
   }
 
-  h2 {font-size: 3.157em;}
+  h2 {font-size: 2.441em;}
 
-  h3 {font-size: 2.369em;}
+  h3 {font-size: 1.953em;}
 
-  h4 {font-size: 1.777em;}
+  h4 {font-size: 1.563em;}
 
-  h5 {font-size: 1.333em;}
+  h5 {font-size: 1.25em;}
 
-  small, .text_small {font-size: 0.75em;}
+  small, .text_small {font-size: 0.8em;}
 `;
 
 export default global;

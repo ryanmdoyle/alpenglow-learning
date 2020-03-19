@@ -10,12 +10,16 @@ const logo = css`
   display: flex;
   align-items: center;
   justify-content: center;
+  h1 { margin: 2rem 0; }
 `
 
 const title = css`
-  h3 {
-    font-size: 1.5rem;
+  /* reset h1 size so site title is h1 while the other headers are h2 or less */
+  h1 {
+    font-size: 1.8rem;
     color: var(--pink);
+    margin: 2rem 0;
+    margin-left: 0.5rem;
   }
 `;
 
@@ -23,10 +27,10 @@ const SiteTitle = () => {
   return (
     <div css={mainContainer}>
       <div css={logo}>
-        <h3>🏔️</h3>
+        <h1>🏔️</h1>
       </div>
       <div css={title}>
-        <h3>Alpineglow Learning</h3>
+        <h1>Alpineglow Learning</h1>
       </div>
       
     </div>
