@@ -11,7 +11,15 @@ const styledBox = css`
   border: 1px solid var(--grey);
   border-radius: 2px;
   box-shadow: var(--shadowLight);
-  p { margin: 0; }
+  overflow: hidden;
+
+  p {
+    margin: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
   :hover {
     box-shadow: var(--shadowMedium);
   }
