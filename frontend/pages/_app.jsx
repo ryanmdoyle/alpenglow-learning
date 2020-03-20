@@ -5,8 +5,7 @@ import { Global, css } from '@emotion/core';
 import global from '../styles/global';
 import { theme } from '../styles/theme';
 
-import SiteTitle from '../components/SiteTitle';
-import NavItem from '../components/NavItem';
+import NavStudent from '../components/NavStudent';
 
 const layout = css`
   height: 100vh;
@@ -45,11 +44,7 @@ function MyApp({ Component, pageProps }) {
       <Global styles={global} />
       <div css={layout}>
         <nav>
-          <SiteTitle />
-          <ul css={css`list-style:none;margin:1rem 0.2rem;padding:0;`}>
-            <NavItem title='Course View'/>
-            <NavItem title='Grades'/>
-          </ul>
+          <NavStudent />
         </nav>
         <main>
           <Component {...pageProps} />

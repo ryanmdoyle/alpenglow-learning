@@ -6,6 +6,7 @@ const global = css`
   
   :root {
     /* CUSTOM PROPS */
+    --shadowFlat: 0 1px 2px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.10);
     --shadowLight: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     --shadowMedium: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     --shadowHeavy: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
@@ -69,6 +70,11 @@ const global = css`
   h5 {font-size: 1.25em;}
 
   small, .text_small {font-size: 0.8em;}
+
+  a {
+    margin-bottom: 1.15rem;
+    text-decoration: none;
+  }
 `;
 
 export default global;

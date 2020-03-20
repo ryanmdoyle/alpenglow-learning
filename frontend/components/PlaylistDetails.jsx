@@ -2,7 +2,7 @@ import React from 'react';
 import { css } from '@emotion/core';
 
 const details = css`
-  background-color: var(--pink25);
+  background-color: var(--blueLight);
   width: 100%;
   min-height: 200px;
   padding: 0 1rem;

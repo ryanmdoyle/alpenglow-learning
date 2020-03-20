@@ -8,9 +8,9 @@ const styledBox = css`
   height: 100%;
   width: 100%;
   background-color: white;
-  border: 1px solid var(--grey);
+  border: 1px solid var(--blueDark);
   border-radius: 2px;
-  box-shadow: var(--shadowLight);
+  box-shadow: var(--shadowFlat);
   overflow: hidden;
 
   p {
@@ -18,10 +18,12 @@ const styledBox = css`
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    color: var(--blueDark);
   }
 
   :hover {
-    box-shadow: var(--shadowMedium);
+    box-shadow: var(--shadowLight);
+    border: 1px solid var(--blueDark);
   }
 `;
 
