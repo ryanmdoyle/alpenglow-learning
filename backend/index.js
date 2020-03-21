@@ -4,8 +4,11 @@ const { AdminUIApp } = require('@keystonejs/app-admin-ui');
 const { MongooseAdapter: Adapter } = require('@keystonejs/adapter-mongoose');
 require('dotenv').config();
 
-const PROJECT_NAME = "Alpineglow Learning API";
+const UserSchema = require('./lists/User.js')
+const PlaylistSchema = require('./lists/Playlist.js')
+const ObjectiveSchema = require('./lists/Objective.js')
 
+const PROJECT_NAME = "Alpineglow Learning API";
 
 /**
  * You've got a new KeystoneJS Project! Things you might want to do next:
@@ -17,6 +20,10 @@ const keystone = new Keystone({
   name: PROJECT_NAME,
   adapter: new Adapter(),
 });
+
+keystone.createList('User', UserSchema);
+keystone.createList('Playlist', PlaylistSchema);
+keystone.createList('Objective', ObjectiveSchema);
 
 module.exports = {
   keystone,
