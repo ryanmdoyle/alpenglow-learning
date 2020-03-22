@@ -1,6 +1,7 @@
 // import App from 'next/app'
 import { ThemeProvider } from 'emotion-theming';
 import { Global, css } from '@emotion/core';
+import Head from 'next/head';
 
 import global from '../styles/global';
 import { theme } from '../styles/theme';
@@ -42,6 +43,9 @@ function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider theme={theme}>
       <Global styles={global} />
+      <Head>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+      </Head>
       <div css={layout}>
         <nav>
           <NavStudent />
