@@ -9,6 +9,8 @@ require('dotenv').config();
 // const mutations = require('./resolvers/mutations');
 // const resolvers = { queries, mutations };
 
+const users = require('./SAMPLEDATA.js');
+
 const typeDefs = gql`
   type User {
     firstName: String,
@@ -30,38 +32,40 @@ const typeDefs = gql`
 
 const resolvers = {
   Mutation: {
-    user: () => User
+    user: () => users
   },
   Query: {
-    user: () => User
+    user: () => users,
+    users: () => users
   }
 }
 
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: req => ({ ...req })
+  context: req => ({ ...req }),
 });
 
 const app = express();
 
-// var corsOptions = {
-//   origin: process.env.FRONTEND_URL,
-//   credentials: false // <-- REQUIRED backend setting
-// };
+var corsOptions = {
+  origin: 'http://localhost:3000', //process.env.FRONTEND_URL
+  // credentials: false // <-- REQUIRED backend setting
+};
 
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.get('/get', (req, res) => {
-  res.send({ user: "Ryan" })
+  console.log(req)
+  res.send("hello")
 })
 
 server.applyMiddleware({
   app,
   path: '/gql',
-  cors: false, //removes apollo cors defaults
 });
 
-app.listen({ port: 4000 }, () =>
-  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
-)
+app.listen({ port: 4000 }, () => {
+  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
+  console.log(users);
+})

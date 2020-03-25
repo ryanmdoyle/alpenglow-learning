@@ -1,4 +1,4 @@
-const data = [
+module.exports = [
   {
     firstName: 'Ryan',
     lastName: 'Doyle',
@@ -10,5 +10,3 @@ const data = [
     email: 'alissa712@gmail.com',
   },
 ]
-
-export default data;
