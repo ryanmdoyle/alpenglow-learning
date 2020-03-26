@@ -5,11 +5,11 @@ import Login from '../components/Login';
 
 const HomePage = () => {
   const testGet = async () => {
-    console.log('testGet running')
+    // console.log('testGet running')
 
     axios.get('http://localhost:4000/get')
       .then((res) => {
-        console.log(res);
+        // console.log(res);
       })
       .catch((err) => {
         console.error(err);
