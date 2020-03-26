@@ -2,6 +2,7 @@ const express = require('express');
 const { ApolloServer, gql } = require('apollo-server-express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const mongoose = require('mongoose');
 require('dotenv').config();
 
 
@@ -41,15 +42,22 @@ const resolvers = {
   }
 }
 
+const db = mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true});
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: req => ({ ...req }),
+  context: req => ({ ...req, db }), // add the mongoose db connection to all requests
 });
 
 const app = express();
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use((req, res, next) => {
+  req = {db, ...db},
+  next();
+})
 
 var corsOptions = {
   origin: 'http://localhost:3000', //process.env.FRONTEND_URL
