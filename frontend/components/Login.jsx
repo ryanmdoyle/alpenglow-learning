@@ -29,7 +29,7 @@ const Login = () => {
         buttonText="Login"
         onSuccess={fromGoogle}
         onFailure={fromGoogle}
-        cookiePolicy={'single_host_origin'}
+      // cookiePolicy={'single_host_origin'}
       />
       <GoogleLogout
         clientId="740708519996-jckm5svthu1lh5fv35jc55pp54kam9br.apps.googleusercontent.com"

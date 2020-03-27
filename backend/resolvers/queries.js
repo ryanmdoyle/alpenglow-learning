@@ -1,3 +1,6 @@
-const Queries = {
-  user: () => User
+const queries = {
+  user: () => users,
+  users: () => users
 }
+
+module.exports = queries;

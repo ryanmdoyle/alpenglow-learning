@@ -1,3 +1,5 @@
-const Mutations = {
-  user: () => User
+const mutations = {
+  user: () => users
 }
+
+module.exports = mutations;
