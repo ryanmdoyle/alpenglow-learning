@@ -18,7 +18,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    user: User,
+    createUser: User,
   }
 `;
 

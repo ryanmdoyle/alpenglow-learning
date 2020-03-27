@@ -6,11 +6,9 @@ import jwt from 'jwt-simple';
 
 const Login = () => {
   const fromGoogle = (response) => {
-    console.log('sending to to /auth/google:', response.tokenId);
-    axios.post('http://localhost:4000/auth/google', { tokenId: response.tokenId })
+    axios.post('http://localhost:4000/auth/google', { tokenId: response.tokenId }) // auth/google
       .then((res) => {
-        // console.log(res);
-        console.log('succes');
+        console.log('tokenId sent');
       })
       .catch((err) => {
         console.error(err);
