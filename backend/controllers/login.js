@@ -1,11 +1,12 @@
 const User = require('../models/User');
 const { v4 } = require('uuid');
 
-const login = (req, res) => {
-  const { OAuth2Client } = require('google-auth-library');
-  const client = new OAuth2Client('740708519996-jckm5svthu1lh5fv35jc55pp54kam9br');
+const login = async (req, res) => {
+  console.log(req);
+  const { OAuth2Client } = await require('google-auth-library');
+  const client = await new OAuth2Client('740708519996-jckm5svthu1lh5fv35jc55pp54kam9br');
 
-  const token = req.body.tokenId;
+  const token = await req.body.tokenId;
   async function verify() {
     const ticket = await client.verifyIdToken({
       idToken: token,
@@ -31,7 +32,13 @@ const login = (req, res) => {
     newUser.save().then(() => { console.log('User saved!') }).catch((err) => { console.log(err) })
   }
   verify().catch(console.error);
-  res.send("message from the backend when done!")
+  // customize token later
+  console.log('set cookie');
+  res.cookie('token', token, {
+    httpOnly: true,
+    maxAge: 1000 * 60 * 60 * 24 * 31,
+  });
+  console.log('where da cookie');
 }
 
 module.exports = login;

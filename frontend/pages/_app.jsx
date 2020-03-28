@@ -2,6 +2,12 @@
 import { ThemeProvider } from 'emotion-theming';
 import { Global, css } from '@emotion/core';
 import Head from 'next/head';
+import ApolloClient from 'apollo-boost'
+// import { gql } from 'apollo-boost';
+import { ApolloProvider } from '@apollo/react-hooks';
+import { withApollo } from '../lib/apollo';
+// import { createHttpLink } from 'apollo-link-http';
+// import fetch from 'node-fetch';
 
 import global from '../styles/global';
 import { theme } from '../styles/theme';
@@ -40,7 +46,15 @@ main {
 `
 
 function MyApp({ Component, pageProps }) {
+  const client = new ApolloClient({
+    // uri: 'http://localhost:4000/gql',
+    // link: createHttpLink({ uri: '/gql' }),
+    fetch: fetch,
+    credentials: 'include',
+  });
+
   return (
+    // <ApolloProvider client={client}>
     <ThemeProvider theme={theme}>
       <Global styles={global} />
       <Head>
@@ -55,6 +69,7 @@ function MyApp({ Component, pageProps }) {
         </main>
       </div>
     </ThemeProvider>
+    // </ApolloProvider>
   )
 }
 
@@ -70,4 +85,4 @@ function MyApp({ Component, pageProps }) {
 //   return { ...appProps }
 // }
 
-export default MyApp
+export default withApollo({ ssr: true })(MyApp)

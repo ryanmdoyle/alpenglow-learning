@@ -1,7 +1,13 @@
+const User = require('../models/User');
+
 const mutations = {
-  createUser: (parent, args, context, into) => {
+  async createUser(parent, args, context, info) {
+
     const { OAuth2Client } = require('google-auth-library');
     const client = new OAuth2Client('740708519996-jckm5svthu1lh5fv35jc55pp54kam9br');
+
+    const token = args.token;
+
     async function verify() {
       const ticket = await client.verifyIdToken({
         idToken: token,
@@ -28,7 +34,8 @@ const mutations = {
 
     }
     verify().catch(console.error);
-  }
+    return newUser;
+  },
 }
 
 module.exports = mutations;

@@ -13,12 +13,15 @@ const typeDefs = gql`
   }
 
   type Query {
-    user: User,
+    currentUser: User,
+    user(_id: ID!): User,
     users: [User],
   }
 
   type Mutation {
     createUser: User,
+    login(_id: ID!): User,
+    sendCookie: User,
   }
 `;
 

@@ -8,7 +8,7 @@ const Login = () => {
   const fromGoogle = (response) => {
     axios.post('http://localhost:4000/auth/google', { tokenId: response.tokenId }) // auth/google
       .then((res) => {
-        console.log('tokenId sent');
+        console.log('response sent: ', res);
       })
       .catch((err) => {
         console.error(err);
