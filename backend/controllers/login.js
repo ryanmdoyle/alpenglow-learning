@@ -2,11 +2,11 @@ const User = require('../models/User');
 const { v4 } = require('uuid');
 
 const login = async (req, res) => {
-  console.log(req);
   const { OAuth2Client } = await require('google-auth-library');
   const client = await new OAuth2Client('740708519996-jckm5svthu1lh5fv35jc55pp54kam9br');
 
   const token = await req.body.tokenId;
+
   async function verify() {
     const ticket = await client.verifyIdToken({
       idToken: token,
@@ -29,16 +29,16 @@ const login = async (req, res) => {
       permissions: 'User',
       uuid: v4(),
     })
-    newUser.save().then(() => { console.log('User saved!') }).catch((err) => { console.log(err) })
+    newUser.save().then(() => { console.log('saved user') }).catch((err) => { console.log('error in login save', err) })
+
   }
-  verify().catch(console.error);
+  await verify().catch(console.error);
   // customize token later
-  console.log('set cookie');
-  res.cookie('token', token, {
-    httpOnly: true,
-    maxAge: 1000 * 60 * 60 * 24 * 31,
-  });
-  console.log('where da cookie');
+  // await res.cookie('LOGIN', 'something', { // all this does is set the header, you have to still send response
+  //   httpOnly: true,
+  // });
+  res.set('Set-Cookie', 'testcookiewithressend="12345"; HttpOnly; Max-Age=6000000; SameSite=None;');
+  res.send("hiya");
 }
 
 module.exports = login;

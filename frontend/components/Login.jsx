@@ -1,12 +1,18 @@
 import React, { useEffect } from 'react';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import axios from 'axios';
+import fetch from 'isomorphic-unfetch';
 import jwt from 'jwt-simple';
 
 
 const Login = () => {
   const fromGoogle = (response) => {
-    axios.post('http://localhost:4000/auth/google', { tokenId: response.tokenId }) // auth/google
+    //change to isomatric unfetch
+    fetch('http://localhost:4000/auth/google', {
+      method: 'POST',
+      credentials: "include", //MUST include for client to set cookie
+      body: { tokenId: response.tokenId }
+    }) // auth/google
       .then((res) => {
         console.log('response sent: ', res);
       })

@@ -43,8 +43,12 @@ app.use(bodyParser.json());
 const login = require('./controllers/login');
 app.post('/auth/google', login)
 app.post('/cookie', (req, res) => { // THIS WORKS
-  res.set('Set-Cookie', 'testcookiewithressend="12345"; HttpOnly; Max-Age=6000000; SameSite=None;');
-  res.send('cookie set!');
+  // res.set('Set-Cookie', 'testcookiewithressend="12345"; HttpOnly; Max-Age=6000000; SameSite=None;');
+  res.cookie('sendStatus', 'something', { // all this does is set the header, you have to still send response
+    httpOnly: true,
+  });
+  console.log(res);
+  res.sendStatus(200);
 })
 ///////////////////
 
