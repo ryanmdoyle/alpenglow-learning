@@ -30,9 +30,9 @@ const SiteTitle = () => {
         <h1>🏔️</h1>
       </div>
       <div css={title}>
-        <h1>Alpineglow Learning</h1>
+        <h1>Alpenglow Learning</h1>
       </div>
-      
+
     </div>
   );
 };
