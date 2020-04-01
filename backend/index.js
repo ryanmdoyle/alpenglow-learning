@@ -3,11 +3,9 @@ const { ApolloServer } = require('apollo-server-express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-const { v4 } = require('uuid');
-
+const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-// Initialize mongo database
 const db = require('./db');
 const User = require('./models/User');
 
@@ -20,42 +18,45 @@ const resolvers = {
   Query: queries,
 }
 
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  context: req => ({ ...req, db }), // add the mongoose db connection to all requests
-
-});
-
 const app = express();
+
 const corsOptions = {
   origin: process.env.FRONTEND_URL,
   credentials: true,
-  // exposedHeaders: 'Set-Cookie',
 };
+
 app.use(cors(corsOptions));
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
 
+app.post('/graphql', (req, res, next) => {
+  const { token } = req.cookies;
+  if (token) {
+    const tokenData = jwt.verify(token, process.env.SECRET);
+    req._id = tokenData._id;
+  }
+  next();
+})
 
 //// TEMP REST LOGIN ////
 const login = require('./controllers/login');
-app.post('/auth/google', login)
-app.post('/cookie', (req, res) => { // THIS WORKS
-  // res.set('Set-Cookie', 'testcookiewithressend="12345"; HttpOnly; Max-Age=6000000; SameSite=None;');
-  res.cookie('sendStatus', 'something', { // all this does is set the header, you have to still send response
-    httpOnly: true,
-  });
-  console.log(res);
-  res.sendStatus(200);
-})
+app.post('/auth/google', login);
 ///////////////////
+
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: async ({ req }) => ({
+    ...req,
+    userId: req._id,
+  })
+});
 
 server.applyMiddleware({
   app,
-  path: '/gql',
-  // cors: false,
+  path: '/graphql',
+  cors: false,
 });
 
 app.listen({ port: 4000 }, () => {
