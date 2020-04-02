@@ -3,7 +3,6 @@ import { ThemeProvider } from 'emotion-theming';
 import { Global, css } from '@emotion/core';
 import Head from 'next/head';
 import ApolloClient from 'apollo-boost'
-// import { gql } from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { withApollo } from '../lib/apollo';
 import { createHttpLink } from 'apollo-link-http';
@@ -46,30 +45,30 @@ main {
 `
 
 function MyApp({ Component, pageProps }) {
-  const client = new ApolloClient({
-    uri: 'http://localhost:4000/graphql',
-    link: createHttpLink({ uri: '/graphql' }),
-    fetch: fetch,
-    credentials: 'include',
-  });
+  // const client = new ApolloClient({
+  //   uri: 'http://localhost:4000/graphql',
+  //   link: createHttpLink({ uri: '/graphql' }),
+  //   fetch: fetch,
+  //   credentials: 'include',
+  // });
 
   return (
-    <ApolloProvider client={client}>
-      <ThemeProvider theme={theme}>
-        <Global styles={global} />
-        <Head>
-          <script src="https://apis.google.com/js/platform.js" async defer></script>
-        </Head>
-        <div css={layout}>
-          <nav>
-            <NavStudent />
-          </nav>
-          <main>
-            <Component {...pageProps} />
-          </main>
-        </div>
-      </ThemeProvider>
-    </ApolloProvider>
+    // <ApolloProvider client={client}>
+    <ThemeProvider theme={theme}>
+      <Global styles={global} />
+      <Head>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+      </Head>
+      <div css={layout}>
+        <nav>
+          <NavStudent />
+        </nav>
+        <main>
+          <Component {...pageProps} />
+        </main>
+      </div>
+    </ThemeProvider>
+    // </ApolloProvider>
   )
 }
 
@@ -77,13 +76,13 @@ function MyApp({ Component, pageProps }) {
 // every single page in your application. This disables the ability to
 // perform automatic static optimization, causing every page in your app to
 // be server-side rendered.
-//
+
 // MyApp.getInitialProps = async (appContext) => {
 //   // calls page's `getInitialProps` and fills `appProps.pageProps`
 //   const appProps = await App.getInitialProps(appContext);
-//
+
 //   return { ...appProps }
 // }
 
-// export default withApollo({ ssr: true })(MyApp)
+// export default withApollo({ ssr: false })(MyApp)
 export default MyApp;

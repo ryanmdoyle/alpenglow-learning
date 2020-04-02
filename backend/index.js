@@ -39,9 +39,11 @@ app.post('/graphql', (req, res, next) => {
   next();
 })
 
-//// TEMP REST LOGIN ////
+//// TEMP REST LOGIN/LOGOUT ////
 const login = require('./controllers/login');
-app.post('/auth/google', login);
+const logout = require('./controllers/logout');
+app.post('/auth/google/login', login);
+app.post('/auth/google/logout', logout);
 ///////////////////
 
 const server = new ApolloServer({

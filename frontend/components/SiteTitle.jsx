@@ -1,5 +1,6 @@
 import React from 'react';
 import { css } from '@emotion/core';
+import { ReactSVG } from 'react-svg';
 
 const mainContainer = css`
   display: flex;
@@ -27,7 +28,7 @@ const SiteTitle = () => {
   return (
     <div css={mainContainer}>
       <div css={logo}>
-        <h1>🏔️</h1>
+        <img src='/alpenglow.svg' width='80px' />
       </div>
       <div css={title}>
         <h1>Alpenglow Learning</h1>

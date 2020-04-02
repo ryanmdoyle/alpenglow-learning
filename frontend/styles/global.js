@@ -15,12 +15,12 @@ const global = css`
     --red: #D93A2B;
     --green: #008C3E;
     --purple: #AA72DB;
-    --pink: #F2AEBB;
-    --pink50: rgba(242,174,187,0.5);
-    --pink25: rgba(242,174,187,0.25);
-    --pinkMuted: #EDBCAF;
+    --pinkMuted: #F2AEBB;
+    --pinkMuted50: rgba(242,174,187,0.5);
+    --pinkMuted25: rgba(242,174,187,0.25);
+    --pink: #F78EB6;
     --blueLight: #BBCDF2;
-    --blueMedium: #324E73;
+    --blueMedium: #4952A8;
     --blueDark: #1F2A40;
     --borderRadius: 5px;
   }

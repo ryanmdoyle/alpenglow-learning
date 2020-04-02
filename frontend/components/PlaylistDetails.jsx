@@ -2,7 +2,7 @@ import React from 'react';
 import { css } from '@emotion/core';
 
 const details = css`
-  background-color: var(--blueLight);
+  background-color: var(--blueMedium);
   width: 100%;
   min-height: 200px;
   padding: 0 1rem;
@@ -21,11 +21,11 @@ const details = css`
 const PlaylistDetails = () => {
   return (
     <div css={details}>
-      <div class='flex-item'>
-        <h2>Playlist Title</h2>
+      <div className='flex-item'>
+        <h2 css={css`color: var(--pink);`}>Playlist Title</h2>
         <p>Here are some details about the playlist that would be important</p>
       </div>
-      <div class='flex-item objectives'>
+      <div className='flex-item objectives'>
         <h3>Objectives</h3>
       </div>
     </div>

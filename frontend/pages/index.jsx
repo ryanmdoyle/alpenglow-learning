@@ -1,11 +1,13 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import fetch from 'isomorphic-unfetch';
 import gql from 'graphql-tag';
+import { withApollo } from '../lib/apollo';
+import { css } from '@emotion/core';
 
 import Login from '../components/Login';
+import Logout from '../components/Logout';
 
-const GET_ID = gql`
+const GET_CURRENTUSER = gql`
   query currentUser {
     currentUser {
       googleId
@@ -15,36 +17,22 @@ const GET_ID = gql`
 `;
 
 const HomePage = () => {
-
-  const testPost = async () => { //THIS WORKS
-    // console.log('testGet running')
-    fetch('http://localhost:4000/token', {
-      method: "POST",
-      credentials: 'include',
-      body: {
-        name: 'Ryan',
-        something: 'some data!'
-      }
-    })
-      .then((res) => {
-        console.log('test post request')
-      })
-      .catch((err) => {
-        console.error(err);
-      })
-  }
-
-  const { loading, error, data } = useQuery(GET_ID);
+  const { loading, error, data } = useQuery(GET_CURRENTUSER);
+  if (loading) return null
   return (
-    <div>
-      <h2>Welcome to Next.js!</h2>
-      <Login />
-      <button onClick={() => { testPost() }}>Test Query</button>
+    <div css={css`padding: 0 1rem;`}>
+      <h2>Welcome to Alpenglow!</h2>
+
+      {data.currentUser ? null : <Login />}
+      {data.currentUser ? <Logout /> : null}
+
       {loading && <p>Loading...</p>}
-      {data && <h1>{data.currentUser.firstName}</h1>}
+      {data.currentUser ? <h1>{data.currentUser.firstName}</h1> : null}
     </div>
   )
 
 }
 
-export default HomePage
+export default withApollo({ ssr: false })(HomePage)
+// export default HomePage;
+export { GET_CURRENTUSER };

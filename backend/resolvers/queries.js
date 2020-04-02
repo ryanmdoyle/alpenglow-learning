@@ -5,9 +5,7 @@ const queries = {
 		if (!context.userId) {
 			return null;
 		}
-
 		const userQuery = await User.findById(context.userId);
-		console.log(userQuery);
 		return userQuery;
 	},
 

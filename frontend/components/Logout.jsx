@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
-import { GoogleLogin } from 'react-google-login';
+import Router from 'next/router';
+import { GoogleLogout } from 'react-google-login';
 import fetch from 'isomorphic-unfetch';
-import { useRouter } from 'next/router';
 
 
-const Login = () => {
-  const router = useRouter();
+const Logout = () => {
   const fromGoogle = (response) => {
 
     fetch('http://localhost:4000/auth/google/login', {
@@ -15,24 +14,38 @@ const Login = () => {
         'Content-Type': 'application/json',
         "Authorization": `${response.tokenId}`,
       },
+    }).catch((err) => {
+      console.error(err);
+    })
+  }
+
+  const logout = (response) => {
+    console.log("logout!")
+    fetch('http://localhost:4000/auth/google/logout', {
+      method: 'POST',
+      credentials: "include", //MUST include for client to set cookie
+      headers: {
+        'Content-Type': 'application/json',
+      },
     })
       .then(() => {
         // in future, make Apollo cache reload
         window.location.href = '/';
       })
       .catch((err) => {
+        cookies.clear('token');
         console.error(err);
       })
   }
 
+
   return (
-    <GoogleLogin
+    <GoogleLogout
       clientId="740708519996-jckm5svthu1lh5fv35jc55pp54kam9br.apps.googleusercontent.com"
-      buttonText="Login"
-      onSuccess={fromGoogle}
-      onFailure={fromGoogle}
+      buttonText="Logout"
+      onLogoutSuccess={logout}
     />
   );
 };
 
-export default Login;
+export default Logout;
