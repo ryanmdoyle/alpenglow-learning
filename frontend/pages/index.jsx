@@ -6,6 +6,7 @@ import { css } from '@emotion/core';
 
 import Login from '../components/Login';
 import Logout from '../components/Logout';
+import Form from '../components/styled/Form';
 
 const GET_CURRENTUSER = gql`
   query currentUser {
@@ -22,10 +23,6 @@ const HomePage = () => {
   return (
     <div css={css`padding: 0 1rem;`}>
       <h2>Welcome to Alpenglow!</h2>
-
-      {data.currentUser ? null : <Login />}
-      {data.currentUser ? <Logout /> : null}
-
       {loading && <p>Loading...</p>}
       {data.currentUser ? <h1>{data.currentUser.firstName}</h1> : null}
     </div>

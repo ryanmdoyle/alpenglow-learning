@@ -1,6 +1,19 @@
 const { ApolloServer, gql } = require('apollo-server-express');
 
 const typeDefs = gql`
+  scalar Date
+
+  type Query {
+    currentUser: User,
+    user(_id: ID): User!,
+    users: [User]!,
+  }
+
+  type Mutation {
+    createUser: User!,
+    createCourse: Course!,
+  }
+
   type User {
     name: String,
     firstName: String,
@@ -11,16 +24,33 @@ const typeDefs = gql`
     email: String,
   }
 
-  type Query {
-    currentUser: User,
-    user(_id: ID): User!,
-    users: [User]!,
+  type Course {
+    name: String,
+    section: String,
+    subject: String,
+    grade: Int,
+    description: String,
+    startDate: Date,
+    endDate: Date,
+    playlists: [Playlist],
   }
 
-  type Mutation {
-    createUser: User!,
-    login(_id: ID!): User!,
-    sendCookie: User!,
+  type Playlist {
+    name: String,
+    subject: String,
+    description: String,
+    grade: Int,
+    objectives: [ Objective ],
+    courses: [ Course ],
+  }
+
+  type Objective {
+    name: String,
+    description: String,
+    subject: String,
+    grade: Int,
+    playlists: [ Playlist ],
+    courses: [Course ],
   }
 `;
 

@@ -12,10 +12,12 @@ const User = require('./models/User');
 const typeDefs = require('./gqlSchema');
 const queries = require('./resolvers/queries');
 const mutations = require('./resolvers/mutations');
+const dateScalar = require('./resolvers/dateScaler');
 
 const resolvers = {
   Mutation: mutations,
   Query: queries,
+  Date: dateScalar,
 }
 
 const app = express();

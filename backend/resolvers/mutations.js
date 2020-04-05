@@ -1,4 +1,7 @@
 const User = require('../models/User');
+const Course = require('../models/Course');
+const Playlist = require('../models/Playlist');
+const Objective = require('../models/Objective');
 
 const mutations = {
   async createUser(parent, args, context, info) {
@@ -36,6 +39,10 @@ const mutations = {
     verify().catch(console.error);
     return newUser;
   },
+
+  async createCourse(parent, args, context, info) {
+    console.log(args);
+  }
 }
 
 module.exports = mutations;

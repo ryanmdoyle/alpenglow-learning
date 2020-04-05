@@ -1,15 +1,25 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Course = require('./Course');
 
 const userSchema = new Schema({
-  uuid: String,
   name: String,
   firstName: String,
   lastName: String,
   picture: String,
   googleId: String,
-  permissions: String,
   email: String,
+  permissions: {
+    type: String,
+    enum: ['SUPER_ADMIN', 'ADMIN', 'TEACHER', 'STUDENT'],
+    default: 'STUDENT'
+  },
+  courses: [
+    {
+      type: mongoose.ObjectId,
+      ref: Course,
+    }
+  ],
 })
 
 const User = mongoose.model('User', userSchema);

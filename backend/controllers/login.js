@@ -39,7 +39,7 @@ const login = async (req, res) => {
           email: payload.email,
           googleId: payload.sub,
           picture: payload.picture,
-          permissions: 'User',
+          permissions: 'Student',
         })
         newUser
           .save()
