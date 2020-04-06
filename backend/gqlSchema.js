@@ -11,17 +11,31 @@ const typeDefs = gql`
 
   type Mutation {
     createUser: User!,
-    createCourse: Course!,
+    createCourse(
+      name: String!,
+      subject: String!,
+      grade: Int!,
+      section: String,
+      description: String,
+      startDate: String,
+      endDate: String,
+    ): Course!,
+    createPlaylist(
+      name: String!,
+      subject: String!,
+      grade: Int!,
+      description: String,
+    ): Playlist!
   }
 
   type User {
-    name: String,
-    firstName: String,
-    lastName: String,
+    name: String!,
+    firstName: String!,
+    lastName: String!,
     picture: String,
-    googleId: String,
-    permissions: String,
-    email: String,
+    googleId: String!,
+    permissions: String!,
+    email: String!,
   }
 
   type Course {

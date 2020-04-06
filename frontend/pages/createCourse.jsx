@@ -1,5 +1,6 @@
 import React from 'react';
 import CreateCourse from '../components/CreateCourse';
+import { withApollo } from '../lib/apollo';
 
 const createCourse = () => {
   return (
@@ -7,4 +8,4 @@ const createCourse = () => {
   );
 };
 
-export default createCourse;
+export default withApollo({ ssr: false })(createCourse)

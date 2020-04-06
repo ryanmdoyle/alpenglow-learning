@@ -4,7 +4,7 @@ const Playlist = require('./Playlist');
 
 const courseSchema = new Schema({
   name: String,
-  section: Number,
+  section: String,
   subject: String,
   grade: Number,
   description: String,

@@ -6,51 +6,42 @@ import { useMutation } from '@apollo/react-hooks';
 import FormWrapper from './styled/FormWrapper';
 import PagePadding from './styled/PagePadding';
 
-const CREATE_COURSE = gql`
-    mutation CREATE_COURSE(
+const CREATE_PLAYLIST = gql`
+    mutation CREATE_PLAYLIST(
       $name: String!,
       $subject: String!,
       $grade: Int!,
-      $section: String,
       $description: String,
-      $startDate: String,
-      $endDate: String,
     ) {
-      createCourse(
+      createPlaylist(
         name: $name,
         subject: $subject,
         grade: $grade,
-        section: $section,
         description: $description,
-        startDate: $startDate,
-        endDate: $endDate,
       ) {
         name
       }
     }
   `;
 
-const CreateCourse = () => {
+const CreatePlaylist = () => {
   const { register, handleSubmit, errors } = useForm();
-  const [createCourse, { data }] = useMutation(CREATE_COURSE);
+  const [createPlaylist, { data }] = useMutation(CREATE_PLAYLIST);
 
   const onSubmit = data => {
-    createCourse({
+    createPlaylist({
       variables: {
         name: data.name,
         subject: data.subject,
-        grade: parseInt(data.grade), //has to be int for gql
-        section: data.section,
         description: data.description,
-        startDate: data.startDate,
-        endDate: data.endDate,
+        grade: parseInt(data.grade), //has to be int for gql
       }
     })
   };
 
   return (
     <PagePadding>
-      <h2>Create New Course</h2>
+      <h2>Create New Playlist</h2>
       <FormWrapper>
         <form onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor='name'>name*</label>
@@ -59,20 +50,11 @@ const CreateCourse = () => {
           <label htmlFor='subject'>subject*</label>
           <input type="text" name="subject" ref={register({ required: true })} />
 
-          <label htmlFor='grade'>grade*</label>
-          <input type="number" name="grade" ref={register({ required: true, max: 12, min: 1 })} />
-
-          <label htmlFor='section'>section</label>
-          <input type="text" name="section" ref={register} />
-
           <label htmlFor='description'>description</label>
           <textarea name="description" ref={register({ maxLength: 255 })} />
 
-          <label htmlFor='startDate'>start Date</label>
-          <input type="date" name="startDate" ref={register} />
-
-          <label htmlFor='endDate'>end Date</label>
-          <input type="date" name="endDate" ref={register} />
+          <label htmlFor='grade'>grade*</label>
+          <input type="number" name="grade" ref={register({ required: true, max: 12, min: 1 })} />
 
           <input type="submit" />
         </form>
@@ -81,4 +63,4 @@ const CreateCourse = () => {
   );
 };
 
-export default CreateCourse;
+export default CreatePlaylist;

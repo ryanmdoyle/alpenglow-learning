@@ -6,7 +6,6 @@ import { css } from '@emotion/core';
 
 import Login from '../components/Login';
 import Logout from '../components/Logout';
-import Form from '../components/styled/Form';
 
 const GET_CURRENTUSER = gql`
   query currentUser {

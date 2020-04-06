@@ -27,7 +27,6 @@ const UserSection = styled.section`
 `;
 
 const NavPanel = ({ setIsLogin, currentUser }) => {
-  console.log("current data in NavPanel", currentUser)
   return (
     <nav css={navStyles}>
       <div id='nav-top'>

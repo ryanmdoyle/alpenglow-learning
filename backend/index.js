@@ -29,8 +29,8 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(cookieParser());
-// app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.post('/graphql', (req, res, next) => {
   const { token } = req.cookies;

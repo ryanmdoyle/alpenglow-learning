@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+
 const User = require('../models/User');
 const Course = require('../models/Course');
 const Playlist = require('../models/Playlist');
@@ -15,14 +17,8 @@ const mutations = {
       const ticket = await client.verifyIdToken({
         idToken: token,
         audience: '740708519996-jckm5svthu1lh5fv35jc55pp54kam9br.apps.googleusercontent.com',  // Specify the CLIENT_ID of the app that accesses the backend
-        // Or, if multiple clients access the backend:
-        //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
       });
       const payload = await ticket.getPayload();
-      const userid = await payload['sub'];
-      // If request specified a G Suite domain:
-      //const domain = payload['hd'];
-
       const newUser = new User({
         firstName: payload.given_name,
         lastName: payload.family_name,
@@ -34,15 +30,36 @@ const mutations = {
         uuid: v4(),
       })
       newUser.save().then(() => { console.log('User saved!') }).catch((err) => { console.log(err) })
-
     }
     verify().catch(console.error);
     return newUser;
   },
 
   async createCourse(parent, args, context, info) {
-    console.log(args);
-  }
+    const userToken = context.cookies.token;
+    const user = await jwt.verify(userToken, process.env.SECRET);
+    if (user.permissions !== 'Student') {
+      const newCourse = new Course({
+        ...args //spread incomming data from form
+      })
+      const createdCourse = await newCourse.save().catch((err) => { console.error(err) });
+      return createdCourse;
+    }
+    return 'Permission Denied!';
+  },
+
+  async createPlaylist(parent, args, context, info) {
+    const userToken = context.cookies.token;
+    const user = await jwt.verify(userToken, process.env.SECRET);
+    if (user.permissions !== 'Student') {
+      const newPlaylist = new Playlist({
+        ...args //spread incomming data from form
+      })
+      const createdPlaylist = await newPlaylist.save().catch((err) => { console.error(err) });
+      return createdPlaylist;
+    }
+    return 'Permission Denied!';
+  },
 }
 
 module.exports = mutations;
