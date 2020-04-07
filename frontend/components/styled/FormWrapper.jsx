@@ -17,7 +17,7 @@ const StyledForm = styled.form`
     font-weight: 600;
   }
 
-  input, textarea {
+  input, textarea, select {
     padding: 0.5rem;
     border: 1px solid var(--blueLight);
     font-size: 0.9rem;

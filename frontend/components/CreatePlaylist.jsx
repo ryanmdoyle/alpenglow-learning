@@ -1,23 +1,35 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { gql } from 'apollo-boost';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation, useQuery } from '@apollo/react-hooks';
 
 import FormWrapper from './styled/FormWrapper';
 import PagePadding from './styled/PagePadding';
 
-const CREATE_PLAYLIST = gql`
+const GET_USER_COURSES_QUERY = gql`
+  # currently gets all courses, but should later only get courses for logged in user
+  query GET_USER_COURSES {
+    getCourses {
+      _id
+      name
+    }
+  }
+`;
+
+const CREATE_PLAYLIST_MUTATION = gql`
     mutation CREATE_PLAYLIST(
       $name: String!,
       $subject: String!,
       $grade: Int!,
       $description: String,
+      $courses: String,
     ) {
       createPlaylist(
         name: $name,
         subject: $subject,
         grade: $grade,
         description: $description,
+        courses: $courses,
       ) {
         name
       }
@@ -26,7 +38,11 @@ const CREATE_PLAYLIST = gql`
 
 const CreatePlaylist = () => {
   const { register, handleSubmit, errors } = useForm();
-  const [createPlaylist, { data }] = useMutation(CREATE_PLAYLIST);
+  // query (not destructured for data name conflicting with query/mutate)
+  const query = useQuery(GET_USER_COURSES_QUERY);
+  const loading = query.loading;
+  const error = query.loading;
+  const [createPlaylist, { data }] = useMutation(CREATE_PLAYLIST_MUTATION);
 
   const onSubmit = data => {
     createPlaylist({
@@ -35,6 +51,7 @@ const CreatePlaylist = () => {
         subject: data.subject,
         description: data.description,
         grade: parseInt(data.grade), //has to be int for gql
+        courses: data.courses,
       }
     })
   };
@@ -55,6 +72,17 @@ const CreatePlaylist = () => {
 
           <label htmlFor='grade'>grade*</label>
           <input type="number" name="grade" ref={register({ required: true, max: 12, min: 1 })} />
+
+          {query.data && (query.data.getCourses.length >= 0) && (
+            <>
+              <label htmlFor='courses'>Course</label>
+              <select name='courses' ref={register}>
+                {query.data.getCourses.map((course) => (
+                  <option value={course._id}>{course.name}</option>
+                ))}
+              </select>
+            </>
+          )}
 
           <input type="submit" />
         </form>

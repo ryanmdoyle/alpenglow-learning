@@ -53,6 +53,7 @@ const mutations = {
     const user = await jwt.verify(userToken, process.env.SECRET);
     if (user.permissions !== 'Student') {
       const newPlaylist = new Playlist({
+        courses: [args.courses],
         ...args //spread incomming data from form
       })
       const createdPlaylist = await newPlaylist.save().catch((err) => { console.error(err) });

@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Courses = require('../models/Course');
 
 const queries = {
 	async currentUser(parent, args, context, info) {
@@ -16,9 +17,15 @@ const queries = {
 	},
 
 	async users(parent, args, context, info) {
-		const users = await User.find()
+		const users = await User.find();
 		return users;
 	},
+
+	async getCourses(parent, args, context, info) {
+		const courses = await Courses.find();
+		console.log(courses);
+		return courses;
+	}
 
 }
 

@@ -7,6 +7,7 @@ const typeDefs = gql`
     currentUser: User,
     user(_id: ID): User!,
     users: [User]!,
+    getCourses: [Course],
   }
 
   type Mutation {
@@ -25,10 +26,12 @@ const typeDefs = gql`
       subject: String!,
       grade: Int!,
       description: String,
+      courses: String,
     ): Playlist!
   }
 
   type User {
+    _id: String,
     name: String!,
     firstName: String!,
     lastName: String!,
@@ -39,6 +42,7 @@ const typeDefs = gql`
   }
 
   type Course {
+    _id: String,
     name: String,
     section: String,
     subject: String,
@@ -50,6 +54,7 @@ const typeDefs = gql`
   }
 
   type Playlist {
+    _id: String,
     name: String,
     subject: String,
     description: String,
@@ -59,6 +64,7 @@ const typeDefs = gql`
   }
 
   type Objective {
+    _id: String,
     name: String,
     description: String,
     subject: String,

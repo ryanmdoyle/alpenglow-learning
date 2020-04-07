@@ -52,7 +52,7 @@ main {
   }
 }
 `
-const GET_CURRENTUSER = gql`
+const GET_CURRENT_USER = gql`
     query currentUser {
       currentUser {
         googleId
@@ -68,7 +68,7 @@ function MyApp({ Component, pageProps }) {
   //   fetch: fetch,
   //   credentials: 'include',
   // });
-  const { loading, error, data } = useQuery(GET_CURRENTUSER);
+  const { loading, error, data } = useQuery(GET_CURRENT_USER);
   const [isLogin, setIsLogin] = useState(false);
 
   // sets as null until there is data to pass into the prop (or errors)
