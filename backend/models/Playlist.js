@@ -1,11 +1,16 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+
 const Objective = require('./Objective');
 const Course = require('./Course');
+const subjectsEnum = require('../lib/subjectsEnum');
 
 const playlistSchema = new Schema({
   name: String,
-  subject: String,
+  subject: {
+    type: String,
+    enum: subjectsEnum,
+  },
   description: String,
   grade: Number,
   objectives: [

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-const StyledForm = styled.form`
+const StyledForm = styled.div`
   form {
   display: flex;
   flex-direction: column;

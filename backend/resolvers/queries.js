@@ -23,7 +23,6 @@ const queries = {
 
 	async getCourses(parent, args, context, info) {
 		const courses = await Courses.find();
-		console.log(courses);
 		return courses;
 	}
 

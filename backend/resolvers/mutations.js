@@ -29,7 +29,7 @@ const mutations = {
         permissions: 'User',
         uuid: v4(),
       })
-      newUser.save().then(() => { console.log('User saved!') }).catch((err) => { console.log(err) })
+      newUser.save().catch((err) => { console.log(err) })
     }
     verify().catch(console.error);
     return newUser;
@@ -50,7 +50,7 @@ const mutations = {
 
   async createPlaylist(parent, args, context, info) {
     const userToken = context.cookies.token;
-    const user = await jwt.verify(userToken, process.env.SECRET);
+    const user = jwt.verify(userToken, process.env.SECRET);
     if (user.permissions !== 'Student') {
       const newPlaylist = new Playlist({
         courses: [args.courses],
@@ -61,6 +61,18 @@ const mutations = {
     }
     return 'Permission Denied!';
   },
-}
 
+  async createObjective(parent, args, context, info) {
+    const userToken = context.cookies.token;
+    const user = jwt.verify(userToken, process.env.SECRET);
+    if (user.permissions !== 'Student') {
+      const newObjective = new Objective({
+        ...args //spread incomming data from form
+      })
+      const createdObjective = await newObjective.save().catch((err) => { console.error(err) });
+      return createdObjective;
+    }
+    return 'Permission Denied!';
+  },
+}
 module.exports = mutations;

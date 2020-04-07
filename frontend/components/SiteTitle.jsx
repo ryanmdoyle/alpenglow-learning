@@ -31,7 +31,7 @@ const SiteTitle = () => {
         <img src='/alpenglow.svg' width='80px' />
       </div>
       <div css={title}>
-        <h1>Alpenglow Learning</h1>
+        <h1>Site Title</h1>
       </div>
 
     </div>

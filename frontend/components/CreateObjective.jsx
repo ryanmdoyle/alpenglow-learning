@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { gql } from 'apollo-boost';
 import { useMutation, useQuery } from '@apollo/react-hooks';
@@ -7,60 +7,43 @@ import FormWrapper from './styled/FormWrapper';
 import PagePadding from './styled/PagePadding';
 import { subjectsEnum } from '../lib/subjectsEnum';
 
-const GET_USER_COURSES_QUERY = gql`
-  # currently gets all courses, but should later only get courses for logged in user
-  query GET_USER_COURSES {
-    getCourses {
+const CREATE_OBJECTIVE_MUTATION = gql`
+  mutation CREATE_OBJECTIVE(
+    $name: String!,
+    $subject: String!,
+    $description: String!,
+    $grade: Int!,
+  ) {
+    createObjective(
+      name: $name,
+      subject: $subject,
+      description: $description,
+      grade: $grade,
+    ) {
       _id
-      name
     }
   }
 `;
 
-const CREATE_PLAYLIST_MUTATION = gql`
-    mutation CREATE_PLAYLIST(
-      $name: String!,
-      $subject: String!,
-      $grade: Int!,
-      $description: String,
-      $courses: String,
-    ) {
-      createPlaylist(
-        name: $name,
-        subject: $subject,
-        grade: $grade,
-        description: $description,
-        courses: $courses,
-      ) {
-        name
-      }
-    }
-  `;
-
-const CreatePlaylist = () => {
+const CreateObjective = () => {
   const { register, handleSubmit, errors } = useForm();
-  // query (not destructured for data name conflicting with query/mutate)
-  const query = useQuery(GET_USER_COURSES_QUERY);
-  const loading = query.loading;
-  const error = query.loading;
 
-  const [createPlaylist, { data }] = useMutation(CREATE_PLAYLIST_MUTATION);
+  const [createObjective, { data }] = useMutation(CREATE_OBJECTIVE_MUTATION);
 
   const onSubmit = data => {
-    createPlaylist({
+    createObjective({
       variables: {
         name: data.name,
         subject: data.subject,
         description: data.description,
         grade: parseInt(data.grade), //has to be int for gql
-        courses: data.courses,
       }
     })
   };
 
   return (
     <PagePadding>
-      <h2>Create New Playlist</h2>
+      <h2>Create Objective</h2>
       <FormWrapper>
         <form onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor='name'>name*</label>
@@ -79,17 +62,6 @@ const CreatePlaylist = () => {
           <label htmlFor='grade'>grade*</label>
           <input type="number" name="grade" ref={register({ required: true, max: 12, min: 1 })} />
 
-          {query.data && (query.data.getCourses.length >= 0) && (
-            <>
-              <label htmlFor='courses'>Course</label>
-              <select name='courses' ref={register}>
-                {query.data.getCourses.map((course) => (
-                  <option value={course._id} key={course._id}>{course.name}</option>
-                ))}
-              </select>
-            </>
-          )}
-
           <input type="submit" />
         </form>
       </FormWrapper>
@@ -97,4 +69,4 @@ const CreatePlaylist = () => {
   );
 };
 
-export default CreatePlaylist;
+export default CreateObjective;

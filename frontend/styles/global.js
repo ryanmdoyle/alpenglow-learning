@@ -19,6 +19,9 @@ const global = css`
     --pinkMuted50: rgba(242,174,187,0.5);
     --pinkMuted25: rgba(242,174,187,0.25);
     --pink: #F78EB6;
+    /* add 80 to hex for 50% transparency */
+    --pink50: #F78EB680;
+    --pink25: #F78EB640;
     --blueLight: #BBCDF2;
     --blueMedium: #4952A8;
     --blueDark: #1F2A40;

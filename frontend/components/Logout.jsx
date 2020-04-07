@@ -20,7 +20,6 @@ const Logout = () => {
   }
 
   const logout = (response) => {
-    console.log("logout!")
     fetch('http://localhost:4000/auth/google/logout', {
       method: 'POST',
       credentials: "include", //MUST include for client to set cookie

@@ -5,6 +5,7 @@ import { useMutation } from '@apollo/react-hooks';
 
 import FormWrapper from './styled/FormWrapper';
 import PagePadding from './styled/PagePadding';
+import { subjectsEnum } from '../lib/subjectsEnum';
 
 const CREATE_COURSE = gql`
     mutation CREATE_COURSE(
@@ -57,7 +58,11 @@ const CreateCourse = () => {
           <input type="text" name="name" ref={register({ required: true })} />
 
           <label htmlFor='subject'>subject*</label>
-          <input type="text" name="subject" ref={register({ required: true })} />
+          <select name='subject' ref={register({ required: true })}>
+            {subjectsEnum.map(subject => (
+              <option value={subject} key={subject}>{subject}</option>
+            ))}
+          </select>
 
           <label htmlFor='grade'>grade*</label>
           <input type="number" name="grade" ref={register({ required: true, max: 12, min: 1 })} />

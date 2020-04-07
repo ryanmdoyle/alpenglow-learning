@@ -12,6 +12,7 @@ const typeDefs = gql`
 
   type Mutation {
     createUser: User!,
+
     createCourse(
       name: String!,
       subject: String!,
@@ -21,13 +22,22 @@ const typeDefs = gql`
       startDate: String,
       endDate: String,
     ): Course!,
+
     createPlaylist(
       name: String!,
       subject: String!,
       grade: Int!,
       description: String,
       courses: String,
-    ): Playlist!
+    ): Playlist!,
+
+    createObjective(
+      _id: String,
+      name: String!,
+      description: String,
+      subject: String,
+      grade: Int,
+    ): Objective! 
   }
 
   type User {
@@ -65,12 +75,11 @@ const typeDefs = gql`
 
   type Objective {
     _id: String,
-    name: String,
+    name: String!,
     description: String,
     subject: String,
     grade: Int,
     playlists: [ Playlist ],
-    courses: [Course ],
   }
 `;
 
