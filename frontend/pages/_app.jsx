@@ -55,8 +55,8 @@ main {
 const GET_CURRENT_USER = gql`
     query currentUser {
       currentUser {
-        googleId
         firstName
+        permissions
       }
     }
   `;

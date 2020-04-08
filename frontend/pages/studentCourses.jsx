@@ -4,7 +4,7 @@ import { css } from '@emotion/core';
 import PageTitle from '../components/PageTitle';
 import CourseContainer from '../components/CourseContainer';
 
-const courses = () => {
+const studentCourses = () => {
   return (
     <>
       <PageTitle title='All Courses' />
@@ -17,4 +17,4 @@ const courses = () => {
   );
 };
 
-export default courses;
+export default studentCourses;

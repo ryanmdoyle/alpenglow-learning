@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/core';
 
 import NavStudent from './NavStudent';
+import NavTeacher from './NavTeacher';
 import SiteTitle from '../SiteTitle';
 import Login from '../Login';
 import Logout from '../Logout';
@@ -35,6 +36,9 @@ const NavPanel = ({ setIsLogin, currentUser }) => {
         </NavSection>
         <NavSection>
           <NavStudent />
+        </NavSection>
+        <NavSection>
+          <NavTeacher />
         </NavSection>
       </div>
       <div id='nav-bottom'>

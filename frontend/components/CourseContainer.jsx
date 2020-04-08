@@ -22,7 +22,8 @@ const courseContainer = css`
     color: var(--blueDark);
   }
   h2  {margin: 0.2rem 0; }
-  h3 { margin: 0.6rem 0; }
+  h3, h5 { margin: 0.6rem 0; }
+
 
   :hover {
     box-shadow: var(--shadowMedium);
@@ -30,31 +31,31 @@ const courseContainer = css`
   }
 `;
 
-const CourseContainer = ({name}) => {
+const CourseContainer = ({ name }) => {
   return (
     <section css={courseContainer}>
-        <h2>{name}</h2>
-        <h3>Essential</h3>
-        <div css={playlistsContainer}>
-          <PlaylistBox />
-          <PlaylistBox />
-          <PlaylistBox />
-          <PlaylistBox />
-          <PlaylistBox />
-          <PlaylistBox />
-          <PlaylistBox />
-          <PlaylistBox />
-          <PlaylistBox />
-        </div>
-        <h5 css={css`margin: 0.6rem 0;`}>Core</h5>
-        <div css={playlistsContainer}>
-          <PlaylistBox />
-          <PlaylistBox />
-          <PlaylistBox />
-          <PlaylistBox />
-          <PlaylistBox />
-        </div>
-      </section>
+      <h3>{name}</h3>
+      <h5>Essential</h5>
+      <div css={playlistsContainer}>
+        <PlaylistBox />
+        <PlaylistBox />
+        <PlaylistBox />
+        <PlaylistBox />
+        <PlaylistBox />
+        <PlaylistBox />
+        <PlaylistBox />
+        <PlaylistBox />
+        <PlaylistBox />
+      </div>
+      <h5 css={css`margin: 0.6rem 0;`}>Core</h5>
+      <div css={playlistsContainer}>
+        <PlaylistBox />
+        <PlaylistBox />
+        <PlaylistBox />
+        <PlaylistBox />
+        <PlaylistBox />
+      </div>
+    </section>
   );
 };
 

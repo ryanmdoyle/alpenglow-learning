@@ -10,7 +10,7 @@ import CreateCourse from '../components/CreateCourse';
 import CreateObjective from '../components/CreateObjective';
 
 const createContent = () => {
-  const [activeForm, setActiveForm] = useState('course');
+  const [activeForm, setActiveForm] = useState('objective');
 
   const changeForm = (courseString) => {
     setActiveForm(courseString);

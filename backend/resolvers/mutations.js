@@ -26,7 +26,7 @@ const mutations = {
         email: payload.email,
         googleId: payload.sub,
         picture: payload.picture,
-        permissions: 'User',
+        permissions: 'STUDENT',
         uuid: v4(),
       })
       newUser.save().catch((err) => { console.log(err) })
