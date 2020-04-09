@@ -15,6 +15,7 @@ const typeDefs = gql`
 
     createCourse(
       name: String!,
+      enrollId: String,
       subject: String!,
       grade: Int!,
       section: String,

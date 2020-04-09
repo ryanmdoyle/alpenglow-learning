@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const ShortUniqueId = require('short-unique-id').default;
 
 const User = require('../models/User');
 const Course = require('../models/Course');
@@ -39,7 +40,9 @@ const mutations = {
     const userToken = context.cookies.token;
     const user = await jwt.verify(userToken, process.env.SECRET);
     if (user.permissions !== 'Student') {
+      const shortuid = new ShortUniqueId();
       const newCourse = new Course({
+        enrollId: await shortuid.randomUUID(8),
         ...args //spread incomming data from form
       })
       const createdCourse = await newCourse.save().catch((err) => { console.error(err) });

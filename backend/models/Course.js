@@ -6,6 +6,7 @@ const subjectsEnum = require('../lib/subjectsEnum');
 
 const courseSchema = new Schema({
   name: String,
+  enrollId: String,
   section: String,
   subject: {
     type: String,
