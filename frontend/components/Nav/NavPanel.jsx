@@ -4,9 +4,9 @@ import { css } from '@emotion/core';
 
 import NavStudent from './NavStudent';
 import NavTeacher from './NavTeacher';
-import SiteTitle from '../SiteTitle';
-import Login from '../Login';
-import Logout from '../Logout';
+import SiteTitle from './SiteTitle';
+import Login from './Login';
+import Logout from './Logout';
 
 const navStyles = css`
   display: flex;

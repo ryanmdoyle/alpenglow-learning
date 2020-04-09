@@ -17,10 +17,10 @@ const NavTeacher = () => {
     <div css={sectionPad}>
       <h5 css={navSectionHeader}>Teacher Admin</h5>
       <ul css={css`list-style:none;margin:1rem 0.2rem;padding:0;`}>
-        <NavItem title='Create Content' href='/createContent' />
-        <NavItem title='Playlists' href='/teacherPlaylists' />
-        <NavItem title='Objectives' href='/teacherObjectives' />
-        <NavItem title='Questions' href='/teacherQuestions' />
+        <NavItem title='Create Content' href='/teacher/createContent' />
+        <NavItem title='Playlists' href='/teacher/teacherPlaylists' />
+        <NavItem title='Objectives' href='/teacher/teacherObjectives' />
+        <NavItem title='Questions' href='/teacher/teacherQuestions' />
       </ul>
     </div>
   );

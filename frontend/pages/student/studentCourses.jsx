@@ -1,8 +1,8 @@
 import React from 'react';
 import { css } from '@emotion/core';
 
-import PageTitle from '../components/PageTitle';
-import CourseContainer from '../components/CourseContainer';
+import PageTitle from '../../components/PageTitle';
+import CourseContainer from '../../components/CourseContainer';
 
 const studentCourses = () => {
   return (
