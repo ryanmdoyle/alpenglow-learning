@@ -29,6 +29,5 @@ const HomePage = () => {
 
 }
 
-export default withApollo({ ssr: false })(HomePage)
-// export default HomePage;
+export default HomePage;
 export { GET_CURRENTUSER };

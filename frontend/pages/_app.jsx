@@ -2,7 +2,7 @@
 import { ThemeProvider } from 'emotion-theming';
 import { Global, css } from '@emotion/core';
 import Head from 'next/head';
-import { withApollo } from '../lib/apollo';
+import { withApollo } from '../lib/withApollo';
 import { useState } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
@@ -62,7 +62,7 @@ const GET_CURRENT_USER = gql`
   `;
 
 function MyApp({ Component, pageProps }) {
-  // const client = new ApolloClient({
+  // const client = new ApolloClient({ //Basic Apollo Client (for testing)
   //   uri: 'http://localhost:4000/graphql',
   //   link: createHttpLink({ uri: '/graphql' }),
   //   fetch: fetch,
@@ -92,4 +92,4 @@ function MyApp({ Component, pageProps }) {
   )
 }
 
-export default withApollo({ ssr: false })(MyApp)
+export default withApollo(MyApp)
