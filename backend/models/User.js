@@ -14,7 +14,7 @@ const userSchema = new Schema({
     enum: ['SUPER_ADMIN', 'ADMIN', 'TEACHER', 'STUDENT'],
     default: 'STUDENT'
   },
-  courses: [
+  enrolledCourses: [
     {
       type: mongoose.ObjectId,
       ref: Course,

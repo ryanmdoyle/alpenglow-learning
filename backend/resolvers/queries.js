@@ -1,3 +1,6 @@
+const verifyUser = require('../lib/verifyUser');
+
+// Mongoose Models
 const User = require('../models/User');
 const Courses = require('../models/Course');
 
@@ -24,6 +27,12 @@ const queries = {
 	async getCourses(parent, args, context, info) {
 		const courses = await Courses.find();
 		return courses;
+	},
+
+	async getUserCourses(parent, args, context, info) {
+		const verifiedUser = verifyUser(context);
+		const user = await User.findById(verifiedUser._id).populate('enrolledCourses');
+		return user.enrolledCourses;
 	}
 
 }

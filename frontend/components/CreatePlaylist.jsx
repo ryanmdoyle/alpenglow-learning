@@ -5,6 +5,7 @@ import { useMutation, useQuery } from '@apollo/react-hooks';
 
 import FormWrapper from './styled/FormWrapper';
 import PagePadding from './styled/PagePadding';
+import Loading from './Loading';
 import { subjectsEnum } from '../lib/subjectsEnum';
 
 const GET_USER_COURSES_QUERY = gql`
@@ -57,7 +58,7 @@ const CreatePlaylist = () => {
       }
     })
   };
-
+  if (loading) return <Loading />;
   return (
     <PagePadding>
       <h2>Create New Playlist</h2>
@@ -90,7 +91,7 @@ const CreatePlaylist = () => {
             </>
           )}
 
-          <input type="submit" />
+          <button type='submit'>Create Playlist</button>
         </form>
       </FormWrapper>
     </PagePadding>

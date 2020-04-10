@@ -2,14 +2,21 @@ const { ApolloServer, gql } = require('apollo-server-express');
 
 const typeDefs = gql`
   scalar Date
-
+  
+  # # # # # # # # # # # #
+  # QUERIES
+  # # # # # # # # # # # #
   type Query {
     currentUser: User,
     user(_id: ID): User!,
     users: [User]!,
-    getCourses: [Course],
+    getCourses: [Course]!,
+    getUserCourses: [Course]!,
   }
 
+  # # # # # # # # # # # #
+  # MUTATIONS
+  # # # # # # # # # # # #
   type Mutation {
     createUser: User!,
 
@@ -38,8 +45,16 @@ const typeDefs = gql`
       description: String,
       subject: String,
       grade: Int,
-    ): Objective! 
+    ): Objective! ,
+
+    enroll(
+      enrollId: String!,
+    ) : User!,
   }
+
+  # # # # # # # # # # # #
+  # CUSTOM TYPES
+  # # # # # # # # # # # #
 
   type User {
     _id: String,
@@ -50,6 +65,7 @@ const typeDefs = gql`
     googleId: String!,
     permissions: String!,
     email: String!,
+    enrolledCourses: [String],
   }
 
   type Course {

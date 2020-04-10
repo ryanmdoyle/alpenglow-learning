@@ -3,6 +3,7 @@ import { css } from '@emotion/core';
 
 import PageTitle from '../../components/PageTitle';
 import CourseContainer from '../../components/CourseContainer';
+import Loading from '../../components/Loading';
 
 const studentCourses = () => {
   return (

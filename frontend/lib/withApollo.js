@@ -70,7 +70,7 @@ export function withApollo(PageComponent, { ssr = true } = {}) {
           // Prevent Apollo Client GraphQL errors from crashing SSR.
           // Handle them in components via the data.error prop:
           // https://www.apollographql.com/docs/react/api/react-apollo.html#graphql-query-data-error
-          console.error('Error while running `getDataFromTree`', error)
+          // console.error('Error while running `getDataFromTree`\n', error.graphQLErrors)
         }
 
         // getDataFromTree does not call componentWillUnmount
@@ -119,7 +119,7 @@ function createApolloClient(initialState = {}) {
   // Check out https://github.com/zeit/next.js/pull/4611 if you want to use the AWSAppSyncClient
   const isBrowser = typeof window !== 'undefined'
   return new ApolloClient({
-    connectToDevTools: isBrowser,
+    connectToDevTools: true, //or isBrowser
     ssrMode: !isBrowser, // Disables forceFetch on the server (so queries are only run once)
     link: new HttpLink({
       uri: 'http://localhost:4000/graphql', // Server URL (must be absolute)

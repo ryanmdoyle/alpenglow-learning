@@ -30,20 +30,21 @@ const StyledForm = styled.div`
     align-self: flex-start;
   }
 
-  input[type=submit] {
+  button[type=submit] {
     margin-top: 1.5rem;
     align-self: flex-end;
     height: 3rem;
-    width: 8rem;
-    border-radius: 2px;
+    width: 10rem;
+    border-radius: 3px;
     border: 1px solid var(--blueDark);
     color: var(--blueLight);
     background-color: var(--blueDark);
     transition: color 0.15s, background-color 0.15s;
+    font-size: 0.8rem;
     :hover, :focus {
       border: 1px solid var(--blueDark);
       color: var(--blueDark);
-      background-color: var(--pink);
+      background-color: var(--pink50);
       transition: color 0.15s, background-color 0.15s;
     }
   }

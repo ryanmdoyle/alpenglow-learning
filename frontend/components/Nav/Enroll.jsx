@@ -71,22 +71,34 @@ const enrollForm = css`
   }
 `;
 
-const ENROLL_COURE = gql`
-  # pass in current user and enroll in course
+const ENROLL_MUTATION = gql`
+  mutation ENROLL($enrollId: String!) {
+    enroll(enrollId: $enrollId) {
+      _id
+    }
+  }
 `;
 
 const Enroll = () => {
-  const [isAdding, setIsAdding] = useState(true);
+  const [isAdding, setIsAdding] = useState(false);
   const { register, handleSubmit, errors } = useForm();
-  const [enroll, { data }] = useMutation(ENROLL_COURSE)
+  const [enroll, { data }] = useMutation(
+    ENROLL_MUTATION,
+    { refetchQueries: 'getUserCourses' } //does not refetch
+  )
+
+  const onSubmit = data => {
+    enroll({ variables: { enrollId: data.enrollId } });
+    setIsAdding(false);
+  }
 
   return (
     <>
       <div css={item} onClick={() => { setIsAdding(!isAdding) }}>
         <p>Add Course</p>
       </div>
-      <form css={enrollForm} className={isAdding ? 'shown' : 'hidden'}>
-        <input placeholder='Enter Enroll ID' className={isAdding ? 'shown' : 'hidden'}></input>
+      <form css={enrollForm} className={isAdding ? 'shown' : 'hidden'} onSubmit={handleSubmit(onSubmit)}>
+        <input placeholder='Enter Enroll ID' name='enrollId' className={isAdding ? 'shown' : 'hidden'} ref={register({ required: true })}></input>
         <button type="submit" className={isAdding ? 'shown' : 'hidden'}>Add</button>
       </form>
     </>

@@ -5,6 +5,7 @@ import { useMutation, useQuery } from '@apollo/react-hooks';
 
 import FormWrapper from './styled/FormWrapper';
 import PagePadding from './styled/PagePadding';
+import Loading from './Loading';
 import { subjectsEnum } from '../lib/subjectsEnum';
 
 const CREATE_OBJECTIVE_MUTATION = gql`
@@ -62,7 +63,7 @@ const CreateObjective = () => {
           <label htmlFor='grade'>grade*</label>
           <input type="number" name="grade" ref={register({ required: true, max: 12, min: 1 })} />
 
-          <input type="submit" />
+          <button type='submit'>Create Objective</button>
         </form>
       </FormWrapper>
     </PagePadding>

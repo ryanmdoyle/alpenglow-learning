@@ -1,6 +1,9 @@
 const jwt = require('jsonwebtoken');
 const ShortUniqueId = require('short-unique-id').default;
 
+const verifyUser = require('../lib/verifyUser');
+
+// Mongoose Models
 const User = require('../models/User');
 const Course = require('../models/Course');
 const Playlist = require('../models/Playlist');
@@ -37,9 +40,8 @@ const mutations = {
   },
 
   async createCourse(parent, args, context, info) {
-    const userToken = context.cookies.token;
-    const user = await jwt.verify(userToken, process.env.SECRET);
-    if (user.permissions !== 'Student') {
+    const user = await verifyUser(context);
+    if (user.permissions !== 'STUDENT') {
       const shortuid = new ShortUniqueId();
       const newCourse = new Course({
         enrollId: await shortuid.randomUUID(8),
@@ -52,9 +54,8 @@ const mutations = {
   },
 
   async createPlaylist(parent, args, context, info) {
-    const userToken = context.cookies.token;
-    const user = jwt.verify(userToken, process.env.SECRET);
-    if (user.permissions !== 'Student') {
+    const user = await verifyUser(context);
+    if (user.permissions !== 'STUDENT') {
       const newPlaylist = new Playlist({
         courses: [args.courses],
         ...args //spread incomming data from form
@@ -66,9 +67,8 @@ const mutations = {
   },
 
   async createObjective(parent, args, context, info) {
-    const userToken = context.cookies.token;
-    const user = jwt.verify(userToken, process.env.SECRET);
-    if (user.permissions !== 'Student') {
+    const user = await verifyUser(context);
+    if (user.permissions !== 'STUDENT') {
       const newObjective = new Objective({
         ...args //spread incomming data from form
       })
@@ -77,5 +77,18 @@ const mutations = {
     }
     return 'Permission Denied!';
   },
+
+  async enroll(parent, args, context, info) {
+    const user = verifyUser(context);
+    console.log('user', user);
+    if (user && user.permissions === 'SUPER_ADMIN') {
+      const userInDb = await User.findById(user._id);
+      const courseToEnroll = await Course.findOne({ enrollId: args.enrollId });
+      userInDb.enrolledCourses.push(courseToEnroll._id);
+      await userInDb.save();
+      return userInDb;
+    }
+    return 'Not a student!'
+  }
 }
 module.exports = mutations;

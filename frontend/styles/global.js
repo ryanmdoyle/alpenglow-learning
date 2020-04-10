@@ -16,8 +16,8 @@ const global = css`
     --green: #008C3E;
     --purple: #AA72DB;
     --pinkMuted: #F2AEBB;
-    --pinkMuted50: rgba(242,174,187,0.5);
-    --pinkMuted25: rgba(242,174,187,0.25);
+    --pinkMuted50: #F2AEBB80;
+    --pinkMuted25: #F2AEBB40;
     --pink: #F78EB6;
     /* add 80 to hex for 50% transparency */
     --pink50: #F78EB680;
