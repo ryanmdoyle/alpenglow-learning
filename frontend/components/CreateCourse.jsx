@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
@@ -7,6 +7,7 @@ import FormWrapper from './styled/FormWrapper';
 import PagePadding from './styled/PagePadding';
 import Loading from './Loading';
 import { subjectsEnum } from '../lib/subjectsEnum';
+import AlertContext from './context/AlertContext';
 
 const CREATE_COURSE = gql`
     mutation CREATE_COURSE(
@@ -34,7 +35,19 @@ const CREATE_COURSE = gql`
 
 const CreateCourse = () => {
   const { register, handleSubmit, errors } = useForm();
-  const [createCourse, { data }] = useMutation(CREATE_COURSE);
+  const context = useContext(AlertContext)
+  const [createCourse, { data }] = useMutation(CREATE_COURSE, {
+    onCompleted: data => {
+      context.setAlertStatus('success');
+      context.setAlertText(`Successfully created course ${data.createCourse.name}!`);
+      context.setAlert(true);
+    },
+    onError: data => {
+      context.setAlertStatus('Error!');
+      context.setAlertText(`Beep-boop-beep....Error creating course.`);
+      context.setAlert(true);
+    }
+  });
 
   const onSubmit = data => {
     createCourse({
@@ -48,6 +61,7 @@ const CreateCourse = () => {
         endDate: data.endDate,
       }
     })
+
   };
 
   return (
@@ -61,7 +75,7 @@ const CreateCourse = () => {
 
           <label htmlFor='subject'>subject*</label>
           <select name='subject' ref={register({ required: true })}>
-            <option disabled="" selected="" value="">Select one of the Options Below</option>
+            <option disabled="" value="">Select one of the Options Below</option>
             {subjectsEnum.map(subject => (
               <option value={subject} key={subject}>{subject}</option>
             ))}
