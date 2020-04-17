@@ -61,7 +61,7 @@ const CreatePlaylist = () => {
   if (loading) return <Loading />;
   return (
     <PagePadding>
-      <h2>Create New Playlist</h2>
+      <h3>Create New Playlist</h3>
       <FormWrapper>
         <form onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor='name'>name*</label>

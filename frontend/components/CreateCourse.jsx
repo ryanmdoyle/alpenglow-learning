@@ -66,7 +66,7 @@ const CreateCourse = () => {
 
   return (
     <PagePadding>
-      <h2>Create New Course</h2>
+      <h3>Create New Course</h3>
       <FormWrapper>
         <form onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor='name'>name*</label>

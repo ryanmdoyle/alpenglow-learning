@@ -44,7 +44,7 @@ const CreateObjective = () => {
 
   return (
     <PagePadding>
-      <h2>Create New Objective</h2>
+      <h3>Create New Objective</h3>
       <FormWrapper>
         <form onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor='name'>name*</label>
