@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
 
+import { AlertStatus } from '../../lib/enums';
 
 const AlertContext = React.createContext(null);
 AlertContext.displayName = 'AlertContext';
 
 const AlertProvider = ({ children }) => {
-  const [alert, setAlert] = useState(false);
-  const [alertStatus, setAlertStatus] = useState('success');
+  const [alert, setAlert] = useState(AlertStatus.None);
   const [alertText, setAlertText] = useState("👍");
 
   return (
     <AlertContext.Provider
       value={{
         alert: alert,
-        setAlert: () => (setAlert(!alert)),
-        alertStatus: alertStatus,
-        setAlertStatus: (status) => (setAlertStatus(status)),
+        success: () => (setAlert(AlertStatus.Success)),
+        error: () => (setAlert(AlertStatus.Error)),
+        clear: () => (setAlert(AlertStatus.None)),
         alertText: alertText,
-        setAlertText: (text) => (setAlertText(text)),
+        setAlertText: (text: string) => (setAlertText(text)),
       }}
     >
       {children}

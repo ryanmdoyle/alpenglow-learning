@@ -38,14 +38,12 @@ const CreateCourse = () => {
   const context = useContext(AlertContext)
   const [createCourse, { data }] = useMutation(CREATE_COURSE, {
     onCompleted: data => {
-      context.setAlertStatus('success');
       context.setAlertText(`Successfully created course ${data.createCourse.name}!`);
-      context.setAlert(true);
+      context.success(); // put the alert text inside of the success/error methods!
     },
     onError: data => {
-      context.setAlertStatus('Error!');
       context.setAlertText(`Beep-boop-beep....Error creating course.`);
-      context.setAlert(true);
+      context.error();
     }
   });
 

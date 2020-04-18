@@ -2,8 +2,9 @@ import React from 'react';
 import { css } from '@emotion/core';
 
 import AlertContext from './context/AlertContext';
+import { AlertStatus } from '../lib/enums';
 
-const alertCore = css`
+const coreStyle = css`
   position: absolute;
   bottom: 0;
   width: calc(100% - 2rem);
@@ -18,7 +19,7 @@ const alertCore = css`
   align-items: center;
 `;
 
-const error = css`
+const errorStyle = css`
   border: 1px solid var(--red);
   background-color: var(--pink50);
   color: var(--red);
@@ -31,7 +32,7 @@ const error = css`
   }
 `;
 
-const dismiss = css`
+const dismissStyle = css`
   height: 40px;
   background-color: rgba(0, 0, 0, 0);
   border: 1px solid var(--blueMedium);
@@ -44,17 +45,17 @@ const dismiss = css`
   }
 `
 
-const Alert = ({ status }) => {
+const Alert = () => {
   // const statusStyle = (status === 'success') ? [alertCore] : [alertCore, error];  // within div css to build
   return (
     <AlertContext.Consumer>
       {(context) => {
-        const { alert, alertStatus, alertText, setAlert, setAlertStatus, setAlertText } = context;
-        if (alert) {
+        const { alert, clear, alertText } = context;
+        if (alert !== AlertStatus.None) {
           return (
-            <div css={(alertStatus === 'success') ? [alertCore] : [alertCore, error]} >
-              <p>{alertStatus === 'success' ? <span>✅ </span> : <span>🛑 </span>}{alertText}</p>
-              <button css={dismiss} onClick={() => (setAlert(false), setAlertStatus('success'))}>Dismiss</button>
+            <div css={(alert === AlertStatus.Success) ? [coreStyle] : [coreStyle, errorStyle]} >
+              <p>{alert === AlertStatus.Success ? <span>✅ </span> : <span>🛑 </span>}{alertText}</p>
+              <button css={dismissStyle} onClick={() => (clear())}>Dismiss</button>
             </div>
           )
         } else {
