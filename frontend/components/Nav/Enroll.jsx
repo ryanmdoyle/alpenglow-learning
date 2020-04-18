@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { css } from '@emotion/core';
 import { useForm } from 'react-hook-form';
 import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
 
 import FormWrapper from '../styled/FormWrapper';
+import AlertContext from '../context/AlertContext';
 
 const item = css`
   margin: 0.5rem 0.5rem;
@@ -82,9 +83,14 @@ const ENROLL_MUTATION = gql`
 const Enroll = () => {
   const [isAdding, setIsAdding] = useState(false);
   const { register, handleSubmit, errors } = useForm();
-  const [enroll, { data }] = useMutation(
-    ENROLL_MUTATION,
-    { refetchQueries: 'getUserCourses' } //does not refetch
+
+  const alert = useContext(AlertContext);
+  const [enroll, { data }] = useMutation(ENROLL_MUTATION, {
+    onCompleted: (data) => {
+      alert.success(`Successfully enrolled in course!`)
+    },
+    onError: (data) => (alert.error(`Ooops, looks like there was a problem. ${data}`)),
+  }
   )
 
   const onSubmit = data => {

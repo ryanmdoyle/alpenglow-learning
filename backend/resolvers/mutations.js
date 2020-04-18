@@ -1,3 +1,4 @@
+const { ApolloError } = require('apollo-server-express')
 const jwt = require('jsonwebtoken');
 const ShortUniqueId = require('short-unique-id').default;
 
@@ -80,12 +81,16 @@ const mutations = {
 
   async enroll(parent, args, context, info) {
     const user = verifyUser(context);
-    console.log('user', user);
     if (user && user.permissions === 'SUPER_ADMIN') {
       const userInDb = await User.findById(user._id);
       const courseToEnroll = await Course.findOne({ enrollId: args.enrollId });
-      userInDb.enrolledCourses.push(courseToEnroll._id);
-      await userInDb.save();
+
+      if (!userInDb.enrolledCourses.includes(courseToEnroll._id)) { // if not already enrolled
+        userInDb.enrolledCourses.push(courseToEnroll._id);
+        await userInDb.save();
+      } else {
+        return new ApolloError('Already Enrolled in course');
+      }
       return userInDb;
     }
     return 'Not a student!'

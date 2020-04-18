@@ -21,7 +21,8 @@ const coreStyle = css`
 
 const errorStyle = css`
   border: 1px solid var(--red);
-  background-color: var(--pink50);
+  background-color: var(--pink);
+  box-shadow: var(--shadowHeavy); 
   color: var(--red);
   button {
     color: var(--red);
