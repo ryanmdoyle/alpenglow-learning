@@ -13,11 +13,23 @@ const AlertProvider = ({ children }) => {
     <AlertContext.Provider
       value={{
         alert: alert,
-        success: () => (setAlert(AlertStatus.Success)),
-        error: () => (setAlert(AlertStatus.Error)),
+        success: (text: string, timeout: number) => {
+          setAlertText(text);
+          setAlert(AlertStatus.Success);
+          setTimeout(() => {
+            setAlert(AlertStatus.None);
+          }, timeout * 1000 || 10000)
+
+        },
+        error: (text: string, timeout: number) => {
+          setAlertText(text);
+          setAlert(AlertStatus.Error);
+          setTimeout(() => {
+            setAlert(AlertStatus.None);
+          }, timeout * 1000 || 10000)
+        },
         clear: () => (setAlert(AlertStatus.None)),
         alertText: alertText,
-        setAlertText: (text: string) => (setAlertText(text)),
       }}
     >
       {children}

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { gql } from 'apollo-boost';
 import { useMutation, useQuery } from '@apollo/react-hooks';
@@ -7,6 +7,7 @@ import FormWrapper from './styled/FormWrapper';
 import PagePadding from './styled/PagePadding';
 import Loading from './Loading';
 import { subjectsEnum } from '../lib/subjectsEnum';
+import AlertContext from './context/AlertContext';
 
 const GET_USER_COURSES_QUERY = gql`
   # currently gets all courses, but should later only get courses for logged in user
@@ -45,7 +46,15 @@ const CreatePlaylist = () => {
   const loading = query.loading;
   const error = query.loading;
 
-  const [createPlaylist, { data }] = useMutation(CREATE_PLAYLIST_MUTATION);
+  const alert = useContext(AlertContext);
+  const [createPlaylist, { data }] = useMutation(CREATE_PLAYLIST_MUTATION, {
+    onCompleted: data => {
+      alert.success(`Successfully created playlist: ${data.createPlaylist.name}`);
+    },
+    onError: () => {
+      alert.error('Sorry, there was an error creating your playlist.');
+    }
+  });
 
   const onSubmit = data => {
     createPlaylist({

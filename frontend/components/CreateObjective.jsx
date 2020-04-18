@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { gql } from 'apollo-boost';
 import { useMutation, useQuery } from '@apollo/react-hooks';
@@ -7,6 +7,7 @@ import FormWrapper from './styled/FormWrapper';
 import PagePadding from './styled/PagePadding';
 import Loading from './Loading';
 import { subjectsEnum } from '../lib/subjectsEnum';
+import AlertContext from './context/AlertContext';
 
 const CREATE_OBJECTIVE_MUTATION = gql`
   mutation CREATE_OBJECTIVE(
@@ -28,8 +29,16 @@ const CREATE_OBJECTIVE_MUTATION = gql`
 
 const CreateObjective = () => {
   const { register, handleSubmit, errors } = useForm();
-
-  const [createObjective, { data }] = useMutation(CREATE_OBJECTIVE_MUTATION);
+  const alert = useContext(AlertContext);
+  const [createObjective, { data }] = useMutation(CREATE_OBJECTIVE_MUTATION, {
+    onCompleted: data => {
+      alert.success(`Successfully created objective: ${data.createObjective.name}`);
+    },
+    onError: data => {
+      alert.error('Sorry, there was a problem creating your objective.', 10);
+      console.error(data);
+    }
+  });
 
   const onSubmit = data => {
     createObjective({

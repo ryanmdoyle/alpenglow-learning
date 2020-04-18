@@ -35,15 +35,14 @@ const CREATE_COURSE = gql`
 
 const CreateCourse = () => {
   const { register, handleSubmit, errors } = useForm();
-  const context = useContext(AlertContext)
+  const alert = useContext(AlertContext)
+
   const [createCourse, { data }] = useMutation(CREATE_COURSE, {
     onCompleted: data => {
-      context.setAlertText(`Successfully created course ${data.createCourse.name}!`);
-      context.success(); // put the alert text inside of the success/error methods!
+      alert.success(`Successfully created course ${data.createCourse.name}!`, 10);
     },
-    onError: data => {
-      context.setAlertText(`Beep-boop-beep....Error creating course.`);
-      context.error();
+    onError: () => {
+      alert.error('Sorry, there was a problem creating your course.');
     }
   });
 
