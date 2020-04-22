@@ -11,7 +11,8 @@ const typeDefs = gql`
     user(_id: ID): User!,
     users: [User]!,
     getCourses: [Course]!,
-    getUserCourses: [Course]!,
+    getEnrolledCourses: [Course],
+    getTeachingCourses: [Course],
   }
 
   # # # # # # # # # # # #

@@ -29,10 +29,16 @@ const queries = {
 		return courses;
 	},
 
-	async getUserCourses(parent, args, context, info) {
+	async getEnrolledCourses(parent, args, context, info) {
 		const verifiedUser = verifyUser(context);
 		const user = await User.findById(verifiedUser._id).populate('enrolledCourses');
 		return user.enrolledCourses;
+	},
+
+	async getTeachingCourses(parent, args, context, info) {
+		const verifiedUser = verifyUser(context);
+		const user = await User.findById(verifiedUser._id).populate('instructingCourses');
+		return user.instructingCourses;
 	}
 
 }

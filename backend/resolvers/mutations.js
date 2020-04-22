@@ -1,5 +1,4 @@
 const { ApolloError } = require('apollo-server-express')
-const jwt = require('jsonwebtoken');
 const ShortUniqueId = require('short-unique-id').default;
 
 const verifyUser = require('../lib/verifyUser');
@@ -43,12 +42,17 @@ const mutations = {
   async createCourse(parent, args, context, info) {
     const user = await verifyUser(context);
     if (user.permissions !== 'STUDENT') {
+      const userInDb = await User.findById(user._id);
       const shortuid = new ShortUniqueId();
       const newCourse = new Course({
         enrollId: await shortuid.randomUUID(8),
         ...args //spread incomming data from form
       })
       const createdCourse = await newCourse.save().catch((err) => { console.error(err) });
+      if (!userInDb.instructingCourses.includes(createdCourse._id)) {
+        userInDb.instructingCourses.push(createdCourse._id);
+        await userInDb.save();
+      }
       return createdCourse;
     }
     return 'Permission Denied!';
@@ -80,7 +84,7 @@ const mutations = {
   },
 
   async enroll(parent, args, context, info) {
-    const user = verifyUser(context);
+    const user = await verifyUser(context);
     if (user && user.permissions === 'SUPER_ADMIN') {
       const userInDb = await User.findById(user._id);
       const courseToEnroll = await Course.findOne({ enrollId: args.enrollId });

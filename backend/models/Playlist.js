@@ -13,6 +13,11 @@ const playlistSchema = new Schema({
   },
   description: String,
   grade: Number,
+  type: {
+    type: String,
+    enum: ['ESSENTIAL', 'CORE', 'CHALLENGE'],
+    default: 'CORE',
+  },
   objectives: [
     {
       type: mongoose.ObjectId,

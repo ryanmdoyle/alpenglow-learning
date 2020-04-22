@@ -20,6 +20,12 @@ const userSchema = new Schema({
       ref: Course,
     }
   ],
+  instructingCourses: [
+    {
+      type: mongoose.ObjectId,
+      ref: Course,
+    }
+  ],
 })
 
 const User = mongoose.model('User', userSchema);
