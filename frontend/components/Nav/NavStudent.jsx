@@ -16,9 +16,11 @@ const navSectionHeader = css`
   color: var(--pink);
 `;
 
-const GET_USER_COURSES_QUERY = gql`
-  query GET_USER_COURSES {
-    getUserCourses {
+const enrolledCourses = css`padding-left: 1rem;`;
+
+const GET_ENROLLED_COURSES_QUERY = gql`
+  query GET_ENROLLED_COURSES_QUERY {
+    getEnrolledCourses {
       name
       _id
     }
@@ -26,22 +28,23 @@ const GET_USER_COURSES_QUERY = gql`
 `;
 
 const NavStudent = props => {
-  const { loading, error, data } = useQuery(GET_USER_COURSES_QUERY);
+  const { loading, error, data } = useQuery(GET_ENROLLED_COURSES_QUERY);
 
   if (loading) return <Loading />;
-  if (error) {
-    console.log("SHIT");
-  }
 
   return (
     <div css={sectionPad}>
       <h5 css={navSectionHeader}>Student Dashboard</h5>
       <ul css={css`list-style:none;margin:1rem 0.2rem;padding:0;`}>
         <NavItem title='All Courses' href='/student/studentCourses' />
-        {data.getUserCourses.map(course => {
-          const courseHref = `/student/course/${course._id}`;
-          return <NavItem title={course.name} href={courseHref} />
-        })}
+        {data.getEnrolledCourses && (
+          <div css={enrolledCourses}>
+            {data.getEnrolledCourses.map(course => {
+              const courseHref = `/student/course/${course._id}`;
+              return <NavItem title={course.name} href={courseHref} key={course._id} />
+            })}
+          </div>
+        )}
         <NavItem title='Grades' href='/student/studentGrades' />
         <Enroll />
       </ul>
@@ -50,4 +53,4 @@ const NavStudent = props => {
 };
 
 export default NavStudent;
-export { GET_USER_COURSES_QUERY };
+export { GET_ENROLLED_COURSES_QUERY };

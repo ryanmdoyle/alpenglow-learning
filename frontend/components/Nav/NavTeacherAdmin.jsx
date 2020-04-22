@@ -12,10 +12,10 @@ const navSectionHeader = css`
   color: var(--pink);
 `;
 
-const NavTeacher = () => {
+const NavTeacherAdmin = () => {
   return (
     <div css={sectionPad}>
-      <h5 css={navSectionHeader}>Teacher Admin</h5>
+      <h5 css={navSectionHeader}>Curriculum</h5>
       <ul css={css`list-style:none;margin:1rem 0.2rem;padding:0;`}>
         <NavItem title='Create Content' href='/teacher/createContent' />
         <NavItem title='Playlists' href='/teacher/teacherPlaylists' />
@@ -26,4 +26,4 @@ const NavTeacher = () => {
   );
 };
 
-export default NavTeacher;
+export default NavTeacherAdmin;

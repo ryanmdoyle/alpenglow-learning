@@ -101,7 +101,7 @@ const Enroll = () => {
   return (
     <>
       <div css={item} onClick={() => { setIsAdding(!isAdding) }}>
-        <p>Add Course</p>
+        <p>Enroll In Course</p>
       </div>
       <form css={enrollForm} className={isAdding ? 'shown' : 'hidden'} onSubmit={handleSubmit(onSubmit)}>
         <input placeholder='Enter Enroll ID' name='enrollId' className={isAdding ? 'shown' : 'hidden'} ref={register({ required: true })}></input>
