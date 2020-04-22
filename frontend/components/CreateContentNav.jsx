@@ -65,9 +65,9 @@ const CreateContentNav = ({ currentForm, changeForm }) => {
 
   return (
     <div css={styles}>
-      <div className={isActive('objective', currentForm)} onClick={() => { changeForm("objective") }} >Objective</div>
-      <div className={isActive('playlist', currentForm)} onClick={() => { changeForm("playlist") }}>Playlist</div>
       <div className={isActive('course', currentForm)} onClick={() => { changeForm("course") }}>Course</div>
+      <div className={isActive('playlist', currentForm)} onClick={() => { changeForm("playlist") }}>Playlist</div>
+      <div className={isActive('objective', currentForm)} onClick={() => { changeForm("objective") }} >Objective</div>
       <div className={isActive('question', currentForm)} onClick={() => { changeForm("question") }}>Question</div>
     </div >
   );

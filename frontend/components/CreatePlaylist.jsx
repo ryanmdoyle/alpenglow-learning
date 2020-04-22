@@ -64,6 +64,7 @@ const CreatePlaylist = () => {
         description: data.description,
         grade: parseInt(data.grade), //has to be int for gql
         courses: data.courses,
+        type: data.type.toUpperCase(), // type accepts: ESSENTIAL, CORE, CHALLENGE
       }
     })
   };
@@ -81,6 +82,13 @@ const CreatePlaylist = () => {
             {subjectsEnum.map(subject => (
               <option value={subject} key={subject}>{subject}</option>
             ))}
+          </select>
+
+          <label htmlFor='type'>Type</label>
+          <select name="type" ref={register()}>
+            <option value='ESSENTIAL'>Essential</option>
+            <option value='CORE'>Core</option>
+            <option value='CHALLENGE'>Challenge</option>
           </select>
 
           <label htmlFor='description'>description</label>
