@@ -1,76 +1,41 @@
 import React from 'react';
 import { css } from '@emotion/core';
+import { useQuery } from '@apollo/react-hooks';
+import gql from 'apollo-boost';
 
+import Loading from '../../components/Loading';
 import PageTitle from '../../components/PageTitle';
 import PagePadding from '../../components/styled/PagePadding';
+import PlaylistItem from '../../components/PlaylistItem';
 
 const courseTitle = css`
   padding-bottom: 1rem;
   margin-bottom: 0;
 `;
 
-const playlist = css`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  padding-left: 1rem;
-  border: 1px solid rgba(0, 0, 0, 0);
-  border-top: 1px solid var(--blueMedium);
+// const TEACHER_PLAYLISTS_QUERY = gql`
+//   query TEACHER_PLAYLISTS_QUERY {
+//     getTeacherPlaylists {
 
-  .playlist-buttons {
-    display: flex;
-    align-items: center;
-    button { margin: 0 0.5rem; }
-  }
-
-  :hover {
-    border: 1px solid var(--blueMedium);
-    border-radius: 5px;
-    box-shadow: var(--shadowMedium);
-  }
-  :hover + li {
-    border-top: 1px solid rgba(0, 0, 0, 0);
-  }
-`;
+//     }
+//   }
+// `;
 
 const teacherPlaylists = () => {
+  const { loading, error, data } = useQuery(TEACHER_PLAYLISTS_QUERY);
+
+  if (loading) return <Loading />
   return (
     <div>
       <PageTitle title='Playlists' />
       <PagePadding>
+        {/* needs to  query courses, and playlists in courses */}
         <h3 css={courseTitle}>Course Something</h3>
         <ul css={css`padding: 0;`}>
-
-          <li css={playlist}>
-            <p>Playlist Title</p>
-            <li className='playlist-buttons'>
-              <button>Edit</button>
-              <button>Remove</button>
-            </li>
-          </li>
-          <li css={playlist}>
-            <p>Playlist Title</p>
-            <li className='playlist-buttons'>
-              <button>Edit</button>
-              <button>Remove</button>
-            </li>
-          </li>
-          <li css={playlist}>
-            <p>Playlist Title</p>
-            <li className='playlist-buttons'>
-              <button>Edit</button>
-              <button>Remove</button>
-            </li>
-          </li>
-          <li css={playlist}>
-            <p>Playlist Title</p>
-            <li className='playlist-buttons'>
-              <button>Edit</button>
-              <button>Remove</button>
-            </li>
-          </li>
+          <PlaylistItem name='testing...' />
+          <PlaylistItem name='testing...' />
         </ul>
-
+        {/* finally query playlists with NO courses assigned */}
       </PagePadding>
     </div>
   );

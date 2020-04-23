@@ -39,7 +39,12 @@ const queries = {
 		const verifiedUser = verifyUser(context);
 		const user = await User.findById(verifiedUser._id).populate('instructingCourses');
 		return user.instructingCourses;
-	}
+	},
+
+	async getTeacherPlaylists(parent, args, context, info) {
+		const verifiedUser = verifyUser(context);
+		const user = await User.findById(verifiedUser._id).populate('instructingPlaylists');
+	},
 
 }
 

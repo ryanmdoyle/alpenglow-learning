@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Course = require('./Course');
+const Playlist = require('./Playlist');
 
 const userSchema = new Schema({
   name: String,
@@ -24,6 +25,12 @@ const userSchema = new Schema({
     {
       type: mongoose.ObjectId,
       ref: Course,
+    }
+  ],
+  instructingPlaylists: [
+    {
+      type: mongoose.ObjectId,
+      ref: Playlist,
     }
   ],
 })

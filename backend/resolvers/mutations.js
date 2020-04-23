@@ -61,11 +61,16 @@ const mutations = {
   async createPlaylist(parent, args, context, info) {
     const user = await verifyUser(context);
     if (user.permissions !== 'STUDENT') {
+      const userInDb = await User.findById(user._id);
       const newPlaylist = new Playlist({
         courses: [args.courses],
         ...args //spread incomming data from form
       })
       const createdPlaylist = await newPlaylist.save().catch((err) => { console.error(err) });
+      if (!userInDb.instructingPlaylists.includes(createdPlaylist._id)) {
+        userInDb.instructingPlaylists.push(createdPlaylist._id);
+        await userInDb.save()
+      }
       return createdPlaylist;
     }
     return 'Permission Denied!';

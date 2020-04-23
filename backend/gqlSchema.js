@@ -13,6 +13,7 @@ const typeDefs = gql`
     getCourses: [Course]!,
     getEnrolledCourses: [Course],
     getTeachingCourses: [Course],
+    getTeacherPlaylists: [Playlist],
   }
 
   # # # # # # # # # # # #
