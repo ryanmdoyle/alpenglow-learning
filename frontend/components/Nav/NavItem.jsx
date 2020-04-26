@@ -54,7 +54,7 @@ const NavItem = ({ title, href }) => {
   }
 
   const pathnameNoQuery = linkWithoutQuery(router);
-  console.log(pathnameNoQuery);
+
   const isActiveLink = pathnameNoQuery.includes(href) ? [item, activeLink] : [item];
   return (
     <Link href={href}>

@@ -34,6 +34,7 @@ const NavTeacherDashBoard = () => {
         {data.getTeachingCourses && data.getTeachingCourses.map(course => (
           <NavItem title={course.name} href={`/teacher/course/${course._id}`} key={course._id} />
         ))}
+        <NavItem title='View Classes' href='/teacher/classes' />
         <NavItem title='View Students' href='/teacher/allStudents' />
         <NavItem title='Grading' href='/teacher/grading' />
 
