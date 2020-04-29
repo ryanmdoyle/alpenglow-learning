@@ -32,15 +32,6 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.post('/graphql', (req, res, next) => {
-  const { token } = req.cookies;
-  if (token) {
-    const tokenData = jwt.verify(token, process.env.SECRET);
-    req._id = tokenData._id;
-  }
-  next();
-})
-
 //// TEMP REST LOGIN/LOGOUT ////
 const login = require('./controllers/login');
 const logout = require('./controllers/logout');
@@ -51,10 +42,16 @@ app.post('/auth/google/logout', logout);
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: async ({ req }) => ({
-    ...req,
-    userId: req._id,
-  })
+  context: async ({ req }) => {
+    const { token } = req.cookies;
+    if (token) {
+      const tokenData = jwt.verify(token, process.env.SECRET);
+      req.userId = tokenData._id;
+    } else {
+      req.userId = null;
+    }
+    return { ...req }
+  }
 });
 
 server.applyMiddleware({
