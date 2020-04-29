@@ -46,7 +46,7 @@ const server = new ApolloServer({
     const { token } = req.cookies;
     if (token) {
       const tokenData = jwt.verify(token, process.env.SECRET);
-      req.userId = tokenData._id;
+      req.currentUser = tokenData;
     } else {
       req.userId = null;
     }
