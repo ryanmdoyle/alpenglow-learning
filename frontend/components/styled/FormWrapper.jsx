@@ -30,6 +30,10 @@ const StyledForm = styled.div`
     align-self: flex-start;
   }
 
+  select {
+    height: 2.2rem;
+  }
+
   button[type=submit] {
     margin-top: 1.5rem;
     align-self: flex-end;
@@ -42,7 +46,7 @@ const StyledForm = styled.div`
     transition: color 0.15s, background-color 0.15s;
     font-size: 0.8rem;
     :hover, :focus {
-      border: 1px solid var(--blueDark);
+      border: 1px solid var(--pink50);
       color: var(--blueDark);
       background-color: var(--pink50);
       transition: color 0.15s, background-color 0.15s;
