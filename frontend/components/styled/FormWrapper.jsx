@@ -2,11 +2,16 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 const StyledForm = styled.div`
+width: 100%;
+display: flex;
+justify-content: center;
+
   form {
-  display: flex;
-  flex-direction: column;
-  max-width: 600px;
-  padding-bottom: 3rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    padding-bottom: 3rem;
   }
 
   label {
