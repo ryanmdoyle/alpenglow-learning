@@ -32,7 +32,7 @@ const queries = {
 		return requestedUser.enrolledCourses;
 	},
 
-	async getTeachingCourses(parent, args, context, info) {
+	async getInstructingCourses(parent, args, context, info) {
 		if (!args.user_id) {
 			const currentUser = await User.findById(context.currentUser._id).populate('instructingCourses');
 			return currentUser.instructingCourses; // return only array of Courses
@@ -51,13 +51,13 @@ const queries = {
 		return requestedUser.enrolledPlaylists;
 	},
 
-	async getTeachingPlaylists(parent, args, context, info) {
+	async getInstructingPlaylists(parent, args, context, info) {
 		if (!args.user_id) {
-			const currentUser = await User.findById(context.currentUser._id).populate('teachingPlaylists');
-			return currentUser.teachingPlaylists; // return only array of Courses
+			const currentUser = await User.findById(context.currentUser._id).populate('instructingPlaylists');
+			return currentUser.instructingPlaylists; // return only array of Courses
 		}
-		const requestedUser = await User.findById(args.user_id).populate('teachingPlaylists');
-		return requestedUser.teachingPlaylists;
+		const requestedUser = await User.findById(args.user_id).populate('instructingPlaylists');
+		return requestedUser.instructingPlaylists;
 	},
 
 }

@@ -7,9 +7,9 @@ import Loading from '../../components/Loading';
 import PagePadding from '../../components/styled/PagePadding';
 import CreateClass from '../../components/CreateClass';
 
-const TEACHER_COURSES_QUERY = gql`
-  query TEACHER_COURSES_QUERY {
-    getTeachingCourses {
+const INSTRUCTING_COURSES_QUERY = gql`
+  query INSTRUCTING_COURSES_QUERY {
+    getInstructingCourses {
       _id
       name
     }
@@ -17,15 +17,15 @@ const TEACHER_COURSES_QUERY = gql`
 `;
 // On  this page, show a list of courses, with a button after to add a "class"
 const teacherClasses = () => {
-  const { loading, error, data } = useQuery(TEACHER_COURSES_QUERY);
+  const { loading, error, data } = useQuery(INSTRUCTING_COURSES_QUERY);
 
   if (loading) return <Loading />
   return (
     <div>
       <PageTitle title='Your Classes' />
       <PagePadding>
-        {data.getTeachingCourses && data.getTeachingCourses.map(course => (
-          <h4>{course.name}</h4>
+        {data.getInstructingCourses && data.getInstructingCourses.map(course => (
+          <h4 key={course._id}>{course.name}</h4>
         ))}
         <h3>Create Class</h3>
         <CreateClass />

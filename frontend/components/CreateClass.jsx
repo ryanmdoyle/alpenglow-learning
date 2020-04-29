@@ -9,9 +9,9 @@ import Loading from './Loading';
 import { subjectsEnum } from '../lib/subjectsEnum';
 import AlertContext from './context/AlertContext';
 
-const TEACHER_COURSES_QUERY = gql`
-  query TEACHER_COURSES_QUERY {
-    getTeachingCourses {
+const INSTRUCTING_COURSES_QUERY = gql`
+  query INSTRUCTING_COURSES_QUERY {
+    getInstructingCourses {
       _id
       name
     }
@@ -36,7 +36,7 @@ const CreateClass = () => {
   const { register, handleSubmit, errors } = useForm();
   const alert = useContext(AlertContext)
 
-  const courseQuery = useQuery(TEACHER_COURSES_QUERY)
+  const courseQuery = useQuery(INSTRUCTING_COURSES_QUERY)
   const [createClass, { data }] = useMutation(CREATE_CLASS, {
     onCompleted: data => {
       alert.success(`Successfully created course ${data.createClass.name}!`, 10);
@@ -70,7 +70,7 @@ const CreateClass = () => {
           <label htmlFor='course'>course*</label>
           <select name='course' ref={register({ required: true })}>
             <option disabled="" value="">Select the course this class is a part of:</option>
-            {courseQuery.data.getTeachingCourses.map(course => (
+            {courseQuery.data.getInstructingCourses.map(course => (
               <option value={course._id} key={course._id}>{course.name}</option>
             ))}
           </select>

@@ -15,9 +15,9 @@ const navSectionHeader = css`
   color: var(--pink);
 `;
 
-const TEACHING_COURSES_QUERY = gql`
-  query TEACHING_COURSES_QUERY {
-    getTeachingCourses {
+const INSTRUCTING_COURSES_QUERY = gql`
+  query INSTRUCTING_COURSES_QUERY {
+    getInstructingCourses {
       name
       _id
     }
@@ -25,13 +25,13 @@ const TEACHING_COURSES_QUERY = gql`
 `;
 
 const NavTeacherDashBoard = () => {
-  const { loading, error, data } = useQuery(TEACHING_COURSES_QUERY);
+  const { loading, error, data } = useQuery(INSTRUCTING_COURSES_QUERY);
   if (loading) return <Loading />
   return (
     <div css={sectionPad}>
       <h5 css={navSectionHeader}>Teaching Dashboard</h5>
       <ul css={css`list-style:none;margin:1rem 0.2rem;padding:0;`}>
-        {data.getTeachingCourses && data.getTeachingCourses.map(course => (
+        {data.getInstructingCourses && data.getInstructingCourses.map(course => (
           <NavItem title={course.name} href={`/teacher/course/${course._id}`} key={course._id} />
         ))}
         <NavItem title='View Classes' href='/teacher/classes' />
