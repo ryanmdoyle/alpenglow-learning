@@ -33,6 +33,11 @@ const typeDefs = gql`
       endDate: String,
     ): Course!,
 
+    createClass(
+      name: String!,
+      course: String!,
+    ): Class!,
+
     createPlaylist(
       name: String!,
       subject: String!,
@@ -80,6 +85,11 @@ const typeDefs = gql`
     startDate: Date,
     endDate: Date,
     playlists: [Playlist],
+  }
+
+  type Class {
+    name: String,
+    course: Course,
   }
 
   type Playlist {
