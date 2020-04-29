@@ -4,46 +4,42 @@ const verifyUser = require('../lib/verifyUser');
 const User = require('../models/User');
 const Courses = require('../models/Course');
 
+// currentUser data from JWT token available on context.user
 const queries = {
-	async currentUser(parent, args, context, info) {
-		if (!context.userId) {
+	async getCurrentUser(parent, args, context, info) {
+		const { user: { id } } = context;
+		if (!id) {
 			return null;
 		}
-		const userQuery = await User.findById(context.userId);
-		return userQuery;
+		return await User.findById(id);
 	},
 
-	async user(parent, args, context, info) {
-		const _id = args._id;
-		const user = await User.findOne({ _id: _id });
-		return user;
+	async getUser(parent, args, context, info) {
+		return await User.findOne({ _id: args.user_id });
 	},
 
-	async users(parent, args, context, info) {
-		const users = await User.find();
-		return users;
-	},
-
-	async getCourses(parent, args, context, info) {
-		const courses = await Courses.find();
-		return courses;
+	async getAllUsers(parent, args, context, info) {
+		return await User.find();
 	},
 
 	async getEnrolledCourses(parent, args, context, info) {
-		const verifiedUser = verifyUser(context);
-		const user = await User.findById(verifiedUser._id).populate('enrolledCourses');
-		return user.enrolledCourses;
+		const user = await User.findById(context.user._id).populate('enrolledCourses');
+		return user.enrolledCourses; // return only array of Courses
 	},
 
 	async getTeachingCourses(parent, args, context, info) {
-		const verifiedUser = verifyUser(context);
-		const user = await User.findById(verifiedUser._id).populate('instructingCourses');
-		return user.instructingCourses;
+		const user = User.findById(context.user._id).populate('instructingCourses');
+		return user.instructinCourses; // return only array of Courses
 	},
 
-	async getTeacherPlaylists(parent, args, context, info) {
-		const verifiedUser = verifyUser(context);
-		const user = await User.findById(verifiedUser._id).populate('instructingPlaylists');
+	async getEnrolledPlaylists(parent, args, context, info) {
+		const user = await User.findById(context.user._id).populate('enrolledPlaylists');
+		return user.enrolledPlaylists; // return only array of Playlists
+	},
+
+	async getTeachingPlaylists(parent, args, context, info) {
+		const user = await User.findById(context.user._id).populate('teachingPlaylists');
+		return user.teachingPlaylists; // return only array of Playlists
 	},
 
 }
