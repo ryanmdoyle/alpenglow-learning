@@ -5,6 +5,7 @@ import { useQuery } from '@apollo/react-hooks'
 
 import Loading from '../../components/Loading';
 import PagePadding from '../../components/styled/PagePadding';
+import CreateClass from '../../components/CreateClass';
 
 const TEACHER_COURSES_QUERY = gql`
   query TEACHER_COURSES_QUERY {
@@ -26,6 +27,9 @@ const teacherClasses = () => {
         {data.getTeachingCourses && data.getTeachingCourses.map(course => (
           <h4>{course.name}</h4>
         ))}
+        <h3>Create Class</h3>
+        <CreateClass />
+
       </PagePadding>
     </div>
   );

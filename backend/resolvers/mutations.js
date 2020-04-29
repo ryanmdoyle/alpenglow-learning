@@ -6,6 +6,7 @@ const verifyUser = require('../lib/verifyUser');
 // Mongoose Models
 const User = require('../models/User');
 const Course = require('../models/Course');
+const Class = require('../models/Class');
 const Playlist = require('../models/Playlist');
 const Objective = require('../models/Objective');
 
@@ -56,6 +57,21 @@ const mutations = {
       return createdCourse;
     }
     return 'Permission Denied!';
+  },
+
+  async createClass(parent, args, context, info) {
+    const { currentUser } = context;
+    if (currentUser.permissions !== 'STUDENT') {
+      const shortuid = new ShortUniqueId();
+      const newClass = new Class({
+        owner: currentUser._id,
+        enrollId: await shortuid.randomUUID(8),
+        ...args //spread incomming data from form
+      })
+      const createdClass = await newClass.save().catch((err) => { console.error(err) });
+      return createdClass;
+    }
+    return 'Cannot create as student!';
   },
 
   async createPlaylist(parent, args, context, info) {

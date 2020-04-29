@@ -7,6 +7,7 @@ const User = require('./User');
 const classSchema = new Schema({
   name: String,
   enrollId: String,
+  owner: mongoose.ObjectId,
   enrolled: [
     {
       type: mongoose.ObjectId,

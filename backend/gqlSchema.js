@@ -36,6 +36,9 @@ const typeDefs = gql`
     createClass(
       name: String!,
       course: String!,
+      enrollId: [String],
+      course: String,
+      owner: String,
     ): Class!,
 
     createPlaylist(
