@@ -36,7 +36,7 @@ const NavStudent = props => {
     <div css={sectionPad}>
       <h5 css={navSectionHeader}>Student Dashboard</h5>
       <ul css={css`list-style:none;margin:1rem 0.2rem;padding:0;`}>
-        <NavItem title='All Courses' href='/student/studentCourses' />
+        <NavItem title='All Courses' href='/student/courses' />
         {data.getEnrolledCourses && (
           <div css={enrolledCourses}>
             {data.getEnrolledCourses.map(course => {
@@ -45,7 +45,7 @@ const NavStudent = props => {
             })}
           </div>
         )}
-        <NavItem title='Grades' href='/student/studentGrades' />
+        <NavItem title='Grades' href='/student/grades' />
         <Enroll />
       </ul>
     </div>

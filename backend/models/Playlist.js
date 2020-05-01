@@ -16,7 +16,6 @@ const playlistSchema = new Schema({
   type: {
     type: String,
     enum: ['ESSENTIAL', 'CORE', 'CHALLENGE'],
-    default: 'CORE',
   },
   objectives: [
     {

@@ -5,10 +5,11 @@ import { useQuery } from '@apollo/react-hooks'
 
 import Loading from '../../components/Loading';
 import PagePadding from '../../components/styled/PagePadding';
+import PopupModal from '../../components/styled/Modal';
 
-const TEACHER_COURSES_QUERY = gql`
-  query TEACHER_COURSES_QUERY {
-    getTeachingCourses {
+const INSTRUCTING_COURSES_QUERY = gql`
+  query INSTRUCTING_COURSES_QUERY {
+    getInstructingCourses {
       _id
       name
     }
@@ -16,15 +17,15 @@ const TEACHER_COURSES_QUERY = gql`
 `;
 
 const teacherCourses = () => {
-  const { loading, error, data } = useQuery(TEACHER_COURSES_QUERY);
+  const { loading, error, data } = useQuery(INSTRUCTING_COURSES_QUERY);
 
   if (loading) return <Loading />;
   return (
     <div>
       <PageTitle title='Courses You Teach' />
       <PagePadding>
-        {data.getTeachingCourses && (
-          data.getTeachingCourses.map(course => (
+        {data.getInstructingCourses && (
+          data.getInstructingCourses.map(course => (
             <>
               <h3>{course.name}</h3>
               <p>CLASS HERE</p>

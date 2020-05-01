@@ -13,14 +13,6 @@ const courseTitle = css`
   margin-bottom: 0;
 `;
 
-// const TEACHER_PLAYLISTS_QUERY = gql`
-//   query TEACHER_PLAYLISTS_QUERY {
-//     getTeacherPlaylists {
-
-//     }
-//   }
-// `;
-
 const teacherPlaylists = () => {
   const { loading, error, data } = useQuery(TEACHER_PLAYLISTS_QUERY);
 

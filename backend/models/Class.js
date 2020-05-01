@@ -7,7 +7,13 @@ const User = require('./User');
 const classSchema = new Schema({
   name: String,
   enrollId: String,
-  owner: mongoose.ObjectId,
+  primaryInstructor: mongoose.ObjectId,
+  secondaryInstructors: [
+    {
+      type: mongoose.ObjectId,
+      ref: User,
+    }
+  ],
   enrolled: [
     {
       type: mongoose.ObjectId,

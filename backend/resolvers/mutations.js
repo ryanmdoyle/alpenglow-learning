@@ -47,7 +47,7 @@ const mutations = {
   },
 
   async createPlaylist(parent, args, context, info) {
-    const user = await verifyUser(context);
+    const user = context.currentUser;
     if (user.permissions !== 'STUDENT') {
       const userInDb = await User.findById(user._id);
       const newPlaylist = new Playlist({
@@ -58,6 +58,11 @@ const mutations = {
       if (!userInDb.instructingPlaylists.includes(createdPlaylist._id)) {
         userInDb.instructingPlaylists.push(createdPlaylist._id);
         await userInDb.save()
+      }
+      const parentCourse = await Course.findById(args.courses);
+      if (!parentCourse.playlists.includes(createdPlaylist._id)) {
+        parentCourse.playlists.push(createdPlaylist._id);
+        await parentCourse.save();
       }
       return createdPlaylist;
     }

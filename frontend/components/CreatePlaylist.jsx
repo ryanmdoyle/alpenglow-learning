@@ -12,7 +12,7 @@ import AlertContext from './context/AlertContext';
 const GET_USER_COURSES_QUERY = gql`
   # currently gets all courses, but should later only get courses for logged in user
   query GET_USER_COURSES {
-    getCourses {
+    getInstructingCourses {
       _id
       name
     }
@@ -25,7 +25,8 @@ const CREATE_PLAYLIST_MUTATION = gql`
       $subject: String!,
       $grade: Int!,
       $description: String,
-      $courses: String,
+      $courses: String!,
+      $type: String!,
     ) {
       createPlaylist(
         name: $name,
@@ -33,6 +34,7 @@ const CREATE_PLAYLIST_MUTATION = gql`
         grade: $grade,
         description: $description,
         courses: $courses,
+        type: $type,
       ) {
         name
       }
@@ -64,11 +66,12 @@ const CreatePlaylist = () => {
         description: data.description,
         grade: parseInt(data.grade), //has to be int for gql
         courses: data.courses,
-        type: data.type.toUpperCase(), // type accepts: ESSENTIAL, CORE, CHALLENGE
+        type: data.type, // type accepts: ESSENTIAL, CORE, CHALLENGE
       }
     })
   };
   if (loading) return <Loading />;
+
   return (
     <PagePadding>
       <h3>Create New Playlist</h3>
@@ -76,6 +79,17 @@ const CreatePlaylist = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor='name'>name*</label>
           <input type="text" name="name" ref={register({ required: true })} />
+
+          {query.data && (query.data.getInstructingCourses.length >= 0) && (
+            <>
+              <label htmlFor='courses'>Course</label>
+              <select name='courses' ref={register}>
+                {query.data.getInstructingCourses.map((course) => (
+                  <option value={course._id} key={course._id}>{course.name}</option>
+                ))}
+              </select>
+            </>
+          )}
 
           <label htmlFor='subject'>subject*</label>
           <select name='subject' ref={register({ required: true })}>
@@ -96,17 +110,6 @@ const CreatePlaylist = () => {
 
           <label htmlFor='grade'>grade*</label>
           <input type="number" name="grade" ref={register({ required: true, max: 12, min: 1 })} />
-
-          {query.data && (query.data.getCourses.length >= 0) && (
-            <>
-              <label htmlFor='courses'>Course</label>
-              <select name='courses' ref={register}>
-                {query.data.getCourses.map((course) => (
-                  <option value={course._id} key={course._id}>{course.name}</option>
-                ))}
-              </select>
-            </>
-          )}
 
           <button type='submit'>Create Playlist</button>
         </form>

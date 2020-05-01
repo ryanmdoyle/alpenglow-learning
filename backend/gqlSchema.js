@@ -46,7 +46,8 @@ const typeDefs = gql`
       subject: String!,
       grade: Int!,
       description: String,
-      courses: String,
+      courses: String!,
+      type: String!,
     ): Playlist!,
 
     createObjective(
