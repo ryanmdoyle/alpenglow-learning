@@ -5,9 +5,9 @@ import { css } from '@emotion/core';
 
 import Loading from '../components/Loading';
 
-const GET_CURRENTUSER = gql`
-  query currentUser {
-    currentUser {
+const GET_CURRENT_USER = gql`
+  query GET_CURRENT_USER {
+    getCurrentUser {
       googleId
       firstName
     }
@@ -15,20 +15,19 @@ const GET_CURRENTUSER = gql`
 `;
 
 const HomePage = () => {
-  const { loading, error, data } = useQuery(GET_CURRENTUSER);
+  const { loading, error, data } = useQuery(GET_CURRENT_USER);
 
   if (loading) return (
     <Loading />
   )
-
   return (
     <div css={css`padding: 0 1rem;`}>
       <h2>Welcome to Alpenglow!</h2>
-      {data.currentUser ? <h1>{data.currentUser.firstName}</h1> : null}
+      {data.getCurrentUser ? <h1>{data.getCurrentUser.firstName}</h1> : null}
     </div>
   )
 
 }
 
 export default HomePage;
-export { GET_CURRENTUSER };
+export { GET_CURRENT_USER };

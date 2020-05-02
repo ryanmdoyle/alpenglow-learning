@@ -48,8 +48,8 @@ main {
 }
 `
 const GET_CURRENT_USER = gql`
-    query currentUser {
-      currentUser {
+    query GET_CURRENT_USER {
+      getCurrentUser {
         firstName
         # permissions
       }
@@ -61,7 +61,7 @@ function MyApp({ Component, pageProps }) {
   const [isLogin, setIsLogin] = useState(false);
 
   // sets as null until there is data to pass into the prop (or errors)
-  const currentUserData = (data) ? data.currentUser : null;
+  const currentUserData = (data) ? data.getCurrentUser : null;
 
   return (
     <ThemeProvider theme={theme}>
