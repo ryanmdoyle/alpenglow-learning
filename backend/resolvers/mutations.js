@@ -13,9 +13,9 @@ const Objective = require('../models/Objective');
 const mutations = {
 
   async createCourse(parent, args, context, info) {
-    const user = await verifyUser(context);
-    if (user.permissions !== 'STUDENT') {
-      const userInDb = await User.findById(user._id);
+    const { currentUser } = context;
+    if (currentUser.permissions !== 'STUDENT') {
+      const userInDb = await User.findById(currentUser._id);
       const shortuid = new ShortUniqueId();
       const newCourse = new Course({
         enrollId: await shortuid.randomUUID(8),
@@ -47,9 +47,9 @@ const mutations = {
   },
 
   async createPlaylist(parent, args, context, info) {
-    const user = context.currentUser;
-    if (user.permissions !== 'STUDENT') {
-      const userInDb = await User.findById(user._id);
+    const { currentUser } = context;
+    if (currentUser.permissions !== 'STUDENT') {
+      const userInDb = await User.findById(currentUser._id);
       const newPlaylist = new Playlist({
         courses: [args.courses],
         ...args //spread incomming data from form
@@ -70,8 +70,8 @@ const mutations = {
   },
 
   async createObjective(parent, args, context, info) {
-    const user = await verifyUser(context);
-    if (user.permissions !== 'STUDENT') {
+    const { currentUser } = context;
+    if (currentUser.permissions !== 'STUDENT') {
       const newObjective = new Objective({
         ...args //spread incomming data from form
       })
@@ -82,9 +82,9 @@ const mutations = {
   },
 
   async enroll(parent, args, context, info) {
-    const user = await verifyUser(context);
-    if (user && user.permissions === 'SUPER_ADMIN') {
-      const userInDb = await User.findById(user._id);
+    const { currentUser } = context;
+    if (currentUser && currentUser.permissions === 'SUPER_ADMIN') {
+      const userInDb = await User.findById(currentUser._id);
       const courseToEnroll = await Course.findOne({ enrollId: args.enrollId });
 
       if (!userInDb.enrolledCourses.includes(courseToEnroll._id)) { // if not already enrolled
