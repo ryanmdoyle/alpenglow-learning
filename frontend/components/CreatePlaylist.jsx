@@ -25,7 +25,7 @@ const CREATE_PLAYLIST_MUTATION = gql`
       $subject: String!,
       $grade: Int!,
       $description: String,
-      $courses: String!,
+      $course: String!,
       $type: String!,
     ) {
       createPlaylist(
@@ -33,7 +33,7 @@ const CREATE_PLAYLIST_MUTATION = gql`
         subject: $subject,
         grade: $grade,
         description: $description,
-        courses: $courses,
+        course: $course,
         type: $type,
       ) {
         name
@@ -65,7 +65,7 @@ const CreatePlaylist = () => {
         subject: data.subject,
         description: data.description,
         grade: parseInt(data.grade), //has to be int for gql
-        courses: data.courses,
+        course: data.course,
         type: data.type, // type accepts: ESSENTIAL, CORE, CHALLENGE
       }
     })
@@ -82,8 +82,8 @@ const CreatePlaylist = () => {
 
           {query.data && (query.data.getInstructingCourses.length >= 0) && (
             <>
-              <label htmlFor='courses'>Course</label>
-              <select name='courses' ref={register}>
+              <label htmlFor='course'>Course</label>
+              <select name='course' ref={register}>
                 {query.data.getInstructingCourses.map((course) => (
                   <option value={course._id} key={course._id}>{course.name}</option>
                 ))}

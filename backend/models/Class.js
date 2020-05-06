@@ -3,11 +3,16 @@ const Schema = mongoose.Schema;
 
 const Playlist = require('./Playlist');
 const User = require('./User');
+const Course = require('./Course');
 
 const classSchema = new Schema({
   name: String,
   enrollId: String,
   primaryInstructor: mongoose.ObjectId,
+  course: {
+    type: mongoose.ObjectId,
+    ref: 'Course',
+  },
   secondaryInstructors: [
     {
       type: mongoose.ObjectId,
@@ -20,10 +25,6 @@ const classSchema = new Schema({
       ref: User,
     }
   ],
-  course: {
-    type: mongoose.ObjectId,
-    ref: Playlist,
-  },
 })
 
 const Class = mongoose.model('Class', classSchema);

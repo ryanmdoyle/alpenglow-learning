@@ -17,16 +17,11 @@ const playlistSchema = new Schema({
     type: String,
     enum: ['ESSENTIAL', 'CORE', 'CHALLENGE'],
   },
+  course: mongoose.ObjectId,
   objectives: [
     {
       type: mongoose.ObjectId,
       ref: Objective,
-    }
-  ],
-  courses: [
-    {
-      type: mongoose.ObjectId,
-      ref: Course,
     }
   ],
 })

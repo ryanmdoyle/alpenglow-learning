@@ -2,7 +2,7 @@ const verifyUser = require('../lib/verifyUser');
 
 // Mongoose Models
 const User = require('../models/User');
-const Courses = require('../models/Course');
+const Course = require('../models/Course');
 
 // currentUser data from JWT token available on context.user
 const queries = {
@@ -23,7 +23,7 @@ const queries = {
 		return await User.find();
 	},
 
-	async getEnrolledCourses(parent, args, context, info) {
+	async getEnrolledCourses(parent, args, context, info) { //match to getInstructingCourses
 		if (!args.user_id) {
 			const currentUser = await User.findById(context.currentUser._id).populate('enrolledCourses');
 			return currentUser.enrolledCourses; // return only array of Courses
@@ -32,13 +32,12 @@ const queries = {
 		return requestedUser.enrolledCourses;
 	},
 
-	async getInstructingCourses(parent, args, context, info) {
+	async getInstructingCourses(parent, args, context, info) { //look up courses belonging to User
+		const { currentUser } = context;
 		if (!args.user_id) {
-			const currentUser = await User.findById(context.currentUser._id).populate('instructingCourses');
-			return currentUser.instructingCourses; // return only array of Courses
+			return await Course.find({ owner: currentUser._id }).populate('playlists').populate('classes');
 		}
-		const requestedUser = await User.findById(args.user_id).populate('instructingCourses');
-		return requestedUser.instructingCourses;
+		return await Course.find({ owner: args.user_id }).populate('playlists').populate('classes');
 	},
 
 	// apply checking logic for current user above to queires below:

@@ -10,7 +10,6 @@ import CreateObjective from '../../components/CreateObjective';
 
 const createContent = ({ href }) => {
   const router = useRouter();
-  console.log(href, router)
   const [activeForm, setActiveForm] = useState('course');
 
   const changeForm = (courseString) => {

@@ -19,6 +19,7 @@ const mutations = {
       const shortuid = new ShortUniqueId();
       const newCourse = new Course({
         enrollId: await shortuid.randomUUID(8),
+        owner: currentUser._id,
         ...args //spread incomming data from form
       })
       const createdCourse = await newCourse.save().catch((err) => { console.error(err) });
@@ -51,7 +52,6 @@ const mutations = {
     if (currentUser.permissions !== 'STUDENT') {
       const userInDb = await User.findById(currentUser._id);
       const newPlaylist = new Playlist({
-        courses: [args.courses],
         ...args //spread incomming data from form
       })
       const createdPlaylist = await newPlaylist.save().catch((err) => { console.error(err) });
@@ -59,7 +59,7 @@ const mutations = {
         userInDb.instructingPlaylists.push(createdPlaylist._id);
         await userInDb.save()
       }
-      const parentCourse = await Course.findById(args.courses);
+      const parentCourse = await Course.findById(args.course);
       if (!parentCourse.playlists.includes(createdPlaylist._id)) {
         parentCourse.playlists.push(createdPlaylist._id);
         await parentCourse.save();

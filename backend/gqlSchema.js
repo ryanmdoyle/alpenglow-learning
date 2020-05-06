@@ -46,7 +46,7 @@ const typeDefs = gql`
       subject: String!,
       grade: Int!,
       description: String,
-      courses: String!,
+      course: String!,
       type: String!,
     ): Playlist!,
 
@@ -74,26 +74,34 @@ const typeDefs = gql`
     lastName: String!,
     picture: String,
     googleId: String!,
-    permissions: String!,
     email: String!,
+    permissions: String!,
     enrolledCourses: [String],
+    instructingCourses: [String],
+    instructingClasses: [String],
   }
 
   type Course {
     _id: String,
-    name: String,
+    name: String!,
+    owner: String!,
+    subject: String!,
     section: String,
-    subject: String,
-    grade: Int,
+    grade: Int!,
     description: String,
     startDate: Date,
     endDate: Date,
-    playlists: [Playlist],
+    playlists: [ Playlist ],
+    classes: [Playlist],
   }
 
   type Class {
-    name: String,
-    course: Course,
+    name: String!,
+    enrollId: String,
+    primaryInstructor: String,
+    course: Course!,
+    secondaryInstructors: [String],
+    enrolled: [String],
   }
 
   type Playlist {
@@ -102,8 +110,9 @@ const typeDefs = gql`
     subject: String,
     description: String,
     grade: Int,
+    type: String,
+    course: String,
     objectives: [ Objective ],
-    courses: [ Course ],
   }
 
   type Objective {
@@ -112,7 +121,7 @@ const typeDefs = gql`
     description: String,
     subject: String,
     grade: Int,
-    playlists: [ Playlist ],
+    playlist: Playlist,
   }
 `;
 

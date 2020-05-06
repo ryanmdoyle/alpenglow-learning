@@ -7,13 +7,12 @@ const subjectsEnum = require('../lib/subjectsEnum');
 
 const courseSchema = new Schema({
   name: String,
-  // enrollId: String,
   owner: mongoose.ObjectId,
-  section: String,
   subject: {
     type: String,
     enum: subjectsEnum,
   },
+  section: String,
   grade: Number,
   description: String,
   startDate: Date,

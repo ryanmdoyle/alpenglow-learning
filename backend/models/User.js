@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Course = require('./Course');
 const Playlist = require('./Playlist');
+const Class = require('./Class');
 
 const userSchema = new Schema({
   name: String,
@@ -27,12 +28,12 @@ const userSchema = new Schema({
       ref: Course,
     }
   ],
-  instructingPlaylists: [
+  instructingClasses: [
     {
       type: mongoose.ObjectId,
-      ref: Playlist,
+      ref: Class,
     }
-  ],
+  ]
 })
 
 const User = mongoose.model('User', userSchema);
