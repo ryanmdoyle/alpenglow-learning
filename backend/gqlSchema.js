@@ -68,7 +68,7 @@ const typeDefs = gql`
   # # # # # # # # # # # #
 
   type User {
-    _id: String,
+    _id: ID,
     name: String!,
     firstName: String!,
     lastName: String!,
@@ -82,7 +82,7 @@ const typeDefs = gql`
   }
 
   type Course {
-    _id: String,
+    _id: ID,
     name: String!,
     owner: String!,
     subject: String!,
@@ -105,23 +105,25 @@ const typeDefs = gql`
   }
 
   type Playlist {
-    _id: String,
+    _id: ID,
     name: String,
     subject: String,
     description: String,
     grade: Int,
     type: String,
+    order: Int,
     course: String,
     objectives: [ Objective ],
   }
 
   type Objective {
-    _id: String,
+    _id: ID,
     name: String!,
     description: String,
     subject: String,
     grade: Int,
     playlist: Playlist,
+    order: Int,
   }
 `;
 

@@ -17,6 +17,7 @@ const playlistSchema = new Schema({
     type: String,
     enum: ['ESSENTIAL', 'CORE', 'CHALLENGE'],
   },
+  order: Number,
   course: mongoose.ObjectId,
   objectives: [
     {

@@ -16,6 +16,7 @@ const objectiveSchema = new Schema({
     type: mongoose.ObjectId,
     ref: 'Playlist',
   },
+  order: Number,
 })
 
 const Objective = mongoose.model('Objective', objectiveSchema);
