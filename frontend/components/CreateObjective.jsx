@@ -28,11 +28,12 @@ const CREATE_OBJECTIVE_MUTATION = gql`
 `;
 
 const CreateObjective = () => {
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors, clear } = useForm();
   const alert = useContext(AlertContext);
   const [createObjective, { data }] = useMutation(CREATE_OBJECTIVE_MUTATION, {
     onCompleted: data => {
       alert.success(`Successfully created objective: ${data.createObjective.name}`);
+      clear();
     },
     onError: data => {
       alert.error('Sorry, there was a problem creating your objective.', 10);

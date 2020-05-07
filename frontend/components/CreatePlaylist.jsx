@@ -42,7 +42,7 @@ const CREATE_PLAYLIST_MUTATION = gql`
   `;
 
 const CreatePlaylist = () => {
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors, clear } = useForm();
   // query (not destructured for data name conflicting with query/mutate)
   const query = useQuery(GET_USER_COURSES_QUERY);
   const loading = query.loading;
@@ -52,6 +52,7 @@ const CreatePlaylist = () => {
   const [createPlaylist, { data }] = useMutation(CREATE_PLAYLIST_MUTATION, {
     onCompleted: data => {
       alert.success(`Successfully created playlist: ${data.createPlaylist.name}`);
+      clear();
     },
     onError: () => {
       alert.error('Sorry, there was an error creating your playlist.');

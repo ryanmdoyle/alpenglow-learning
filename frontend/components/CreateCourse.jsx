@@ -34,11 +34,12 @@ const CREATE_COURSE = gql`
   `;
 
 const CreateCourse = () => {
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors, reset } = useForm();
   const alert = useContext(AlertContext)
 
   const [createCourse, { data }] = useMutation(CREATE_COURSE, {
     onCompleted: data => {
+      reset();
       alert.success(`Successfully created course ${data.createCourse.name}!`, 10);
     },
     onError: () => {
@@ -46,7 +47,7 @@ const CreateCourse = () => {
     }
   });
 
-  const onSubmit = data => {
+  const onSubmit = (data, e) => {
     createCourse({
       variables: {
         name: data.name,
@@ -58,7 +59,6 @@ const CreateCourse = () => {
         endDate: data.endDate,
       }
     })
-
   };
 
   return (
