@@ -13,6 +13,7 @@ const navStyles = css`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  overflow-y: scroll;
 `;
 
 const NavSection = styled.section`

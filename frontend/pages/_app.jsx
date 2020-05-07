@@ -51,7 +51,7 @@ const GET_CURRENT_USER = gql`
     query GET_CURRENT_USER {
       getCurrentUser {
         firstName
-        # permissions
+        permissions
       }
     }
   `;
