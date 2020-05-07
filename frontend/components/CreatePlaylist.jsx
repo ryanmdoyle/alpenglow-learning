@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { gql } from 'apollo-boost';
 import { useMutation, useQuery } from '@apollo/react-hooks';
@@ -15,6 +15,7 @@ const GET_USER_COURSES_QUERY = gql`
     getInstructingCourses {
       _id
       name
+      subject
     }
   }
 `;
@@ -42,6 +43,7 @@ const CREATE_PLAYLIST_MUTATION = gql`
   `;
 
 const CreatePlaylist = () => {
+  const [courseSubject, setCourseSubject] = useState(null);
   const { register, handleSubmit, errors, clear } = useForm();
   // query (not destructured for data name conflicting with query/mutate)
   const query = useQuery(GET_USER_COURSES_QUERY);
@@ -71,8 +73,17 @@ const CreatePlaylist = () => {
       }
     })
   };
-  if (loading) return <Loading />;
 
+  const onCourseSelect = optionValue => {
+    // iterates through courses and sets selectedSubject to subject that matches course with same _id in option selected
+    for (let i = 0; i < query.data.getInstructingCourses.length; i++) {
+      if (query.data.getInstructingCourses[i]._id === optionValue) {
+        setCourseSubject(query.data.getInstructingCourses[i].subject);
+      }
+    }
+  }
+
+  if (loading) return <Loading />;
   return (
     <PagePadding>
       <h3>Create New Playlist</h3>
@@ -84,7 +95,8 @@ const CreatePlaylist = () => {
           {query.data && (query.data.getInstructingCourses.length >= 0) && (
             <>
               <label htmlFor='course'>Course</label>
-              <select name='course' ref={register}>
+              <select name='course' ref={register} onChange={() => { onCourseSelect(event.target.value) }}>
+                <option disabled="" value="">Select the Course this Playlist will be in below:</option>
                 {query.data.getInstructingCourses.map((course) => (
                   <option value={course._id} key={course._id}>{course.name}</option>
                 ))}
@@ -93,9 +105,9 @@ const CreatePlaylist = () => {
           )}
 
           <label htmlFor='subject'>subject*</label>
-          <select name='subject' ref={register({ required: true })}>
+          <select name='subject' value={courseSubject} ref={register({ required: true })} onChange={() => { setCourseSubject(event.target.value) }}>
             {subjectsEnum.map(subject => (
-              <option value={subject} key={subject}>{subject}</option>
+              <option value={subject} key={subject} >{subject}</option>
             ))}
           </select>
 
