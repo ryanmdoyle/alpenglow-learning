@@ -13,7 +13,6 @@ const INSTRUCTING_COURSES_QUERY = gql`
       name
       subject
       description
-      playlists
     }
     getInstructingPlaylists {
       _id
@@ -36,7 +35,6 @@ const teacherCourses = () => {
             <>
               <h3>{course.name}</h3>
               <p>{course.description}</p>
-              <h4>Playlists</h4>
             </>
           ))
         )}
