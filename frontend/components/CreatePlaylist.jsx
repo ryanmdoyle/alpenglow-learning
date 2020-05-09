@@ -44,7 +44,7 @@ const CREATE_PLAYLIST_MUTATION = gql`
 
 const CreatePlaylist = () => {
   const [courseSubject, setCourseSubject] = useState(null);
-  const { register, handleSubmit, errors, clear } = useForm();
+  const { register, handleSubmit, errors, reset } = useForm();
   // query (not destructured for data name conflicting with query/mutate)
   const query = useQuery(GET_USER_COURSES_QUERY);
   const loading = query.loading;
@@ -54,9 +54,9 @@ const CreatePlaylist = () => {
   const [createPlaylist, { data }] = useMutation(CREATE_PLAYLIST_MUTATION, {
     onCompleted: data => {
       alert.success(`Successfully created playlist: ${data.createPlaylist.name}`);
-      clear();
+      reset();
     },
-    onError: () => {
+    onError: error => {
       alert.error('Sorry, there was an error creating your playlist.');
     }
   });
@@ -105,7 +105,7 @@ const CreatePlaylist = () => {
           )}
 
           <label htmlFor='subject'>subject*</label>
-          <select name='subject' value={courseSubject} ref={register({ required: true })} onChange={() => { setCourseSubject(event.target.value) }}>
+          <select name='subject' value={courseSubject || ''} ref={register({ required: true })} onChange={() => { setCourseSubject(event.target.value) }}>
             {subjectsEnum.map(subject => (
               <option value={subject} key={subject} >{subject}</option>
             ))}

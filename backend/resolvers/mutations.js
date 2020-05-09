@@ -50,16 +50,14 @@ const mutations = {
   async createPlaylist(parent, args, context, info) {
     const { currentUser } = context;
     if (currentUser.permissions !== 'STUDENT') {
-      const userInDb = await User.findById(currentUser._id);
+      const parentCourse = await Course.findById(args.course);
       const newPlaylist = new Playlist({
+        order: parentCourse.playlists.length + 1, // set order to last, according to parent array length
         ...args //spread incomming data from form
       })
+      // save playlist to DB
       const createdPlaylist = await newPlaylist.save().catch((err) => { console.error(err) });
-      if (!userInDb.instructingPlaylists.includes(createdPlaylist._id)) {
-        userInDb.instructingPlaylists.push(createdPlaylist._id);
-        await userInDb.save()
-      }
-      const parentCourse = await Course.findById(args.course);
+      // add playlist to parentCourse (and prevent duplication)
       if (!parentCourse.playlists.includes(createdPlaylist._id)) {
         parentCourse.playlists.push(createdPlaylist._id);
         await parentCourse.save();
