@@ -52,6 +52,7 @@ const mutations = {
     if (currentUser.permissions !== 'STUDENT') {
       const parentCourse = await Course.findById(args.course);
       const newPlaylist = new Playlist({
+        grade: parentCourse.grade,
         order: parentCourse.playlists.length + 1, // set order to last, according to parent array length
         ...args //spread incomming data from form
       })
