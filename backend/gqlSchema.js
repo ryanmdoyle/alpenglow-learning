@@ -44,7 +44,7 @@ const typeDefs = gql`
     createPlaylist(
       name: String!,
       subject: String!,
-      grade: Int!,
+      grade: Int,
       description: String,
       course: String!,
       type: String!,
