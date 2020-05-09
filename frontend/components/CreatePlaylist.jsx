@@ -121,9 +121,6 @@ const CreatePlaylist = () => {
           <label htmlFor='description'>description</label>
           <textarea name="description" ref={register({ maxLength: 255 })} />
 
-          <label htmlFor='grade'>grade*</label>
-          <input type="number" name="grade" ref={register({ required: true, max: 12, min: 1 })} />
-
           <button type='submit'>Create Playlist</button>
         </form>
       </FormWrapper>
