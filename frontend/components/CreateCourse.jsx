@@ -7,6 +7,7 @@ import FormWrapper from './styled/FormWrapper';
 import PagePadding from './styled/PagePadding';
 import Loading from './Loading';
 import { subjectsEnum } from '../lib/subjectsEnum';
+import gradeLevels from '../lib/gradeLevels';
 import AlertContext from './context/AlertContext';
 
 const CREATE_COURSE = gql`
@@ -80,7 +81,12 @@ const CreateCourse = () => {
           {errors.subject && 'Course subject is required'}
 
           <label htmlFor='grade'>grade*</label>
-          <input type="number" name="grade" ref={register({ required: true, max: 12, min: 1 })} />
+          <select name='grade' ref={register({ required: true, max: 12, min: 0 })}>
+            <option disabled="" value="">Select grade level below</option>
+            {gradeLevels.map(gradeTuple => (
+              <option type='number' name='grade' value={gradeTuple[1]} key={gradeTuple[1]}>{gradeTuple[0]}</option>
+            ))}
+          </select>
           {errors.grade && 'Course grade level is required'}
 
           <label htmlFor='section'>section</label>
