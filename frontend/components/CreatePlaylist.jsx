@@ -24,7 +24,6 @@ const CREATE_PLAYLIST_MUTATION = gql`
     mutation CREATE_PLAYLIST(
       $name: String!,
       $subject: String!,
-      $grade: Int!,
       $description: String,
       $course: String!,
       $type: String!,
@@ -32,7 +31,6 @@ const CREATE_PLAYLIST_MUTATION = gql`
       createPlaylist(
         name: $name,
         subject: $subject,
-        grade: $grade,
         description: $description,
         course: $course,
         type: $type,
