@@ -13,8 +13,8 @@ const playlistsContainer = css`
 const courseContainer = css`
   box-sizing: border-box;
   width: calc( 100% - 2rem);
-  margin: 1rem 1rem;
   padding: 1rem;
+  margin: 1rem 0 0 1rem;
   border-radius: var(--borderRadius);
   transition: box-shadow 0.15s;
   
@@ -22,7 +22,8 @@ const courseContainer = css`
     color: var(--blueDark);
   }
   h2  {margin: 0.2rem 0; }
-  h3, h5 { margin: 0.6rem 0; }
+  h4, h5 { margin: 0.6rem 0; }
+  h5 { color: var(--blueMedium);}
 
 
   :hover {
@@ -34,7 +35,7 @@ const courseContainer = css`
 const CourseTimeline = ({ name }) => {
   return (
     <section css={courseContainer}>
-      <h3>{name}</h3>
+      <h4>{name}</h4>
       <h5>Essential</h5>
       <div css={playlistsContainer}>
         <PlaylistBox />
@@ -47,7 +48,7 @@ const CourseTimeline = ({ name }) => {
         <PlaylistBox />
         <PlaylistBox />
       </div>
-      <h5 css={css`margin: 0.6rem 0;`}>Core</h5>
+      <h5>Core</h5>
       <div css={playlistsContainer}>
         <PlaylistBox />
         <PlaylistBox />
