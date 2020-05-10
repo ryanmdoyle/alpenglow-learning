@@ -5,6 +5,7 @@ import { useQuery } from '@apollo/react-hooks'
 
 import Loading from '../../components/Loading';
 import PagePadding from '../../components/styled/PagePadding';
+import CourseTimeline from '../../components/CourseTimeline';
 
 const INSTRUCTING_COURSES_QUERY = gql`
   query INSTRUCTING_COURSES_QUERY {
@@ -13,10 +14,10 @@ const INSTRUCTING_COURSES_QUERY = gql`
       name
       subject
       description
-    }
-    getInstructingPlaylists {
-      _id
-      name
+      playlists {
+        _id
+        name
+      }
     }
   }
 `;
@@ -25,7 +26,7 @@ const teacherCourses = () => {
   const { loading, error, data } = useQuery(INSTRUCTING_COURSES_QUERY);
 
   if (loading) return <Loading />;
-
+  console.log(data);
   return (
     <div>
       <PageTitle title='Courses You Teach' />
@@ -34,7 +35,10 @@ const teacherCourses = () => {
           data.getInstructingCourses.map(course => (
             <>
               <h3>{course.name}</h3>
-              <p>{course.description}</p>
+              <small>{course.description}</small>
+              {course.playlists.map(playlist => (
+                <h5>{playlist.name}</h5>
+              ))}
             </>
           ))
         )}

@@ -2,18 +2,18 @@ import React from 'react';
 import { css } from '@emotion/core';
 
 import PageTitle from '../../components/PageTitle';
-import CourseContainer from '../../components/CourseContainer';
+import CourseTimeline from '../../components/CourseTimeline';
 import Loading from '../../components/Loading';
 
 const studentCourses = () => {
   return (
     <>
       <PageTitle title='All Courses' />
-      <CourseContainer name='Math' />
-      <CourseContainer name='Science' />
-      <CourseContainer name='English' />
-      <CourseContainer name='Social Studies' />
-      <CourseContainer name='Social Studies' />
+      <CourseTimeline name='Math' />
+      <CourseTimeline name='Science' />
+      <CourseTimeline name='English' />
+      <CourseTimeline name='Social Studies' />
+      <CourseTimeline name='Social Studies' />
     </>
   );
 };

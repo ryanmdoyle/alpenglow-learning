@@ -31,7 +31,7 @@ const courseContainer = css`
   }
 `;
 
-const CourseContainer = ({ name }) => {
+const CourseTimeline = ({ name }) => {
   return (
     <section css={courseContainer}>
       <h3>{name}</h3>
@@ -59,4 +59,4 @@ const CourseContainer = ({ name }) => {
   );
 };
 
-export default CourseContainer;
+export default CourseTimeline;
