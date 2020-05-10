@@ -17,4 +17,10 @@ enum Subjects {
   Elective = 'Elective',
 }
 
-export { AlertStatus, Subjects }
+enum PlaylistEnum {
+  Essential = 'ESSENTIAL',
+  Core = 'CORE',
+  Challenge = 'CHALLENGE',
+}
+
+export { AlertStatus, Subjects, PlaylistEnum }

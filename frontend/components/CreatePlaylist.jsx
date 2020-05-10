@@ -56,6 +56,7 @@ const CreatePlaylist = () => {
     },
     onError: error => {
       alert.error('Sorry, there was an error creating your playlist.');
+      console.error(error);
     }
   });
 
@@ -92,8 +93,8 @@ const CreatePlaylist = () => {
 
           {query.data && (query.data.getInstructingCourses.length >= 0) && (
             <>
-              <label htmlFor='course'>Course</label>
-              <select name='course' ref={register} onChange={() => { onCourseSelect(event.target.value) }}>
+              <label htmlFor='course'>Course*</label>
+              <select name='course' ref={register({ required: true })} onChange={() => { onCourseSelect(event.target.value) }}>
                 <option disabled="" value="">Select the Course this Playlist will be in below:</option>
                 {query.data.getInstructingCourses.map((course) => (
                   <option value={course._id} key={course._id}>{course.name}</option>

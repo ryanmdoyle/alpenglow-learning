@@ -17,6 +17,8 @@ const INSTRUCTING_COURSES_QUERY = gql`
       playlists {
         _id
         name
+        type
+        order
       }
     }
   }
@@ -32,7 +34,7 @@ const teacherCourses = () => {
       <PageTitle title='Courses You Teach' />
       {data.getInstructingCourses && (
         data.getInstructingCourses.map(course => (
-          <CourseTimeline name={course.name} key={course._id} />
+          <CourseTimeline name={course.name} playlists={course.playlists} key={course._id} />
         ))
       )}
     </div >

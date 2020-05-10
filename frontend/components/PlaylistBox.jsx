@@ -27,10 +27,10 @@ const styledBox = css`
   }
 `;
 
-const PlaylistBox = ({ className }) => {
+const PlaylistBox = ({ name, playlistId, className }) => {
   return (
     <div css={styledBox} className={className} >
-      <p>A Playlist</p>
+      <p>{name}</p>
     </div>
   );
 };

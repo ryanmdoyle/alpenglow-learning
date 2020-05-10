@@ -2,6 +2,7 @@ import React from 'react';
 import { css } from '@emotion/core';
 
 import PlaylistBox from './PlaylistBox';
+import { PlaylistEnum } from '../lib/enums';
 
 const playlistsContainer = css`
   box-sizing: border-box;
@@ -32,30 +33,46 @@ const courseContainer = css`
   }
 `;
 
-const CourseTimeline = ({ name }) => {
+const CourseTimeline = ({ name, playlists }) => {
+  const essential = playlists.filter(playlist => playlist.type === PlaylistEnum.Essential);
+  const core = playlists.filter(playlist => playlist.type === PlaylistEnum.Core);
+  const challenge = playlists.filter(playlist => playlist.type === PlaylistEnum.Challenge);
+
   return (
     <section css={courseContainer}>
       <h4>{name}</h4>
-      <h5>Essential</h5>
-      <div css={playlistsContainer}>
-        <PlaylistBox />
-        <PlaylistBox />
-        <PlaylistBox />
-        <PlaylistBox />
-        <PlaylistBox />
-        <PlaylistBox />
-        <PlaylistBox />
-        <PlaylistBox />
-        <PlaylistBox />
-      </div>
-      <h5>Core</h5>
-      <div css={playlistsContainer}>
-        <PlaylistBox />
-        <PlaylistBox />
-        <PlaylistBox />
-        <PlaylistBox />
-        <PlaylistBox />
-      </div>
+
+      {(essential.length > 0) && (
+        <>
+          <h5>Essential</h5>
+          <div css={playlistsContainer}>
+            {essential.map(playlist => {
+              return <PlaylistBox name={playlist.name} />
+            })}
+          </div>
+        </>
+      )}
+      {core.length > 0 && (
+        <>
+          <h5>Core</h5>
+          <div css={playlistsContainer}>
+            {core.map(playlist => {
+              return <PlaylistBox name={playlist.name} />
+            })}
+          </div>
+        </>
+      )}
+
+      {challenge.length > 0 && (
+        <>
+          <h5>Challenge</h5>
+          <div css={playlistsContainer}>
+            {challenge.map(playlist => {
+              return <PlaylistBox name={playlist.name} />
+            })}
+          </div>
+        </>
+      )}
     </section>
   );
 };
