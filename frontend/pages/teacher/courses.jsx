@@ -30,19 +30,11 @@ const teacherCourses = () => {
   return (
     <div>
       <PageTitle title='Courses You Teach' />
-      <PagePadding>
-        {data.getInstructingCourses && (
-          data.getInstructingCourses.map(course => (
-            <>
-              <h3>{course.name}</h3>
-              <small>{course.description}</small>
-              {course.playlists.map(playlist => (
-                <h5>{playlist.name}</h5>
-              ))}
-            </>
-          ))
-        )}
-      </PagePadding>
+      {data.getInstructingCourses && (
+        data.getInstructingCourses.map(course => (
+          <CourseTimeline name={course.name} key={course._id} />
+        ))
+      )}
     </div >
   );
 };
