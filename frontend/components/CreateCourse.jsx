@@ -5,10 +5,10 @@ import { useMutation } from '@apollo/react-hooks';
 
 import FormWrapper from './styled/FormWrapper';
 import PagePadding from './styled/PagePadding';
-import Loading from './Loading';
-import { subjectsEnum } from '../lib/subjectsEnum';
 import gradeLevels from '../lib/gradeLevels';
 import AlertContext from './context/AlertContext';
+import { subjectsEnum } from '../lib/subjectsEnum';
+import { INSTRUCTING_COURSES_QUERY } from '../gql/queries';
 
 const CREATE_COURSE = gql`
     mutation CREATE_COURSE(
@@ -39,6 +39,8 @@ const CreateCourse = () => {
   const alert = useContext(AlertContext)
 
   const [createCourse, { data }] = useMutation(CREATE_COURSE, {
+    awaitRefetchQueries: true,
+    refetchQueries: [{ query: INSTRUCTING_COURSES_QUERY }],
     onCompleted: data => {
       reset();
       alert.success(`Successfully created course ${data.createCourse.name}!`, 10);

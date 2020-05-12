@@ -8,7 +8,7 @@ import PagePadding from './styled/PagePadding';
 import Loading from './Loading';
 import AlertContext from './context/AlertContext';
 import { subjectsEnum } from '../lib/subjectsEnum';
-import { INSTRUCTING_COURSES_QUERY } from '../pages/teacher/courses';
+import { INSTRUCTING_COURSES_QUERY } from '../gql/queries';
 
 const GET_USER_COURSES_QUERY = gql`
   # currently gets all courses, but should later only get courses for logged in user
