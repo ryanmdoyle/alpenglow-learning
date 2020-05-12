@@ -62,7 +62,6 @@ const queries = {
 	},
 
 	async getPlaylist(parent, args, context, info) {
-		console.log("running getPlaylist Query", args);
 		if (!args.playlistId) return "No Playlist ID provided";
 		return await Playlist.findById(args.playlistId);
 	}
