@@ -23,12 +23,12 @@ const details = css`
   }
 `;
 
-const PlaylistDetails = () => {
+const PlaylistDetails = ({ title, description }) => {
   return (
     <div css={details}>
       <div className='flex-item'>
-        <h2>Playlist Title</h2>
-        <p>Here are some details about the playlist that would be important.</p>
+        <h2>{title}</h2>
+        <p>{description}</p>
       </div>
       <div className='flex-item objectives'>
         <h3>Objectives</h3>

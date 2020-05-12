@@ -3,6 +3,8 @@ const verifyUser = require('../lib/verifyUser');
 // Mongoose Models
 const User = require('../models/User');
 const Course = require('../models/Course');
+const Playlist = require('../models/Playlist');
+const Objective = require('../models/Objective');
 
 // currentUser data from JWT token available on context.user
 const queries = {
@@ -58,6 +60,12 @@ const queries = {
 		const requestedUser = await User.findById(args.user_id).populate('instructingPlaylists');
 		return requestedUser.instructingPlaylists;
 	},
+
+	async getPlaylist(parent, args, context, info) {
+		console.log("running getPlaylist Query", args);
+		if (!args.playlistId) return "No Playlist ID provided";
+		return await Playlist.findById(args.playlistId);
+	}
 
 }
 

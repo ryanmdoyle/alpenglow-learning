@@ -10,6 +10,7 @@ const typeDefs = gql`
     getCurrentUser: User,
     getUser(user_id: ID): User!,
     getAllUsers: [User]!,
+    getPlaylist(playlistId: ID): Playlist!,
     getEnrolledCourses(user_id: ID): [Course],
     getInstructingCourses(user_id: ID): [Course],
     getEnrolledPlaylists(user_id: ID): [Playlist],
