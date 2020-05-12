@@ -28,7 +28,7 @@ const teacherCourses = () => {
   const { loading, error, data } = useQuery(INSTRUCTING_COURSES_QUERY);
 
   if (loading) return <Loading />;
-  console.log(data);
+
   return (
     <div>
       <PageTitle title='Courses You Teach' />
@@ -42,3 +42,4 @@ const teacherCourses = () => {
 };
 
 export default teacherCourses;
+export { INSTRUCTING_COURSES_QUERY };

@@ -47,7 +47,7 @@ const CourseTimeline = ({ name, playlists }) => {
           <h5>Essential</h5>
           <div css={playlistsContainer}>
             {essential.map(playlist => {
-              return <PlaylistBox name={playlist.name} />
+              return <PlaylistBox name={playlist.name} key={playlist._id} />
             })}
           </div>
         </>
@@ -57,7 +57,7 @@ const CourseTimeline = ({ name, playlists }) => {
           <h5>Core</h5>
           <div css={playlistsContainer}>
             {core.map(playlist => {
-              return <PlaylistBox name={playlist.name} />
+              return <PlaylistBox name={playlist.name} key={playlist._id} />
             })}
           </div>
         </>
@@ -68,7 +68,7 @@ const CourseTimeline = ({ name, playlists }) => {
           <h5>Challenge</h5>
           <div css={playlistsContainer}>
             {challenge.map(playlist => {
-              return <PlaylistBox name={playlist.name} />
+              return <PlaylistBox name={playlist.name} key={playlist._id} />
             })}
           </div>
         </>

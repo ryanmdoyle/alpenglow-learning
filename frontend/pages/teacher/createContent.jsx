@@ -8,15 +8,13 @@ import CreatePlaylist from '../../components/CreatePlaylist';
 import CreateCourse from '../../components/CreateCourse';
 import CreateObjective from '../../components/CreateObjective';
 
-const createContent = ({ href }) => {
+const createContent = () => {
   const router = useRouter();
   const [activeForm, setActiveForm] = useState('course');
 
   const changeForm = (courseString) => {
     setActiveForm(courseString);
   }
-
-
   return (
     <div>
       <PageTitle title='Create New Content' />

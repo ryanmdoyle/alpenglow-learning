@@ -6,8 +6,9 @@ import { useMutation, useQuery } from '@apollo/react-hooks';
 import FormWrapper from './styled/FormWrapper';
 import PagePadding from './styled/PagePadding';
 import Loading from './Loading';
-import { subjectsEnum } from '../lib/subjectsEnum';
 import AlertContext from './context/AlertContext';
+import { subjectsEnum } from '../lib/subjectsEnum';
+import { INSTRUCTING_COURSES_QUERY } from '../pages/teacher/courses';
 
 const GET_USER_COURSES_QUERY = gql`
   # currently gets all courses, but should later only get courses for logged in user
@@ -43,16 +44,19 @@ const CREATE_PLAYLIST_MUTATION = gql`
 const CreatePlaylist = () => {
   const [courseSubject, setCourseSubject] = useState(null);
   const { register, handleSubmit, errors, reset } = useForm();
+
   // query (not destructured for data name conflicting with query/mutate)
   const query = useQuery(GET_USER_COURSES_QUERY);
   const loading = query.loading;
   const error = query.loading;
 
   const alert = useContext(AlertContext);
-  const [createPlaylist, { data }] = useMutation(CREATE_PLAYLIST_MUTATION, {
-    onCompleted: data => {
+  const [createPlaylist, { data, client }] = useMutation(CREATE_PLAYLIST_MUTATION, {
+    awaitRefetchQueries: true,
+    refetchQueries: [{ query: INSTRUCTING_COURSES_QUERY }],
+    onCompleted: (data) => {
       alert.success(`Successfully created playlist: ${data.createPlaylist.name}`);
-      reset();
+      reset(); //resets form values
     },
     onError: error => {
       alert.error('Sorry, there was an error creating your playlist.');
