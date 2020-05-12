@@ -1,6 +1,7 @@
 import React from 'react';
-import { css } from '@emotion/core';
 import styled from '@emotion/styled';
+import { css } from '@emotion/core';
+import Link from 'next/link';
 
 const styledBox = css`
   margin-right: 3px;
@@ -29,9 +30,11 @@ const styledBox = css`
 
 const PlaylistBox = ({ name, playlistId, className }) => {
   return (
-    <div css={styledBox} className={className} >
-      <p>{name}</p>
-    </div>
+    <Link href={`/teacher/playlists/${playlistId}`}>
+      <div css={styledBox} className={className} >
+        <p>{name}</p>
+      </div>
+    </Link>
   );
 };
 
