@@ -9,8 +9,8 @@ import { INSTRUCTING_COURSES_QUERY } from '../../gql/queries';
 const teacherCourses = () => {
   const { loading, error, data } = useQuery(INSTRUCTING_COURSES_QUERY);
 
+  if (error) return null;
   if (loading) return <Loading />;
-
   return (
     <div>
       <PageTitle title='Courses You Teach' />

@@ -26,6 +26,7 @@ const playlistId = () => {
     variables: { playlistId },
   })
 
+  if (error) return null;
   if (loading) return <Loading />
   return (
     <div>

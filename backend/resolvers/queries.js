@@ -54,7 +54,7 @@ const queries = {
 
 	async getInstructingPlaylists(parent, args, context, info) {
 		if (!args.user_id) {
-			const currentUser = await User.findById(context.currentUser._id).populate('instructingPlaylists');
+			const currentUser = await Playlist.find({ owner })
 			return currentUser.instructingPlaylists; // return only array of Courses
 		}
 		const requestedUser = await User.findById(args.user_id).populate('instructingPlaylists');

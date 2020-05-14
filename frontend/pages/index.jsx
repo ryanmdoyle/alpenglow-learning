@@ -17,9 +17,8 @@ const GET_CURRENT_USER = gql`
 const HomePage = () => {
   const { loading, error, data } = useQuery(GET_CURRENT_USER);
 
-  if (loading) return (
-    <Loading />
-  )
+  if (error) return null;
+  if (loading) return <Loading />
   return (
     <div css={css`padding: 0 1rem;`}>
       <h2>Welcome to Alpenglow!</h2>

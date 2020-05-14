@@ -19,6 +19,7 @@ const INSTRUCTING_COURSES_QUERY = gql`
 const teacherClasses = () => {
   const { loading, error, data } = useQuery(INSTRUCTING_COURSES_QUERY);
 
+  if (error) return null;
   if (loading) return <Loading />
   return (
     <div>
