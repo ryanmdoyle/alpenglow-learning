@@ -5,19 +5,6 @@ import fetch from 'isomorphic-unfetch';
 
 
 const Logout = () => {
-  const fromGoogle = (response) => {
-
-    fetch('http://localhost:4000/auth/google/login', {
-      method: 'POST',
-      credentials: "include", //MUST include for client to set cookie
-      headers: {
-        'Content-Type': 'application/json',
-        "Authorization": `${response.tokenId}`,
-      },
-    }).catch((err) => {
-      console.error(err);
-    })
-  }
 
   const logout = (response) => {
     fetch('http://localhost:4000/auth/google/logout', {
@@ -32,7 +19,6 @@ const Logout = () => {
         window.location.href = '/';
       })
       .catch((err) => {
-        cookies.clear('token');
         console.error(err);
       })
   }

@@ -1,13 +1,16 @@
-import React, { useEffect } from 'react';
-import { GoogleLogin } from 'react-google-login';
+import React, { useState } from 'react';
 import fetch from 'isomorphic-unfetch';
+import { css } from '@emotion/core';
+import styled from '@emotion/styled';
+import { GoogleLogin } from 'react-google-login';
 import { useRouter } from 'next/router';
 
 
-const Login = () => {
-  const router = useRouter();
-  const fromGoogle = (response) => {
 
+const Login = (props) => {
+  const router = useRouter();
+
+  const fromGoogle = (response) => {
     fetch('http://localhost:4000/auth/google/login', {
       method: 'POST',
       credentials: "include", //MUST include for client to set cookie
@@ -19,6 +22,7 @@ const Login = () => {
       .then(() => {
         // in future, make Apollo cache reload
         window.location.href = '/';
+        // setDisabled(!disabled);
       })
       .catch((err) => {
         console.error(err);
@@ -26,12 +30,15 @@ const Login = () => {
   }
 
   return (
-    <GoogleLogin
-      clientId="740708519996-jckm5svthu1lh5fv35jc55pp54kam9br.apps.googleusercontent.com"
-      buttonText="Login"
-      onSuccess={fromGoogle}
-      onFailure={fromGoogle}
-    />
+    <div {...props}>
+      <GoogleLogin
+        clientId="740708519996-jckm5svthu1lh5fv35jc55pp54kam9br.apps.googleusercontent.com"
+        buttonText="Login"
+        onSuccess={fromGoogle}
+        onFailure={fromGoogle}
+        disabled={props.disabled}
+      />
+    </div>
   );
 };
 

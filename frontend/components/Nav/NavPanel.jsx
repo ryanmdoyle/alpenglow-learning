@@ -53,7 +53,14 @@ const NavPanel = ({ setIsLogin, currentUser }) => {
       </div>
       <div id='nav-bottom'>
         <UserSection>
-          {(currentUser === null) ? <Login /> : <Logout />}
+          {(currentUser === null) ? <Login disabled={false} /> :
+            (
+              <>
+                <Login disabled={true} css={css`display: none;`} />
+                <Logout />
+              </>
+            )
+          }
         </UserSection>
       </div>
     </nav>

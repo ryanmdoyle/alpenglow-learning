@@ -1,5 +1,4 @@
 const User = require('../models/User');
-// const { v4 } = require('uuid');
 const jwt = require('jsonwebtoken');
 
 const login = async (req, res) => {
@@ -39,7 +38,7 @@ const login = async (req, res) => {
           email: payload.email,
           googleId: payload.sub,
           picture: payload.picture,
-          permissions: 'Student',
+          permissions: 'STUDENT',
         })
         newUser
           .save()
