@@ -30,21 +30,26 @@ const UserSection = styled.section`
 `;
 
 const NavPanel = ({ setIsLogin, currentUser }) => {
+
   return (
     <nav css={navStyles}>
       <div id='nav-top'>
         <NavSection>
           <SiteTitle />
         </NavSection>
-        <NavSection>
-          <NavStudent />
-        </NavSection>
-        <NavSection>
-          <NavStudentProgress />
-        </NavSection>
-        <NavSection>
-          <NavCurriculumDashboard />
-        </NavSection>
+        {currentUser && (
+          <>
+            <NavSection>
+              <NavStudent />
+            </NavSection>
+            <NavSection>
+              <NavStudentProgress />
+            </NavSection>
+            <NavSection>
+              <NavCurriculumDashboard />
+            </NavSection>
+          </>
+        )}
       </div>
       <div id='nav-bottom'>
         <UserSection>
