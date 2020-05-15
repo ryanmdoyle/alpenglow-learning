@@ -3,7 +3,7 @@ import PageTitle from '../../components/PageTitle';
 import { useQuery } from '@apollo/react-hooks'
 
 import Loading from '../../components/Loading';
-import CourseTimeline from '../../components/CourseTimeline';
+import CourseTimeline from '../../components/courses/CourseTimeline';
 import { INSTRUCTING_COURSES_QUERY } from '../../gql/queries';
 
 const teacherCourses = () => {

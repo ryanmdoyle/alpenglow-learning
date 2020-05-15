@@ -12,14 +12,26 @@ const details = css`
   .flex-item {
     width: 50%;
     padding-right: 0.8rem;
+    padding-bottom: 1rem;
   }
   .objectives { 
     padding-left: 1rem;
+    padding-bottom: 1rem;
     border-left: 1px solid var(--blueMedium);
+    ol { 
+      padding-left: 1.5rem;
+      margin-top: 1.3rem;
+    }
+    li {
+      font-size: 0.9em;
+    }
   }
 
-  h2, h3 {
-    color: var(--pink);
+  h4, h5 {
+    color: var(--blueDark);
+  }
+  h5 {
+    margin-top: calc(2.75rem + 7px);
   }
 `;
 
@@ -27,14 +39,14 @@ const PlaylistDetails = ({ title, description }) => {
   return (
     <div css={details}>
       <div className='flex-item'>
-        <h2>{title}</h2>
+        <h3>{title}</h3>
         <p>{description}</p>
       </div>
       <div className='flex-item objectives'>
-        <h3>Objectives</h3>
+        <h5>Objectives</h5>
         <ol>
-          <li>asd</li>
-          <li>asd</li>
+          <li>Solve single and multiple step equations from word problems.  step equations from word problems.  step equations from word problems.</li>
+          <li>Solve single and multiple step equations from word problems.</li>
         </ol>
       </div>
     </div>

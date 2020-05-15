@@ -1,8 +1,10 @@
 import React from 'react';
 import { css } from '@emotion/core';
 
-import PlaylistBox from './PlaylistBox';
-import { PlaylistEnum } from '../lib/enums';
+import PlaylistBox from '../courses/PlaylistBox';
+import PlusButton from '../styled/elements/PlusButton';
+import MinusButton from '../styled/elements/MinusButton';
+import { PlaylistEnum } from '../../lib/enums';
 
 const playlistsContainer = css`
   box-sizing: border-box;
@@ -33,6 +35,18 @@ const courseContainer = css`
   }
 `;
 
+const title = css`
+  display: flex;
+  align-items: center;
+`;
+
+const playlistButton = css`
+  font-size: 0.7rem;
+  margin-left: 0.2rem;
+  opacity: 1;
+  :hover { opacity: 1;}
+`;
+
 const CourseTimeline = ({ name, playlists }) => {
   const essential = playlists.filter(playlist => playlist.type === PlaylistEnum.Essential);
   const core = playlists.filter(playlist => playlist.type === PlaylistEnum.Core);
@@ -49,6 +63,9 @@ const CourseTimeline = ({ name, playlists }) => {
             {essential.map(playlist => {
               return <PlaylistBox name={playlist.name} playlistId={playlist._id} key={playlist._id} />
             })}
+            <div css={css`min-width: 3rem;display: flex;align-items:center;`}>
+              <PlusButton css={playlistButton} />
+            </div>
           </div>
         </>
       )}
@@ -65,7 +82,10 @@ const CourseTimeline = ({ name, playlists }) => {
 
       {challenge.length > 0 && (
         <>
-          <h5>Challenge</h5>
+          <div css={title}>
+            <h5>Core</h5>
+            <PlusButton css={playlistButton} />
+          </div>
           <div css={playlistsContainer}>
             {challenge.map(playlist => {
               return <PlaylistBox name={playlist.name} playlistId={playlist._id} key={playlist._id} />
