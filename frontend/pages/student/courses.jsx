@@ -2,7 +2,7 @@ import React from 'react';
 import { css } from '@emotion/core';
 
 import PageTitle from '../../components/PageTitle';
-import CourseTimeline from '../../components/CourseTimeline';
+import CourseTimeline from '../../components/courses/CourseTimeline';
 import Loading from '../../components/Loading';
 
 const studentCourses = () => {
