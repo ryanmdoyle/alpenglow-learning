@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { gql } from 'apollo-boost';
 import { useQuery, useMutation } from '@apollo/react-hooks';
@@ -32,7 +33,7 @@ const CREATE_CLASS = gql`
     }
   `;
 
-const CreateClass = () => {
+const CreateClass = ({ courseId }) => {
   const { register, handleSubmit, errors } = useForm();
   const alert = useContext(AlertContext)
 
@@ -51,7 +52,7 @@ const CreateClass = () => {
     createClass({
       variables: {
         name: data.name,
-        course: data.course,
+        course: data.course || courseId,
       }
     })
 
@@ -67,14 +68,19 @@ const CreateClass = () => {
           <input type="text" name="name" ref={register({ required: true })} />
           {errors.name && 'Class name is required'}
 
-          <label htmlFor='course'>course*</label>
-          <select name='course' ref={register({ required: true })}>
-            <option disabled="" value="">Select the course this class is a part of:</option>
-            {courseQuery.data.getInstructingCourses.map(course => (
-              <option value={course._id} key={course._id}>{course.name}</option>
-            ))}
-          </select>
-          {errors.course && 'Class course is required. If course is not available, make sure you created the course first!'}
+          {!courseId && (
+            <>
+              <label htmlFor='course'>course*</label>
+              <select name='course' ref={register({ required: true })}>
+                <option disabled="" value="">Select the course this class is a part of:</option>
+                {courseQuery.data.getInstructingCourses.map(course => (
+                  <option value={course._id} key={course._id}>{course.name}</option>
+                ))}
+              </select>
+              {errors.course && 'Class course is required. If course is not available, make sure you created the course first!'}
+            </>
+          )}
+
 
           <button type='submit'>Create Class</button>
         </form>
@@ -82,5 +88,9 @@ const CreateClass = () => {
     </PagePadding>
   );
 };
+
+CreateClass.propTypes = {
+  courseId: PropTypes.string,
+}
 
 export default CreateClass;
