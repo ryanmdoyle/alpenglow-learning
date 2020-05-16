@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PageTitle from '../../components/PageTitle';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks'
@@ -7,6 +7,7 @@ import Loading from '../../components/Loading';
 import PagePadding from '../../components/styled/PagePadding';
 import CreateClass from '../../components/CreateClass';
 import PlusButton from '../../components/styled/elements/PlusButton';
+import Modal from '../../components/styled/Modal';
 
 const INSTRUCTING_COURSES_QUERY = gql`
   query INSTRUCTING_COURSES_QUERY {
@@ -23,6 +24,7 @@ const INSTRUCTING_COURSES_QUERY = gql`
 // On  this page, show a list of courses, with a button after to add a "class"
 const teacherClasses = () => {
   const { loading, error, data } = useQuery(INSTRUCTING_COURSES_QUERY);
+  const [newClassModal, toggleNewClassModal] = useState(false);
 
   if (error) return null;
   if (loading) return <Loading />
@@ -31,19 +33,22 @@ const teacherClasses = () => {
       <PageTitle title='Your Classes' />
       <PagePadding>
         {data?.getInstructingCourses?.map(course => (
-          <>
-            <h4 key={course._id}>{course.name}</h4>
-            {course.classes.length === 0 && <PlusButton />}
+          <div key={course._id}>
+            <h4>{course.name}</h4>
+            {course.classes.length === 0 && <PlusButton onClick={() => { toggleNewClassModal(!newClassModal) }} />}
             {course.classes.map(c => (
-              <h6>{c.name}</h6>
+              <h6 key={c._id}>{c.name}</h6>
             ))}
-          </>
+          </div>
         )
         )}
-        <h3>Create Class</h3>
-        <CreateClass />
 
       </PagePadding>
+      {newClassModal && (
+        <Modal isOpen={newClassModal} toggle={toggleNewClassModal}>
+          <CreateClass />
+        </Modal>
+      )}
     </div >
   );
 };
