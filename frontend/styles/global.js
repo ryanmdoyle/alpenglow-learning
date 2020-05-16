@@ -23,8 +23,11 @@ const global = css`
     --pink50: #F78EB680;
     --pink25: #F78EB640;
     --blueLight: #BBCDF2;
+    --blueLight50: #BBCDF280;
     --blueMedium: #4952A8;
+    --blueMedium50: #4952A880;
     --blueDark: #1F2A40;
+    --blueDark50: #1F2A4080;
     --borderRadius: 5px;
   }
 
