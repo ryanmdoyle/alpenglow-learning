@@ -97,6 +97,7 @@ const typeDefs = gql`
   }
 
   type Class {
+    _id: ID,
     name: String!,
     enrollId: String,
     primaryInstructor: String,
