@@ -5,19 +5,19 @@ import { css } from '@emotion/core';
 
 const titleStyles = css`
   width: 100%;
-  min-height: 100px;
+  min-height: 75px;
   padding: 0 2rem;
   background-color: var(--blueLight);
-  h2 {
+  h3 {
     margin: 0;
-    padding: 2rem 0;
+    padding: 1.2rem 0;
   }
 `;
 
 const PageTitle = ({ title }) => {
   return (
     <div css={titleStyles}>
-      <h2>{title}</h2>
+      <h3>{title}</h3>
     </div>
   );
 };

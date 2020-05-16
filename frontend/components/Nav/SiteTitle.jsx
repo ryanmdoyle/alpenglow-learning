@@ -2,37 +2,62 @@ import React from 'react';
 import { css } from '@emotion/core';
 
 const mainContainer = css`
+  width: 100%;
+  height: 75px;
   display: flex;
-  padding: 0 1rem;
-`;
-
-const logo = css`
-  display: flex;
-  align-items: center;
   justify-content: center;
-  h1 { margin: 2rem 0; }
-`
+  align-items: center;
+  padding: 0.5rem;
+  
+  .logo {
+    display: flex;
+    width: 60px;
+    height: 75px;
+    align-items: center;
+    justify-content: center;
+  }
 
-const title = css`
-  /* reset h1 size so site title is h1 while the other headers are h2 or less */
-  h1 {
-    font-size: 1.8rem;
-    color: var(--pink);
-    margin: 2rem 0;
-    margin-left: 0.5rem;
+  .title {
+    height: 75px;
+    width: 160px;
+    padding-top: 0.7rem;
+    h1 {
+      font-size: 1.4rem;
+      height: 1.4rem;
+      color: var(--pink);
+      margin:0;
+      margin-left: 1rem;
+    }
   }
 `;
+
+// const logo = css`
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   /* h1 { margin: 2rem 0; } */
+// `
+
+// const title = css`
+//   /* reset h1 size so site title is h1 while the other headers are h2 or less */
+//   display: flex;
+//   align-items: center;
+//   h1 {
+//     font-size: 1.4rem;
+//     color: var(--pink);
+//     margin-left: 1rem;
+//   }
+// `;
 
 const SiteTitle = () => {
   return (
     <div css={mainContainer}>
-      <div css={logo}>
-        <img src='/alpenglow.svg' width='80px' />
+      <div className='logo'>
+        <img src='/alpenglow.svg' width='60px' />
       </div>
-      <div css={title}>
+      <div className='title'>
         <h1>Alpenglow Learning</h1>
       </div>
-
     </div>
   );
 };

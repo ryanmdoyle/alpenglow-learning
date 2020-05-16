@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/core';
 
@@ -8,6 +8,8 @@ import NavStudentProgress from './NavStudentProgress';
 import SiteTitle from './SiteTitle';
 import Login from './Login';
 import Logout from './Logout';
+import Loading from '../Loading';
+import UserContext from '../context/UserContext';
 
 const navStyles = css`
   display: flex;
@@ -29,7 +31,9 @@ const UserSection = styled.section`
   justify-content: space-evenly;
 `;
 
-const NavPanel = ({ setIsLogin, currentUser }) => {
+const NavPanel = () => {
+  const { currentUser: { error, data, loading } } = useContext(UserContext);
+  const user = data?.getCurrentUser;
 
   return (
     <nav css={navStyles}>
@@ -37,23 +41,31 @@ const NavPanel = ({ setIsLogin, currentUser }) => {
         <NavSection>
           <SiteTitle />
         </NavSection>
-        {currentUser && (
+        {loading && <Loading />}
+        {data && (
           <>
-            <NavSection>
-              <NavStudent />
-            </NavSection>
-            <NavSection>
-              <NavStudentProgress />
-            </NavSection>
-            <NavSection>
-              <NavCurriculumDashboard />
-            </NavSection>
+            {user.permissions === "STUDENT" || "SUPER_ADMIN" && (
+              <NavSection>
+                <NavStudent />
+              </NavSection>
+            )}
+
+            {user.permissions === "TEACHER" || ("SUPER_ADMIN" || "ADMIN") && (
+              <>
+                <NavSection>
+                  <NavStudentProgress />
+                </NavSection>
+                <NavSection>
+                  <NavCurriculumDashboard />
+                </NavSection>
+              </>
+            )}
           </>
         )}
       </div>
       <div id='nav-bottom'>
         <UserSection>
-          {(currentUser === null) ? <Login disabled={false} /> :
+          {(data === null) ? <Login disabled={false} /> :
             (
               <>
                 <Login disabled={true} css={css`display: none;`} />
