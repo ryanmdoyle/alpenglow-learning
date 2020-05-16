@@ -45,15 +45,15 @@ justify-content: center;
     height: 3rem;
     width: 10rem;
     border-radius: 3px;
-    border: 1px solid var(--blueDark);
-    color: var(--blueLight);
-    background-color: var(--blueDark);
+    border: 2px solid var(--blueMedium);
+    color: var(--blueMedium);
+    background-color: white;
     transition: color 0.15s, background-color 0.15s;
     font-size: 0.8rem;
     :hover, :focus {
-      border: 1px solid var(--pink50);
-      color: var(--blueDark);
-      background-color: var(--pink50);
+      border: 2px solid var(--blueMedoum);
+      color: white;
+      background-color: var(--blueMedium);
       transition: color 0.15s, background-color 0.15s;
     }
   }
