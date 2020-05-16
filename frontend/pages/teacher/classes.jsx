@@ -14,7 +14,8 @@ const INSTRUCTING_COURSES_QUERY = gql`
       _id
       name
       classes {
-        
+        _id
+        name
       }
     }
   }
@@ -25,23 +26,25 @@ const teacherClasses = () => {
 
   if (error) return null;
   if (loading) return <Loading />
-  console.log(data.getInstructingCourses)
   return (
     <div>
       <PageTitle title='Your Classes' />
       <PagePadding>
-        {data?.getInstructingCourses?.length == 0 && (
-          <PlusButton />
-        )}
-
         {data?.getInstructingCourses?.map(course => (
-          <h4 key={course._id}>{course.name}</h4>
-        ))}
+          <>
+            <h4 key={course._id}>{course.name}</h4>
+            {course.classes.length === 0 && <PlusButton />}
+            {course.classes.map(c => (
+              <h6>{c.name}</h6>
+            ))}
+          </>
+        )
+        )}
         <h3>Create Class</h3>
         <CreateClass />
 
       </PagePadding>
-    </div>
+    </div >
   );
 };
 
