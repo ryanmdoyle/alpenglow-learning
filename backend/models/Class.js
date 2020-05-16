@@ -8,21 +8,21 @@ const Course = require('./Course');
 const classSchema = new Schema({
   name: String,
   enrollId: String,
-  primaryInstructor: mongoose.ObjectId,
   course: {
     type: mongoose.ObjectId,
     ref: 'Course',
   },
+  primaryInstructor: mongoose.ObjectId,
   secondaryInstructors: [
     {
       type: mongoose.ObjectId,
-      ref: User,
+      ref: 'User',
     }
   ],
   enrolled: [
     {
       type: mongoose.ObjectId,
-      ref: User,
+      ref: 'User',
     }
   ],
 })
