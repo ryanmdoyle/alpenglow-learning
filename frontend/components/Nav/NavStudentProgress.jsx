@@ -24,10 +24,10 @@ const NavStudentProgress = () => {
       <ul css={css`list-style:none;margin:1rem 0.2rem;padding:0;`}>
         <NavItem title='All Your Students' href='/teacher/classes' />
         <div css={css`padding-left: 1rem;`}>
-          <NavItem title='Class 1' href='/teacher/allStudents' />
+          <NavItem title='placeholder class' href='/teacher/allStudents' />
         </div>
         <div css={css`padding-left: 1rem;`}>
-          <NavItem title='Class 2' href='/teacher/allStudents' />
+          <NavItem title='placeholder class' href='/teacher/allStudents' />
         </div>
         <NavItem title='Grading' href='/teacher/grading' />
 
