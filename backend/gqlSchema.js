@@ -78,8 +78,8 @@ const typeDefs = gql`
     email: String!,
     permissions: String!,
     enrolledCourses: [String],
-    instructingCourses: [String],
-    instructingClasses: [String],
+    instructingCourses: [Course],
+    instructingClasses: [Class],
   }
 
   type Course {
@@ -100,10 +100,10 @@ const typeDefs = gql`
     _id: ID,
     name: String!,
     enrollId: String,
-    primaryInstructor: String,
     course: Course!,
-    secondaryInstructors: [String],
-    enrolled: [String],
+    primaryInstructor: String!,
+    secondaryInstructors: [User],
+    enrolled: [User],
   }
 
   type Playlist {
