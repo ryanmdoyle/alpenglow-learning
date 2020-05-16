@@ -93,7 +93,7 @@ const typeDefs = gql`
     startDate: Date,
     endDate: Date,
     playlists: [ Playlist ],
-    classes: [Playlist],
+    classes: [ Class ],
   }
 
   type Class {
