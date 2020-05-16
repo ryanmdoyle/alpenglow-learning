@@ -1,11 +1,8 @@
 import React from 'react';
 import Head from 'next/head';
-import gql from 'graphql-tag';
 import { ThemeProvider } from 'emotion-theming';
 import { Global, css } from '@emotion/core';
 import { withApollo } from '../lib/withApollo';
-import { useState } from 'react';
-import { useQuery } from '@apollo/react-hooks';
 
 // Styles
 import global from '../styles/global';
@@ -48,21 +45,8 @@ main {
   }
 }
 `
-const GET_CURRENT_USER = gql`
-    query GET_CURRENT_USER {
-      getCurrentUser {
-        firstName
-        permissions
-      }
-    }
-  `;
 
 function MyApp({ Component, pageProps }) {
-  const { loading, error, data } = useQuery(GET_CURRENT_USER);
-
-  // sets as null until there is data to pass into the prop (or errors)
-  const currentUserData = (data) ? data.getCurrentUser : null;
-
   return (
     <ThemeProvider theme={theme}>
       <UserProvider>
@@ -72,9 +56,9 @@ function MyApp({ Component, pageProps }) {
             <script src="https://apis.google.com/js/platform.js" async defer></script>
           </Head>
           <div css={layout}>
-            <NavPanel currentUser={currentUserData} />
+            <NavPanel />
             <main>
-              <Component {...pageProps} currentUserTEST={currentUserData} />
+              <Component {...pageProps} />
               <Alert />
             </main>
           </div>
