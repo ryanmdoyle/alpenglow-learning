@@ -38,18 +38,16 @@ const teacherClasses = () => {
           <div key={course._id}>
             <h4>{course.name}</h4>
             {course.classes.length === 0 && (
-              <>
-                <p>You currently don't have any classes enrolled in Math 6. Click below to add your first class!</p>
-                <TextButton text={`Add class to ${course.name}`} whenClicked={() => {
-                  setModalId(course._id);
-                  toggleNewClassModal(!newClassModal);
-                }}></TextButton>
-              </>
+              <p>You currently don't have any classes enrolled in Math 6. Click below to add your first class!</p>
             )}
 
             {course.classes.map(c => (
-              <h6 key={c._id}>{c.name}</h6>
+              <p key={c._id}>{c.name}</p>
             ))}
+            <TextButton text={`Add class to ${course.name}`} whenClicked={() => {
+                  setModalId(course._id);
+                  toggleNewClassModal(!newClassModal);
+                }}></TextButton>
           </div>
         ))}
 
