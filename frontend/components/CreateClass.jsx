@@ -7,17 +7,9 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import FormWrapper from './styled/FormWrapper';
 import PagePadding from './styled/PagePadding';
 import Loading from './Loading';
-import { subjectsEnum } from '../lib/subjectsEnum';
 import AlertContext from './context/AlertContext';
-
-const INSTRUCTING_COURSES_QUERY = gql`
-  query INSTRUCTING_COURSES_QUERY {
-    getInstructingCourses {
-      _id
-      name
-    }
-  }
-`;
+import { INSTRUCTING_CLASSES_QUERY } from '../components/Nav/NavStudentProgress';
+import { INSTRUCTING_COURSES_QUERY } from '../gql/queries';
 
 const CREATE_CLASS = gql`
     mutation CREATE_CLASS(
@@ -34,12 +26,15 @@ const CREATE_CLASS = gql`
   `;
 
 const CreateClass = ({ courseId }) => {
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors, reset } = useForm();
   const alert = useContext(AlertContext)
 
   const courseQuery = useQuery(INSTRUCTING_COURSES_QUERY)
   const [createClass, { data }] = useMutation(CREATE_CLASS, {
+    awaitRefetchQueries: true,
+    refetchQueries: [{ query: INSTRUCTING_CLASSES_QUERY }, { query: INSTRUCTING_COURSES_QUERY }],
     onCompleted: data => {
+      reset();
       alert.success(`Successfully created course ${data.createClass.name}!`, 10);
     },
     onError: (error) => {
