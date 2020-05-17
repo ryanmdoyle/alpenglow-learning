@@ -3,6 +3,7 @@ const verifyUser = require('../lib/verifyUser');
 // Mongoose Models
 const User = require('../models/User');
 const Course = require('../models/Course');
+const Class = require('../models/Class');
 const Playlist = require('../models/Playlist');
 const Objective = require('../models/Objective');
 
@@ -26,12 +27,7 @@ const queries = {
 	},
 
 	async getEnrolledCourses(parent, args, context, info) { //match to getInstructingCourses
-		if (!args.user_id) {
-			const currentUser = await User.findById(context.currentUser._id).populate('enrolledCourses');
-			return currentUser.enrolledCourses; // return only array of Courses
-		}
-		const requestedUser = await User.findById(args.user_id).populate('enrolledCourses');
-		return requestedUser.enrolledCourses;
+		// PLACEHOLDER
 	},
 
 	async getInstructingCourses(parent, args, context, info) { //look up courses belonging to User
@@ -40,6 +36,18 @@ const queries = {
 			return await Course.find({ owner: currentUser._id }).populate('playlists').populate('classes');
 		}
 		return await Course.find({ owner: args.user_id }).populate('playlists').populate('classes');
+	},
+
+	async getEnrolledClasses(parent, args, context, info) { //match to getInstructingCourses
+		// PLACEHOLDER
+	},
+
+	async getInstructingClasses(parent, args, context, info) { //look up courses belonging to User
+		const { currentUser } = context;
+		if (!args.user_id) {
+			return await Class.find({ primaryInstructor: currentUser._id }).populate('enrolled').populate('secondaryInstructors');
+		}
+		return await Class.find({ primaryInstructor: args.user_id }).populate('enrolled').populate('secondaryInstructors');
 	},
 
 	// apply checking logic for current user above to queires below:

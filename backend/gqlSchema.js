@@ -13,6 +13,8 @@ const typeDefs = gql`
     getPlaylist(playlistId: ID): Playlist!,
     getEnrolledCourses(user_id: ID): [Course],
     getInstructingCourses(user_id: ID): [Course],
+    getEnrolledClasses(user_id: ID): [Class],
+    getInstructingClasses(user_id: ID): [Class],
     getEnrolledPlaylists(user_id: ID): [Playlist],
     getInstructingPlaylists(user_id: ID): [Playlist],
   }
