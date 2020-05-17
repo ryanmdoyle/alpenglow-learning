@@ -13,6 +13,10 @@ export const INSTRUCTING_COURSES_QUERY = gql`
         type
         order
       }
+      classes {
+        _id
+        name
+      }
     }
   }
 `;
