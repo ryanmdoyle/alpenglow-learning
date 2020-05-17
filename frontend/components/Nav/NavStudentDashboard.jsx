@@ -3,18 +3,11 @@ import { css } from '@emotion/core';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 
+import NavSectionPadding from '../styled/NavSectionPadding';
+import NavSectionHeader from '../styled/NavSectionHeader';
 import NavItem from './NavItem';
 import Enroll from './Enroll';
 import Loading from '../Loading';
-
-const sectionPad = css`
-  padding: 0 1rem;
-`;
-
-const navSectionHeader = css`
-  margin: 0;
-  color: var(--pink);
-`;
 
 const enrolledCourses = css`padding-left: 1rem;`;
 
@@ -33,8 +26,8 @@ const NavStudentDashboard = props => {
   if (loading) return <Loading />;
 
   return (
-    <div css={sectionPad}>
-      <h5 css={navSectionHeader}>Student Dashboard</h5>
+    <NavSectionPadding>
+      <NavSectionHeader title='Student Dashboard' />
       <ul css={css`list-style:none;margin:1rem 0.2rem;padding:0;`}>
         <NavItem title='All Courses' href='/student/courses' />
         {data.getEnrolledCourses && (
@@ -48,7 +41,7 @@ const NavStudentDashboard = props => {
         <NavItem title='Grades' href='/student/grades' />
         <Enroll />
       </ul>
-    </div>
+    </NavSectionPadding>
   );
 };
 
