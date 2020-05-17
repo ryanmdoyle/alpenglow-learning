@@ -40,7 +40,7 @@ main {
   height: 100vh;
   width: 100%;
   overflow-y: scroll;
-  h1, h2, h2, h3 {
+  h1, h2, h2, h3, h4, h5 {
     color: var(--blueDark);
   }
 }
