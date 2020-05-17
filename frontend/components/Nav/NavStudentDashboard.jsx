@@ -27,7 +27,7 @@ const GET_ENROLLED_COURSES_QUERY = gql`
   }
 `;
 
-const NavStudent = props => {
+const NavStudentDashboard = props => {
   const { loading, error, data } = useQuery(GET_ENROLLED_COURSES_QUERY);
 
   if (loading) return <Loading />;
@@ -52,5 +52,5 @@ const NavStudent = props => {
   );
 };
 
-export default NavStudent;
+export default NavStudentDashboard;
 export { GET_ENROLLED_COURSES_QUERY };

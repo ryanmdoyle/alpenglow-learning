@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/core';
 
-import NavStudent from './NavStudent';
+import NavStudent from './NavStudentDashboard';
 import NavCurriculumDashboard from './NavCurriculumDashboard';
 import NavStudentProgress from './NavStudentProgress';
 import SiteTitle from './SiteTitle';
@@ -10,6 +10,7 @@ import Login from './Login';
 import Logout from './Logout';
 import Loading from '../Loading';
 import UserContext from '../context/UserContext';
+import NavStudentDashboard from './NavStudentDashboard';
 
 const navStyles = css`
   display: flex;
@@ -46,7 +47,7 @@ const NavPanel = () => {
           <>
             {user.permissions === "STUDENT" || "SUPER_ADMIN" && (
               <NavSection>
-                <NavStudent />
+                <NavStudentDashboard />
               </NavSection>
             )}
 
