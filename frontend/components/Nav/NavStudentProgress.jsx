@@ -40,3 +40,4 @@ const NavStudentProgress = () => {
 };
 
 export default NavStudentProgress;
+export { INSTRUCTING_CLASSES_QUERY };
