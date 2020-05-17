@@ -27,7 +27,7 @@ const NavStudentProgress = () => {
     <NavSectionPadding>
       <NavSectionHeader title='Student Progress' />
       <ul css={css`list-style:none;margin:1rem 0.2rem;padding:0;`}>
-        <NavItem title='All Your Students' href='/teacher/classes' css={css`padding-left: 2rem;`} />
+        <NavItem title='All Your Students' href='/teacher/students' css={css`padding-left: 2rem;`} />
         {data?.getInstructingClasses?.map(c => (
           <div css={innerPadding}>
             <NavItem title={c.name} href='/teacher/allStudents' />
