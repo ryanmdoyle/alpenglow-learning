@@ -23,4 +23,11 @@ enum PlaylistEnum {
   Challenge = 'CHALLENGE',
 }
 
-export { AlertStatus, Subjects, PlaylistEnum }
+enum Roles {
+  Student = 'STUDENT',
+  Teacher = 'TEACHER',
+  Admin = 'ADMIN',
+  SuperAdmin = 'SUPER_ADMIN',
+}
+
+export { AlertStatus, Subjects, PlaylistEnum, Roles }
