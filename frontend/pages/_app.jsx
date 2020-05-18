@@ -18,7 +18,7 @@ const layout = css`
   height: 100vh;
   max-width: 100vw;
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 260px 1fr;
   grid-template-rows: 1fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
