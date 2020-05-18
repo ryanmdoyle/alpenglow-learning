@@ -11,6 +11,8 @@ import Logout from './Logout';
 import Loading from '../Loading';
 import UserContext from '../context/UserContext';
 import NavStudentDashboard from './NavStudentDashboard';
+import hasPermission from '../../lib/hasPermission';
+import { Roles } from '../../lib/enums';
 
 const navStyles = css`
   display: flex;
@@ -33,9 +35,10 @@ const UserSection = styled.section`
 `;
 
 const NavPanel = () => {
-  const { currentUser: { error, data, loading } } = useContext(UserContext);
-  const user = data?.getCurrentUser;
-
+  const currentUserContext = useContext(UserContext);
+  const user = currentUserContext?.currentUser?.data?.getCurrentUser;
+  const { loading, data, error } = currentUserContext?.currentUser;
+  console.log(user);
   return (
     <nav css={navStyles}>
       <div id='nav-top'>
@@ -43,33 +46,26 @@ const NavPanel = () => {
           <SiteTitle />
         </NavSection>
         {loading && <Loading />}
-        {data && (
+        {user && (
           <>
-            {user.permissions === "STUDENT" || "SUPER_ADMIN" && (
-              <NavSection>
-                <NavStudentDashboard />
-              </NavSection>
-            )}
-
-            {user.permissions === "TEACHER" || ("SUPER_ADMIN" || "ADMIN") && (
-              <>
-                <NavSection>
-                  <NavStudentProgress />
-                </NavSection>
-                <NavSection>
-                  <NavCurriculumDashboard />
-                </NavSection>
-              </>
-            )}
+            <NavSection>
+              <NavStudentDashboard />
+            </NavSection>
+            <NavSection>
+              <NavStudentProgress />
+            </NavSection>
+            <NavSection>
+              <NavCurriculumDashboard />
+            </NavSection>
           </>
         )}
       </div>
       <div id='nav-bottom'>
         <UserSection>
-          {(data === null) ? <Login disabled={false} /> :
+          {(!user) ? <Login disabled={false} /> :
             (
               <>
-                <Login disabled={true} css={css`display: none;`} />
+                <Login disabled={true} />
                 <Logout />
               </>
             )

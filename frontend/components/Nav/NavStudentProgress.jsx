@@ -22,7 +22,6 @@ const INSTRUCTING_CLASSES_QUERY = gql`
 const NavStudentProgress = () => {
   const { loading, error, data } = useQuery(INSTRUCTING_CLASSES_QUERY);
   if (loading) return <Loading />
-  console.log('courses in Student Progress', data);
   return (
     <NavSectionPadding>
       <NavSectionHeader title='Student Progress' />
