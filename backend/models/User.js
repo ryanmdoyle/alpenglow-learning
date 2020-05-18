@@ -11,11 +11,13 @@ const userSchema = new Schema({
   picture: String,
   googleId: String,
   email: String,
-  permissions: {
-    type: String,
-    enum: ['SUPER_ADMIN', 'ADMIN', 'TEACHER', 'STUDENT'],
-    default: 'STUDENT'
-  },
+  roles: [
+    {
+      type: String,
+      enum: ['SUPER_ADMIN', 'ADMIN', 'TEACHER', 'STUDENT'],
+      default: 'STUDENT'
+    }
+  ],
   enrolledCourses: [
     {
       type: mongoose.ObjectId,
