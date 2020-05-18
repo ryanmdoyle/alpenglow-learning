@@ -7,7 +7,7 @@ const Class = require('../models/Class');
 const Playlist = require('../models/Playlist');
 const Objective = require('../models/Objective');
 
-// currentUser data from JWT token available on context.user
+// currentUser data from JWT token available on context.currentUser
 const queries = {
 	async getCurrentUser(parent, args, context, info) {
 		const { currentUser: { _id } } = context;

@@ -28,7 +28,7 @@ const NavStudentProgress = () => {
       <ul css={css`list-style:none;margin:1rem 0.2rem;padding:0;`}>
         <NavItem title='All Your Students' href='/teacher/students' css={css`padding-left: 2rem;`} />
         {data?.getInstructingClasses?.map(c => (
-          <div css={innerPadding}>
+          <div css={innerPadding} key={c._id}>
             <NavItem title={c.name} href='/teacher/allStudents' />
           </div>
         ))}

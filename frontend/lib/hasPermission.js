@@ -1,9 +1,15 @@
 const hasPermission = (user, roles) => {
-  if (!user.permissions) return false;
-  user.permissions.forEach(role => {
-    if (roles.includes(role)) return true;
-  })
-  return false;
+  let hasPermission = false;
+  if (user && user.roles) {
+    user.roles.forEach(userRole => {
+      if (roles.includes(userRole)) {
+        hasPermission = true;
+      }
+    })
+  } else {
+    return false;
+  }
+  return hasPermission;
 }
 
 export default hasPermission;

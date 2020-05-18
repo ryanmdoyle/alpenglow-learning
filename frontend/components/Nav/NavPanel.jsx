@@ -38,7 +38,7 @@ const NavPanel = () => {
   const currentUserContext = useContext(UserContext);
   const user = currentUserContext?.currentUser?.data?.getCurrentUser;
   const { loading, data, error } = currentUserContext?.currentUser;
-  console.log(user);
+
   return (
     <nav css={navStyles}>
       <div id='nav-top'>
@@ -48,15 +48,21 @@ const NavPanel = () => {
         {loading && <Loading />}
         {user && (
           <>
-            <NavSection>
-              <NavStudentDashboard />
-            </NavSection>
-            <NavSection>
-              <NavStudentProgress />
-            </NavSection>
-            <NavSection>
-              <NavCurriculumDashboard />
-            </NavSection>
+            {hasPermission(user, [Roles.SuperAdmin, Roles.Student]) && (
+              <NavSection>
+                <NavStudentDashboard />
+              </NavSection>
+            )}
+            {hasPermission(user, [Roles.Admin, Roles.SuperAdmin]) && (
+              <>
+                <NavSection>
+                  <NavStudentProgress />
+                </NavSection>
+                <NavSection>
+                  <NavCurriculumDashboard />
+                </NavSection>
+              </>
+            )}
           </>
         )}
       </div>
