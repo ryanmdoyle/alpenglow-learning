@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import PageTitle from '../../components/PageTitle';
+import PageTitle from '../../../components/PageTitle';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks'
 
-import Loading from '../../components/Loading';
-import PagePadding from '../../components/styled/PagePadding';
-import CreateClass from '../../components/CreateClass';
-import PlusButton from '../../components/styled/elements/PlusButton';
-import TextButton from '../../components/styled/elements/TextButton';
-import Modal from '../../components/styled/Modal';
+import Loading from '../../../components/Loading';
+import PagePadding from '../../../components/styled/PagePadding';
+import CreateClass from '../../../components/CreateClass';
+import PlusButton from '../../../components/styled/elements/PlusButton';
+import TextButton from '../../../components/styled/elements/TextButton';
+import Modal from '../../../components/styled/Modal';
 
 const INSTRUCTING_COURSES_QUERY = gql`
   query INSTRUCTING_COURSES_QUERY {

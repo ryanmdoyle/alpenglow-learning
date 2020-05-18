@@ -12,7 +12,7 @@ const NavCurriculumDashboard = () => {
       <ul css={css`list-style:none;margin:1rem 0.2rem;padding:0;`}>
         <NavItem title='Courses' href='/teacher/courses' />
         <NavItem title='Classes' href='/teacher/classes' />
-        <NavItem title='Manage Students' href='/teacher/manageStudents' />
+        <NavItem title='Manage Students' href='/teacher/students/manage' />
         <NavItem title='Quick Add Content' href='/teacher/createContent' />
       </ul>
     </NavSectionPadding>

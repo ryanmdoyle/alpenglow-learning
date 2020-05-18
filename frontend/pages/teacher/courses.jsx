@@ -13,7 +13,7 @@ const teacherCourses = () => {
   if (loading) return <Loading />;
   return (
     <div>
-      <PageTitle title='Courses You Teach' />
+      <PageTitle title='Course Curriculum' />
       {data.getInstructingCourses && (
         data.getInstructingCourses.map(course => (
           <CourseTimeline name={course.name} playlists={course.playlists} key={course._id} />

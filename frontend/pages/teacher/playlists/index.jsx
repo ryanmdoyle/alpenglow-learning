@@ -17,7 +17,7 @@ const teacherPlaylists = () => {
 
   return (
     <div>
-      <h3>Hey</h3>
+      <h3>all playlists</h3>
     </div>
   );
 };

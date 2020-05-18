@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 
-import PageTitle from '../../components/PageTitle';
-import CreateContentNav from '../../components/CreateContentNav';
+import PageTitle from '../../../components/PageTitle';
+import CreateContentNav from '../../../components/CreateContentNav';
 
-import CreatePlaylist from '../../components/CreatePlaylist';
-import CreateCourse from '../../components/CreateCourse';
-import CreateObjective from '../../components/CreateObjective';
+import CreatePlaylist from '../../../components/CreatePlaylist';
+import CreateCourse from '../../../components/CreateCourse';
+import CreateObjective from '../../../components/CreateObjective';
 
 const createContent = () => {
   const router = useRouter();
