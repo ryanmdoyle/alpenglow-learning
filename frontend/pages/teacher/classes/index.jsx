@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { css } from '@emotion/core';
 import PageTitle from '../../../components/PageTitle';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks'
@@ -9,6 +10,7 @@ import CreateClass from '../../../components/CreateClass';
 import PlusButton from '../../../components/styled/elements/PlusButton';
 import TextButton from '../../../components/styled/elements/TextButton';
 import Modal from '../../../components/styled/Modal';
+import ClassInfo, {ClassInfoHeader} from '../../../components/ClassInfo';
 
 const INSTRUCTING_COURSES_QUERY = gql`
   query INSTRUCTING_COURSES_QUERY {
@@ -18,6 +20,10 @@ const INSTRUCTING_COURSES_QUERY = gql`
       classes {
         _id
         name
+        enrollId
+        enrolled {
+          _id
+        }
       }
     }
   }
@@ -40,14 +46,17 @@ const teacherClasses = () => {
             {course.classes.length === 0 && (
               <p>You currently don't have any classes enrolled in Math 6. Click below to add your first class!</p>
             )}
-
+            <ClassInfoHeader />
             {course.classes.map(c => (
-              <p key={c._id}>{c.name}</p>
+              <ClassInfo key={c._id} classData={c} />
             ))}
+            <div css={css`display: flex; justify-content: flex-end;`}>
             <TextButton text={`Add class to ${course.name}`} whenClicked={() => {
                   setModalId(course._id);
                   toggleNewClassModal(!newClassModal);
                 }}></TextButton>
+
+            </div>
           </div>
         ))}
 
