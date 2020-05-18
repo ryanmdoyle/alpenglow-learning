@@ -21,7 +21,7 @@ const login = async (req, res) => {
         const alpenglowToken = await jwt.sign({
           firstName: response.firstName,
           lastName: response.lastName,
-          permissions: response.permissions,
+          roles: response.roles,
           _id: response._id,
         }, process.env.SECRET)
         await res.set('Set-Cookie', `token=${alpenglowToken}; HttpOnly; Max-Age=6000000; SameSite=None; Path=/`);
@@ -38,7 +38,7 @@ const login = async (req, res) => {
           email: payload.email,
           googleId: payload.sub,
           picture: payload.picture,
-          permissions: 'STUDENT',
+          roles: ['STUDENT'],
         })
         newUser
           .save()
@@ -49,7 +49,7 @@ const login = async (req, res) => {
               const alpenglowToken = await jwt.sign({
                 firstName: newUserRes.firstName,
                 lastName: newUserRes.lastName,
-                permissions: newUserRes.permissions,
+                roles: newUserRes.roles,
                 _id: newUserRes._id,
               }, process.env.SECRET);
 
