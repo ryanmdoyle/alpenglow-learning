@@ -14,7 +14,7 @@ const mutations = {
 
   async createCourse(parent, args, context, info) {
     const { currentUser } = context;
-    if (currentUser.permissions !== 'STUDENT') {
+    if (!currentUser.roles.includes('STUDENT')) {
       const userInDb = await User.findById(currentUser._id);
       const shortuid = new ShortUniqueId();
       const newCourse = new Course({
@@ -34,7 +34,7 @@ const mutations = {
 
   async createClass(parent, args, context, info) {
     const { currentUser } = context;
-    if (currentUser.permissions !== 'STUDENT') {
+    if (!currentUser.roles.includes('STUDENT')) {
       const parentCourse = await Course.findById(args.course);
       const shortuid = new ShortUniqueId();
       const newClass = new Class({
@@ -54,7 +54,7 @@ const mutations = {
 
   async createPlaylist(parent, args, context, info) {
     const { currentUser } = context;
-    if (currentUser.permissions !== 'STUDENT') {
+    if (!currentUser.roles.includes('STUDENT')) {
       const parentCourse = await Course.findById(args.course);
       const newPlaylist = new Playlist({
         grade: parentCourse.grade,
@@ -87,7 +87,7 @@ const mutations = {
 
   async enroll(parent, args, context, info) {
     const { currentUser } = context;
-    if (currentUser && currentUser.permissions === 'SUPER_ADMIN') {
+    if (currentUser && !currentUser.roles.includes('STUDENT')) {
       const userInDb = await User.findById(currentUser._id);
       const courseToEnroll = await Course.findOne({ enrollId: args.enrollId });
 
