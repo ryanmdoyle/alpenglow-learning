@@ -13,7 +13,7 @@ const NavCurriculumDashboard = () => {
         <NavItem title='Courses' href='/teacher/courses' />
         <NavItem title='Classes' href='/teacher/classes' />
         <NavItem title='Manage Students' href='/teacher/students/manage' />
-        <NavItem title='Quick Add Content' href='/teacher/createContent' />
+        <NavItem title='Quick Add Content' href='/teacher/create-content' />
       </ul>
     </NavSectionPadding>
   );
