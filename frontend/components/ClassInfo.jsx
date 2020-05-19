@@ -2,79 +2,81 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { css } from '@emotion/core';
 
-const classRow = css`
+const classTable = css`
   width: 100%;
-  padding: 0.2rem 1rem;
   border-radius: var(--borderRadius);
-  border: 1px solid white;
+  border: 1px solid rgba(1, 1, 1, 0);
   display: flex;
   align-items: center;
-  :hover, :focus, :active {
-    border: 1px solid var(--blueMedium);
-    box-shadow: var(--shadowLight);
-  }
-
-  h5, p {
-    margin: 0.25rem;
-    line-height: 3rem;
-    padding: 0;
-    color: var(--blueMedium);
-    flex-basis: 50%;
-  }
-
   p {
-    margin-left: 2rem;
-    flex-basis: 25%;
+    flex: 0 1 25%;
     text-align: right;
+  }
+  .name {
+    flex: 1 0 50%;
+    text-align: left;
   }
 `;
 
-const classRowHeader = css`
-  width: 100%;
+const row = css`
   padding: 0.2rem 1rem;
-  border-bottom: 1px solid var(--blueMedium);
-  display: flex;
-  p {
-    margin: 0.25rem;
-    line-height: 1rem;
-    padding: 0;
-    color: var(--blueMedium);
-  }
-  .name{ 
-    flex-basis: 50%;
-  }
-  .column {
-    margin-left: 2rem;
-    flex-shrink: 10;
-    flex-basis: 25%;
-    text-align: right;
+  :hover, :focus, :active {
+      border: 1px solid var(--blueMedium);
+      box-shadow: var(--shadowLight);
+      text-align: left;
   }
 `;
 
-const ClassInfo = ({ classData }) => {
-  const { _id, name, enrollId, enrolled } = classData;
+const header = css`
+  padding: 0rem 1rem;
+  font-size: 0.85rem;
+  line-height: 0.5rem;
+  border-radius: 0;
+`;
+
+const firstDivBorder = css`
+  div:nth-of-type(2) {
+    border-top: 1px solid var(--blueMedium50);
+    border-radius: 0;
+    :hover {
+      border-radius: var(--borderRadius);
+      border: 1px solid var(--blueMedium);
+      box-shadow: var(--shadowLight);
+    }
+  }
+`;
+
+const ClassTable = ({ classData }) => {
+
   return (
-    <div css={classRow}>
-      <h5>{name}</h5>
-      <p>{enrollId}</p>
-      <p>{enrolled.length}</p>
+    <div css={firstDivBorder}>
+      <ClassTableHeader />
+      {classData.map(c => {
+        return (
+          <div css={[classTable, row]} key={c._id}>
+            <p className='name'>{c.name}</p>
+            <p>{c.enrollId}</p>
+            <p>{c.enrolled.length}</p>
+          </div>
+        )
+      })}
     </div>
   );
 };
 
-const ClassInfoHeader = () => {
+const ClassTableHeader = () => {
   return (
-    <div css={classRowHeader}>
+    <div css={[classTable, header]}>
       <p className='name'>Class Name</p>
-      <p className='column'>Enroll Id</p>
-      <p className='column'>Students Enrolled</p>
+      <p>Enroll ID</p>
+      <p>Students Enrolled</p>
     </div>
-  );
+  )
 }
 
-ClassInfo.propTypes = {
-  classData: PropTypes.node.isRequired,
+ClassTable.propTypes = {
+  classData: PropTypes.array.isRequired,
 }
 
-export default ClassInfo;
-export { ClassInfoHeader };
+export default ClassTable;
+export { ClassTableHeader };

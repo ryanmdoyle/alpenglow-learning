@@ -10,7 +10,7 @@ import CreateClass from '../../../components/CreateClass';
 import PlusButton from '../../../components/styled/elements/PlusButton';
 import TextButton from '../../../components/styled/elements/TextButton';
 import Modal from '../../../components/styled/Modal';
-import ClassInfo, {ClassInfoHeader} from '../../../components/ClassInfo';
+import ClassTable from '../../../components/ClassInfo';
 
 const INSTRUCTING_COURSES_QUERY = gql`
   query INSTRUCTING_COURSES_QUERY {
@@ -46,10 +46,7 @@ const teacherClasses = () => {
             {course.classes.length === 0 && (
               <p>You currently don't have any classes enrolled in Math 6. Click below to add your first class!</p>
             )}
-            <ClassInfoHeader />
-            {course.classes.map(c => (
-              <ClassInfo key={c._id} classData={c} />
-            ))}
+            <ClassTable classData={course.classes} />
             <div css={css`display: flex; justify-content: flex-end;`}>
             <TextButton text={`Add class to ${course.name}`} whenClicked={() => {
                   setModalId(course._id);
