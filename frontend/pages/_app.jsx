@@ -18,32 +18,48 @@ const layout = css`
   height: 100vh;
   max-width: 100vw;
   display: grid;
-  grid-template-columns: 260px 1fr;
+  grid-template-columns: 280px 1fr;
   grid-template-rows: 1fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
   grid-template-areas:
     "nav main";
   overflow: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar) var(--scrollbarBG);
+  
+    /* nav::-webkit-scrollbar, main::-webkit-scrollbar {
+      width: 10px;
+    }
+    
+    nav::-webkit-scrollbar-track, main::-webkit-scrollbar-track {
+      background: var(--scrollbarBG);
+    }
 
-nav {
-  grid-area: nav;
-  border-right: 1px solid var(--grey);
-  height: 100vh;
-  box-shadow: var(--shadowMedium);
-  background-color: var(--blueDark);
-}
+    nav::-webkit-scrollbar-thumb, main::-webkit-scrollbar-thumb {
+      background-color: var(--scrollbar) ;
+      border-radius: 6px;
+      border: 3px solid var(--scrollbarBG);
+    } */
 
-main {
-  position: relative;
-  grid-area: main;
-  height: 100vh;
-  width: 100%;
-  overflow-y: scroll;
-  h1, h2, h2, h3, h4, h5 {
-    color: var(--blueDark);
-  }
-}
+    nav {
+      grid-area: nav;
+      border-right: 1px solid var(--grey);
+      height: 100vh;
+      box-shadow: var(--shadowMedium);
+      background-color: var(--blueDark);
+    }
+
+    main {
+      position: relative;
+      grid-area: main;
+      height: 100vh;
+      width: 100%;
+      overflow-y: scroll;
+      h1, h2, h2, h3, h4, h5 {
+        color: var(--blueDark);
+      }
+    }
 `
 
 function MyApp({ Component, pageProps }) {
