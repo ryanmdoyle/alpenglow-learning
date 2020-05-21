@@ -57,8 +57,7 @@ const typeDefs = gql`
       _id: String,
       name: String!,
       description: String,
-      subject: String,
-      grade: Int,
+      playlist: String,
     ): Objective! ,
 
     enroll(
@@ -124,8 +123,6 @@ const typeDefs = gql`
     _id: ID,
     name: String!,
     description: String,
-    subject: String,
-    grade: Int,
     playlist: Playlist,
     order: Int,
   }

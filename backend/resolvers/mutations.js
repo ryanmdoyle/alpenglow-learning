@@ -77,9 +77,10 @@ const mutations = {
     const { currentUser } = context;
     if (currentUser.permissions !== 'STUDENT') {
       const newObjective = new Objective({
-        ...args //spread incomming data from form
+        ...args
       })
       const createdObjective = await newObjective.save().catch((err) => { console.error(err) });
+      console.log('createdObj in mutation res\n', createdObjective);
       return createdObjective;
     }
     return 'Permission Denied!';

@@ -12,17 +12,16 @@ import { INSTRUCTING_COURSES_QUERY } from '../gql/queries';
 const CREATE_OBJECTIVE_MUTATION = gql`
   mutation CREATE_OBJECTIVE(
     $name: String!,
-    $subject: String!,
+    $playlist: String!,
     $description: String!,
-    $grade: Int!,
   ) {
     createObjective(
       name: $name,
-      subject: $subject,
+      playlist: $playlist,
       description: $description,
-      grade: $grade,
     ) {
       _id
+      name
     }
   }
 `;
@@ -35,7 +34,7 @@ const CreateObjective = () => {
   const courseQuery = useQuery(INSTRUCTING_COURSES_QUERY);
   // const playlistQuery = useQuery(INSTRUCTING_PLAYLISTS_QUERY);
 
-  const [createObjective, { data }] = useMutation(CREATE_OBJECTIVE_MUTATION, {
+  const [createObjective, { data } ] = useMutation(CREATE_OBJECTIVE_MUTATION, {
     onCompleted: data => {
       alert.success(`Successfully created objective: ${data.createObjective.name}`);
       reset();
@@ -50,9 +49,8 @@ const CreateObjective = () => {
     createObjective({
       variables: {
         name: data.name,
-        subject: data.subject,
+        playlist: data.playlist,
         description: data.description,
-        grade: parseInt(data.grade), //has to be int for gql
       }
     })
   };
@@ -71,6 +69,7 @@ const CreateObjective = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor='name'>name*</label>
           <input type="text" name="name" ref={register({ required: true })} />
+          {errors.name && "Name is required"}
 
           {courseQuery.data && (
             <>
@@ -81,24 +80,28 @@ const CreateObjective = () => {
                   <option value={course._id} key={course._id}>{course.name}</option>
                 ))}
               </select>
+              {errors.course && "Course is required"}
             </>
           )}
 
           {coursePlaylists && (coursePlaylists.length > 0) ?
             <>
-              <label htmlFor='course'>Playlist*</label>
+              <label htmlFor='playlist'>Playlist*</label>
               <select name='playlist' ref={register({ required: true })}>
                 <option disabled="" value="">Select the Playlist this objective will be in:</option>
                 {coursePlaylists.map(playlist => (
                   <option value={playlist._id} key={playlist._id}>{playlist.name}</option>
                 ))}
               </select>
+              {errors.playlist && "Course is required"}
             </> :
             (coursePlaylists && <p>No playlists in course.  Please create playlist first</p>)
           }
 
           <label htmlFor='description'>description</label>
           <textarea name="description" ref={register({ required: true, maxLength: 255 })} />
+          {errors.description?.type === "required" && "Description is required."}
+          {errors.description?.type === "maxLength" && "Maximum description length is 255 characters."}
 
           <button type='submit'>Create Objective</button>
         </form>
