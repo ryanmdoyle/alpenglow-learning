@@ -7,8 +7,6 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const db = require('./db');
-const User = require('./models/User');
-
 const typeDefs = require('./gqlSchema');
 const queries = require('./resolvers/queries');
 const mutations = require('./resolvers/mutations');
