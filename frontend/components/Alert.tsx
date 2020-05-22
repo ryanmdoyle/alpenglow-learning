@@ -47,7 +47,6 @@ const dismissStyle = css`
 `
 
 const Alert = () => {
-  // const statusStyle = (status === 'success') ? [alertCore] : [alertCore, error];  // within div css to build
   return (
     <AlertContext.Consumer>
       {(context) => {
