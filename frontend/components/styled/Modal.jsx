@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { css } from '@emotion/core';
-import PropTypes from 'prop-types';
 
+import ModalContext from '../context/ModalContext';
 import CloseButton from '../styled/elements/CloseButton';
 
 const modalContainer = css`
-  position: absolute;
+  position: fixed;
   top: 0;
-  width: 100%;
+  left: var(--navWidth);
+  width: calc(100% - var(--navWidth));
   height: 100%;
   display: flex;
   align-items: center;
@@ -17,15 +18,14 @@ const modalContainer = css`
 
 const modal = css`
   position: relative;
-  height: 80%;
-  width: 80%;
+  width: 60%;
   background-color: white;
   border-radius: var(--borderRadius);
   box-shadow: var(--shadowHeavy);
   padding: 1rem;
 
   .close {
-    position: absolute;
+    position: relative;
     top: 0;
     right: 0;
     padding: 1rem;
@@ -34,24 +34,23 @@ const modal = css`
 `;
 
 
-const Modal = ({ children, isOpen, toggle }) => {
+const Modal = () => {
+  const context = useContext(ModalContext);
 
-  return (
-    <div css={modalContainer}>
-      <div css={modal}>
-        <div className='close'>
-          <CloseButton onClick={() => { toggle(!isOpen) }} />
+  if (context.isOpen) { //modal context IS open
+    return (
+      <div css={modalContainer}>
+        <div css={modal}>
+          <div className='close'>
+            <CloseButton onClick={() => { context.setIsOpen(false) }} />
+          </div>
+          {context.childComponent}
         </div>
-        {children}
       </div>
-    </div>
-  );
+    )
+  } else { // modal context is NOT Open
+    return null;
+  };
 };
-
-Modal.propTypes = {
-  children: PropTypes.node.isRequired,
-  isOpen: PropTypes.bool.isRequired,
-  toggle: PropTypes.func.isRequired,
-}
 
 export default Modal;

@@ -11,14 +11,16 @@ import { theme } from '../styles/theme';
 // Components
 import NavPanel from '../components/Nav/NavPanel';
 import Alert from '../components/Alert';
+import Modal from '../components/styled/Modal';
 import { UserProvider } from '../components/context/UserContext';
 import { AlertProvider } from '../components/context/AlertContext';
+import { ModalProvider } from '../components/context/ModalContext';
 
 const layout = css`
   height: 100vh;
   max-width: 100vw;
   display: grid;
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: var(--navWidth) 1fr;
   grid-template-rows: 1fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
@@ -67,17 +69,20 @@ function MyApp({ Component, pageProps }) {
     <ThemeProvider theme={theme}>
       <UserProvider>
         <AlertProvider>
-          <Global styles={global} />
-          <Head>
-            <script src="https://apis.google.com/js/platform.js" async defer></script>
-          </Head>
-          <div css={layout}>
-            <NavPanel />
-            <main>
-              <Component {...pageProps} />
-              <Alert />
-            </main>
-          </div>
+          <ModalProvider>
+            <Global styles={global} />
+            <Head>
+              <script src="https://apis.google.com/js/platform.js" async defer></script>
+            </Head>
+            <div css={layout}>
+              <NavPanel />
+              <main>
+                <Component {...pageProps} />
+                <Alert />
+                <Modal />
+              </main>
+            </div>
+          </ModalProvider>
         </AlertProvider>
       </UserProvider>
     </ThemeProvider>
