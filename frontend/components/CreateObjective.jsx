@@ -30,10 +30,8 @@ const CreateObjective = () => {
   const { register, handleSubmit, errors, reset } = useForm();
   const [coursePlaylists, setCoursePlaylists] = useState(null);
   const alert = useContext(AlertContext);
-
   const courseQuery = useQuery(INSTRUCTING_COURSES_QUERY);
-  // const playlistQuery = useQuery(INSTRUCTING_PLAYLISTS_QUERY);
-
+  
   const [createObjective, { data } ] = useMutation(CREATE_OBJECTIVE_MUTATION, {
     onCompleted: data => {
       alert.success(`Successfully created objective: ${data.createObjective.name}`);

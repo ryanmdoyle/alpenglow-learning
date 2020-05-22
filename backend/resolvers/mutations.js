@@ -76,11 +76,14 @@ const mutations = {
   async createObjective(parent, args, context, info) {
     const { currentUser } = context;
     if (currentUser.permissions !== 'STUDENT') {
+      const parentPlaylist = await Playlist.findById(args.playlist);
       const newObjective = new Objective({
+        order: parentPlaylist.objectives.length + 1,
         ...args
       })
       const createdObjective = await newObjective.save().catch((err) => { console.error(err) });
-      console.log('createdObj in mutation res\n', createdObjective);
+      parentPlaylist.objectives.push(newObjective._id);
+      parentPlaylist.save().catch((err) => {console.log(err)});
       return createdObjective;
     }
     return 'Permission Denied!';
