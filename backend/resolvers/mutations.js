@@ -83,7 +83,7 @@ const mutations = {
       })
       const createdObjective = await newObjective.save().catch((err) => { console.error(err) });
       parentPlaylist.objectives.push(newObjective._id);
-      parentPlaylist.save().catch((err) => {console.log(err)});
+      await parentPlaylist.save().catch((err) => {console.log(err)});
       return createdObjective;
     }
     return 'Permission Denied!';
