@@ -18,10 +18,10 @@ const userSchema = new Schema({
       default: 'STUDENT'
     }
   ],
-  enrolledCourses: [
+  enrolledClasses: [
     {
       type: mongoose.ObjectId,
-      ref: Course,
+      ref: Class,
     }
   ],
   instructingCourses: [

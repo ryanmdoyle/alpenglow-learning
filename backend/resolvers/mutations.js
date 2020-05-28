@@ -83,7 +83,7 @@ const mutations = {
       })
       const createdObjective = await newObjective.save().catch((err) => { console.error(err) });
       parentPlaylist.objectives.push(newObjective._id);
-      await parentPlaylist.save().catch((err) => {console.log(err)});
+      await parentPlaylist.save().catch((err) => { console.log(err) });
       return createdObjective;
     }
     return 'Permission Denied!';
@@ -91,19 +91,29 @@ const mutations = {
 
   async enroll(parent, args, context, info) {
     const { currentUser } = context;
-    if (currentUser && !currentUser.roles.includes('STUDENT')) {
-      const userInDb = await User.findById(currentUser._id);
-      const courseToEnroll = await Course.findOne({ enrollId: args.enrollId });
 
-      if (!userInDb.enrolledCourses.includes(courseToEnroll._id)) { // if not already enrolled
-        userInDb.enrolledCourses.push(courseToEnroll._id);
+    if (currentUser) {
+      const userInDb = await User.findById(currentUser._id);
+      const classToEnroll = await Class.findOne({ enrollId: args.enrollId });
+
+      // Add class to a Users enrolledClasses
+      if (!userInDb.enrolledClasses.includes(classToEnroll._id)) {
+        userInDb.enrolledClasses.push(classToEnroll._id);
         await userInDb.save();
       } else {
-        return new ApolloError('Already Enrolled in course');
+        return new ApolloError(`User is already enrolled in this class.`);
+      }
+
+      // Adds User to list of enrolled students in Class
+      if (!classToEnroll.enrolled.includes(userInDb._id)) {
+        classToEnroll.enrolled.push(userInDb._id);
+        await classToEnroll.save();
+      } else {
+        return new ApolloError(`Class already has this user as an enrolled student.`);
       }
       return userInDb;
     }
-    return 'Not a student!'
+    return 'Not logged in!'
   }
 }
 module.exports = mutations;

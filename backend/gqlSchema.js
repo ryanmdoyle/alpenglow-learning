@@ -78,7 +78,7 @@ const typeDefs = gql`
     googleId: String!,
     email: String!,
     roles: [String!],
-    enrolledCourses: [String],
+    enrolledClasses: [String],
     instructingCourses: [Course],
     instructingClasses: [Class],
   }

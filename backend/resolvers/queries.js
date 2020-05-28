@@ -39,7 +39,13 @@ const queries = {
 	},
 
 	async getEnrolledClasses(parent, args, context, info) { //match to getInstructingCourses
-		// PLACEHOLDER
+		const { currentUser } = context;
+		if (!args.user_id) {
+			const user = await User.findById(currentUser._id).populate('enrolledClasses');
+			return user.enrolledClasses;
+		}
+		const user = await User.findById(args.user_id);
+		return user.enrolledClasses;
 	},
 
 	async getInstructingClasses(parent, args, context, info) { //look up courses belonging to User

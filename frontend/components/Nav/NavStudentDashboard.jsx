@@ -6,47 +6,37 @@ import { gql } from 'apollo-boost';
 import NavSectionPadding from '../styled/NavSectionPadding';
 import NavSectionHeader from '../styled/NavSectionHeader';
 import NavItem from './NavItem';
-import Enroll from './Enroll';
+import Enroll from './EnrollNavButton';
 import Loading from '../Loading';
+import { GET_ENROLLED_CLASSES_QUERY } from '../../gql/queries';
 
-const enrolledCourses = css`padding-left: 1rem;`;
-
-const GET_ENROLLED_COURSES_QUERY = gql`
-  query GET_ENROLLED_COURSES_QUERY {
-    getEnrolledCourses {
-      name
-      _id
-    }
-  }
-`;
+const enrolledClasses = css`padding-left: 1rem;`;
 
 const NavStudentDashboard = props => {
-  const { loading, error, data } = useQuery(GET_ENROLLED_COURSES_QUERY);
-  const studentHasEnrollments = data?.getEnrolledCourses?.length > 0;
-
+  const { loading, error, data } = useQuery(GET_ENROLLED_CLASSES_QUERY);
+  const studentHasEnrollments = data?.getEnrolledClasses?.length > 0;
   if (loading) return <Loading />;
   return (
     <NavSectionPadding>
       <NavSectionHeader title='Student Dashboard' />
       <ul css={css`list-style:none;margin:1rem 0.2rem;padding:0;`}>
-        {studentHasEnrollments ? (
+        {studentHasEnrollments && (
           <>
-            <NavItem title='All Courses' href='/student/courses' />
-            {data.getEnrolledCourses && (
-              <div css={enrolledCourses}>
-                {data.getEnrolledCourses.map(course => {
-                  const courseHref = `/student/course/${course._id}`;
-                  return <NavItem title={course.name} href={courseHref} key={course._id} />
+            <NavItem title='All Classes' href='/student/classes' />
+            {data.getEnrolledClasses && (
+              <div css={enrolledClasses}>
+                {data.getEnrolledClasses.map(c => {
+                  const classHref = `/student/class/${c._id}`;
+                  return <NavItem title={c.name} href={classHref} key={c._id} />
                 })}
               </div>
             )}
             <NavItem title='Grades' href='/student/grades' />
           </>
-        ) : <Enroll />}
+        )}
       </ul>
     </NavSectionPadding>
   );
 };
 
 export default NavStudentDashboard;
-export { GET_ENROLLED_COURSES_QUERY };
