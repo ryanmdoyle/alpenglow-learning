@@ -3,12 +3,12 @@ import { useForm } from 'react-hook-form';
 import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
 
-import FormWrapper from './styled/FormWrapper';
-import PagePadding from './styled/PagePadding';
-import gradeLevels from '../lib/gradeLevels';
-import AlertContext from './context/AlertContext';
-import { subjectsEnum } from '../lib/subjectsEnum';
-import { INSTRUCTING_COURSES_QUERY } from '../gql/queries';
+import FormWrapper from '../styled/FormWrapper';
+import PagePadding from '../styled/PagePadding';
+import gradeLevels from '../../lib/gradeLevels';
+import AlertContext from '../context/AlertContext';
+import { subjectsEnum } from '../../lib/subjectsEnum';
+import { INSTRUCTING_COURSES_QUERY } from '../../gql/queries';
 
 const CREATE_COURSE = gql`
     mutation CREATE_COURSE(
@@ -34,7 +34,7 @@ const CREATE_COURSE = gql`
     }
   `;
 
-const CreateCourse = () => {
+const CreateCourseForm = () => {
   const { register, handleSubmit, errors, reset } = useForm();
   const alert = useContext(AlertContext)
 
@@ -66,7 +66,7 @@ const CreateCourse = () => {
 
   return (
     <PagePadding>
-      <h3>Create New Course</h3>
+      <h4>Create New Course</h4>
       <FormWrapper>
         <form onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor='name'>name*</label>
@@ -111,4 +111,4 @@ const CreateCourse = () => {
   );
 };
 
-export default CreateCourse;
+export default CreateCourseForm;

@@ -3,11 +3,11 @@ import { useForm } from 'react-hook-form';
 import { gql } from 'apollo-boost';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 
-import FormWrapper from './styled/FormWrapper';
-import PagePadding from './styled/PagePadding';
-import Loading from './Loading';
-import AlertContext from './context/AlertContext';
-import { INSTRUCTING_COURSES_QUERY } from '../gql/queries';
+import FormWrapper from '../styled/FormWrapper';
+import PagePadding from '../styled/PagePadding';
+import Loading from '../Loading';
+import AlertContext from '../context/AlertContext';
+import { INSTRUCTING_COURSES_QUERY } from '../../gql/queries';
 
 const CREATE_OBJECTIVE_MUTATION = gql`
   mutation CREATE_OBJECTIVE(
@@ -26,13 +26,13 @@ const CREATE_OBJECTIVE_MUTATION = gql`
   }
 `;
 
-const CreateObjective = () => {
+const CreateObjectiveForm = () => {
   const { register, handleSubmit, errors, reset } = useForm();
   const [coursePlaylists, setCoursePlaylists] = useState(null);
   const alert = useContext(AlertContext);
   const courseQuery = useQuery(INSTRUCTING_COURSES_QUERY);
-  
-  const [createObjective, { data } ] = useMutation(CREATE_OBJECTIVE_MUTATION, {
+
+  const [createObjective, { data }] = useMutation(CREATE_OBJECTIVE_MUTATION, {
     onCompleted: data => {
       alert.success(`Successfully created objective: ${data.createObjective.name}`);
       reset();
@@ -62,7 +62,7 @@ const CreateObjective = () => {
 
   return (
     <PagePadding>
-      <h3>Create New Objective</h3>
+      <h4>Create New Objective</h4>
       <FormWrapper>
         <form onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor='name'>name*</label>
@@ -108,4 +108,4 @@ const CreateObjective = () => {
   );
 };
 
-export default CreateObjective;
+export default CreateObjectiveForm;

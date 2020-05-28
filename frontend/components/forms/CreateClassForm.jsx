@@ -4,13 +4,13 @@ import { useForm } from 'react-hook-form';
 import { gql } from 'apollo-boost';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
-import FormWrapper from './styled/FormWrapper';
-import PagePadding from './styled/PagePadding';
-import Loading from './Loading';
-import AlertContext from './context/AlertContext';
-import ModalContext from './context/ModalContext';
-import { INSTRUCTING_CLASSES_QUERY } from '../components/Nav/NavStudentProgress';
-import { INSTRUCTING_COURSES_QUERY } from '../gql/queries';
+import FormWrapper from '../styled/FormWrapper';
+import PagePadding from '../styled/PagePadding';
+import Loading from '../Loading';
+import AlertContext from '../context/AlertContext';
+import ModalContext from '../context/ModalContext';
+import { INSTRUCTING_CLASSES_QUERY } from '../Nav/NavStudentProgress';
+import { INSTRUCTING_COURSES_QUERY } from '../../gql/queries';
 
 const CREATE_CLASS = gql`
     mutation CREATE_CLASS(
@@ -26,7 +26,7 @@ const CREATE_CLASS = gql`
     }
   `;
 
-const CreateClass = ({ courseId }) => {
+const CreateClassForm = ({ courseId }) => {
   const { register, handleSubmit, errors, reset } = useForm();
   const alert = useContext(AlertContext)
   const modal = useContext(ModalContext);
@@ -59,7 +59,7 @@ const CreateClass = ({ courseId }) => {
   if (courseQuery.loading) return <Loading />;
   return (
     <PagePadding>
-      <h3>Create New Class</h3>
+      <h4>Create New Class</h4>
       <FormWrapper>
         <form onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor='name'>name*</label>
@@ -87,8 +87,8 @@ const CreateClass = ({ courseId }) => {
   );
 };
 
-CreateClass.propTypes = {
+CreateClassForm.propTypes = {
   courseId: PropTypes.string,
 }
 
-export default CreateClass;
+export default CreateClassForm;

@@ -4,9 +4,9 @@ import { useRouter } from 'next/router';
 import PageTitle from '../../../components/PageTitle';
 import CreateContentNav from '../../../components/CreateContentNav';
 
-import CreatePlaylist from '../../../components/CreatePlaylist';
-import CreateCourse from '../../../components/CreateCourse';
-import CreateObjective from '../../../components/CreateObjective';
+import CreatePlaylistForm from '../../../components/forms/CreatePlaylistForm';
+import CreateCourseForm from '../../../components/forms/CreateCourseForm';
+import CreateObjectiveForm from '../../../components/forms/CreateObjectiveForm';
 
 const createContent = () => {
   const router = useRouter();
@@ -19,10 +19,10 @@ const createContent = () => {
     <div>
       <PageTitle>Create New Content</PageTitle>
       <CreateContentNav changeForm={changeForm} currentForm={activeForm} />
-      {(activeForm === 'objective') && <CreateObjective />}
-      {(activeForm === 'playlist') && <CreatePlaylist />}
-      {(activeForm === 'course') && <CreateCourse />}
-      {/* {(activeForm === 'question') && <CreateQuestion />} */}
+      {(activeForm === 'objective') && <CreateObjectiveForm />}
+      {(activeForm === 'playlist') && <CreatePlaylistForm />}
+      {(activeForm === 'course') && <CreateCourseForm />}
+      {/* {(activeForm === 'question') && <CreateQuestionForm />} */}
     </div>
   );
 };

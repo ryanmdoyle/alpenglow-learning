@@ -3,12 +3,12 @@ import { useForm } from 'react-hook-form';
 import { gql } from 'apollo-boost';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 
-import FormWrapper from './styled/FormWrapper';
-import PagePadding from './styled/PagePadding';
-import Loading from './Loading';
-import AlertContext from './context/AlertContext';
-import { subjectsEnum } from '../lib/subjectsEnum';
-import { INSTRUCTING_COURSES_QUERY } from '../gql/queries';
+import FormWrapper from '../styled/FormWrapper';
+import PagePadding from '../styled/PagePadding';
+import Loading from '../Loading';
+import AlertContext from '../context/AlertContext';
+import { subjectsEnum } from '../../lib/subjectsEnum';
+import { INSTRUCTING_COURSES_QUERY } from '../../gql/queries';
 
 const GET_USER_COURSES_QUERY = gql`
   # currently gets all courses, but should later only get courses for logged in user
@@ -41,7 +41,7 @@ const CREATE_PLAYLIST_MUTATION = gql`
     }
   `;
 
-const CreatePlaylist = () => {
+const CreatePlaylistForm = () => {
   const [courseSubject, setCourseSubject] = useState(null);
   const { register, handleSubmit, errors, reset } = useForm();
 
@@ -89,7 +89,7 @@ const CreatePlaylist = () => {
   if (loading) return <Loading />;
   return (
     <PagePadding>
-      <h3>Create New Playlist</h3>
+      <h4>Create New Playlist</h4>
       <FormWrapper>
         <form onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor='name'>name*</label>
@@ -131,4 +131,4 @@ const CreatePlaylist = () => {
   );
 };
 
-export default CreatePlaylist;
+export default CreatePlaylistForm;

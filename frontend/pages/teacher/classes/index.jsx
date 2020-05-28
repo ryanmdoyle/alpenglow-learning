@@ -5,7 +5,7 @@ import { useQuery } from '@apollo/react-hooks'
 
 import Loading from '../../../components/Loading';
 import PagePadding from '../../../components/styled/PagePadding';
-import CreateClass from '../../../components/CreateClass';
+import CreateClassForm from '../../../components/forms/CreateClassForm';
 import TextButton from '../../../components/styled/elements/TextButton';
 import ClassTable from '../../../components/ClassInfo';
 import ModalContext from '../../../components/context/ModalContext';
@@ -32,7 +32,7 @@ const teacherClasses = () => {
             )}
             <div css={css`display: flex; justify-content: flex-end;`}>
             <TextButton text={`Add class to ${course.name}`} whenClicked={() => {
-                  modal.setChildComponent(<CreateClass courseId={course._id} />);
+                  modal.setChildComponent(<CreateClassForm courseId={course._id} />);
                   modal.open();
                 }}></TextButton>
 
