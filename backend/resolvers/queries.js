@@ -18,60 +18,40 @@ const queries = {
 	},
 
 	async getUser(parent, args, context, info) {
-		if (!args.user_id) return User.findOne({ _id: context.currentUser._id });
-		return await User.findOne({ _id: args.currentUser._id });
+		const userId = args.user_id ? args.user_id : context.currentUser._id;
+		return await User.findOne({ _id: userId });
 	},
 
 	async getAllUsers(parent, args, context, info) {
 		return await User.find();
 	},
 
-	async getEnrolledCourses(parent, args, context, info) { //match to getInstructingCourses
-		// PLACEHOLDER
+	async getInstructingCourses(parent, args, context, info) {
+		const userId = args.user_id ? args.user_id : context.currentUser._id;
+		return await Course.find({ owner: userId }).populate('playlists').populate('classes');
 	},
 
-	async getInstructingCourses(parent, args, context, info) { //look up courses belonging to User
-		const { currentUser } = context;
-		if (!args.user_id) {
-			return await Course.find({ owner: currentUser._id }).populate('playlists').populate('classes');
-		}
-		return await Course.find({ owner: args.user_id }).populate('playlists').populate('classes');
-	},
-
-	async getEnrolledClasses(parent, args, context, info) { //match to getInstructingCourses
-		const { currentUser } = context;
-		if (!args.user_id) {
-			const user = await User.findById(currentUser._id).populate('enrolledClasses');
-			return user.enrolledClasses;
-		}
-		const user = await User.findById(args.user_id);
+	async getEnrolledClasses(parent, args, context, info) {
+		const userId = args.user_id ? args.user_id : context.currentUser._id;
+		const user = await User.findById(userId).populate('enrolledClasses');
 		return user.enrolledClasses;
 	},
 
-	async getInstructingClasses(parent, args, context, info) { //look up courses belonging to User
-		const { currentUser } = context;
-		if (!args.user_id) {
-			return await Class.find({ primaryInstructor: currentUser._id }).populate('enrolled').populate('secondaryInstructors');
-		}
-		return await Class.find({ primaryInstructor: args.user_id }).populate('enrolled').populate('secondaryInstructors');
+	async getInstructingClasses(parent, args, context, info) {
+		const userId = args.user_id ? args.user_id : context.currentUser._id;
+		return await Class.find({ primaryInstructor: userId }).populate('enrolled').populate('secondaryInstructors');
 	},
 
 	// apply checking logic for current user above to queires below:
 	async getEnrolledPlaylists(parent, args, context, info) {
-		if (!args.user_id) {
-			const currentUser = await User.findById(context.currentUser._id).populate('enrolledPlaylists');
-			return currentUser.enrolledPlaylists; // return only array of Courses
-		}
-		const requestedUser = await User.findById(args.user_id).populate('enrolledPlaylists');
+		const userId = args.user_id ? args.user_id : context.currentUser._id;
+		const requestedUser = await User.findById(userId).populate('enrolledPlaylists');
 		return requestedUser.enrolledPlaylists;
 	},
 
 	async getInstructingPlaylists(parent, args, context, info) {
-		if (!args.user_id) {
-			const currentUser = await Playlist.find({ owner })
-			return currentUser.instructingPlaylists; // return only array of Courses
-		}
-		const requestedUser = await User.findById(args.user_id).populate('instructingPlaylists');
+		const userId = args.user_id ? args.user_id : context.currentUser._id;
+		const requestedUser = await User.findById(userId).populate('instructingPlaylists');
 		return requestedUser.instructingPlaylists;
 	},
 
