@@ -11,7 +11,7 @@ import { theme } from '../styles/theme';
 // Components
 import NavPanel from '../components/Nav/NavPanel';
 import Alert from '../components/Alert';
-import Modal from '../components/styled/Modal';
+import Modal from '../components/Modal';
 import { UserProvider } from '../components/context/UserContext';
 import { AlertProvider } from '../components/context/AlertContext';
 import { ModalProvider } from '../components/context/ModalContext';
