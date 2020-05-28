@@ -15,7 +15,8 @@ const ModalProvider = ({ children }) => {
           setChildComponent(component);
         },
         isOpen: isOpen,
-        setIsOpen: () => (setIsOpen(!isOpen)),
+        open: () => (setIsOpen(true)),
+        close: () => (setIsOpen(false)),
       }}
     >
       {children}

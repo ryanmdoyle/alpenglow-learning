@@ -8,7 +8,7 @@ import PagePadding from '../../../components/styled/PagePadding';
 const manage = () => {
   return (
     <>
-      <PageTitle title='Manage Students' />
+      <PageTitle>Manage Students</PageTitle>
       <PagePadding>
 
         <p>Manage all students here (emails, parents data, etc.)</p>

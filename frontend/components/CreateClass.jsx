@@ -8,6 +8,7 @@ import FormWrapper from './styled/FormWrapper';
 import PagePadding from './styled/PagePadding';
 import Loading from './Loading';
 import AlertContext from './context/AlertContext';
+import ModalContext from './context/ModalContext';
 import { INSTRUCTING_CLASSES_QUERY } from '../components/Nav/NavStudentProgress';
 import { INSTRUCTING_COURSES_QUERY } from '../gql/queries';
 
@@ -28,6 +29,7 @@ const CREATE_CLASS = gql`
 const CreateClass = ({ courseId }) => {
   const { register, handleSubmit, errors, reset } = useForm();
   const alert = useContext(AlertContext)
+  const modal = useContext(ModalContext);
 
   const courseQuery = useQuery(INSTRUCTING_COURSES_QUERY)
   const [createClass, { data }] = useMutation(CREATE_CLASS, {
@@ -35,6 +37,7 @@ const CreateClass = ({ courseId }) => {
     refetchQueries: [{ query: INSTRUCTING_CLASSES_QUERY }, { query: INSTRUCTING_COURSES_QUERY }],
     onCompleted: data => {
       reset();
+      modal.close();
       alert.success(`Successfully created course ${data.createClass.name}!`, 10);
     },
     onError: (error) => {

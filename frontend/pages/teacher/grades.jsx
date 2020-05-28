@@ -4,7 +4,7 @@ import PageTitle from '../../components/PageTitle';
 const teacherGrades = () => {
   return (
     <div>
-      <PageTitle title='Grades' />
+      <PageTitle>Grades</PageTitle>
     </div>
   );
 };

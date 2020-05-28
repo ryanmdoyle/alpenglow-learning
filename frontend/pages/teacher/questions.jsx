@@ -4,7 +4,7 @@ import PageTitle from '../../components/PageTitle';
 const teacherQuestions = () => {
   return (
     <div>
-      <PageTitle title='Questions' />
+      <PageTitle>Questions</PageTitle>
     </div>
   );
 };

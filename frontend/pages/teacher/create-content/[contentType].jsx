@@ -24,7 +24,7 @@ const createContent = (req, res) => {
 
   return (
     <div>
-      <PageTitle title='Create New Content' />
+      <PageTitle>Create New Content</PageTitle>
       <CreateContentNav changeForm={changeForm} currentForm={activeForm} />
       {(activeForm === 'objective') && <CreateObjective />}
       {(activeForm === 'playlist') && <CreatePlaylist />}

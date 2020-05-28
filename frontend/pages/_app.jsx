@@ -29,20 +29,6 @@ const layout = css`
   overflow: hidden;
   scrollbar-width: thin;
   scrollbar-color: var(--scrollbar) var(--scrollbarBG);
-  
-    /* nav::-webkit-scrollbar, main::-webkit-scrollbar {
-      width: 10px;
-    }
-    
-    nav::-webkit-scrollbar-track, main::-webkit-scrollbar-track {
-      background: var(--scrollbarBG);
-    }
-
-    nav::-webkit-scrollbar-thumb, main::-webkit-scrollbar-thumb {
-      background-color: var(--scrollbar) ;
-      border-radius: 6px;
-      border: 3px solid var(--scrollbarBG);
-    } */
 
     nav {
       grid-area: nav;

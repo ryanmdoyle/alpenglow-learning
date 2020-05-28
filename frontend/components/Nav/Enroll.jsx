@@ -87,7 +87,7 @@ const Enroll = () => {
   const alert = useContext(AlertContext);
   const [enroll, { data }] = useMutation(ENROLL_MUTATION, {
     onCompleted: (data) => {
-      alert.success(`Successfully enrolled in course!`)
+      alert.success(`Successfully enrolled in class!`)
     },
     onError: (data) => (alert.error(`Ooops, looks like there was a problem. ${data}`)),
   }
@@ -101,7 +101,7 @@ const Enroll = () => {
   return (
     <>
       <div css={item} onClick={() => { setIsAdding(!isAdding) }}>
-        <p>Enroll In Course</p>
+        <p>Enroll In Class</p>
       </div>
       <form css={enrollForm} className={isAdding ? 'shown' : 'hidden'} onSubmit={handleSubmit(onSubmit)}>
         <input placeholder='Enter Enroll ID' name='enrollId' className={isAdding ? 'shown' : 'hidden'} ref={register({ required: true })}></input>

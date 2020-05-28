@@ -8,7 +8,7 @@ import Loading from '../../components/Loading';
 const studentCourses = () => {
   return (
     <>
-      <PageTitle title='All Courses' />
+      <PageTitle>All Courses</PageTitle>
       <CourseTimeline name='Math' />
       <CourseTimeline name='Science' />
       <CourseTimeline name='English' />

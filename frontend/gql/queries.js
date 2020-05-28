@@ -16,6 +16,10 @@ export const INSTRUCTING_COURSES_QUERY = gql`
       classes {
         _id
         name
+        enrollId
+        enrolled {
+          _id
+        }
       }
     }
   }

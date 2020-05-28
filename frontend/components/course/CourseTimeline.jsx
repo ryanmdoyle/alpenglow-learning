@@ -3,7 +3,6 @@ import { css } from '@emotion/core';
 
 import PlaylistBox from '../courses/PlaylistBox';
 import PlusButton from '../styled/elements/PlusButton';
-import MinusButton from '../styled/elements/MinusButton';
 import { PlaylistEnum } from '../../lib/enums';
 
 const playlistsContainer = css`
@@ -51,7 +50,6 @@ const CourseTimeline = ({ name, playlists }) => {
   const essential = playlists.filter(playlist => playlist.type === PlaylistEnum.Essential);
   const core = playlists.filter(playlist => playlist.type === PlaylistEnum.Core);
   const challenge = playlists.filter(playlist => playlist.type === PlaylistEnum.Challenge);
-
   return (
     <section css={courseContainer}>
       <h4>{name}</h4>

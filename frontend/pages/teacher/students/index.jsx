@@ -9,7 +9,7 @@ const teacherStudents = () => {
 
   return (
     <>
-      <PageTitle title='Student Progress' />
+      <PageTitle>Student Progress</PageTitle>
       <PagePadding>
         <p>A list of students will be here someday...</p>
       </PagePadding>

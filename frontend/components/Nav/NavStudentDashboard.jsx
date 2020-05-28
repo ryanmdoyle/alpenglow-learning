@@ -22,24 +22,27 @@ const GET_ENROLLED_COURSES_QUERY = gql`
 
 const NavStudentDashboard = props => {
   const { loading, error, data } = useQuery(GET_ENROLLED_COURSES_QUERY);
+  const studentHasEnrollments = data?.getEnrolledCourses?.length > 0;
 
   if (loading) return <Loading />;
-
   return (
     <NavSectionPadding>
       <NavSectionHeader title='Student Dashboard' />
       <ul css={css`list-style:none;margin:1rem 0.2rem;padding:0;`}>
-        <NavItem title='All Courses' href='/student/courses' />
-        {data.getEnrolledCourses && (
-          <div css={enrolledCourses}>
-            {data.getEnrolledCourses.map(course => {
-              const courseHref = `/student/course/${course._id}`;
-              return <NavItem title={course.name} href={courseHref} key={course._id} />
-            })}
-          </div>
-        )}
-        <NavItem title='Grades' href='/student/grades' />
-        <Enroll />
+        {studentHasEnrollments ? (
+          <>
+            <NavItem title='All Courses' href='/student/courses' />
+            {data.getEnrolledCourses && (
+              <div css={enrolledCourses}>
+                {data.getEnrolledCourses.map(course => {
+                  const courseHref = `/student/course/${course._id}`;
+                  return <NavItem title={course.name} href={courseHref} key={course._id} />
+                })}
+              </div>
+            )}
+            <NavItem title='Grades' href='/student/grades' />
+          </>
+        ) : <Enroll />}
       </ul>
     </NavSectionPadding>
   );

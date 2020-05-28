@@ -14,16 +14,16 @@ const titleStyles = css`
   }
 `;
 
-const PageTitle = ({ title }) => {
+const PageTitle = ({ children }) => {
   return (
     <div css={titleStyles}>
-      <h3>{title}</h3>
+      <h3>{children}</h3>
     </div>
   );
 };
 
 PageTitle.propTypes = {
-  title: PropTypes.string.isRequired,
+  children: PropTypes.string.isRequired,
 }
 
 export default PageTitle;
