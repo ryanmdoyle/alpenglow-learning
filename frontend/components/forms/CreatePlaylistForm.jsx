@@ -94,7 +94,7 @@ const CreatePlaylistForm = ({ course, subject, type }) => {
   if (loading) return <Loading />;
   return (
     <PagePadding>
-      <h4>Create New Playlist</h4>
+      {(course && type) ? <h4>Create New {type} Playlist</h4> : <h4>Create New Playlist</h4>}
       <FormWrapper>
         <form onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor='name'>name*</label>
