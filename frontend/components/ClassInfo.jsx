@@ -8,18 +8,19 @@ const classTable = css`
   border: 1px solid rgba(1, 1, 1, 0);
   display: flex;
   align-items: center;
-  p {
-    flex: 0 1 25%;
+  span {
+    flex: 0 1 20%;
     text-align: right;
+    padding: 0.5rem 0;
   }
-  .name {
-    flex: 1 0 50%;
+  span:first-of-type {
+    flex: 1 1 50%;
     text-align: left;
   }
 `;
 
 const row = css`
-  padding: 0.2rem 1rem;
+  padding: 0.5rem 1rem;
   :hover, :focus, :active {
       border: 1px solid var(--blueMedium);
       box-shadow: var(--shadowLight);
@@ -35,6 +36,7 @@ const header = css`
 `;
 
 const firstDivBorder = css`
+  min-width: 500px;
   div:nth-of-type(2) {
     border-top: 1px solid var(--blueMedium50);
     border-radius: 0;
@@ -46,20 +48,37 @@ const firstDivBorder = css`
   }
 `;
 
+const tableContainer = css`
+  width: 100%;
+  overflow-y: auto;
+  ::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 3px;
+    height: 0.3rem;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: var(--blueMedium);
+  }
+`;
+
 const ClassTable = ({ classData }) => {
 
   return (
-    <div css={firstDivBorder}>
-      <ClassTableHeader />
-      {classData.map(c => {
-        return (
-          <div css={[classTable, row]} key={c._id}>
-            <p className='name'>{c.name}</p>
-            <p>{c.enrollId}</p>
-            <p>{c.enrolled.length}</p>
-          </div>
-        )
-      })}
+    <div css={tableContainer}>
+      <div css={firstDivBorder}>
+        <ClassTableHeader />
+        {classData.map(c => {
+          return (
+            <div css={[classTable, row]} key={c._id}>
+              <span className='first-column'>{c.name}</span>
+              <span>{c.enrollId}</span>
+              <span>{c.enrolled.length}</span>
+            </div>
+          )
+        })}
+      </div>
     </div>
   );
 };
@@ -67,9 +86,9 @@ const ClassTable = ({ classData }) => {
 const ClassTableHeader = () => {
   return (
     <div css={[classTable, header]}>
-      <p className='name'>Class Name</p>
-      <p>Enroll ID</p>
-      <p>Students Enrolled</p>
+      <span className='first-column'>Class Name</span>
+      <span>Enroll ID</span>
+      <span>Students Enrolled</span>
     </div>
   )
 }
