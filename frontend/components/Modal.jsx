@@ -18,11 +18,15 @@ const modalContainer = css`
 
 const modal = css`
   position: relative;
-  width: 60%;
+  width: 80%;
   background-color: white;
   border-radius: var(--borderRadius);
   box-shadow: var(--shadowHeavy);
-  padding: 1rem;
+  padding: 0;
+  
+  h4 {
+    margin: 0;
+  }
 
   .close {
     position: relative;
@@ -30,7 +34,6 @@ const modal = css`
     right: 0;
     padding: 1rem;
   }
-  
 `;
 
 

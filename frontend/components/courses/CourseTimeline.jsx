@@ -1,5 +1,6 @@
 import React from 'react';
 import { css } from '@emotion/core';
+import PropTypes from 'prop-types';
 
 import PlaylistBox from './PlaylistBox';
 import PlaylistTypeTimeline from './PlaylistTypeTimeline';
@@ -19,8 +20,14 @@ const courseContainer = css`
     color: var(--blueDark);
   }
   h2  {margin: 0.2rem 0; }
-  h4, h5 { margin: 0.6rem 0; }
-  h5 { color: var(--blueMedium);}
+  h4, h5 { 
+    margin: 0.6rem 0;
+  }
+  h4 {
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--blueMedium50);
+    margin-bottom: 1rem;
+  }
 
   :hover {
     box-shadow: var(--shadowMedium);
@@ -28,7 +35,7 @@ const courseContainer = css`
   }
 `;
 
-const CourseTimeline = ({ name, playlists }) => {
+const CourseTimeline = ({ name, playlists, courseId, subject }) => {
   const essential = playlists.filter(playlist => playlist.type === PlaylistEnum.Essential);
   const core = playlists.filter(playlist => playlist.type === PlaylistEnum.Core);
   const challenge = playlists.filter(playlist => playlist.type === PlaylistEnum.Challenge);
@@ -36,11 +43,18 @@ const CourseTimeline = ({ name, playlists }) => {
   return (
     <section css={courseContainer}>
       <h4>{name}</h4>
-      <PlaylistTypeTimeline type='Essential' playlists={essential} />
-      <PlaylistTypeTimeline type='Core' playlists={core} />
-      <PlaylistTypeTimeline type='Challenge' playlists={challenge} />
+      <PlaylistTypeTimeline courseId={courseId} subject={subject} type='Essential' playlists={essential} />
+      <PlaylistTypeTimeline courseId={courseId} subject={subject} type='Core' playlists={core} />
+      <PlaylistTypeTimeline courseId={courseId} subject={subject} type='Challenge' playlists={challenge} />
     </section>
   );
 };
+
+CourseTimeline.propTypes = {
+  name: PropTypes.string,
+  playlists: PropTypes.array,
+  courseId: PropTypes.string,
+  subject: PropTypes.string,
+}
 
 export default CourseTimeline;

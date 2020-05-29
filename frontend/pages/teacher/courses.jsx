@@ -16,7 +16,13 @@ const teacherCourses = () => {
       <PageTitle>Course Curriculum</PageTitle>
       {data.getInstructingCourses && (
         data.getInstructingCourses.map(course => (
-          <CourseTimeline name={course.name} playlists={course.playlists} key={course._id} />
+          <CourseTimeline
+            name={course.name}
+            courseId={course._id}
+            playlists={course.playlists}
+            subject={course.subject}
+            key={course._id}
+          />
         ))
       )}
     </div >

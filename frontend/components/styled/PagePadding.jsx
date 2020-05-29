@@ -1,16 +1,16 @@
 import React from 'react';
-import styled from '@emotion/styled';
+import { css } from '@emotion/core';
 
-const PagePaddingStyled = styled.div`
+const PagePaddingStyled = css`
   display: relative;
   padding: 0 2rem 3rem 2rem;
 `;
 
 const PagePadding = ({ children }) => {
   return (
-    <PagePaddingStyled>
+    <div css={PagePaddingStyled}>
       {children}
-    </PagePaddingStyled>
+    </div>
   );
 };
 

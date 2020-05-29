@@ -2,11 +2,13 @@ import React, { useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { gql } from 'apollo-boost';
 import { useMutation, useQuery } from '@apollo/react-hooks';
+import PropTypes from 'prop-types';
 
 import FormWrapper from '../styled/FormWrapper';
 import PagePadding from '../styled/PagePadding';
 import Loading from '../Loading';
 import AlertContext from '../context/AlertContext';
+import ModalContext from '../context/ModalContext';
 import { subjectsEnum } from '../../lib/subjectsEnum';
 import { INSTRUCTING_COURSES_QUERY } from '../../gql/queries';
 
@@ -41,7 +43,7 @@ const CREATE_PLAYLIST_MUTATION = gql`
     }
   `;
 
-const CreatePlaylistForm = () => {
+const CreatePlaylistForm = ({ course, subject, type }) => {
   const [courseSubject, setCourseSubject] = useState(null);
   const { register, handleSubmit, errors, reset } = useForm();
 
@@ -51,10 +53,13 @@ const CreatePlaylistForm = () => {
   const error = query.loading;
 
   const alert = useContext(AlertContext);
+  const modal = useContext(ModalContext);
+
   const [createPlaylist, { data, client }] = useMutation(CREATE_PLAYLIST_MUTATION, {
     awaitRefetchQueries: true,
     refetchQueries: [{ query: INSTRUCTING_COURSES_QUERY }],
     onCompleted: (data) => {
+      modal.close();
       alert.success(`Successfully created playlist: ${data.createPlaylist.name}`);
       reset(); //resets form values
     },
@@ -68,11 +73,11 @@ const CreatePlaylistForm = () => {
     createPlaylist({
       variables: {
         name: data.name,
-        subject: data.subject,
+        subject: data.subject ? data.subject : subject,
         description: data.description,
         grade: parseInt(data.grade), //has to be int for gql
-        course: data.course,
-        type: data.type, // type accepts: ESSENTIAL, CORE, CHALLENGE
+        course: data.course ? data.course : course,
+        type: data.type ? data.type : type.toUpperCase(), // type accepts: ESSENTIAL, CORE, CHALLENGE
       }
     })
   };
@@ -95,31 +100,41 @@ const CreatePlaylistForm = () => {
           <label htmlFor='name'>name*</label>
           <input type="text" name="name" ref={register({ required: true })} />
 
-          {query.data && (query.data.getInstructingCourses.length >= 0) && (
+          {!course && (
+            query.data && (query.data.getInstructingCourses.length >= 0) && (
+              <>
+                <label htmlFor='course'>Course*</label>
+                <select name='course' ref={register({ required: true })} onChange={() => { onCourseSelect(event.target.value) }}>
+                  <option disabled="" value="">Select the Course this Playlist will be in below:</option>
+                  {query.data.getInstructingCourses.map((course) => (
+                    <option value={course._id} key={course._id}>{course.name}</option>
+                  ))}
+                </select>
+              </>
+            )
+          )}
+
+          {!subject && (
             <>
-              <label htmlFor='course'>Course*</label>
-              <select name='course' ref={register({ required: true })} onChange={() => { onCourseSelect(event.target.value) }}>
-                <option disabled="" value="">Select the Course this Playlist will be in below:</option>
-                {query.data.getInstructingCourses.map((course) => (
-                  <option value={course._id} key={course._id}>{course.name}</option>
+              <label htmlFor='subject'>subject*</label>
+              <select name='subject' value={courseSubject || ''} ref={register({ required: true })} onChange={() => { setCourseSubject(event.target.value) }}>
+                {subjectsEnum.map(subject => (
+                  <option value={subject} key={subject} >{subject}</option>
                 ))}
               </select>
             </>
           )}
 
-          <label htmlFor='subject'>subject*</label>
-          <select name='subject' value={courseSubject || ''} ref={register({ required: true })} onChange={() => { setCourseSubject(event.target.value) }}>
-            {subjectsEnum.map(subject => (
-              <option value={subject} key={subject} >{subject}</option>
-            ))}
-          </select>
-
-          <label htmlFor='type'>Type</label>
-          <select name="type" ref={register()}>
-            <option value='ESSENTIAL'>Essential</option>
-            <option value='CORE'>Core</option>
-            <option value='CHALLENGE'>Challenge</option>
-          </select>
+          {!type && (
+            <>
+              <label htmlFor='type'>Type</label>
+              <select name="type" ref={register()}>
+                <option value='ESSENTIAL'>Essential</option>
+                <option value='CORE'>Core</option>
+                <option value='CHALLENGE'>Challenge</option>
+              </select>
+            </>
+          )}
 
           <label htmlFor='description'>description</label>
           <textarea name="description" ref={register({ maxLength: 255 })} />
@@ -130,5 +145,11 @@ const CreatePlaylistForm = () => {
     </PagePadding>
   );
 };
+
+CreatePlaylistForm.propTypes = {
+  course: PropTypes.string,
+  subject: PropTypes.string,
+  type: PropTypes.string,
+}
 
 export default CreatePlaylistForm;
