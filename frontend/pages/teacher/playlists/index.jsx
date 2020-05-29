@@ -6,7 +6,7 @@ import gql from 'apollo-boost';
 import Loading from '../../../components/Loading';
 import PageTitle from '../../../components/PageTitle';
 import PagePadding from '../../../components/styled/PagePadding';
-import PlaylistItem from '../../../components/PlaylistItem';
+import PlaylistItem from '../../../components/playlist/PlaylistItem';
 
 const courseTitle = css`
   padding-bottom: 1rem;
