@@ -4,25 +4,43 @@ import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks'
 
 import PagePadding from '../../../components/styled/PagePadding';
+import Loading from '../../../components/Loading';
+import { TextTableContainer, TextTableHeader, TextTableRow } from '../../../components/styled/tables/TextTable';
 
 const GET_INSTRUCTING_STUDENTS_QUERY = gql`
   query GET_INSTRUCTING_STUDENTS_QUERY {
     getInstructingStudents {
       _id
       name
+      email
+      enrolledClasses
     }
   }
 `;
 
 const manage = () => {
   const { loading, error, data } = useQuery(GET_INSTRUCTING_STUDENTS_QUERY);
-  console.log(data);
+
+  if (loading) return <Loading />;
   return (
     <>
       <PageTitle>Manage Students</PageTitle>
       <PagePadding>
-
-        <p>Manage all students here (emails, parents data, etc.)</p>
+        <h4>All Students Enrolled in Classes</h4>
+        <TextTableContainer>
+          <TextTableHeader>
+            <span>Name</span>
+            <span>Email</span>
+            <span>Enrolled Classes</span>
+          </TextTableHeader>
+          {data.getInstructingStudents.map(student => (
+            <TextTableRow>
+              <span>{student.name}</span>
+              <span>{student.email}</span>
+              <span>{student.enrolledClasses.length}</span>
+            </TextTableRow>
+          ))}
+        </TextTableContainer>
       </PagePadding>
     </>
   );
