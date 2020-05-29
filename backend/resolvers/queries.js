@@ -26,6 +26,23 @@ const queries = {
 		return await User.find();
 	},
 
+	async getInstructingStudents(parent, args, context, info) {
+		const userId = args.user_id ? args.user_id : context.currentUser._id;
+		const classes = await Class.find({ primaryInstructor: userId }).populate('enrolled');
+		// const students = classes.map(c => {
+		// 	return c.enrolled;
+		// })
+		let students = [];
+		classes.forEach(c => {
+			for (let i = 0; i < c.enrolled.length; i++) {
+				if (!students.includes(c.enrolled[i])) {
+					students.push(c.enrolled[i]);
+				}
+			}
+		})
+		return students;
+	},
+
 	async getInstructingCourses(parent, args, context, info) {
 		const userId = args.user_id ? args.user_id : context.currentUser._id;
 		return await Course.find({ owner: userId }).populate('playlists').populate('classes');
