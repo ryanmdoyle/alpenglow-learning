@@ -77,7 +77,7 @@ const TextTableHeader = ({ children }) => (
 )
 
 const TextTableRow = ({ children }) => (
-  <div css={[classTable, row]} key={rowItem._id}>
+  <div css={[classTable, row]}>
     {children}
   </div>
 )
