@@ -15,12 +15,13 @@ const GET_CURRENT_USER = gql`
 `;
 
 const UserProvider = ({ children }) => {
-  const currentUser = useQuery(GET_CURRENT_USER);
-
+  // const currentUser = useQuery(GET_CURRENT_USER);
+  const { loading, error, data } = useQuery(GET_CURRENT_USER);
+  const contextValue = (!data) ? null : data;
   return (
     <UserContext.Provider
       value={{
-        currentUser
+        ...contextValue?.getCurrentUser
       }}
     >
       {children}
@@ -28,5 +29,5 @@ const UserProvider = ({ children }) => {
   );
 };
 
-export { UserProvider };
+export { UserProvider, UserContext };
 export default UserContext;

@@ -7,11 +7,11 @@ import Loading from '../components/Loading';
 import UserContext from '../components/context/UserContext';
 
 const HomePage = ({ }) => {
-  const { currentUser: { loading, data, error } } = useContext(UserContext);
+  const user = useContext(UserContext);
 
   return (
     <div css={css`padding: 0 1rem;`}>
-      <h2>Welcome to Alpenglow, {data?.getCurrentUser?.firstName}</h2>
+      <h2>Welcome to Alpenglow, {user?.firstName}</h2>
     </div>
   )
 

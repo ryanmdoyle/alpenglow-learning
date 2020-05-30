@@ -35,9 +35,7 @@ const UserSection = styled.section`
 `;
 
 const NavPanel = () => {
-  const currentUserContext = useContext(UserContext);
-  const user = currentUserContext?.currentUser?.data?.getCurrentUser;
-  const { loading, data, error } = currentUserContext?.currentUser;
+  const user = useContext(UserContext);
 
   return (
     <nav css={navStyles}>
@@ -45,7 +43,6 @@ const NavPanel = () => {
         <NavSection>
           <SiteTitle />
         </NavSection>
-        {loading && <Loading />}
         {user && (
           <>
             {hasPermission(user, [Roles.SuperAdmin, Roles.Student]) && (

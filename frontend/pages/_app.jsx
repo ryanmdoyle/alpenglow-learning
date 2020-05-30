@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Head from 'next/head';
 import { ThemeProvider } from 'emotion-theming';
 import { Global, css } from '@emotion/core';
@@ -12,7 +12,8 @@ import { theme } from '../styles/theme';
 import NavPanel from '../components/Nav/NavPanel';
 import Alert from '../components/Alert';
 import Modal from '../components/Modal';
-import { UserProvider } from '../components/context/UserContext';
+import ComponentWithRoles from '../components/ComponentWithRoles';
+import { UserProvider, UserContext } from '../components/context/UserContext';
 import { AlertProvider } from '../components/context/AlertContext';
 import { ModalProvider } from '../components/context/ModalContext';
 
@@ -63,7 +64,7 @@ function MyApp({ Component, pageProps }) {
             <div css={layout}>
               <NavPanel />
               <main>
-                <Component {...pageProps} />
+                <ComponentWithRoles Component={Component} pageProps={pageProps} />
                 <Alert />
                 <Modal />
               </main>
