@@ -1,7 +1,7 @@
 import React from 'react';
-import styled from '@emotion/styled';
 import { css } from '@emotion/core';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const styledBox = css`
   margin-right: 3px;
@@ -29,8 +29,10 @@ const styledBox = css`
 `;
 
 const PlaylistBox = ({ name, playlistId, className }) => {
+  const router = useRouter();
+  const pathname = router.pathname.startsWith('/teacher') ? '/teacher' : '/student';
   return (
-    <Link href={`/teacher/playlists/${playlistId}`}>
+    <Link href={`${pathname}/playlists/${playlistId}`}>
       <div css={styledBox} className={className} >
         <p>{name}</p>
       </div>
