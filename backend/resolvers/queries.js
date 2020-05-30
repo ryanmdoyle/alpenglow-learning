@@ -54,6 +54,13 @@ const queries = {
 		return user.enrolledClasses;
 	},
 
+	async getEnrolledCourses(parent, args, context, info) {
+		const userId = args.user_id ? args.user_id : context.currentUser._id;
+		const user = await User.findById(userId);
+		const courses = await Course.find({ classes: { $in: user.enrolledClasses } }).populate('playlists');
+		return courses;
+	},
+
 	async getInstructingClasses(parent, args, context, info) {
 		const userId = args.user_id ? args.user_id : context.currentUser._id;
 		return await Class.find({ primaryInstructor: userId }).populate('enrolled').populate('secondaryInstructors');

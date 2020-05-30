@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { css } from '@emotion/core';
 import PropTypes from 'prop-types';
+import { useRouter } from 'next/router';
 
 import PlaylistBox from './PlaylistBox';
 import PlusButton from '../styled/elements/PlusButton';
@@ -23,6 +24,8 @@ const playlistButton = css`
 
 const PlaylistTypeTimeline = ({ type, playlists, courseId, subject }) => {
   const modal = useContext(ModalContext);
+  const router = useRouter();
+  const studentView = router.pathname.startsWith('/student');
 
   const toggleModal = (courseData) => {
     modal.setChildComponent(
@@ -35,7 +38,7 @@ const PlaylistTypeTimeline = ({ type, playlists, courseId, subject }) => {
     modal.open();
   }
 
-  if (playlists.length == 0) return (
+  if (playlists.length == 0 && !studentView) return (
     <>
       <h5 css={css`color: var(--blueMedium);`}>{type}</h5>
       <div css={css`min-width: 3rem;display: flex;align-items:center;padding-left: 1rem;`}>
@@ -52,9 +55,11 @@ const PlaylistTypeTimeline = ({ type, playlists, courseId, subject }) => {
         {playlists.map(playlist => {
           return <PlaylistBox name={playlist.name} playlistId={playlist._id} key={playlist._id} />
         })}
-        <div css={css`min-width: 3rem;display: flex;align-items:center;`}>
-          <PlusButton css={playlistButton} onClick={toggleModal} />
-        </div>
+        {!studentView && (
+          <div css={css`min-width: 3rem;display: flex;align-items:center;`}>
+            <PlusButton css={playlistButton} onClick={toggleModal} />
+          </div>
+        )}
       </div>
     </>
   );

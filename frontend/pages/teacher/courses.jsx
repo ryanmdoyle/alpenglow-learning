@@ -30,4 +30,3 @@ const teacherCourses = () => {
 };
 
 export default teacherCourses;
-export { INSTRUCTING_COURSES_QUERY };
