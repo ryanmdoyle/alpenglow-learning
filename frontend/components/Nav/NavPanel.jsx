@@ -23,8 +23,7 @@ const navStyles = css`
 
 const NavSection = styled.section`
   width: 100%;
-  border-bottom: 1px solid var(--blueLight);
-  padding: 1rem 0rem;
+  padding: 1rem 0 0.25rem 0;
 `;
 
 const UserSection = styled.section`

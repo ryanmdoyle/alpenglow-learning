@@ -29,7 +29,7 @@ const global = css`
     --blueDark: #1F2A40;
     --blueDark50: #1F2A4080;
     --borderRadius: 5px;
-    --navWidth: 280px;
+    --navWidth: 240px;
     --scrollbarBG: rgba(0,0,0,0);
     --scrollbar: rgba(0,0,0,0.4);
   }
