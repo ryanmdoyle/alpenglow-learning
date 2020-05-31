@@ -15,6 +15,7 @@ const PLAYLIST_QUERY = gql`
       name
       subject
       description
+      type
     }
   }
 `;
