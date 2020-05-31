@@ -127,6 +127,15 @@ const typeDefs = gql`
     playlist: Playlist,
     order: Int,
   }
+
+  type Resource {
+    _id: ID,
+    name: String,
+    description: String,
+    href: String,
+    order: Int,
+    objective: String,
+  }
 `;
 
 module.exports = typeDefs;
