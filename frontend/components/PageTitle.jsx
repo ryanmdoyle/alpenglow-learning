@@ -18,11 +18,11 @@ const titleStyles = css`
 `;
 
 const PageTitle = ({ children, subtitle }) => {
-  const capitalizedSubtitle = subtitle[0] + subtitle.slice(1).toLowerCase();
+  const capitalizedSubtitle = subtitle ? subtitle[0] + subtitle.slice(1).toLowerCase() : null;
   return (
     <div css={titleStyles}>
       <h3>{children}</h3>
-      {subtitle &&
+      {capitalizedSubtitle &&
         <span>{capitalizedSubtitle} Playlist</span>
       }
     </div>

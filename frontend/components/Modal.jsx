@@ -19,6 +19,7 @@ const modalContainer = css`
 const modal = css`
   position: relative;
   width: 80%;
+  max-width: 800px;
   background-color: white;
   border-radius: var(--borderRadius);
   box-shadow: var(--shadowHeavy);
