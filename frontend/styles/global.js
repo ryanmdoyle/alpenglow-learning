@@ -28,6 +28,8 @@ const global = css`
     --blueMedium50: #4952A880;
     --blueDark: #1F2A40;
     --blueDark50: #1F2A4080;
+    --mint: #91F5BD;
+    --yellowLight: #F5E193;
     --borderRadius: 5px;
     --navWidth: 240px;
     --scrollbarBG: rgba(0,0,0,0);
