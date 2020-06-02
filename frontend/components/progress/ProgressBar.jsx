@@ -4,36 +4,33 @@ import PropTypes from 'prop-types';
 
 const progressContainer = css`
   height: 12px;
-  width: 200px;
-  border: 1px solid var(--blueDark);
+  width: 80%;
+  min-width: 100px;
+  border: 1px solid var(--blueDark50);
   border-radius: 6px;
   overflow: hidden;
 `;
 
+// progress of all attempts
 const progressBar = css`
   height: 100%;
-  width: 60%;
-  background-color: var(--mint);
   display: flex;
   flex-direction: row-reverse;
 `;
 
 const completeProgress = css`
   height: 100%;
-  width: 50%;
   background-color: var(--mint);
 `;
 
 const partialProgress = css`
   height: 100%;
-  width: 40%;
   background-color: var(--yellowLight);
 `;
 
 const lowProgress = css`
   height: 100%;
-  width: 10%;
-  background-color: var(--red);
+  background-color: red;
 `;
 
 const ProgressBar = ({

@@ -5,6 +5,7 @@ import { useQuery } from '@apollo/react-hooks'
 
 import PagePadding from '../../../components/styled/PagePadding';
 import ProgressBar from '../../../components/progress/ProgressBar';
+import ProgressTable_Courses from '../../../components/progress/ProgressTable_Courses';
 
 const teacherStudents = () => {
 
@@ -12,14 +13,7 @@ const teacherStudents = () => {
     <>
       <PageTitle>Student Progress</PageTitle>
       <PagePadding>
-        <p>A list of students will be here someday...</p>
-        <ProgressBar
-          totalPlaylists={30}
-          totalAttempts={28}
-          completeAttempts={18}
-          partialAttempts={7}
-          lowAttempts={3}
-        />
+        <ProgressTable_Courses />
       </PagePadding>
     </ >
   );
