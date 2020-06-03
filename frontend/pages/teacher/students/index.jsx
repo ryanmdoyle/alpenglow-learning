@@ -4,10 +4,11 @@ import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks'
 
 import PagePadding from '../../../components/styled/PagePadding';
-import ProgressBar from '../../../components/progress/ProgressBar';
 import ProgressTable_Courses from '../../../components/progress/ProgressTable_Courses';
+import { GET_INSTRUCTING_STUDENTS_QUERY } from '../../../gql/queries';
 
 const teacherStudents = () => {
+  const { loading: loadingStudents, error: errorStudents, data: dataStudents } = useQuery(GET_INSTRUCTING_STUDENTS_QUERY);
 
   return (
     <>

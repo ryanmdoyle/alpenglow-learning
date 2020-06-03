@@ -42,3 +42,14 @@ query GET_ENROLLED_CLASSES_QUERY {
   }
 }
 `;
+
+export const GET_INSTRUCTING_STUDENTS_QUERY = gql`
+  query GET_INSTRUCTING_STUDENTS_QUERY {
+    getInstructingStudents {
+      _id
+      name
+      email
+      enrolledClasses
+    }
+  }
+`;

@@ -6,17 +6,7 @@ import { useQuery } from '@apollo/react-hooks'
 import PagePadding from '../../../components/styled/PagePadding';
 import Loading from '../../../components/Loading';
 import { TextTableContainer, TextTableHeader, TextTableRow } from '../../../components/styled/tables/TextTable';
-
-const GET_INSTRUCTING_STUDENTS_QUERY = gql`
-  query GET_INSTRUCTING_STUDENTS_QUERY {
-    getInstructingStudents {
-      _id
-      name
-      email
-      enrolledClasses
-    }
-  }
-`;
+import { GET_INSTRUCTING_STUDENTS_QUERY } from '../../../gql/queries';
 
 const manage = () => {
   const { loading, error, data } = useQuery(GET_INSTRUCTING_STUDENTS_QUERY);
