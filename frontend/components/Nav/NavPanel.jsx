@@ -13,7 +13,6 @@ import UserContext from '../context/UserContext';
 import NavStudentDashboard from './NavStudentDashboard';
 import hasPermission from '../../lib/hasPermission';
 import { Roles } from '../../lib/enums';
-import { isEmpty } from '../../lib/isEmptyObject';
 
 const navStyles = css`
   display: flex;
@@ -64,7 +63,7 @@ const NavPanel = () => {
       </div>
       <div id='nav-bottom'>
         <UserSection>
-          {(isEmpty(user)) ? <Login disabled={false} /> :
+          {(!user) ? <Login disabled={false} /> :
             (
               <>
                 <Login disabled={true} />

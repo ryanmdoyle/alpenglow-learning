@@ -18,11 +18,12 @@ const UserProvider = ({ children }) => {
   // const currentUser = useQuery(GET_CURRENT_USER);
   const { loading, error, data } = useQuery(GET_CURRENT_USER);
   const contextValue = (!data) ? null : data;
+  console.log('contextValue in user context', contextValue);
   return (
     <UserContext.Provider
-      value={{
-        ...contextValue?.getCurrentUser
-      }}
+      value={
+        contextValue?.getCurrentUser
+      }
     >
       {children}
     </UserContext.Provider>
