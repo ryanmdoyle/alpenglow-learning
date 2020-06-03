@@ -140,8 +140,23 @@ const typeDefs = gql`
   type Quiz {
     _id: ID,
     playlist: String,
-    score: String,
     user: String,
+    score: Score,
+    questions: [Question],
+  }
+
+  type Score {
+    _id: ID,
+    playlist: String,
+    score: Int,
+    user: String,
+  }
+
+  type Question {
+    _id: ID,
+    objective: String,
+    text: String,
+    responses: [String], 
   }
 `;
 
