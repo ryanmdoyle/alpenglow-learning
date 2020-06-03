@@ -3,8 +3,8 @@ import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 
-import Playlist from '../../../components/playlist/Playlist';
-import Loading from '../../../components/Loading';
+import Playlist from '../../../../components/playlist/Playlist';
+import Loading from '../../../../components/Loading';
 
 const PLAYLIST_QUERY = gql`
   query PLAYLIST_QUERY(

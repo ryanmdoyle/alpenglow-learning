@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 
-import PageTitle from '../../../components/PageTitle';
-import CreateContentNav from '../../../components/CreateContentNav';
+import PageTitle from '../../../../components/PageTitle';
+import CreateContentNav from '../../../../components/CreateContentNav';
 
-import CreatePlaylistForm from '../../../components/forms/CreatePlaylistForm';
-import CreateCourseForm from '../../../components/forms/CreateCourseForm';
-import CreateObjectiveForm from '../../../components/forms/CreateObjectiveForm';
+import CreatePlaylistForm from '../../../../components/forms/CreatePlaylistForm';
+import CreateCourseForm from '../../../../components/forms/CreateCourseForm';
+import CreateObjectiveForm from '../../../../components/forms/CreateObjectiveForm';
 
 const createContent = () => {
   const router = useRouter();

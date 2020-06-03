@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/core';
 
 import NavStudent from './NavStudentDashboard';
-import NavCurriculumDashboard from './NavCurriculumDashboard';
+import NavManageDashboard from './NavManageDashboard';
 import NavStudentProgress from './NavStudentProgress';
 import SiteTitle from './SiteTitle';
 import Login from './Login';
@@ -13,7 +13,7 @@ import UserContext from '../context/UserContext';
 import NavStudentDashboard from './NavStudentDashboard';
 import hasPermission from '../../lib/hasPermission';
 import { Roles } from '../../lib/enums';
-import { isEmpty} from '../../lib/isEmptyObject';
+import { isEmpty } from '../../lib/isEmptyObject';
 
 const navStyles = css`
   display: flex;
@@ -55,7 +55,7 @@ const NavPanel = () => {
                   <NavStudentProgress />
                 </NavSection>
                 <NavSection>
-                  <NavCurriculumDashboard />
+                  <NavManageDashboard />
                 </NavSection>
               </>
             )}

@@ -1,11 +1,11 @@
 import React from 'react';
-import PageTitle from '../../../components/PageTitle';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks'
 
-import PagePadding from '../../../components/styled/PagePadding';
-import ProgressTable_Courses from '../../../components/progress/ProgressTable_Courses';
-import { GET_INSTRUCTING_STUDENTS_QUERY } from '../../../gql/queries';
+import PageTitle from '../../../../components/PageTitle';
+import PagePadding from '../../../../components/styled/PagePadding';
+import ProgressTable_Courses from '../../../../components/progress/ProgressTable_Courses';
+import { GET_INSTRUCTING_STUDENTS_QUERY } from '../../../../gql/queries';
 
 const INSTRUCTING_CLASSES_WITH_QUIZZES = gql`
   query INSTRUCTING_CLASSES_WITH_QUIZZES {

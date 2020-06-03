@@ -8,13 +8,13 @@ import Loading from '../../../components/Loading';
 import { TextTableContainer, TextTableHeader, TextTableRow } from '../../../components/styled/tables/TextTable';
 import { GET_INSTRUCTING_STUDENTS_QUERY } from '../../../gql/queries';
 
-const manage = () => {
+const studentList = () => {
   const { loading, error, data } = useQuery(GET_INSTRUCTING_STUDENTS_QUERY);
 
   if (loading) return <Loading />;
   return (
     <>
-      <PageTitle>Manage Students</PageTitle>
+      <PageTitle>Manage Your Students</PageTitle>
       <PagePadding>
         <h4>All Students Enrolled in Classes</h4>
         <TextTableContainer>
@@ -36,4 +36,4 @@ const manage = () => {
   );
 };
 
-export default manage;
+export default studentList;

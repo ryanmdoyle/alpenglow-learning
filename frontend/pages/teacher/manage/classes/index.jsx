@@ -1,16 +1,16 @@
 import React, { useContext } from 'react';
 import { css } from '@emotion/core';
-import PageTitle from '../../../components/PageTitle';
+import PageTitle from '../../../../components/PageTitle';
 import { useQuery } from '@apollo/react-hooks'
 
-import Loading from '../../../components/Loading';
-import PagePadding from '../../../components/styled/PagePadding';
-import CreateClassForm from '../../../components/forms/CreateClassForm';
-import TextButton from '../../../components/styled/elements/TextButton';
-import ModalContext from '../../../components/context/ModalContext';
-import { INSTRUCTING_COURSES_QUERY } from '../../../gql/queries';
+import Loading from '../../../../components/Loading';
+import PagePadding from '../../../../components/styled/PagePadding';
+import CreateClassForm from '../../../../components/forms/CreateClassForm';
+import TextButton from '../../../../components/styled/elements/TextButton';
+import ModalContext from '../../../../components/context/ModalContext';
+import { INSTRUCTING_COURSES_QUERY } from '../../../../gql/queries';
 
-import { TextTableContainer, TextTableHeader, TextTableRow} from '../../../components/styled/tables/TextTable';
+import { TextTableContainer, TextTableHeader, TextTableRow} from '../../../../components/styled/tables/TextTable';
 
 const teacherClasses = () => {
   const { loading, error, data } = useQuery(INSTRUCTING_COURSES_QUERY);
@@ -20,7 +20,7 @@ const teacherClasses = () => {
   if (loading) return <Loading />
   return (
     <div>
-      <PageTitle>Your Classes</PageTitle>
+      <PageTitle>Manage Your Classes</PageTitle>
       <PagePadding>
         {data?.getInstructingCourses?.map(course => (
           <div key={course._id}>

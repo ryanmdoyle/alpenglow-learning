@@ -1,10 +1,10 @@
 import React from 'react';
-import PageTitle from '../../components/PageTitle';
 import { useQuery } from '@apollo/react-hooks'
 
-import Loading from '../../components/Loading';
-import CourseTimeline from '../../components/courses/CourseTimeline';
-import { INSTRUCTING_COURSES_QUERY } from '../../gql/queries';
+import PageTitle from '../../../components/PageTitle';
+import Loading from '../../../components/Loading';
+import CourseTimeline from '../../../components/courses/CourseTimeline';
+import { INSTRUCTING_COURSES_QUERY } from '../../../gql/queries';
 
 const teacherCourses = () => {
   const { loading, error, data } = useQuery(INSTRUCTING_COURSES_QUERY);
@@ -13,7 +13,7 @@ const teacherCourses = () => {
   if (loading) return <Loading />;
   return (
     <div>
-      <PageTitle>Course Curriculum</PageTitle>
+      <PageTitle>Manage Course Curriculum</PageTitle>
       {data.getInstructingCourses && (
         data.getInstructingCourses.map(course => (
           <CourseTimeline
