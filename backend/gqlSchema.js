@@ -136,6 +136,14 @@ const typeDefs = gql`
     order: Int,
     objective: String,
   }
+
+  type Quiz {
+    _id: ID,
+    playlist: String,
+    score: String,
+    user: String,
+  }
 `;
+
 
 module.exports = typeDefs;
