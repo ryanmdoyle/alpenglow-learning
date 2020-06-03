@@ -2,7 +2,8 @@ import { css } from '@emotion/core';
 
 const global = css`
 
-  @import url('https://fonts.googleapis.com/css?family=Montserrat:700|Hind+Madurai:400|Lora:500');
+  @import url('https://fonts.googleapis.com/css?family=Montserrat:700|Lora:500');
+  @import url('https://fonts.googleapis.com/css2?family=Hind+Madurai:wght@400;700&display=swap');
   
   :root {
     /* CUSTOM PROPS */
@@ -48,12 +49,18 @@ const global = css`
     font-family: 'Hind Madurai', sans-serif;
     font-weight: 400;
     line-height: 1.65;
-    color: #333;
+    color: var(--blueDark);
     padding: 0;
     margin: 0;
   }
 
   p {margin-bottom: 1.15rem;}
+
+  strong {
+    font-family: 'Hind Madurai', sans-serif;
+    font-weight: 700;
+    line-height: 1.65;
+  }
 
   h1, h2, h3, h4, h5 {
     margin: 2.75rem 0 1.05rem;
