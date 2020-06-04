@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { css } from '@emotion/core';
 import { useQuery } from '@apollo/react-hooks'
 import Link from 'next/link';
+import Router from 'next/router';
 
 import PageTitle from '../../../../components/PageTitle';
 import Loading from '../../../../components/Loading';
@@ -16,6 +17,11 @@ import { TextTableContainer, TextTableHeader, TextTableRow} from '../../../../co
 const teacherClasses = () => {
   const { loading, error, data } = useQuery(INSTRUCTING_COURSES_QUERY);
   const modal = useContext(ModalContext);
+
+  const navClick = (classId) => {
+    console.log('link clicked!')
+    Router.push(`/teacher/manage/classes/${classId}`, '/itworks');
+  }
 
   if (error) return null;
   if (loading) return <Loading />
@@ -38,15 +44,12 @@ const teacherClasses = () => {
                 </TextTableHeader>
                 {course.classes.map(c => {
                   return (
-                    <Link href={`/teacher/manage/classes/${c._id}`}>
-                      <TextTableRow key={c._id}>
-                          <>
-                            <span className='first-column'>{c.name}</span>
-                            <span>{c.enrollId}</span>
-                            <span>{c.enrolled.length}</span>
-                          </>
-                      </TextTableRow>
-                    </Link>
+                    // TODO --> Put Link into table row, and pass a link as a prop
+                    <TextTableRow key={c._id}>
+                        <span className='first-column'>{c.name}</span>
+                        <span>{c.enrollId}</span>
+                        <span>{c.enrolled.length}</span>
+                    </TextTableRow>
                   )
                 })}
               </TextTableContainer>

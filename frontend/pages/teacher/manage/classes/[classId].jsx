@@ -16,11 +16,11 @@ const COURSE_QUERY = gql`
 const manageClass = ({ classId }) => {
   return (
     <>
-      <PageTitle>Manage Class</PageTitle>
+      {/* <PageTitle>Manage Class</PageTitle>
       <PagePadding>
 
-      </PagePadding>
-
+      </PagePadding> */}
+      <p>A class!</p>
     </>
   );
 };

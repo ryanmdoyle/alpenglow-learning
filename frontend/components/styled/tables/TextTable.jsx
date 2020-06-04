@@ -1,5 +1,6 @@
 import React from 'react';
 import { css } from '@emotion/core';
+import PropTypes from 'prop-types';
 
 const classTable = css`
   width: 100%;
@@ -76,11 +77,15 @@ const TextTableHeader = ({ children }) => (
   </div>
 )
 
-const TextTableRow = ({ children }) => (
+const TextTableRow = ({ children, href }) => (
   <div css={[classTable, row]}>
     {children}
   </div>
 )
+
+TextTableRow.PropTypes = {
+  href: PropTypes.string,
+}
 
 export default TextTableContainer;
 export { TextTableContainer, TextTableHeader, TextTableRow }
