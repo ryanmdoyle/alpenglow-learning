@@ -30,7 +30,7 @@ const styledBox = css`
 
 const PlaylistBox = ({ name, playlistId, className }) => {
   const router = useRouter();
-  const pathname = router.pathname.startsWith('/teacher') ? '/teacher' : '/student';
+  const pathname = router.pathname.startsWith('/teacher') ? '/teacher/manage' : '/student';
   return (
     <Link href={`${pathname}/playlists/${playlistId}`}>
       <div css={styledBox} className={className} >
