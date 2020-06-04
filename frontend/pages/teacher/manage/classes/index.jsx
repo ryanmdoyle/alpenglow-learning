@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 import { css } from '@emotion/core';
-import PageTitle from '../../../../components/PageTitle';
 import { useQuery } from '@apollo/react-hooks'
+import Link from 'next/link';
 
+import PageTitle from '../../../../components/PageTitle';
 import Loading from '../../../../components/Loading';
 import PagePadding from '../../../../components/styled/PagePadding';
 import CreateClassForm from '../../../../components/forms/CreateClassForm';
@@ -37,11 +38,15 @@ const teacherClasses = () => {
                 </TextTableHeader>
                 {course.classes.map(c => {
                   return (
-                    <TextTableRow key={c._id}>
-                      <span className='first-column'>{c.name}</span>
-                      <span>{c.enrollId}</span>
-                      <span>{c.enrolled.length}</span>
-                    </TextTableRow>
+                    <Link href={`/teacher/manage/classes/${c._id}`}>
+                      <TextTableRow key={c._id}>
+                          <>
+                            <span className='first-column'>{c.name}</span>
+                            <span>{c.enrollId}</span>
+                            <span>{c.enrolled.length}</span>
+                          </>
+                      </TextTableRow>
+                    </Link>
                   )
                 })}
               </TextTableContainer>

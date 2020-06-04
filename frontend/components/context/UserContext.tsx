@@ -15,7 +15,6 @@ const GET_CURRENT_USER = gql`
 `;
 
 const UserProvider = ({ children }) => {
-  // const currentUser = useQuery(GET_CURRENT_USER);
   const { loading, error, data } = useQuery(GET_CURRENT_USER);
   const contextValue = (!data) ? null : data;
 

@@ -12,8 +12,8 @@ const NavManageDashboard = () => {
       <ul css={css`list-style:none;margin:1rem 0.2rem;padding:0;`}>
         <NavItem title='Courses' href='/teacher/manage/courses' />
         <NavItem title='Classes' href='/teacher/manage/classes' />
-        <NavItem title='Students' href='/teacher/manage/student-list' />
-        <NavItem title='Quick Add Content' href='/teacher/manage/create-content' />
+        <NavItem title='Students' href='/teacher/manage/students' />
+        <NavItem title='Quick Add Content' href='/teacher/manage/quick-add' />
       </ul>
     </NavSectionPadding>
   );

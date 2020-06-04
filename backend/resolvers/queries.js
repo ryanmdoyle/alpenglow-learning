@@ -43,6 +43,11 @@ const queries = {
 		return students;
 	},
 
+	async getInstructingCourse(parent, args, context, info) {
+		const userId = args.user_id ? args.user_id : context.currentUser._id;
+		return await Course.find({ owner: userId }).populate('playlists').populate('classes');
+	},
+
 	async getInstructingCourses(parent, args, context, info) {
 		const userId = args.user_id ? args.user_id : context.currentUser._id;
 		return await Course.find({ owner: userId }).populate('playlists').populate('classes');
