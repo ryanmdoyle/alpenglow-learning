@@ -1,6 +1,7 @@
 import React from 'react';
 import { css } from '@emotion/core';
 import PropTypes from 'prop-types';
+import Link from 'next/link';
 
 const classTable = css`
   width: 100%;
@@ -77,14 +78,25 @@ const TextTableHeader = ({ children }) => (
   </div>
 )
 
-const TextTableRow = ({ children, href }) => (
-  <div css={[classTable, row]}>
-    {children}
-  </div>
-)
+const TextTableRow = ({ children, linkAs }) => {
+  if (linkAs) {
+    return (
+      <Link href='/teacher/manage/classes/[classId]' as={linkAs}>
+        <div css={[classTable, row]}>
+          {children}
+        </div>
+      </Link>
+    )
+  }
+  return (
+    <div css={[classTable, row]}>
+      {children}
+    </div>
+  )
+}
 
 TextTableRow.PropTypes = {
-  href: PropTypes.string,
+  linkAs: PropTypes.string,
 }
 
 export default TextTableContainer;

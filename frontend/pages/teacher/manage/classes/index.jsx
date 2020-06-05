@@ -45,7 +45,7 @@ const teacherClasses = () => {
                 {course.classes.map(c => {
                   return (
                     // TODO --> Put Link into table row, and pass a link as a prop
-                    <TextTableRow key={c._id}>
+                    <TextTableRow key={c._id} linkAs={`/teacher/manage/classes/${c._id}`}>
                         <span className='first-column'>{c.name}</span>
                         <span>{c.enrollId}</span>
                         <span>{c.enrolled.length}</span>
