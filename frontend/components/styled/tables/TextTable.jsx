@@ -78,10 +78,10 @@ const TextTableHeader = ({ children }) => (
   </div>
 )
 
-const TextTableRow = ({ children, linkAs }) => {
-  if (linkAs) {
+const TextTableRow = ({ children, linkHref, linkAs }) => {
+  if (linkAs && linkHref) {
     return (
-      <Link href='/teacher/manage/classes/[classId]' as={linkAs}>
+      <Link href={linkHref} as={linkAs}>
         <div css={[classTable, row]}>
           {children}
         </div>
@@ -95,7 +95,8 @@ const TextTableRow = ({ children, linkAs }) => {
   )
 }
 
-TextTableRow.PropTypes = {
+TextTableRow.propTypes = {
+  linkHref: PropTypes.string,
   linkAs: PropTypes.string,
 }
 
