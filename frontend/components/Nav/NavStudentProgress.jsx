@@ -26,13 +26,13 @@ const NavStudentProgress = () => {
     <NavSectionPadding>
       <NavSectionHeader title='Student Progress' />
       <ul css={css`list-style:none;margin:1rem 0.2rem;padding:0;`}>
-        <NavItem title='All Students' href='/teacher/progress/students' css={css`padding-left: 2rem;`} />
+        <NavItem href='/teacher/progress/students' css={css`padding-left: 2rem;`}>All Students</NavItem>
         {data?.getInstructingClasses?.map(c => (
           <div css={innerPadding} key={c._id}>
-            <NavItem title={c.name} href={`/teacher/progress/students/${c._id}`} />
+            <NavItem href='/teacher/progress/students/[classId]' as={`/teacher/progress/students/${c._id}`}>{c.name}</NavItem>
           </div>
         ))}
-        <NavItem title='Grading' href='/teacher/progress/grading' />
+        <NavItem href='/teacher/progress/grading'>Grading</NavItem>
       </ul>
     </NavSectionPadding>
   );

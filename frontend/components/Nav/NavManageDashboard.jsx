@@ -10,10 +10,10 @@ const NavManageDashboard = () => {
     <NavSectionPadding>
       <NavSectionHeader title='Manage' />
       <ul css={css`list-style:none;margin:1rem 0.2rem;padding:0;`}>
-        <NavItem title='Courses' href='/teacher/manage/courses' />
-        <NavItem title='Classes' href='/teacher/manage/classes' />
-        <NavItem title='Students' href='/teacher/manage/students' />
-        <NavItem title='Quick Add Content' href='/teacher/manage/quick-add' />
+        <NavItem href='/teacher/manage/classes'>Classes</NavItem>
+        <NavItem href='/teacher/manage/courses'>Courses</NavItem>
+        <NavItem href='/teacher/manage/students'>Students</NavItem>
+        <NavItem href='/teacher/manage/quick-add'>Quick Add Content</NavItem>
       </ul>
     </NavSectionPadding>
   );

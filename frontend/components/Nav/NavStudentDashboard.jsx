@@ -22,16 +22,15 @@ const NavStudentDashboard = props => {
       <ul css={css`list-style:none;margin:1rem 0.2rem;padding:0;`}>
         {studentHasEnrollments && (
           <>
-            <NavItem title='All Classes' href='/student/classes' />
+            <NavItem href='/student/classes'>All Classes</NavItem>
             {data.getEnrolledClasses && (
               <div css={enrolledClasses}>
-                {data.getEnrolledClasses.map(c => {
-                  const classHref = `/student/class/${c._id}`;
-                  return <NavItem title={c.name} href={classHref} key={c._id} />
-                })}
+                {data.getEnrolledClasses.map(c => (
+                  <NavItem href='/student/classes/[classId]' as={`/student/classes/${c._id}`} key={c._id}>{c.name}</NavItem>
+                ))}
               </div>
             )}
-            <NavItem title='Grades' href='/student/grades' />
+            <NavItem href='/student/grades'>Grades</NavItem>
           </>
         )}
       </ul>

@@ -1,8 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-
 import { css } from '@emotion/core';
+import PropTypes from 'prop-types';
 
 const item = css`
   padding: 0.5rem 1rem;
@@ -37,7 +37,7 @@ const activeLink = css`
     }
 `;
 
-const NavItem = ({ title, href }) => {
+const NavItem = ({ children, href, as }) => {
   const router = useRouter();
   const linkWithoutQuery = (router) => {
     if (Object.keys(router.query).length !== 0) {
@@ -52,15 +52,21 @@ const NavItem = ({ title, href }) => {
   }
 
   const pathnameNoQuery = linkWithoutQuery(router);
-
   const isActiveLink = pathnameNoQuery.includes(href) ? [item, activeLink] : [item];
+
   return (
-    <Link href={href}>
+    <Link href={href} as={as}>
       <li css={isActiveLink}>
-        <a>{title}</a>
+        <a>{children}</a>
       </li>
     </Link>
   );
 };
+
+NavItem.propTypes = {
+  children: PropTypes.node.isRequired,
+  href: PropTypes.string.isRequired,
+  as: PropTypes.string,
+}
 
 export default NavItem;
