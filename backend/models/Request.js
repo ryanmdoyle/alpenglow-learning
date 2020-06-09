@@ -12,7 +12,9 @@ const requestSchema = new Schema({
   playlist: {
     type: mongoose.ObjectId,
     ref: Playlist,
-  }
+  },
+  approved:Boolean,
+  approvalAccepted: Boolean,
 })
 
 const Request = mongoose.model('Request', requestSchema);

@@ -68,8 +68,7 @@ const typeDefs = gql`
       enrollId: String!,
     ) : User!,
 
-    requestQuiz(
-      user: String!,
+    createRequest(
       playlist: String!,
     ) : Request!,
   }
@@ -179,6 +178,8 @@ const typeDefs = gql`
     _id: ID,
     user: String,
     playlist: String,
+    approved: Boolean,
+    approvalAccepted: Boolean,
   }
 `;
 

@@ -1,5 +1,7 @@
 import React from 'react';
 import { css } from '@emotion/core';
+import { useMutation } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
 
 import TextButton from '../styled/elements/TextButton';
 
@@ -34,13 +36,36 @@ const details = css`
 
 `;
 
-const PlaylistDetails = ({ title, description }) => {
+const CREATE_REQUEST = gql`
+  mutation CREATE_REQUEST(
+    $playlist: String!,
+  ) {
+    createRequest(
+      playlist: $playlist,
+    ) {
+      approved
+      approvalAccepted
+    }
+  }
+`;
+
+const PlaylistDetails = ({ title, description, id }) => {
+  const [createRequest, { data }] = useMutation(CREATE_REQUEST);
+
+  const createNewRequest = () => {
+    createRequest({
+      variables: {
+        playlist: id,
+      }
+    })
+  }
+
   return (
     <div css={details}>
       <div className='flex-item'>
         <h5>Description</h5>
         <p>{description}</p>
-        <TextButton text='Request Assessment'></TextButton>
+        <TextButton onClick={createNewRequest}>Request Assessment</TextButton>
       </div>
       <div className='flex-item objectives'>
         <h5>Objectives</h5>

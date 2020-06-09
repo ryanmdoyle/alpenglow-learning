@@ -12,13 +12,15 @@ const Objective = require('../models/Objective');
 const Request = require('../models/Request');
 
 const mutations = {
-  async requestQuiz(parent, args, context, info) {
+  async createRequest(parent, args, context, info) {
     const { currentUser } = context;
     const request = new Request({
+      approved: false,
+      approvalAccepted: false,
+      user: currentUser._id,
       ...args,
     })
     const newRequest = await request.save().catch(err => { console.log(err)});
-    pubsub.publish('quizRequested', { postAdded: args });
     return newRequest;
   },
 

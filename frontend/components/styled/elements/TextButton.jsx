@@ -9,22 +9,22 @@ const buttonStyles = css`
   width: 10rem;
   border-radius: 3px;
   border: 2px solid var(--blueMedium);
-  color: var(--blueMedium);
-  background-color: white;
-  transition: color 0.15s, background-color 0.15s;
+  color: white;
+  background-color: var(--blueMedium);
+  transition: color 0.15s, background-color 0.15s, border 0.15s;
   font-size: 0.8rem;
   :hover, :focus {
-    border: 2px solid var(--blueMedoum);
+    border: 2px solid var(--pink);
     color: white;
-    background-color: var(--blueMedium);
-    transition: color 0.15s, background-color 0.15s;
+    background-color: var(--pink);
+    transition: color 0.15s, background-color 0.15s, border 0.15s;
   }
 `;
 
-const TextButton = ({ text, whenClicked }) => {
+const TextButton = ({ children, onClick }) => {
   return (
-    <button type='button' css={buttonStyles} onClick={() => whenClicked()}>
-      {text}
+    <button type='button' css={buttonStyles} onClick={() => onClick()}>
+      {children}
     </button>
   );
 };
