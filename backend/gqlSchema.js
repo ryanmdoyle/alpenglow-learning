@@ -67,6 +67,19 @@ const typeDefs = gql`
     enroll(
       enrollId: String!,
     ) : User!,
+
+    requestQuiz(
+      user: String!,
+      playlist: String!,
+    ) : Request!,
+  }
+
+  # # # # # # # # # # # #
+  # SUBSCRIPTIONS
+  # # # # # # # # # # # #
+
+  type Subscription {
+    quizRequested: Request,
   }
 
   # # # # # # # # # # # #
@@ -160,6 +173,12 @@ const typeDefs = gql`
     objective: String,
     text: String,
     responses: [String], 
+  }
+
+  type Request {
+    _id: ID,
+    user: String,
+    playlist: String,
   }
 `;
 

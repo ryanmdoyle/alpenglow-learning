@@ -1,7 +1,7 @@
 const { ApolloError } = require('apollo-server-express')
 const ShortUniqueId = require('short-unique-id').default;
 
-const verifyUser = require('../lib/verifyUser');
+const { pubsub } = require('./pubsub');
 
 // Mongoose Models
 const User = require('../models/User');
@@ -9,8 +9,18 @@ const Course = require('../models/Course');
 const Class = require('../models/Class');
 const Playlist = require('../models/Playlist');
 const Objective = require('../models/Objective');
+const Request = require('../models/Request');
 
 const mutations = {
+  async requestQuiz(parent, args, context, info) {
+    const { currentUser } = context;
+    const request = new Request({
+      ...args,
+    })
+    const newRequest = await request.save().catch(err => { console.log(err)});
+    pubsub.publish('quizRequested', { postAdded: args });
+    return newRequest;
+  },
 
   async createCourse(parent, args, context, info) {
     const { currentUser } = context;
