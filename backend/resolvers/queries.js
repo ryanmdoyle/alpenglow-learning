@@ -6,6 +6,7 @@ const Course = require('../models/Course');
 const Class = require('../models/Class');
 const Playlist = require('../models/Playlist');
 const Objective = require('../models/Objective');
+const Request = require('../models/Request');
 
 // currentUser data from JWT token available on context.currentUser
 const queries = {
@@ -87,6 +88,10 @@ const queries = {
 	async getPlaylist(parent, args, context, info) {
 		if (!args.playlistId) return "No Playlist ID provided";
 		return await Playlist.findById(args.playlistId);
+	},
+
+	async getPlaylistRequest(parent, args, context, info) {
+		return await Request.findOne({ user: context.currentUser, playlist: args.playlistId });
 	}
 
 }

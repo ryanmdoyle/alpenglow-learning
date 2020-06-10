@@ -14,14 +14,19 @@ const Request = require('../models/Request');
 const mutations = {
   async createRequest(parent, args, context, info) {
     const { currentUser } = context;
-    const request = new Request({
-      approved: false,
-      approvalAccepted: false,
-      user: currentUser._id,
-      ...args,
-    })
-    const newRequest = await request.save().catch(err => { console.log(err)});
-    return newRequest;
+    const requestExists = await Request.exists({ playlist: args.playlistId });
+    if (!requestExists) {
+      const request = new Request({
+        approved: false,
+        approvalAccepted: false,
+        user: currentUser._id,
+        playlist: args.playlistId,
+        ...args,
+      })
+      const newRequest = await request.save().catch(err => { console.log(err) });
+      return request;
+    }
+    return new ApolloError('Request has already been submitted.');
   },
 
   async createCourse(parent, args, context, info) {

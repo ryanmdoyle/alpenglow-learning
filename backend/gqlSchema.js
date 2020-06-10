@@ -10,7 +10,9 @@ const typeDefs = gql`
     getCurrentUser: User,
     getUser(user_id: ID): User!,
     getAllUsers: [User]!,
+
     getPlaylist(playlistId: ID): Playlist!,
+    getPlaylistRequest(playlistId: ID): Request,
     
     getEnrolledCourses(user_id: ID): [Course],
     getEnrolledClasses(user_id: ID): [Class],
@@ -69,7 +71,7 @@ const typeDefs = gql`
     ) : User!,
 
     createRequest(
-      playlist: String!,
+      playlistId: ID!,
     ) : Request!,
   }
 

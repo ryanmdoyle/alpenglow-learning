@@ -21,17 +21,16 @@ const buttonStyles = css`
   }
 `;
 
-const TextButton = ({ children, onClick }) => {
+const TextButton = ({ children, onClick, ...props }) => {
   return (
-    <button type='button' css={buttonStyles} onClick={() => onClick()}>
+    <button type='button' css={buttonStyles} onClick={() => onClick()} {...props}>
       {children}
     </button>
   );
 };
 
 TextButton.propTypes = {
-  text: PropTypes.string.isRequired,
-  whenClicked: PropTypes.func,
+  onClick: PropTypes.func.isRequired,
 }
 
 export default TextButton;
