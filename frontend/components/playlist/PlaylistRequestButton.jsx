@@ -38,7 +38,7 @@ const PlaylistRequestButton = ({ playlistId }) => {
     refetchQueries: [{ query: GET_PLAYLIST_REQUEST, variables: { playlistId: playlistId } }],
   });
 
-  const createNewRequest = () => {
+  const requestQuiz = () => {
     createRequest({
       variables: {
         playlistId: playlistId,
@@ -46,8 +46,30 @@ const PlaylistRequestButton = ({ playlistId }) => {
     })
   }
 
+  const isRequested = queryData?.getPlaylistRequest ? true : false;
+  const isApproved = isRequested && queryData?.getPlaylistRequest.approved;
+
+  if (isApproved) {
+    return <TextButton onClick={() => console.log("Already requested!")}>Approved! Take Quiz</TextButton>
+  }
+
+  if (isRequested) {
+    return <TextButton
+      onClick={() => console.log("Already requested!")}
+      css={css`
+        background-color: white;
+        color: var(--blueMedium);
+        :hover, :focus  {
+          background-color: white;
+          color: var(--blueMedium);
+          border-color: var(--blueMedium);
+        }
+      `}
+    >Awaiting Approval...</TextButton>
+  }
+
   return (
-    <TextButton onClick={createNewRequest}>{!queryData?.getPlaylistRequest ? 'Request Assessment' : 'Awaiting Approval...'}</TextButton>
+    <TextButton onClick={requestQuiz}>Request Quiz</TextButton>
   );
 };
 

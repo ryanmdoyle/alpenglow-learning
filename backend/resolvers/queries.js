@@ -92,6 +92,23 @@ const queries = {
 
 	async getPlaylistRequest(parent, args, context, info) {
 		return await Request.findOne({ user: context.currentUser, playlist: args.playlistId });
+	},
+
+	async getStudentRequests(parent, args, context, info) {
+		const { currentUser } = context;
+		// Create array of users classes they instruct
+		let classList = [];
+		await Class.find({ primaryInstructor: currentUser._id }).then(classes => {
+			classes.forEach(clas => classList.push(clas._id))
+		});
+		// create list of students
+		let studentList = [];
+		await User.find({ enrolledClasses: { $in: classList } }).then(students => {
+			students.forEach(student => studentList.push(student._id));
+		})
+		// get all request for students you instruct
+		const requests = await Request.find({ user: { $in: studentList } }).populate('user').populate('playlist');
+		return requests;
 	}
 
 }

@@ -13,6 +13,7 @@ const typeDefs = gql`
 
     getPlaylist(playlistId: ID): Playlist!,
     getPlaylistRequest(playlistId: ID): Request,
+    getStudentRequests: [Request],
     
     getEnrolledCourses(user_id: ID): [Course],
     getEnrolledClasses(user_id: ID): [Class],
@@ -98,7 +99,6 @@ const typeDefs = gql`
     roles: [String!],
     enrolledClasses: [String],
     instructingCourses: [Course],
-    instructingClasses: [Class],
   }
 
   type Course {
@@ -178,8 +178,8 @@ const typeDefs = gql`
 
   type Request {
     _id: ID,
-    user: String,
-    playlist: String,
+    user: User,
+    playlist: Playlist,
     approved: Boolean,
     approvalAccepted: Boolean,
   }
