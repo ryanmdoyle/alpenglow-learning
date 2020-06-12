@@ -70,8 +70,9 @@ const typeDefs = gql`
     enroll(enrollId: String!) : User!,
 
     createRequest(playlistId: ID!) : Request!,
-
-    deleteRequest(playlistId: ID!): ID,
+    approveRequest(playlistId: ID!): Request!,
+    cancelRequest(playlistId: ID!): Request!
+    deleteRequest(playlistId: ID!): ID!,
   }
 
   # # # # # # # # # # # #
@@ -79,7 +80,7 @@ const typeDefs = gql`
   # # # # # # # # # # # #
 
   type Subscription {
-    quizRequested: Request,
+    requestApproved(userId: ID!): Request,
   }
 
   # # # # # # # # # # # #

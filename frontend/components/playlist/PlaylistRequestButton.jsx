@@ -33,6 +33,7 @@ const CREATE_REQUEST = gql`
 const PlaylistRequestButton = ({ playlistId }) => {
   const { loading, error, data: queryData } = useQuery(GET_PLAYLIST_REQUEST, {
     variables: { playlistId: playlistId },
+    pollInterval: 3000,
   });
   const [createRequest, { data }] = useMutation(CREATE_REQUEST, {
     refetchQueries: [{ query: GET_PLAYLIST_REQUEST, variables: { playlistId: playlistId } }],

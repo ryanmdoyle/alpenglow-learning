@@ -1,8 +1,8 @@
 const { pubsub } = require('./pubsub');
 
 const subscriptions = {
-  quizRequested: {
-    subscribe: () => pubsub.asyncIterator(['quizRequested']),
+  requestApproved: {
+    subscribe: () => pubsub.asyncIterator(['requestApproved']),
   }
 }
 

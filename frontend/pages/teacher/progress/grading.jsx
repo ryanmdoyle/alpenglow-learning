@@ -24,7 +24,9 @@ const GET_STUDENT_QUIZ_REQUESTS = gql`
 `;
 
 const grading = () => {
-  const { loading, error, data: requestData } = useQuery(GET_STUDENT_QUIZ_REQUESTS);
+  const { loading, error, data: requestData } = useQuery(GET_STUDENT_QUIZ_REQUESTS, {
+    pollInterval: 3000,
+  });
   if (loading) return <Loading />
   return (
     <div>
@@ -39,6 +41,7 @@ const grading = () => {
               playlist={request.playlist.name}
               approved={request.approved}
               approvalAccepted={request.approvalAccepted}
+              key={request._id}
             />
           ))
         )}
@@ -48,3 +51,4 @@ const grading = () => {
 };
 
 export default grading;
+export { GET_STUDENT_QUIZ_REQUESTS };
