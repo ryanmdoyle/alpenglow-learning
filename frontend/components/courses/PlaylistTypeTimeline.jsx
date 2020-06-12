@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import PlaylistBox from './PlaylistBox';
 import PlusButton from '../styled/elements/PlusButton';
 import CreatePlaylistForm from '../forms/CreatePlaylistForm';
-import ModalContext, { modalContext } from '../context/ModalContext';
+import ModalContext from '../context/ModalContext';
 
 const playlistsContainer = css`
   box-sizing: border-box;
@@ -38,6 +38,7 @@ const PlaylistTypeTimeline = ({ type, playlists, courseId, subject }) => {
     modal.open();
   }
 
+  // If no playlists and not a student, show button to add playlist
   if (playlists.length == 0 && !studentView) return (
     <>
       <h5 css={css`color: var(--blueMedium);`}>{type}</h5>
@@ -48,7 +49,8 @@ const PlaylistTypeTimeline = ({ type, playlists, courseId, subject }) => {
     </>
   );
 
-  return (
+  // If there are playlists, show playlist type
+  if (playlists.length > 0) return (
     <>
       <h5>{type}</h5>
       <div css={playlistsContainer}>
@@ -63,6 +65,9 @@ const PlaylistTypeTimeline = ({ type, playlists, courseId, subject }) => {
       </div>
     </>
   );
+
+  // if there are no playlists, return nothing
+  return null;
 };
 
 PlaylistTypeTimeline.propTypes = {
