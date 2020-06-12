@@ -23,7 +23,7 @@ const modal = css`
   background-color: white;
   border-radius: var(--borderRadius);
   box-shadow: var(--shadowHeavy);
-  padding: 0;
+  padding: 1rem;
   
   h4 {
     margin: 0;
@@ -33,7 +33,6 @@ const modal = css`
     position: relative;
     top: 0;
     right: 0;
-    padding: 1rem;
   }
 `;
 

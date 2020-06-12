@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { css } from '@emotion/core';
-import { useMutation } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
+import { useRouter } from 'next/router';
 
 import TextButton from '../styled/elements/TextButton';
 import PlaylistRequestButton from './PlaylistRequestButton';
+import PlaylistCreateQuizButton from './PlaylistCreateQuizButton';
 
 const details = css`
   width: 100%;
@@ -38,13 +38,16 @@ const details = css`
 `;
 
 const PlaylistDetails = ({ title, description, id }) => {
+  const { pathname } = useRouter();
+  const studentView = pathname.startsWith('/student');
 
   return (
     <div css={details}>
       <div className='flex-item'>
         <h5>Description</h5>
         <p>{description}</p>
-        <PlaylistRequestButton playlistId={id} />
+        {studentView && <PlaylistRequestButton playlistId={id} />}
+        {!studentView && <PlaylistCreateQuizButton playlistId={id} />}
       </div>
       <div className='flex-item objectives'>
         <h5>Objectives</h5>
