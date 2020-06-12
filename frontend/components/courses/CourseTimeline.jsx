@@ -1,11 +1,8 @@
 import React from 'react';
-import { css } from '@emotion/core';
 import PropTypes from 'prop-types';
+import { css } from '@emotion/core';
 
-import PlaylistBox from './PlaylistBox';
 import PlaylistTypeTimeline from './PlaylistTypeTimeline';
-import PlusButton from '../styled/elements/PlusButton';
-import MinusButton from '../styled/elements/MinusButton';
 import { PlaylistEnum } from '../../lib/enums';
 
 const courseContainer = css`
