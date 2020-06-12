@@ -131,6 +131,15 @@ const mutations = {
       return userInDb;
     }
     return 'Not logged in!'
-  }
+  },
+
+  async deleteRequest(parent, args, context, info) {
+    const request = Request.deleteOne({ _id: args.playlistId });
+    if (request.deletedCount) {
+      return args.playlistId
+    } else {
+      return null;
+    }
+  },
 }
 module.exports = mutations;

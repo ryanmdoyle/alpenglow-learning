@@ -67,13 +67,11 @@ const typeDefs = gql`
       playlist: String,
     ): Objective! ,
 
-    enroll(
-      enrollId: String!,
-    ) : User!,
+    enroll(enrollId: String!) : User!,
 
-    createRequest(
-      playlistId: ID!,
-    ) : Request!,
+    createRequest(playlistId: ID!) : Request!,
+
+    deleteRequest(playlistId: ID!): ID,
   }
 
   # # # # # # # # # # # #
