@@ -32,7 +32,7 @@ const grading = () => {
     <div>
       <PageTitle>Grades</PageTitle>
       <PagePadding>
-        <h4>Quiz Requests</h4>
+        <h4>Pending Quiz Requests</h4>
         {requestData?.getStudentRequests && (
           requestData?.getStudentRequests.map(request => (
             <QuizRequest
@@ -45,6 +45,7 @@ const grading = () => {
             />
           ))
         )}
+        <h4>Pending Scores</h4>
       </PagePadding>
     </div>
   );
