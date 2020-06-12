@@ -30,12 +30,6 @@ const userSchema = new Schema({
       ref: Course,
     }
   ],
-  instructingClasses: [
-    {
-      type: mongoose.ObjectId,
-      ref: Class,
-    }
-  ]
 })
 
 const User = mongoose.model('User', userSchema);

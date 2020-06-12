@@ -1,7 +1,10 @@
 import React from 'react';
 import { css } from '@emotion/core';
+import { useMutation } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
 
 import TextButton from '../styled/elements/TextButton';
+import PlaylistRequestButton from './PlaylistRequestButton';
 
 const details = css`
   width: 100%;
@@ -34,13 +37,14 @@ const details = css`
 
 `;
 
-const PlaylistDetails = ({ title, description }) => {
+const PlaylistDetails = ({ title, description, id }) => {
+
   return (
     <div css={details}>
       <div className='flex-item'>
         <h5>Description</h5>
         <p>{description}</p>
-        <TextButton text='Request Assessment'></TextButton>
+        <PlaylistRequestButton playlistId={id} />
       </div>
       <div className='flex-item objectives'>
         <h5>Objectives</h5>

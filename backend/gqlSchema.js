@@ -10,7 +10,10 @@ const typeDefs = gql`
     getCurrentUser: User,
     getUser(user_id: ID): User!,
     getAllUsers: [User]!,
+
     getPlaylist(playlistId: ID): Playlist!,
+    getPlaylistRequest(playlistId: ID): Request,
+    getStudentRequests: [Request],
     
     getEnrolledCourses(user_id: ID): [Course],
     getEnrolledClasses(user_id: ID): [Class],
@@ -64,9 +67,20 @@ const typeDefs = gql`
       playlist: String,
     ): Objective! ,
 
-    enroll(
-      enrollId: String!,
-    ) : User!,
+    enroll(enrollId: String!) : User!,
+
+    createRequest(playlistId: ID!) : Request!,
+    approveRequest(playlistId: ID!): Request!,
+    cancelRequest(playlistId: ID!): Request!
+    deleteRequest(playlistId: ID!): ID!,
+  }
+
+  # # # # # # # # # # # #
+  # SUBSCRIPTIONS
+  # # # # # # # # # # # #
+
+  type Subscription {
+    requestApproved(userId: ID!): Request,
   }
 
   # # # # # # # # # # # #
@@ -84,7 +98,6 @@ const typeDefs = gql`
     roles: [String!],
     enrolledClasses: [String],
     instructingCourses: [Course],
-    instructingClasses: [Class],
   }
 
   type Course {
@@ -160,6 +173,14 @@ const typeDefs = gql`
     objective: String,
     text: String,
     responses: [String], 
+  }
+
+  type Request {
+    _id: ID,
+    user: User,
+    playlist: Playlist,
+    approved: Boolean,
+    approvalAccepted: Boolean,
   }
 `;
 

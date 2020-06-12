@@ -1,7 +1,7 @@
 const { ApolloError } = require('apollo-server-express')
 const ShortUniqueId = require('short-unique-id').default;
 
-const verifyUser = require('../lib/verifyUser');
+const { pubsub } = require('./pubsub');
 
 // Mongoose Models
 const User = require('../models/User');
@@ -9,9 +9,9 @@ const Course = require('../models/Course');
 const Class = require('../models/Class');
 const Playlist = require('../models/Playlist');
 const Objective = require('../models/Objective');
+const Request = require('../models/Request');
 
 const mutations = {
-
   async createCourse(parent, args, context, info) {
     const { currentUser } = context;
     if (!currentUser.roles.includes('STUDENT')) {
@@ -114,6 +114,46 @@ const mutations = {
       return userInDb;
     }
     return 'Not logged in!'
-  }
+  },
+
+  async createRequest(parent, args, context, info) {
+    const { currentUser } = context;
+    const requestExists = await Request.exists({ playlist: args.playlistId });
+    if (!requestExists) {
+      const request = new Request({
+        approved: false,
+        approvalAccepted: false,
+        user: currentUser._id,
+        playlist: args.playlistId,
+        ...args,
+      })
+      const newRequest = await request.save().catch(err => { console.log(err) });
+      return request;
+    }
+    return new ApolloError('Request has already been submitted.');
+  },
+
+  async approveRequest(parent, args, context, info) {
+    const request = await Request.findOne({ _id: args.playlistId });
+    request.approved = true;
+    return await request.save();
+    // return request;
+  },
+
+  async cancelRequest(parent, args, context, info) {
+    const request = await Request.findOne({ _id: args.playlistId });
+    request.approved = false;
+    return await request.save();
+    // return request;
+  },
+
+  async deleteRequest(parent, args, context, info) {
+    const request = await Request.deleteOne({ _id: args.playlistId });
+    if (request.deletedCount) {
+      return args.playlistId
+    } else {
+      return new ApolloError('Error deleting the current quiz request.');
+    }
+  },
 }
 module.exports = mutations;

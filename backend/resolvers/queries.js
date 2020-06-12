@@ -6,6 +6,7 @@ const Course = require('../models/Course');
 const Class = require('../models/Class');
 const Playlist = require('../models/Playlist');
 const Objective = require('../models/Objective');
+const Request = require('../models/Request');
 
 // currentUser data from JWT token available on context.currentUser
 const queries = {
@@ -87,6 +88,27 @@ const queries = {
 	async getPlaylist(parent, args, context, info) {
 		if (!args.playlistId) return "No Playlist ID provided";
 		return await Playlist.findById(args.playlistId);
+	},
+
+	async getPlaylistRequest(parent, args, context, info) {
+		return await Request.findOne({ user: context.currentUser, playlist: args.playlistId });
+	},
+
+	async getStudentRequests(parent, args, context, info) {
+		const { currentUser } = context;
+		// Create array of users classes they instruct
+		let classList = [];
+		await Class.find({ primaryInstructor: currentUser._id }).then(classes => {
+			classes.forEach(clas => classList.push(clas._id))
+		});
+		// create list of students
+		let studentList = [];
+		await User.find({ enrolledClasses: { $in: classList } }).then(students => {
+			students.forEach(student => studentList.push(student._id));
+		})
+		// get all request for students you instruct
+		const requests = await Request.find({ user: { $in: studentList } }).populate('user').populate('playlist');
+		return requests;
 	}
 
 }
