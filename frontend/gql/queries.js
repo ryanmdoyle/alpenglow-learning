@@ -53,3 +53,22 @@ export const GET_INSTRUCTING_STUDENTS_QUERY = gql`
     }
   }
 `;
+
+export const PLAYLIST_QUERY = gql`
+  query PLAYLIST_QUERY(
+    $playlistId: ID!
+  ) {
+    getPlaylist(playlistId: $playlistId) {
+      _id
+      name
+      subject
+      description
+      objectives {
+        _id
+        name
+        description
+      }
+      type
+    }
+  }
+`;
