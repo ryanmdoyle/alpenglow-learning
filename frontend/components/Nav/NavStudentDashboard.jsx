@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 
 import NavSectionPadding from '../styled/blocks/NavSectionPadding';
-import NavSectionHeader from '../styled/element/NavSectionHeader';
+import NavSectionHeader from '../styled/elements/NavSectionHeader';
 import NavItem from './NavItem';
 import Loading from '../Loading';
 import { GET_ENROLLED_CLASSES_QUERY } from '../../gql/queries';

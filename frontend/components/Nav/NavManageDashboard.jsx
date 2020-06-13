@@ -2,7 +2,7 @@ import React from 'react';
 import { css } from '@emotion/core';
 
 import NavSectionPadding from '../styled/blocks/NavSectionPadding';
-import NavSectionHeader from '../styled/element/NavSectionHeader';
+import NavSectionHeader from '../styled/elements/NavSectionHeader';
 import NavItem from './NavItem';
 
 const NavManageDashboard = () => {
