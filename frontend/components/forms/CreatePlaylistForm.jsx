@@ -4,7 +4,7 @@ import { gql } from 'apollo-boost';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
 
-import FormWrapper from '../styled/FormWrapper';
+import FormWrapper from '../styled/blocks/FormWrapper';
 import PagePadding from '../styled/PagePadding';
 import Loading from '../Loading';
 import AlertContext from '../context/AlertContext';

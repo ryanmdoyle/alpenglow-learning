@@ -1,7 +1,7 @@
 import React from 'react';
-import styled from '@emotion/styled';
+import { css } from '@emotion/core';
 
-const StyledForm = styled.div`
+const StyledForm = css`
 width: 100%;
 display: flex;
 justify-content: center;
@@ -62,9 +62,9 @@ justify-content: center;
 
 const FormWrapper = ({ children, onSubmit }) => {
   return (
-    <StyledForm>
+    <div css={StyledForm}>
       {children}
-    </StyledForm>
+    </div>
   );
 };
 

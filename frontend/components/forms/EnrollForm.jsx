@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { gql } from 'apollo-boost';
 
-import FormWrapper from '../styled/FormWrapper';
+import FormWrapper from '../styled/blocks/FormWrapper';
 import AlertContext from '../context/AlertContext';
 import ModalContext from '../context/ModalContext';
 import PagePadding from '../styled/PagePadding';

@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
 
-import FormWrapper from '../styled/FormWrapper';
 import AlertContext from '../context/AlertContext';
 
 const item = css`
