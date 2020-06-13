@@ -5,7 +5,7 @@ import { css } from '@emotion/core';
 const buttonStyles = css`
   margin-top: 0.5rem;
   align-self: flex-end;
-  height: 3rem;
+  height: 2.5rem;
   width: 10rem;
   border-radius: 3px;
   border: 2px solid var(--blueMedium);

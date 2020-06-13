@@ -49,7 +49,7 @@ const teacherClasses = () => {
               </TextTableContainer>
             )}
             <div css={css`display: flex; justify-content: flex-end;`}>
-            <TextButton whenClicked={() => {
+            <TextButton onClick={() => {
                   modal.setChildComponent(<CreateClassForm courseId={course._id} />);
                   modal.open();
                 }}>{`Add class to ${course.name}`}</TextButton>

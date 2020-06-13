@@ -5,14 +5,12 @@ import Link from 'next/link';
 
 const classTable = css`
   width: 100%;
-  border-radius: var(--borderRadius);
-  border: 1px solid rgba(1, 1, 1, 0);
   display: flex;
   align-items: center;
   span {
     flex: 0 1 20%;
     text-align: right;
-    padding: 0.5rem 0;
+    padding: 0;
   }
   span:first-of-type {
     flex: 1 1 50%;
@@ -21,41 +19,31 @@ const classTable = css`
 `;
 
 const row = css`
-  padding: 0.5rem 1rem;
+  padding: 0.7rem 1rem;
+  border-radius: var(--borderRadius);
   :hover, :focus, :active {
-      border: 1px solid var(--blueMedium);
-      box-shadow: var(--shadowLight);
-      text-align: left;
+    box-shadow: var(--shadowLight);
   }
 `;
 
 const header = css`
-  padding: 0rem 1rem;
+  padding: 0.4rem 1rem;
   font-size: 0.85rem;
   line-height: 0.5rem;
-  border-radius: 0;
-`;
-
-const firstDivBorder = css`
-  min-width: 500px;
-  div:nth-of-type(2) {
-    border-top: 1px solid var(--blueMedium50);
-    border-radius: 0;
-    :hover {
-      border-radius: var(--borderRadius);
-      border: 1px solid var(--blueMedium);
-      box-shadow: var(--shadowLight);
-    }
-  }
+  color: var(--blueMedium);
+  text-decoration-line: underline;
 `;
 
 const tableContainer = css`
   width: 100%;
-  overflow-y: auto;
+  /* overflow-y: scroll; */
+  overflow-x: scroll;
+  /* padding so scrollbar does not hide row box-shadow */
+  padding: 0.2rem;
   ::-webkit-scrollbar {
     -webkit-appearance: none;
     width: 3px;
-    height: 0.3rem;
+    height: 0.2rem;
   }
 
   ::-webkit-scrollbar-thumb {
@@ -66,9 +54,7 @@ const tableContainer = css`
 
 const TextTableContainer = ({ children }) => (
   <div css={tableContainer}>
-    <div css={firstDivBorder}>
-      {children}
-    </div>
+    {children}
   </div>
 )
 

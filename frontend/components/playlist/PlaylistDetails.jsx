@@ -2,9 +2,10 @@ import React, { useContext } from 'react';
 import { css } from '@emotion/core';
 import { useRouter } from 'next/router';
 
-import TextButton from '../styled/elements/TextButton';
 import PlaylistRequestButton from './PlaylistRequestButton';
 import PlaylistCreateQuizButton from './PlaylistCreateQuizButton';
+import PlaylistNewObjectiveButton from './PlaylistNewObjectiveButton';
+import { PLAYLIST_QUERY } from '../../pages/'
 
 const details = css`
   width: 100%;
@@ -37,7 +38,7 @@ const details = css`
 
 `;
 
-const PlaylistDetails = ({ title, description, id }) => {
+const PlaylistDetails = ({ title, description, id, objectives }) => {
   const { pathname } = useRouter();
   const studentView = pathname.startsWith('/student');
 
@@ -52,10 +53,11 @@ const PlaylistDetails = ({ title, description, id }) => {
       <div className='flex-item objectives'>
         <h5>Objectives</h5>
         <ol>
-          <li>Obj 1</li>
-          <li>Obj 2</li>
-          <li>Obj 3</li>
+          {objectives && objectives.map(objective => (
+            <li key={objective._id}><strong>{objective.name}: </strong><br></br>{objective.description}</li>
+          ))}
         </ol>
+        {!studentView && <PlaylistNewObjectiveButton name={title} playlistId={id} />}
       </div>
     </div>
   );

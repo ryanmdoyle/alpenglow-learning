@@ -9,22 +9,26 @@ import { GET_STUDENT_QUIZ_REQUESTS } from '../../pages/teacher/progress/grading'
 
 const requestContainer = css`
   width: 100%;
-  /* box-shadow: var(--shadowLight); */
-  padding: 0.5rem 1rem;
+  padding: 0.7rem 1rem;
   border-radius: var(--borderRadius);
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  :hover {
+  :hover, :focus, :active {
     box-shadow: var(--shadowLight);
   }
+  span { color: var(--blueDark);}
+  small { color: var(--pink);}
 `;
 
 const oneWide = css`
   height: 30px;
   width: 210px;
   margin: 0;
+  @media (max-width: 750px) {
+    width: 150px;
+  }
 `;
 
 const twoWide = css`
@@ -37,6 +41,9 @@ const twoWide = css`
   }
   button:last-of-type {
     margin: 0 0 0 10px;
+  }
+  @media (max-width: 750px) {
+    button { width: 70px; }
   }
 `;
 
@@ -79,7 +86,7 @@ const QuizRequest = ({ id, name, playlist, approved, approvalAccepted }) => {
   return (
     <div css={requestContainer}>
       <div>
-        <span><strong>{name}</strong></span>
+        <span>{name}</span>
         <span css={css`margin-left: 1rem;color: var(--blueMedium);`}><small>{playlist}</small></span>
         <span>{approved}</span>
       </div>

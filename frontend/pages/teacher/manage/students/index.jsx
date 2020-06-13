@@ -6,6 +6,7 @@ import PageTitle from '../../../../components/PageTitle';
 import PagePadding from '../../../../components/styled/blocks/PagePadding';
 import Loading from '../../../../components/Loading';
 import { TextTableContainer, TextTableHeader, TextTableRow } from '../../../../components/styled/tables/TextTable';
+import { ListContainer, ListRow } from '../../../../components/styled/blocks/List';
 import { GET_INSTRUCTING_STUDENTS_QUERY } from '../../../../gql/queries';
 
 const studentList = () => {
@@ -18,20 +19,18 @@ const studentList = () => {
       <PageTitle>Manage Your Students</PageTitle>
       <PagePadding>
         <h4>All Students Enrolled in Classes</h4>
-        <TextTableContainer>
-          <TextTableHeader>
-            <span>Name</span>
-            <span>Email</span>
-            <span>Enrolled Classes</span>
-          </TextTableHeader>
-          {data.getInstructingStudents.map(student => (
-            <TextTableRow key={student._id} linkHref='/teacher/manage/students/[studentId]' linkAs={`/teacher/manage/students/${student._id}`}>
-              <span>{student.name}</span>
-              <span>{student.email}</span>
-              <span>{student.enrolledClasses.length}</span>
-            </TextTableRow>
-          ))}
-        </TextTableContainer>
+        <ListContainer>
+          {data.getInstructingStudents.map(student => {
+            const enrolled = student.enrolledClasses.length;
+            return (
+              <ListRow>
+                <span>{student.name}</span>
+                <span>{student.email}</span>
+                <span>{enrolled > 1 ? `${enrolled} classes` : `${enrolled} class`}</span>
+              </ListRow>
+            )
+          })}
+        </ListContainer>
       </PagePadding>
     </>
   );

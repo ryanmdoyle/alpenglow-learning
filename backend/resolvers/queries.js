@@ -87,7 +87,7 @@ const queries = {
 
 	async getPlaylist(parent, args, context, info) {
 		if (!args.playlistId) return "No Playlist ID provided";
-		return await Playlist.findById(args.playlistId);
+		return await Playlist.findById(args.playlistId).populate('objectives');
 	},
 
 	async getPlaylistRequest(parent, args, context, info) {

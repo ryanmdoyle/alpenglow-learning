@@ -15,6 +15,11 @@ const PLAYLIST_QUERY = gql`
       name
       subject
       description
+      objectives {
+        _id
+        name
+        description
+      }
       type
     }
   }
@@ -30,10 +35,9 @@ const playlistId = () => {
   if (error) return null;
   if (loading) return <Loading />
   return (
-    <div>
-      <Playlist playlistData={data.getPlaylist} />
-    </div>
+    <Playlist playlistData={data.getPlaylist} />
   );
 };
 
 export default playlistId;
+export { PLAYLIST_QUERY };

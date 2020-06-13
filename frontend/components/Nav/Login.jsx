@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import fetch from 'isomorphic-unfetch';
-import { css } from '@emotion/core';
-import styled from '@emotion/styled';
 import { GoogleLogin } from 'react-google-login';
 import { useRouter } from 'next/router';
 
