@@ -3,8 +3,8 @@ import { css } from '@emotion/core';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
 
-import NavSectionPadding from '../styled/NavSectionPadding';
-import NavSectionHeader from '../styled/NavSectionHeader';
+import NavSectionPadding from '../styled/blocks/NavSectionPadding';
+import NavSectionHeader from '../styled/elements/NavSectionHeader';
 import NavItem from './NavItem';
 import Loading from '../Loading';
 

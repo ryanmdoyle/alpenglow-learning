@@ -3,10 +3,9 @@ import { css } from '@emotion/core';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 
-import NavSectionPadding from '../styled/NavSectionPadding';
-import NavSectionHeader from '../styled/NavSectionHeader';
+import NavSectionPadding from '../styled/blocks/NavSectionPadding';
+import NavSectionHeader from '../styled/element/NavSectionHeader';
 import NavItem from './NavItem';
-import Enroll from './EnrollNavButton';
 import Loading from '../Loading';
 import { GET_ENROLLED_CLASSES_QUERY } from '../../gql/queries';
 
