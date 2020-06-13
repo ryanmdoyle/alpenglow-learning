@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/react-hooks';
 
 import PageTitle from '../../../components/PageTitle';
 import Loading from '../../../components/Loading';
-import PagePadding from '../../../components/styled/PagePadding';
+import PagePadding from '../../../components/styled/blocks/PagePadding';
 import QuizRequest from '../../../components/progress/QuizRequest';
 
 const GET_STUDENT_QUIZ_REQUESTS = gql`

@@ -3,14 +3,14 @@ import Link from 'next/link';
 import { useQuery } from '@apollo/react-hooks'
 
 import PageTitle from '../../../../components/PageTitle';
-import PagePadding from '../../../../components/styled/PagePadding';
+import PagePadding from '../../../../components/styled/blocks/PagePadding';
 import Loading from '../../../../components/Loading';
 import { TextTableContainer, TextTableHeader, TextTableRow } from '../../../../components/styled/tables/TextTable';
 import { GET_INSTRUCTING_STUDENTS_QUERY } from '../../../../gql/queries';
 
 const studentList = () => {
   const { loading, error, data } = useQuery(GET_INSTRUCTING_STUDENTS_QUERY);
-  
+
   if (error) return null;
   if (loading) return <Loading />;
   return (

@@ -5,7 +5,7 @@ import { useQuery } from '@apollo/react-hooks'
 
 import PageTitle from '../../../../components/PageTitle';
 import Loading from '../../../../components/Loading';
-import PagePadding from '../../../../components/styled/PagePadding';
+import PagePadding from '../../../../components/styled/blocks/PagePadding';
 
 const COURSE_QUERY = gql`
   query COURSE_QUERY {

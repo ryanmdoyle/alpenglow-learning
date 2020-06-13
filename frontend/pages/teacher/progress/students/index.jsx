@@ -3,7 +3,7 @@ import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks'
 
 import PageTitle from '../../../../components/PageTitle';
-import PagePadding from '../../../../components/styled/PagePadding';
+import PagePadding from '../../../../components/styled/blocks/PagePadding';
 import ProgressTable_Courses from '../../../../components/progress/ProgressTable_Courses';
 // import { GET_INSTRUCTING_STUDENTS_QUERY } from '../../../../gql/queries';
 

@@ -5,7 +5,7 @@ import gql from 'apollo-boost';
 
 import Loading from '../../../../components/Loading';
 import PageTitle from '../../../../components/PageTitle';
-import PagePadding from '../../../../components/styled/PagePadding';
+import PagePadding from '../../../../components/styled/blocks/PagePadding';
 import PlaylistItem from '../../../../components/playlist/PlaylistItem';
 
 const courseTitle = css`

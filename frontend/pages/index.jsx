@@ -7,7 +7,7 @@ import Loading from '../components/Loading';
 import UserContext from '../components/context/UserContext';
 import hasPermission from '../lib/hasPermission';
 import PageTitle from '../components/PageTitle';
-import PagePadding from '../components/styled/PagePadding';
+import PagePadding from '../components/styled/blocks/PagePadding';
 import StudentWelcome from '../components/welcome/StudentWelcome';
 import TeacherWelcome from '../components/welcome/TeacherWelcome';
 import { Roles } from '../lib/enums';
