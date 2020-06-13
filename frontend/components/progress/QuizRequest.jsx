@@ -21,6 +21,25 @@ const requestContainer = css`
   }
 `;
 
+const oneWide = css`
+  height: 30px;
+  width: 210px;
+  margin: 0;
+`;
+
+const twoWide = css`
+  display: flex;
+  align-items: center;
+  button {
+    height: 30px;
+    width: 100px;
+    margin: 0;
+  }
+  button:last-of-type {
+    margin: 0 0 0 10px;
+  }
+`;
+
 const APPROVE_QUIZ_REQUEST = gql`
   mutation APPROVE_QUIZ_REQUEST($playlistId: ID!) {
     approveRequest(playlistId: $playlistId) {
@@ -66,11 +85,15 @@ const QuizRequest = ({ id, name, playlist, approved, approvalAccepted }) => {
       </div>
       <div>
         {approved ?
-          <TextButton onClick={cancel} css={css`height: 30px; width: 210px; margin: 0;`}>Cancel Quiz Approval</TextButton>
+          <TextButton onClick={cancel} css={[oneWide, css`:hover{background-color: var(--red);border-color: var(--red);}`]}>Cancel Quiz Approval</TextButton>
           :
-          <div css={css`display: flex; align-items: center;`}>
-            <TextButton onClick={approve} css={css`height: 30px; width: 100px; margin: 0;`}>Approve</TextButton>
-            <TextButton onClick={deny} css={css`height: 30px; width: 100px; margin: 0 0 0 10px;`}>Deny</TextButton>
+          <div css={twoWide}>
+            <TextButton onClick={approve}
+              css={css`:hover{background-color: var(--green);border-color: var(--green);}`}
+            >Approve</TextButton>
+            <TextButton onClick={deny}
+              css={css`:hover{background-color: var(--red);border-color: var(--red);}`}
+            >Deny</TextButton>
           </div>
         }
       </div>

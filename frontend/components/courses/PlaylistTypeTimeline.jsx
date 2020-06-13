@@ -41,7 +41,7 @@ const PlaylistTypeTimeline = ({ type, playlists, courseId, subject }) => {
   // If no playlists and not a student, show button to add playlist
   if (playlists.length == 0 && !studentView) return (
     <>
-      <h5 css={css`color: var(--blueMedium);`}>{type}</h5>
+      <h5>{type}</h5>
       <div css={css`min-width: 3rem;display: flex;align-items:center;padding-left: 1rem;`}>
         <PlusButton css={playlistButton} onClick={toggleModal} />
         <p css={css`margin: 0;padding-left:0.5rem; color: var(--blueMedium);`}>Create a {type} playlist</p>

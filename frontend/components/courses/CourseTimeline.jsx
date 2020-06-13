@@ -13,17 +13,20 @@ const courseContainer = css`
   border-radius: var(--borderRadius);
   transition: box-shadow 0.15s;
   
-  h1, h2, h3, h4, h5, h6 {
-    color: var(--blueDark);
-  }
-  h2  {margin: 0.2rem 0; }
   h4, h5 { 
     margin: 0.6rem 0;
   }
   h4 {
     padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--blueMedium50);
+    /* border-bottom: 1px solid var(--blueMedium50); */
     margin-bottom: 1rem;
+  }
+
+  h5 {
+    color: var(--blueMedium);
+    :after {
+      display: none;
+    }
   }
 
   :hover {

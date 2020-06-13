@@ -20,17 +20,17 @@ const progressBar = css`
 
 const completeProgress = css`
   height: 100%;
-  background-color: var(--mint);
+  background-color: var(--green);
 `;
 
 const partialProgress = css`
   height: 100%;
-  background-color: var(--yellowLight);
+  background-color: var(--yellow);
 `;
 
 const lowProgress = css`
   height: 100%;
-  background-color: red;
+  background-color: var(--red);
 `;
 
 const ProgressBar = ({

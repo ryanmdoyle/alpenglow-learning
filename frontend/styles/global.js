@@ -24,8 +24,9 @@ const global = css`
     --blueMedium50: #4952A880;
     --blueDark: #1F2A40;
     --blueDark50: #1F2A4080;
-    --mint: #91F5BD;
-    --yellowLight: #F5E193;
+    --green: #57C295;
+    --red: #E34451;
+    --yellow: #F0D655;
     --headerFontFamily: 'Montserrat', sans-serif;
     --borderRadius: 5px;
     --navWidth: 240px;
@@ -67,6 +68,7 @@ const global = css`
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
     line-height: 1.15;
+    /* color: var(--blueDark); */
   }
 
   h1 {
@@ -87,6 +89,21 @@ const global = css`
   a {
     margin-bottom: 1.15rem;
     text-decoration: none;
+  }
+
+  h4, h5 {
+    position: relative;
+    ::after {
+      position: absolute;
+      top: 100%;
+      transform: skew(45deg);
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: var(--pink50);
+      content: '';
+      z-index: -100;
+    }
   }
 `;
 

@@ -1,9 +1,26 @@
 import React from 'react';
 import { css } from '@emotion/core';
 
+const test = css`
+  h4 {
+  position: relative;
+  ::after {
+      position: absolute;
+      top: 79%;
+      transform: skew(45deg);
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: var(--pink50);
+      content: '';
+      z-index: -100;
+    }
+  }
+`;
+
 const PlaylistObjective = () => {
   return (
-    <div>
+    <div css={test}>
       <h4>This is the Objective Header</h4>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Imperdiet nulla malesuada pellentesque elit eget gravida. Scelerisque eleifend donec pretium vulputate sapien nec. Sociis natoque penatibus et magnis. In fermentum posuere urna nec tincidunt praesent semper feugiat. Viverra orci sagittis eu volutpat odio facilisis mauris. Etiam dignissim diam quis enim lobortis scelerisque fermentum dui. Congue mauris rhoncus aenean vel elit scelerisque mauris pellentesque. Gravida rutrum quisque non tellus orci ac auctor augue. Scelerisque felis imperdiet proin fermentum leo. Mattis nunc sed blandit libero volutpat sed. Molestie nunc non blandit massa enim nec dui nunc mattis. A condimentum vitae sapien pellentesque habitant. Leo duis ut diam quam nulla porttitor.
 
