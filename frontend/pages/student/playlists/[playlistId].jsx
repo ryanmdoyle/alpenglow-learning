@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router'
 
-import Playlist from '../../../../components/playlist/Playlist';
+import Playlist from '../../../components/playlist/Playlist';
 
 const studentPlaylistId = () => {
   const router = useRouter();
