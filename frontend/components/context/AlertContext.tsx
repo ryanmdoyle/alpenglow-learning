@@ -7,12 +7,13 @@ AlertContext.displayName = 'AlertContext';
 
 const AlertProvider = ({ children }) => {
   const [alert, setAlert] = useState(AlertStatus.None);
-  const [alertText, setAlertText] = useState("👍");
+  const [alertText, setAlertText] = useState(null);
 
   return (
     <AlertContext.Provider
       value={{
         alert: alert,
+        alertText: alertText,
         success: (text: string, timeout: number) => {
           setAlertText(text);
           setAlert(AlertStatus.Success);
@@ -29,7 +30,6 @@ const AlertProvider = ({ children }) => {
           }, timeout * 1000 || 10000)
         },
         clear: () => (setAlert(AlertStatus.None)),
-        alertText: alertText,
       }}
     >
       {children}
