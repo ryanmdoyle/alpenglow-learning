@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import { css } from '@emotion/core';
 
+import PlaylistResourceList from './PlaylistResourceList';
+
 const test = css`
   h4 {
   position: relative;
@@ -24,6 +26,7 @@ const PlaylistObjective = ({ name, description }) => {
     <div css={test}>
       <h4>{name}</h4>
       <small>{description}</small>
+      <PlaylistResourceList />
     </div>
   );
 };

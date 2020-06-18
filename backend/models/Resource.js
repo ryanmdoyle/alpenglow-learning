@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const Objective = require('./Objective');
+const Resources = require('../lib/resourcesEnum');
 
 const resourceSchema = new Schema({
   name: String,
@@ -11,7 +12,11 @@ const resourceSchema = new Schema({
   objective: {
     type: mongoose.ObjectId,
     ref: Objective,
-  }
+  },
+  type: {
+    type: String,
+    enum: Resources,
+  },
 })
 
 const Resource = mongoose.model('Resource', resourceSchema);
