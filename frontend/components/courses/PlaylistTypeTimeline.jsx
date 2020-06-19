@@ -15,13 +15,6 @@ const playlistsContainer = css`
   display: flex;
 `;
 
-const playlistButton = css`
-  font-size: 0.7rem;
-  margin-left: 0.2rem;
-  opacity: 1;
-  :hover { opacity: 1;}
-`;
-
 const PlaylistTypeTimeline = ({ type, playlists, courseId, subject }) => {
   const modal = useContext(ModalContext);
   const router = useRouter();
@@ -43,7 +36,7 @@ const PlaylistTypeTimeline = ({ type, playlists, courseId, subject }) => {
     <>
       <h5>{type}</h5>
       <div css={css`min-width: 3rem;display: flex;align-items:center;padding-left: 1rem;`}>
-        <PlusButton css={playlistButton} onClick={toggleModal} />
+        <PlusButton onClick={toggleModal} />
         <p css={css`margin: 0;padding-left:0.5rem; color: var(--blueMedium);`}>Create a {type} playlist</p>
       </div>
     </>
@@ -59,7 +52,7 @@ const PlaylistTypeTimeline = ({ type, playlists, courseId, subject }) => {
         })}
         {!studentView && (
           <div css={css`min-width: 3rem;display: flex;align-items:center;`}>
-            <PlusButton css={playlistButton} onClick={toggleModal} />
+            <PlusButton onClick={toggleModal} />
           </div>
         )}
       </div>

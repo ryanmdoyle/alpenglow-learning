@@ -1,44 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { css } from '@emotion/core';
 
 const plus = css`
-	border: 2px solid var(--blueMedium);
-	background-color: white;
-	font-size: 0.8rem;
-	height: 2.5em;
-	width: 2.5em;
-	border-radius: 100%;
-	position: relative;
-
+  color: var(--blueMedium);
+  font-size: 1.8rem;
+  transition: color 0.3s;
   :hover {
-    background-color: var(--blueMedium);
-    :after, :before {
-      background-color: white;
-    }
+    color: var(--pink);
+    transition: color 0.3s;
   }
-	
-	:after,
-	:before {
-		content: "";
-		display: block;
-		background-color: var(--blueMedium);
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-	}
-	
-	:before {
-		height: 1em;
-		width: 0.15em;
-	}
-
-	:after {
-		height: 0.15em;
-		width: 1em;
-	}
 `;
 
-const PlusButton = (props) => (<div css={plus} {...props}></div>);
+const PlusButton = (props) => {
+  const [isHover, toggleHover] = useState(false);
+
+  return (
+    <i
+      className='material-icons'
+      css={plus}
+      onClick={props.onClick}
+      onMouseEnter={() => { toggleHover(!isHover) }}
+      onMouseLeave={() => { toggleHover(!isHover) }}
+    >
+      {isHover ? 'add_circle' : 'add_circle_outline'}
+    </i>
+  )
+};
 
 export default PlusButton;

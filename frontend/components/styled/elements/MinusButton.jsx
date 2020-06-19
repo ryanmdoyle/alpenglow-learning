@@ -1,35 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { css } from '@emotion/core';
 
 const minus = css`
-border: 2px solid var(--blueMedium);
-	background-color: white;
-	font-size: 0.8rem;
-	height: 2.5em;
-	width: 2.5em;
-	border-radius: 100%;
-	position: relative;
-
+  color: var(--blueMedium);
+  font-size: 1.8rem;
+  transition: color 0.3s;
   :hover {
-    background-color: var(--blueMedium);
-    :before {
-      background-color: white;
-    }
+    color: var(--pink);
+    transition: color 0.3s;
   }
-	
-	:before {
-		content: "";
-		display: block;
-		background-color: var(--blueMedium);
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		height: 0.15em;
-		width: 1em;
-	}
 `;
 
-const MinusButton = (props) => (<div css={minus} {...props}></div>)
+const MinusButton = (props) => {
+  const [isHover, toggleHover] = useState(false);
+
+  return (
+    <i
+      className='material-icons'
+      css={minus}
+      onClick={props.onClick}
+      onMouseEnter={() => { toggleHover(!isHover) }}
+      onMouseLeave={() => { toggleHover(!isHover) }}
+    >
+      {isHover ? 'remove_circle' : 'remove_circle_outline'}
+    </i>
+  )
+};
 
 export default MinusButton;
