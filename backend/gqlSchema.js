@@ -67,6 +67,14 @@ const typeDefs = gql`
       playlist: String,
     ): Objective! ,
 
+    createResource(
+      name: String!,
+      description: String!,
+      href: String!,
+      type: String!,
+      objective: String!
+    ) : Resource!,
+
     enroll(enrollId: String!) : User!,
 
     createRequest(playlistId: ID!) : Request!,
@@ -96,8 +104,6 @@ const typeDefs = gql`
     googleId: String!,
     email: String!,
     roles: [String!],
-    enrolledClasses: [String],
-    instructingCourses: [Course],
   }
 
   type Course {
@@ -119,7 +125,7 @@ const typeDefs = gql`
     name: String!,
     enrollId: String,
     course: Course!,
-    primaryInstructor: String!,
+    primaryInstructor: User!,
     secondaryInstructors: [User],
     enrolled: [User],
   }
@@ -131,8 +137,7 @@ const typeDefs = gql`
     description: String,
     grade: Int,
     type: String,
-    order: Int,
-    course: String,
+    course: Course,
     objectives: [ Objective ],
   }
 
@@ -141,7 +146,7 @@ const typeDefs = gql`
     name: String!,
     description: String,
     playlist: Playlist,
-    order: Int,
+    resources: [ Resource ],
   }
 
   type Resource {
@@ -150,27 +155,28 @@ const typeDefs = gql`
     description: String,
     href: String,
     order: Int,
-    objective: String,
+    objective: Objective,
   }
 
   type Quiz {
     _id: ID,
-    playlist: String,
-    user: String,
+    playlist: Playlist,
+    user: User,
     score: Score,
-    questions: [Question],
+    questions: [ Question ],
   }
 
   type Score {
     _id: ID,
-    playlist: String,
+    user: User,
+    possibleScore: Int,
     score: Int,
-    user: String,
+    playlist: Playlist,
   }
 
   type Question {
     _id: ID,
-    objective: String,
+    objective: Objective,
     text: String,
     responses: [String], 
   }

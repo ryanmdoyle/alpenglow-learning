@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const Objective = require('./Objective');
 const Resources = require('../lib/resourcesEnum');
 
 const resourceSchema = new Schema({
@@ -11,7 +10,8 @@ const resourceSchema = new Schema({
   order: Number,
   objective: {
     type: mongoose.ObjectId,
-    ref: Objective,
+    ref: 'Objective',
+    autopopulate: { maxDepth: 1 },
   },
   type: {
     type: String,
@@ -19,5 +19,6 @@ const resourceSchema = new Schema({
   },
 })
 
+resourceSchema.plugin(require('mongoose-autopopulate'));
 const Resource = mongoose.model('Resource', resourceSchema);
 module.exports = Resource;

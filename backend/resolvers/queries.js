@@ -29,10 +29,7 @@ const queries = {
 
 	async getInstructingStudents(parent, args, context, info) {
 		const userId = args.user_id ? args.user_id : context.currentUser._id;
-		const classes = await Class.find({ primaryInstructor: userId }).populate('enrolled');
-		// const students = classes.map(c => {
-		// 	return c.enrolled;
-		// })
+		const classes = await Class.find({ primaryInstructor: userId });
 		let students = [];
 		classes.forEach(c => {
 			for (let i = 0; i < c.enrolled.length; i++) {
@@ -46,48 +43,33 @@ const queries = {
 
 	async getInstructingCourse(parent, args, context, info) {
 		const userId = args.user_id ? args.user_id : context.currentUser._id;
-		return await Course.find({ owner: userId }).populate('playlists').populate('classes');
+		return await Course.findOne({ owner: userId });
 	},
 
 	async getInstructingCourses(parent, args, context, info) {
 		const userId = args.user_id ? args.user_id : context.currentUser._id;
-		return await Course.find({ owner: userId }).populate('playlists').populate('classes');
+		return await Course.find({ owner: userId });
 	},
 
 	async getEnrolledClasses(parent, args, context, info) {
 		const userId = args.user_id ? args.user_id : context.currentUser._id;
-		const user = await User.findById(userId).populate('enrolledClasses');
-		return user.enrolledClasses;
+		return await Class.find({ enrolled: { $in: userId } });
 	},
 
 	async getEnrolledCourses(parent, args, context, info) {
 		const userId = args.user_id ? args.user_id : context.currentUser._id;
 		const user = await User.findById(userId);
-		const courses = await Course.find({ classes: { $in: user.enrolledClasses } }).populate('playlists');
-		return courses;
+		return await Course.find({ classes: { $in: user.enrolledClasses } });
 	},
 
 	async getInstructingClasses(parent, args, context, info) {
 		const userId = args.user_id ? args.user_id : context.currentUser._id;
-		return await Class.find({ primaryInstructor: userId }).populate('enrolled').populate('secondaryInstructors');
-	},
-
-	// apply checking logic for current user above to queires below:
-	async getEnrolledPlaylists(parent, args, context, info) {
-		const userId = args.user_id ? args.user_id : context.currentUser._id;
-		const requestedUser = await User.findById(userId).populate('enrolledPlaylists');
-		return requestedUser.enrolledPlaylists;
-	},
-
-	async getInstructingPlaylists(parent, args, context, info) {
-		const userId = args.user_id ? args.user_id : context.currentUser._id;
-		const requestedUser = await User.findById(userId).populate('instructingPlaylists');
-		return requestedUser.instructingPlaylists;
+		return await Class.find({ primaryInstructor: userId });
 	},
 
 	async getPlaylist(parent, args, context, info) {
-		if (!args.playlistId) return "No Playlist ID provided";
-		return await Playlist.findById(args.playlistId).populate('objectives');
+		if (!args.playlistId) return null;
+		return await Playlist.findById(args.playlistId);
 	},
 
 	async getPlaylistRequest(parent, args, context, info) {
@@ -107,8 +89,7 @@ const queries = {
 			students.forEach(student => studentList.push(student._id));
 		})
 		// get all request for students you instruct
-		const requests = await Request.find({ user: { $in: studentList } }).populate('user').populate('playlist');
-		return requests;
+		return await Request.find({ user: { $in: studentList } }).populate('user').populate('playlist');
 	}
 
 }

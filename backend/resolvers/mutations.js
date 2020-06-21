@@ -10,6 +10,7 @@ const Class = require('../models/Class');
 const Playlist = require('../models/Playlist');
 const Objective = require('../models/Objective');
 const Request = require('../models/Request');
+const Resource = require('../models/Resource');
 
 const mutations = {
   async createCourse(parent, args, context, info) {
@@ -131,6 +132,23 @@ const mutations = {
       return request;
     }
     return new ApolloError('Request has already been submitted.');
+  },
+
+  async createResource(parent, args, context, info) {
+    const { currentUser } = context;
+    const resource = new Resource({
+      objective: args.objective,
+      name: args.name,
+      description: args.description,
+      href: args.href,
+      type: args.type,
+    });
+    const savedResource = await resource.save().catch(err => console.error(err));
+    // should not need if virtuals are creating the array at query time....
+    // const parentObjective = await Objective.findById(args.objective);
+    // await parentObjective.resources.push(savedResource._id);
+    // await parentObjective.save();
+    return savedResource;
   },
 
   async approveRequest(parent, args, context, info) {

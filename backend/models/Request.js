@@ -1,21 +1,21 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const User = require('./User');
-const Playlist = require('./Playlist');
-
 const requestSchema = new Schema({
   user: {
     type: mongoose.ObjectId,
-    ref: User,
+    ref: 'User',
+    autopopulate: { maxDepth: 1 },
   },
   playlist: {
     type: mongoose.ObjectId,
-    ref: Playlist,
+    ref: 'Playlist',
+    autopopulate: { maxDepth: 1 },
   },
-  approved:Boolean,
+  approved: Boolean,
   approvalAccepted: Boolean,
 })
 
+requestSchema.plugin(require('mongoose-autopopulate'));
 const Request = mongoose.model('Request', requestSchema);
 module.exports = Request;

@@ -1,29 +1,28 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const Playlist = require('./Playlist');
-const User = require('./User');
-const Score = require('./Score');
-const Question = require('./Question');
-
 // A quiz is a reference to a quiz that was taken by a user.
 // Quizzes are randomly generated and saved once completed.
 const quizSchema = new Schema({
   playlist: {
     type: mongoose.ObjectId,
-    ref: Playlist,
+    ref: 'Playlist',
+    autopopulate: { maxDepth: 1 },
   },
   user: {
     type: mongoose.ObjectId,
-    ref: User,
+    ref: 'User',
+    autopopulate: true,
   },
   questions: [{
     type: mongoose.ObjectId,
-    ref: Question,
+    ref: 'Question',
+    autopopulate: { maxDepth: 2 },
   }],
   score: {
     type: mongoose.ObjectId,
-    ref: Score,
+    ref: 'Score',
+    autopopulate: { maxDepth: 1 },
   }
 })
 

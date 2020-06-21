@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const Objective = require('./Objective');
-const Course = require('./Course');
 const subjectsEnum = require('../lib/subjectsEnum');
 
 const playlistSchema = new Schema({
@@ -17,15 +15,20 @@ const playlistSchema = new Schema({
     type: String,
     enum: ['ESSENTIAL', 'CORE', 'CHALLENGE'],
   },
-  order: Number,
-  course: mongoose.ObjectId,
+  course: {
+    type: mongoose.ObjectId,
+    ref: 'Course',
+    autopopulate: { maxDepth: 1 },
+  },
   objectives: [
     {
       type: mongoose.ObjectId,
-      ref: Objective,
+      ref: 'Objective',
+      autopopulate: true,
     }
   ],
 })
 
+playlistSchema.plugin(require('mongoose-autopopulate'));
 const Playlist = mongoose.model('Playlist', playlistSchema);
 module.exports = Playlist;

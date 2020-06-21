@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const Playlist = require('./Playlist');
-const Class = require('./Class');
 const subjectsEnum = require('../lib/subjectsEnum');
 
 const courseSchema = new Schema({
@@ -20,16 +18,19 @@ const courseSchema = new Schema({
   playlists: [
     {
       type: mongoose.ObjectId,
-      ref: Playlist,
+      ref: 'Playlist',
+      autopopulate: true,
     }
   ],
   classes: [
     {
       type: mongoose.ObjectId,
-      ref: Class,
+      ref: 'Class',
+      autopopulate: true,
     }
   ],
 })
 
+courseSchema.plugin(require('mongoose-autopopulate'));
 const Course = mongoose.model('Course', courseSchema);
 module.exports = Course;

@@ -1,18 +1,16 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const Objective = require('./Objective');
-
 const questionSchema = new Schema({
   objective: {
     type: mongoose.ObjectId,
-    ref: Objective,
+    ref: 'Objective',
+    autopopulate: { maxDepth: 1 },
   },
   text: String,
-  responses: [
-    String
-  ],
+  responses: [String],
 })
 
+questionsSchema.plugin(require('mongoose-autopopulate'));
 const Question = mongoose.model('Question', questionSchema);
 module.exports = Question;
