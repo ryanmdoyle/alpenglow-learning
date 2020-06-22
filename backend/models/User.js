@@ -18,5 +18,6 @@ const userSchema = new Schema({
 })
 
 userSchema.plugin(require('mongoose-autopopulate'));
+userSchema.options.selectPopulatedPaths = false;
 const User = mongoose.model('User', userSchema);
 module.exports = User;

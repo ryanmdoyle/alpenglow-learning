@@ -16,5 +16,6 @@ const requestSchema = new Schema({
 })
 
 requestSchema.plugin(require('mongoose-autopopulate'));
+requestSchema.options.selectPopulatedPaths = false;
 const Request = mongoose.model('Request', requestSchema);
 module.exports = Request;

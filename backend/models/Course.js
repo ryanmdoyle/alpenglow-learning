@@ -32,5 +32,6 @@ const courseSchema = new Schema({
 })
 
 courseSchema.plugin(require('mongoose-autopopulate'));
+courseSchema.options.selectPopulatedPaths = false;
 const Course = mongoose.model('Course', courseSchema);
 module.exports = Course;

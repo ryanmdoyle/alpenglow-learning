@@ -30,5 +30,6 @@ const classSchema = new Schema({
 })
 
 classSchema.plugin(require('mongoose-autopopulate'));
+classSchema.options.selectPopulatedPaths = false;
 const Class = mongoose.model('Class', classSchema);
 module.exports = Class;

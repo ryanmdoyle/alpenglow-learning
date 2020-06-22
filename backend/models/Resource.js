@@ -19,5 +19,6 @@ const resourceSchema = new Schema({
 })
 
 resourceSchema.plugin(require('mongoose-autopopulate'));
+resourceSchema.options.selectPopulatedPaths = false;
 const Resource = mongoose.model('Resource', resourceSchema);
 module.exports = Resource;

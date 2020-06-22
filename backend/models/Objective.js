@@ -18,5 +18,6 @@ const objectiveSchema = new Schema({
 })
 
 objectiveSchema.plugin(require('mongoose-autopopulate'));
+objectiveSchema.options.selectPopulatedPaths = false;
 const Objective = mongoose.model('Objective', objectiveSchema);
 module.exports = Objective;

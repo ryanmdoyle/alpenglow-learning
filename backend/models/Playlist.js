@@ -29,5 +29,6 @@ const playlistSchema = new Schema({
 })
 
 playlistSchema.plugin(require('mongoose-autopopulate'));
+playlistSchema.options.selectPopulatedPaths = false;
 const Playlist = mongoose.model('Playlist', playlistSchema);
 module.exports = Playlist;

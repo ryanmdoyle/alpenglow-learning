@@ -11,5 +11,6 @@ const questionSchema = new Schema({
 })
 
 questionsSchema.plugin(require('mongoose-autopopulate'));
+questionsSchema.options.selectPopulatedPaths = false;
 const Question = mongoose.model('Question', questionSchema);
 module.exports = Question;

@@ -16,5 +16,6 @@ const scoreSchema = new Schema({
 })
 
 scoreSchema.plugin(require('mongoose-autopopulate'));
+scoreSchema.options.selectPopulatedPaths = false;
 const Score = mongoose.model('Score', scoreSchema)
 module.exports = Score;
