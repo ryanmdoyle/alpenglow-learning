@@ -11,7 +11,6 @@ const resourceSchema = new Schema({
   objective: {
     type: mongoose.ObjectId,
     ref: 'Objective',
-    autopopulate: { maxDepth: 1 },
   },
   type: {
     type: String,

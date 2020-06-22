@@ -144,10 +144,9 @@ const mutations = {
       type: args.type,
     });
     const savedResource = await resource.save().catch(err => console.error(err));
-    // should not need if virtuals are creating the array at query time....
-    // const parentObjective = await Objective.findById(args.objective);
-    // await parentObjective.resources.push(savedResource._id);
-    // await parentObjective.save();
+    const parentObjective = await Objective.findById(args.objective);
+    await parentObjective.resources.push(savedResource._id);
+    await parentObjective.save();
     return savedResource;
   },
 

@@ -5,7 +5,6 @@ const questionSchema = new Schema({
   objective: {
     type: mongoose.ObjectId,
     ref: 'Objective',
-    autopopulate: { maxDepth: 1 },
   },
   text: String,
   responses: [String],

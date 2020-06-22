@@ -19,14 +19,14 @@ const courseSchema = new Schema({
     {
       type: mongoose.ObjectId,
       ref: 'Playlist',
-      autopopulate: true,
+      autopopulate: { maxDepth: 1 },
     }
   ],
   classes: [
     {
       type: mongoose.ObjectId,
       ref: 'Class',
-      autopopulate: true,
+      autopopulate: { maxDepth: 1 },
     }
   ],
 })

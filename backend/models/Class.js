@@ -7,7 +7,6 @@ const classSchema = new Schema({
   course: {
     type: mongoose.ObjectId,
     ref: 'Course',
-    autopopulate: { maxDepth: 1 },
   },
   primaryInstructor: {
     type: mongoose.ObjectId,

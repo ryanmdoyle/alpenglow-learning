@@ -7,7 +7,6 @@ const objectiveSchema = new Schema({
   playlist: {
     type: mongoose.ObjectId,
     ref: 'Playlist',
-    autopopulate: { maxDepth: 1 },
   },
   resources: [
     {

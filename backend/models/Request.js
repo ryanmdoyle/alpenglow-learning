@@ -5,12 +5,11 @@ const requestSchema = new Schema({
   user: {
     type: mongoose.ObjectId,
     ref: 'User',
-    autopopulate: { maxDepth: 1 },
+    autopopulate: true,
   },
   playlist: {
     type: mongoose.ObjectId,
     ref: 'Playlist',
-    autopopulate: { maxDepth: 1 },
   },
   approved: Boolean,
   approvalAccepted: Boolean,

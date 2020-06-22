@@ -58,8 +58,10 @@ const queries = {
 
 	async getEnrolledCourses(parent, args, context, info) {
 		const userId = args.user_id ? args.user_id : context.currentUser._id;
-		const user = await User.findById(userId);
-		return await Course.find({ classes: { $in: user.enrolledClasses } });
+		const userClasses = await Class.find({ enrolled: { $in: userId } });
+		// take userClasses and create array of only the ID's
+		// take array of class IDs and use that to search for the classes $in below
+		return await Courses.find({ classes: { $in: userClasses } });
 	},
 
 	async getInstructingClasses(parent, args, context, info) {
@@ -69,7 +71,8 @@ const queries = {
 
 	async getPlaylist(parent, args, context, info) {
 		if (!args.playlistId) return null;
-		return await Playlist.findById(args.playlistId);
+		const playlist = await Playlist.findById(args.playlistId);
+		return playlist;
 	},
 
 	async getPlaylistRequest(parent, args, context, info) {
@@ -89,7 +92,7 @@ const queries = {
 			students.forEach(student => studentList.push(student._id));
 		})
 		// get all request for students you instruct
-		return await Request.find({ user: { $in: studentList } }).populate('user').populate('playlist');
+		return await Request.find({ user: { $in: studentList } });
 	}
 
 }

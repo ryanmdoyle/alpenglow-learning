@@ -18,7 +18,6 @@ const playlistSchema = new Schema({
   course: {
     type: mongoose.ObjectId,
     ref: 'Course',
-    autopopulate: { maxDepth: 1 },
   },
   objectives: [
     {

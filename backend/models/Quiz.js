@@ -7,7 +7,6 @@ const quizSchema = new Schema({
   playlist: {
     type: mongoose.ObjectId,
     ref: 'Playlist',
-    autopopulate: { maxDepth: 1 },
   },
   user: {
     type: mongoose.ObjectId,
@@ -17,12 +16,10 @@ const quizSchema = new Schema({
   questions: [{
     type: mongoose.ObjectId,
     ref: 'Question',
-    autopopulate: { maxDepth: 2 },
   }],
   score: {
     type: mongoose.ObjectId,
     ref: 'Score',
-    autopopulate: { maxDepth: 1 },
   }
 })
 
