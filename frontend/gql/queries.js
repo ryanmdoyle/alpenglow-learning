@@ -11,7 +11,6 @@ export const INSTRUCTING_COURSES_QUERY = gql`
         _id
         name
         type
-        order
       }
       classes {
         _id
@@ -49,7 +48,6 @@ export const GET_INSTRUCTING_STUDENTS_QUERY = gql`
       _id
       name
       email
-      enrolledClasses
     }
   }
 `;
@@ -67,6 +65,10 @@ export const PLAYLIST_QUERY = gql`
         _id
         name
         description
+        resources {
+          _id
+          name
+        }
       }
       type
     }

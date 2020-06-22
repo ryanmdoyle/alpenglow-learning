@@ -23,7 +23,7 @@ const ENROLLED_COURSES_QUERY = gql`
 
 const studentClasses = () => {
   const { loading, error, data } = useQuery(ENROLLED_COURSES_QUERY);
-
+  console.log(data);
   if (error) return null;
   if (loading) return <Loading />;
   return (

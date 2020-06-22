@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types'
 import { css } from '@emotion/core';
+import { useRouter } from 'next/router';
 
 import PlaylistResourceList from './PlaylistResourceList';
+import TextButton from '../styled/elements/TextButton';
+import ModalContext from '../context/ModalContext';
+import AlertContext from '../context/AlertContext';
+import CreateResource from '../forms/CreateResource';
 
 const test = css`
   h4 {
@@ -21,19 +26,34 @@ const test = css`
   }
 `;
 
-const PlaylistObjective = ({ name, description }) => {
+const PlaylistObjective = ({ id, name, description, resources }) => {
+  const modal = useContext(ModalContext);
+  const alert = useContext(AlertContext);
+  const { pathname } = useRouter();
+  const studentView = pathname.startsWith('/student');
+
+  const addResourceModal = () => {
+    modal.setChildComponent(<CreateResource objectiveName={name} objectiveId={id} />)
+    modal.open();
+  }
+
   return (
     <div css={test}>
       <h4>{name}</h4>
       <small>{description}</small>
-      <PlaylistResourceList />
+      <PlaylistResourceList resources={resources} />
+      {!studentView && (
+        <TextButton onClick={addResourceModal}>Add Resource</TextButton>
+      )}
     </div>
   );
 };
 
 PlaylistObjective.propTypes = {
+  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
+  resources: PropTypes.array,
 }
 
 export default PlaylistObjective;

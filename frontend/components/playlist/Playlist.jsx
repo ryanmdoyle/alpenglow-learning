@@ -13,6 +13,7 @@ const Playlist = ({ playlistId }) => {
   const { loading, error, data } = useQuery(PLAYLIST_QUERY, {
     variables: { playlistId },
   })
+  console.log(data);
   // const { name, description, type, _id, objectives } = data ? data.getPlaylist : '';
   if (loading) return <Loading />
   return (
@@ -27,7 +28,13 @@ const Playlist = ({ playlistId }) => {
       <PagePadding>
         {data.getPlaylist.objectives && (
           data.getPlaylist.objectives.map(obj => (
-            <PlaylistObjective name={obj.name} description={obj.description} key={obj._id} />
+            <PlaylistObjective
+              id={obj._id}
+              key={obj._id}
+              name={obj.name}
+              description={obj.description}
+              resources={obj.resources}
+            />
           ))
         )}
       </PagePadding>

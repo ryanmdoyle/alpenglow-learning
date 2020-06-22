@@ -5,7 +5,6 @@ import { useQuery } from '@apollo/react-hooks'
 import PageTitle from '../../../../components/PageTitle';
 import PagePadding from '../../../../components/styled/blocks/PagePadding';
 import Loading from '../../../../components/Loading';
-import { TextTableContainer, TextTableHeader, TextTableRow } from '../../../../components/styled/tables/TextTable';
 import { ListContainer, ListRow } from '../../../../components/styled/blocks/List';
 import { GET_INSTRUCTING_STUDENTS_QUERY } from '../../../../gql/queries';
 
@@ -21,7 +20,7 @@ const studentList = () => {
         <h4>All Students Enrolled in Classes</h4>
         <ListContainer>
           {data.getInstructingStudents.map(student => {
-            const enrolled = student.enrolledClasses.length;
+            const enrolled = '5';
             return (
               <ListRow>
                 <span>{student.name}</span>
