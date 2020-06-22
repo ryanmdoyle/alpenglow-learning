@@ -58,10 +58,8 @@ const queries = {
 
 	async getEnrolledCourses(parent, args, context, info) {
 		const userId = args.user_id ? args.user_id : context.currentUser._id;
-		const userClasses = await Class.find({ enrolled: { $in: userId } });
-		// take userClasses and create array of only the ID's
-		// take array of class IDs and use that to search for the classes $in below
-		return await Courses.find({ classes: { $in: userClasses } });
+		const enrolledClasses = await Class.find({ enrolled: { $in: userId } }).select('_id');
+		return await Course.find({ classes: { $in: enrolledClasses } });
 	},
 
 	async getInstructingClasses(parent, args, context, info) {
