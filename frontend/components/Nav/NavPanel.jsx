@@ -19,6 +19,7 @@ const navStyles = css`
   flex-direction: column;
   justify-content: space-between;
   overflow-y: scroll;
+  z-index: 100;
 `;
 
 const NavSection = styled.section`
@@ -27,7 +28,6 @@ const NavSection = styled.section`
 `;
 
 const UserSection = styled.section`
-  border-top: 1px solid var(--blueLight);
   padding: 1rem 1rem;
   display: flex;
   justify-content: space-evenly;
