@@ -33,6 +33,7 @@ const details = css`
     }
     li {
       font-size: 0.9em;
+      strong { color: var(--blueMedium); }
     }
   }
 
@@ -41,6 +42,7 @@ const details = css`
 const PlaylistDetails = ({ title, description, id, objectives }) => {
   const { pathname } = useRouter();
   const studentView = pathname.startsWith('/student');
+  console.log(objectives)
 
   return (
     <div css={details}>
@@ -54,7 +56,13 @@ const PlaylistDetails = ({ title, description, id, objectives }) => {
         <h5>Objectives</h5>
         <ol>
           {objectives && objectives.map(objective => (
-            <li key={objective._id}><strong>{objective.name}: </strong><br></br>{objective.description}</li>
+            <li key={objective._id}>
+              <a href={`#${objective._id}`}>
+                <strong>{objective.name}: </strong>
+              </a>
+              <br></br>
+              {objective.description}
+            </li>
           ))}
         </ol>
         {!studentView && <PlaylistNewObjectiveButton name={title} playlistId={id} />}

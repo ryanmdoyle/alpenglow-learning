@@ -37,12 +37,11 @@ const PlaylistResourceListItem = ({ resource }) => {
         return 'link';
     }
   }
-  console.log(resource)
 
   return (
     <a href={`http://${resource.href}`} target="_blank" referrerpolicy='no-referrer' rel='external' css={link}>
       <li>
-        <i className="material-icons">{icon(resource.type)}</i>
+        <i className="material-icons icon">{icon(resource.type)}</i>
         <div css={info}>
           <span>{resource?.name}</span>
           <small>{resource?.description}</small>

@@ -44,6 +44,7 @@ const PlaylistObjective = ({ id, name, description, resources, playlistId }) => 
 
   return (
     <div css={test}>
+      <a name={id}></a>
       <h4>{name}</h4>
       <small>{description}</small>
       <PlaylistResourceList resources={resources} />
