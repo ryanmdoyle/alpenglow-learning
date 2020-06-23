@@ -1,7 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types'
 import { css } from '@emotion/core';
 import { useRouter } from 'next/router';
+import { DragDropContext } from 'react-beautiful-dnd';
 
 import PlaylistResourceList from './PlaylistResourceList';
 import TextButton from '../styled/elements/TextButton';
@@ -9,7 +10,7 @@ import ModalContext from '../context/ModalContext';
 import AlertContext from '../context/AlertContext';
 import CreateResource from '../forms/CreateResource';
 
-const test = css`
+const objectiveStyles = css`
   h4 {
   position: relative;
   ::after {
@@ -26,7 +27,8 @@ const test = css`
   }
 `;
 
-const PlaylistObjective = ({ id, name, description, resources, playlistId }) => {
+const PlaylistObjective = ({ objectiveId, objectiveName, objectiveDescription, resources, playlistId }) => {
+  const [resourceArr, setResourceArr] = useState(resources);
   const modal = useContext(ModalContext);
   const alert = useContext(AlertContext);
   const { pathname } = useRouter();
@@ -35,19 +37,34 @@ const PlaylistObjective = ({ id, name, description, resources, playlistId }) => 
   const addResourceModal = () => {
     modal.setChildComponent(
       <CreateResource
-        objectiveName={name}
-        objectiveId={id}
+        objectiveName={objectiveName}
+        objectiveId={objectiveId}
         playlistId={playlistId}
       />)
     modal.open();
   }
 
+  const handleDrag = result => {
+    const { source, destination } = result;
+    const draggedItem = resourceArr[source.index];
+    const newOrderArr = [...resourceArr];
+    newOrderArr.splice(source.index, 1);
+    newOrderArr.splice(destination.index, 0, draggedItem)
+    setResourceArr([...newOrderArr]);
+  }
+
+  useEffect(() => {
+    setResourceArr([...resources])
+  }, [resources])
+
   return (
-    <div css={test}>
-      <a name={id}></a>
-      <h4>{name}</h4>
-      <small>{description}</small>
-      <PlaylistResourceList resources={resources} />
+    <div css={objectiveStyles}>
+      <a name={objectiveId}></a>
+      <h4>{objectiveName}</h4>
+      <small>{objectiveDescription}</small>
+      <DragDropContext onDragEnd={handleDrag}>
+        <PlaylistResourceList resources={resourceArr} objectiveId={objectiveId} />
+      </DragDropContext>
       {!studentView && (
         <TextButton onClick={addResourceModal}>Add Resource</TextButton>
       )}
@@ -56,11 +73,11 @@ const PlaylistObjective = ({ id, name, description, resources, playlistId }) => 
 };
 
 PlaylistObjective.propTypes = {
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  resources: PropTypes.array,
   playlistId: PropTypes.string.isRequired,
+  objectiveId: PropTypes.string.isRequired,
+  objectiveName: PropTypes.string.isRequired,
+  objectiveDescription: PropTypes.string.isRequired,
+  resources: PropTypes.array,
 }
 
 export default PlaylistObjective;

@@ -35,7 +35,6 @@ const dragTest = () => {
     newOrderArr.splice(destination.index, 0, draggedItem)
     // update the state with the updated array order
     updateItems([...newOrderArr])
-    console.log(newOrderArr);
     // push new array order to DB to be updated
   }
 
@@ -49,7 +48,6 @@ const dragTest = () => {
             ref={provided.innerRef}
           >
             {items && items.map((item, index) => {
-              // if (!item.id) return null;
               return (
                 <Draggable key={item._id} draggableId={item._id} index={index}>
                   {provided => (

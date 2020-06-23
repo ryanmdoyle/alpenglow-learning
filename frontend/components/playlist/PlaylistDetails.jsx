@@ -42,7 +42,6 @@ const details = css`
 const PlaylistDetails = ({ title, description, id, objectives }) => {
   const { pathname } = useRouter();
   const studentView = pathname.startsWith('/student');
-  console.log(objectives)
 
   return (
     <div css={details}>

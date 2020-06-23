@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { css } from '@emotion/core';
+import { Droppable, Draggable } from 'react-beautiful-dnd';
+
 
 import PlaylistResourceListItem from './PlaylistResourceListItem';
 
@@ -31,15 +33,24 @@ padding: 0;
   }
 `;
 
-const PlaylistResourceList = ({ resources }) => {
+const PlaylistResourceList = ({ resources, objectiveId }) => {
   return (
-    <ul css={list}>
-      {resources ?
-        resources.map(resource => (
-          <PlaylistResourceListItem resource={resource} key={resource._id} />
-        ))
-        : "This objective does not have any resources. (Yet!)"}
-    </ul>
+    <Droppable droppableId={objectiveId}>
+      {provided => (
+        <ul
+          css={list}
+          {...provided.droppableProps}
+          ref={provided.innerRef}
+        >
+          {resources &&
+            resources.map((resource, index) => (
+              <PlaylistResourceListItem resource={resource} key={resource._id} index={index} />
+            ))
+          }
+          {provided.placeholder}
+        </ul>
+      )}
+    </Droppable>
   );
 };
 

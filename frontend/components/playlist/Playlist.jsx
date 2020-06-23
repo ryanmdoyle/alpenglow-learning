@@ -27,12 +27,12 @@ const Playlist = ({ playlistId }) => {
         {data.getPlaylist.objectives && (
           data.getPlaylist.objectives.map(obj => (
             <PlaylistObjective
-              id={obj._id}
-              key={obj._id}
-              name={obj.name}
-              description={obj.description}
-              resources={obj.resources}
               playlistId={playlistId}
+              objectiveId={obj._id}
+              objectiveName={obj.name}
+              objectiveDescription={obj.description}
+              resources={obj.resources}
+              key={obj._id}
             />
           ))
         )}
