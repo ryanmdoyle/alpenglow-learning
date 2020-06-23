@@ -68,6 +68,9 @@ export const PLAYLIST_QUERY = gql`
         resources {
           _id
           name
+          href
+          description
+          type
         }
       }
       type

@@ -7,16 +7,48 @@ const info = css`
   flex-direction: column;
 `;
 
+const link = css`
+  color: var(--blueDark);
+  :visited {
+    color: var(--blueMedium);
+  }
+`;
+
 const PlaylistResourceListItem = ({ resource }) => {
+
+  const icon = (type) => {
+    switch (type) {
+      case 'Article':
+        return 'article'
+        break;
+      case 'Image':
+        return 'image'
+        break;
+      case 'Practice':
+        return 'create'
+        break;
+      case 'Video':
+        return 'videocam'
+        break;
+      case 'Audio':
+        return 'mic'
+        break;
+      default:
+        return 'link';
+    }
+  }
+  console.log(resource)
+
   return (
-    <li>
-      {/* <img src='/article-40.png' /> */}
-      <i className="material-icons">article</i>
-      <div css={info}>
-        <span>{resource?.name}</span>
-        <small>{resource?.description}</small>
-      </div>
-    </li>
+    <a href={`http://${resource.href}`} target="_blank" referrerpolicy='no-referrer' rel='external' css={link}>
+      <li>
+        <i className="material-icons">{icon(resource.type)}</i>
+        <div css={info}>
+          <span>{resource?.name}</span>
+          <small>{resource?.description}</small>
+        </div>
+      </li>
+    </a>
   );
 };
 

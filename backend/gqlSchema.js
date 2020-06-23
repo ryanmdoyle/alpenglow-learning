@@ -156,6 +156,7 @@ const typeDefs = gql`
     href: String,
     order: Int,
     objective: String,
+    type: String,
   }
 
   type Quiz {

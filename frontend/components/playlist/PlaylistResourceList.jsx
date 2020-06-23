@@ -36,7 +36,7 @@ const PlaylistResourceList = ({ resources }) => {
     <ul css={list}>
       {resources ?
         resources.map(resource => (
-          <PlaylistResourceListItem resource={resource} />
+          <PlaylistResourceListItem resource={resource} key={resource._id} />
         ))
         : "This objective does not have any resources. (Yet!)"}
     </ul>

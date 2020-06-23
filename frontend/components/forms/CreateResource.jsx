@@ -30,13 +30,13 @@ const CREATE_RESOURCE_MUTATION = gql`
   }
 `;
 
-const AddResourceButtonForm = ({ objectiveName, objectiveId }) => {
+const AddResourceButtonForm = ({ objectiveName, objectiveId, playlistId }) => {
   const { register, handleSubmit, errors } = useForm();
   const alert = useContext(AlertContext);
   const modal = useContext(ModalContext);
 
   const [addResource, { data }] = useMutation(CREATE_RESOURCE_MUTATION, {
-    // refetchQueries: [{ query: PLAYLIST_QUERY, variables: { playlistId: playlistId } }],
+    refetchQueries: [{ query: PLAYLIST_QUERY, variables: { playlistId: playlistId } }],
     onCompleted: (data) => {
       if (modal.isOpen) {
         modal.close();

@@ -26,14 +26,19 @@ const test = css`
   }
 `;
 
-const PlaylistObjective = ({ id, name, description, resources }) => {
+const PlaylistObjective = ({ id, name, description, resources, playlistId }) => {
   const modal = useContext(ModalContext);
   const alert = useContext(AlertContext);
   const { pathname } = useRouter();
   const studentView = pathname.startsWith('/student');
 
   const addResourceModal = () => {
-    modal.setChildComponent(<CreateResource objectiveName={name} objectiveId={id} />)
+    modal.setChildComponent(
+      <CreateResource
+        objectiveName={name}
+        objectiveId={id}
+        playlistId={playlistId}
+      />)
     modal.open();
   }
 
@@ -54,6 +59,7 @@ PlaylistObjective.propTypes = {
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   resources: PropTypes.array,
+  playlistId: PropTypes.string.isRequired,
 }
 
 export default PlaylistObjective;
