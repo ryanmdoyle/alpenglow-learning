@@ -72,6 +72,9 @@ const PlaylistObjective = ({ objectiveId, objectiveName, objectiveDescription, r
 
   const handleDrag = result => {
     const { source, destination } = result;
+    if (!destination) return;
+    if (destination.droppableId === source.droppableId && destination.index === source.index) return;
+
     const draggedItem = resourceArr[source.index];
     const newOrderArr = [...resourceArr];
     newOrderArr.splice(source.index, 1);
