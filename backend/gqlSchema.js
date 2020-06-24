@@ -81,6 +81,12 @@ const typeDefs = gql`
     approveRequest(playlistId: ID!): Request!,
     cancelRequest(playlistId: ID!): Request!
     deleteRequest(playlistId: ID!): ID!,
+
+    updateResourceOrder(
+      objectiveId: String!,
+      source: Int!,
+      destination: Int!, 
+    ): Objective!,
   }
 
   # # # # # # # # # # # #

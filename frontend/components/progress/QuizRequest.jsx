@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { gql } from 'apollo-boost';
+import gql from 'graphql-tag';
 import { css } from '@emotion/core';
 import { useMutation } from '@apollo/react-hooks';
 

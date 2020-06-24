@@ -1,5 +1,5 @@
 import React from 'react';
-import { gql } from 'apollo-boost';
+import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks'
 
 import PageTitle from '../../../../components/PageTitle';
@@ -24,7 +24,6 @@ const teacherStudents = () => {
   // const { loading: studentsLoading, error: studentsError, data: studentsData } = useQuery(GET_INSTRUCTING_STUDENTS_QUERY);
   const { loading, error, data } = useQuery(STUDENT_PROGRESS_QUERY);
 
-  console.log(data)
   return (
     <>
       <PageTitle>Student Progress</PageTitle>

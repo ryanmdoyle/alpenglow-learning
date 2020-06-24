@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { css } from '@emotion/core';
 import { useForm } from 'react-hook-form';
-import { gql } from 'apollo-boost';
+import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 
 import AlertContext from '../context/AlertContext';

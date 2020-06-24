@@ -1,7 +1,7 @@
 import React from 'react';
 import { css } from '@emotion/core';
 import { useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
+import gql from 'graphql-tag';
 
 import NavSectionPadding from '../styled/blocks/NavSectionPadding';
 import NavSectionHeader from '../styled/elements/NavSectionHeader';

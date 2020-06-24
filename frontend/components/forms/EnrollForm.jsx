@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { gql } from 'apollo-boost';
+import gql from 'graphql-tag';
 
 import FormWrapper from '../styled/blocks/FormWrapper';
 import AlertContext from '../context/AlertContext';

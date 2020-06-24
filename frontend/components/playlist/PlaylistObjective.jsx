@@ -1,14 +1,17 @@
 import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types'
+import gql from 'graphql-tag';
 import { css } from '@emotion/core';
 import { useRouter } from 'next/router';
 import { DragDropContext } from 'react-beautiful-dnd';
+import { useMutation } from '@apollo/react-hooks';
 
 import PlaylistResourceList from './PlaylistResourceList';
 import TextButton from '../styled/elements/TextButton';
 import ModalContext from '../context/ModalContext';
 import AlertContext from '../context/AlertContext';
 import CreateResource from '../forms/CreateResource';
+import { PLAYLIST_QUERY } from '../../gql/queries';
 
 const objectiveStyles = css`
   h4 {
@@ -27,12 +30,35 @@ const objectiveStyles = css`
   }
 `;
 
+const UPDATE_RESOURCE_ORDER = gql`
+  mutation UPDATE_RESOURCE_ORDER(
+    $objectiveId: String!,
+    $source: Int!,
+    $destination: Int!
+  ) {
+    updateResourceOrder(
+      objectiveId: $objectiveId,
+      source: $source,
+      destination: $destination,
+    ) {
+      _id
+    }
+  }
+`;
+
 const PlaylistObjective = ({ objectiveId, objectiveName, objectiveDescription, resources, playlistId }) => {
   const [resourceArr, setResourceArr] = useState(resources);
   const modal = useContext(ModalContext);
   const alert = useContext(AlertContext);
   const { pathname } = useRouter();
   const studentView = pathname.startsWith('/student');
+  const [updateOrder, { data }] = useMutation(UPDATE_RESOURCE_ORDER, {
+    refetchQueries: [{ query: PLAYLIST_QUERY, variables: { playlistId: playlistId } }],
+    onCompleted: (data) => {
+      alert.success(`Successfully reordered!`, 2)
+    },
+    onError: (data) => (alert.error(`Ooops, looks like there was a problem. ${data}`)),
+  })
 
   const addResourceModal = () => {
     modal.setChildComponent(
@@ -51,6 +77,14 @@ const PlaylistObjective = ({ objectiveId, objectiveName, objectiveDescription, r
     newOrderArr.splice(source.index, 1);
     newOrderArr.splice(destination.index, 0, draggedItem)
     setResourceArr([...newOrderArr]);
+
+    updateOrder({
+      variables: {
+        objectiveId: objectiveId,
+        source: source.index,
+        destination: destination.index,
+      }
+    })
   }
 
   useEffect(() => {

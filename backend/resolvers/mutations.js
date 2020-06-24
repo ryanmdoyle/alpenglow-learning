@@ -172,5 +172,16 @@ const mutations = {
       return new ApolloError('Error deleting the current quiz request.');
     }
   },
+
+  async updateResourceOrder(parent, args, context, info) {
+    const { objectiveId, source, destination } = args;
+    const objective = await Objective.findById(objectiveId);
+    const objectiveIds = objective.resources.map(resource => resource._id);
+    const movedObjective = objectiveIds[source];
+    objectiveIds.splice(source, 1);
+    objectiveIds.splice(destination, 0, movedObjective);
+    objective.resources = [...objectiveIds];
+    return await objective.save();
+  },
 }
 module.exports = mutations;

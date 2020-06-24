@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import gql from 'graphql-tag';
 
 export const INSTRUCTING_COURSES_QUERY = gql`
   query INSTRUCTING_COURSES_QUERY {
