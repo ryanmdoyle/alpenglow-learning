@@ -59,19 +59,19 @@ const mutations = {
       const parentCourse = await Course.findById(args.course);
       const newPlaylist = new Playlist({
         grade: parentCourse.grade,
-        order: parentCourse.playlists.length + 1, // set order to last, according to parent array length
         ...args //spread incomming data from form
       })
       // save playlist to DB
       const createdPlaylist = await newPlaylist.save().catch((err) => { console.error(err) });
       // add playlist to parentCourse (and prevent duplication)
-      if (!parentCourse.playlists.includes(createdPlaylist._id)) {
-        parentCourse.playlists.push(createdPlaylist._id);
+      const playlistType = args.type.toLowerCase();
+      if (!parentCourse[`${playlistType}Playlists`].includes(createdPlaylist._id)) {
+        parentCourse[`${playlistType}Playlists`].push(createdPlaylist._id);
         await parentCourse.save();
       }
       return createdPlaylist;
     }
-    return 'Permission Denied!';
+    return null;
   },
 
   async createObjective(parent, args, context, info) {

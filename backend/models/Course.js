@@ -22,6 +22,27 @@ const courseSchema = new Schema({
       autopopulate: { maxDepth: 1 },
     }
   ],
+  essentialPlaylists: [
+    {
+      type: mongoose.ObjectId,
+      ref: 'Playlist',
+      autopopulate: { maxDepth: 1 },
+    }
+  ],
+  corePlaylists: [
+    {
+      type: mongoose.ObjectId,
+      ref: 'Playlist',
+      autopopulate: { maxDepth: 1 },
+    }
+  ],
+  challengePlaylists: [
+    {
+      type: mongoose.ObjectId,
+      ref: 'Playlist',
+      autopopulate: { maxDepth: 1 },
+    }
+  ],
   classes: [
     {
       type: mongoose.ObjectId,

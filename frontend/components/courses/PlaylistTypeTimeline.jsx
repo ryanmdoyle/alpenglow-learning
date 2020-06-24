@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
-import { css } from '@emotion/core';
 import PropTypes from 'prop-types';
+import { css } from '@emotion/core';
 import { useRouter } from 'next/router';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 import PlaylistBox from './PlaylistBox';
 import PlusButton from '../styled/elements/PlusButton';
@@ -31,6 +32,10 @@ const PlaylistTypeTimeline = ({ type, playlists, courseId, subject }) => {
     modal.open();
   }
 
+  const handleDrag = result => {
+    console.log(result)
+  }
+
   // If no playlists and not a student, show button to add playlist
   if (playlists.length == 0 && !studentView) return (
     <>
@@ -47,9 +52,24 @@ const PlaylistTypeTimeline = ({ type, playlists, courseId, subject }) => {
     <>
       <h5>{type}</h5>
       <div css={playlistsContainer}>
-        {playlists.map(playlist => {
-          return <PlaylistBox name={playlist.name} playlistId={playlist._id} key={playlist._id} />
-        })}
+        <DragDropContext onDragEnd={handleDrag}>
+          <Droppable droppableId={type} direction='horizontal'>
+            {provided => (
+              <div
+                css={playlistsContainer}
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                {/* Render the playlists in a row */}
+                {playlists.map((playlist, index) => {
+                  return <PlaylistBox name={playlist.name} playlistId={playlist._id} key={playlist._id} index={index} />
+                })}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+        {/* If a teacher/admin is viewing, show button to add playlist */}
         {!studentView && (
           <div css={css`min-width: 3rem;display: flex;align-items:center;`}>
             <PlusButton onClick={toggleModal} />

@@ -129,6 +129,9 @@ const typeDefs = gql`
     startDate: Date,
     endDate: Date,
     playlists: [ Playlist ],
+    essentialPlaylists: [ Playlist ],
+    corePlaylists: [ Playlist ],
+    challengePlaylists: [ Playlist ],
     classes: [ Class ],
   }
 

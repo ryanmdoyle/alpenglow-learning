@@ -7,7 +7,17 @@ export const INSTRUCTING_COURSES_QUERY = gql`
       name
       subject
       description
-      playlists {
+      essentialPlaylists {
+        _id
+        name
+        type
+      }
+      corePlaylists {
+        _id
+        name
+        type
+      }
+      challengePlaylists {
         _id
         name
         type

@@ -1,7 +1,9 @@
 import React from 'react';
-import { css } from '@emotion/core';
 import Link from 'next/link';
+import PropTypes from 'prop-types'
+import { css } from '@emotion/core';
 import { useRouter } from 'next/router';
+import { Draggable } from 'react-beautiful-dnd';
 
 const styledBox = css`
   margin-right: 3px;
@@ -32,16 +34,36 @@ const styledBox = css`
   }
 `;
 
-const PlaylistBox = ({ name, playlistId, className }) => {
+const PlaylistBox = ({ name, playlistId, index }) => {
   const router = useRouter();
   const pathname = router.pathname.startsWith('/teacher') ? '/teacher/manage' : '/student';
   return (
-    <Link href={`${pathname}/playlists/${playlistId}`}>
-      <div css={styledBox} className={className} >
-        <span>{name}</span>
-      </div>
-    </Link>
+    <Draggable
+      draggableId={playlistId}
+      index={index}
+    >
+      {provided => (
+        <div
+          css={styledBox}
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+        >
+          <Link href={`${pathname}/playlists/${playlistId}`}>
+            <div>
+              <span>{name}</span>
+            </div>
+          </Link>
+        </div>
+      )}
+    </Draggable>
   );
 };
+
+PlaylistBox.propTypes = {
+  name: PropTypes.string.isRequired,
+  playlistId: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
+}
 
 export default PlaylistBox;

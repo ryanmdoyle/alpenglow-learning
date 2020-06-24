@@ -35,17 +35,14 @@ const courseContainer = css`
   }
 `;
 
-const CourseTimeline = ({ name, playlists, courseId, subject }) => {
-  const essential = playlists.filter(playlist => playlist.type === PlaylistEnum.Essential);
-  const core = playlists.filter(playlist => playlist.type === PlaylistEnum.Core);
-  const challenge = playlists.filter(playlist => playlist.type === PlaylistEnum.Challenge);
+const CourseTimeline = ({ name, essentialPlaylists, corePlaylists, challengePlaylists, courseId, subject }) => {
 
   return (
     <section css={courseContainer}>
       <h4>{name}</h4>
-      <PlaylistTypeTimeline courseId={courseId} subject={subject} type='Essential' playlists={essential} />
-      <PlaylistTypeTimeline courseId={courseId} subject={subject} type='Core' playlists={core} />
-      <PlaylistTypeTimeline courseId={courseId} subject={subject} type='Challenge' playlists={challenge} />
+      <PlaylistTypeTimeline courseId={courseId} subject={subject} type='Essential' playlists={essentialPlaylists} />
+      <PlaylistTypeTimeline courseId={courseId} subject={subject} type='Core' playlists={corePlaylists} />
+      <PlaylistTypeTimeline courseId={courseId} subject={subject} type='Challenge' playlists={challengePlaylists} />
     </section>
   );
 };

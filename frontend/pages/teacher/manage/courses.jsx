@@ -19,7 +19,9 @@ const teacherCourses = () => {
           <CourseTimeline
             name={course.name}
             courseId={course._id}
-            playlists={course.playlists}
+            essentialPlaylists={course.essentialPlaylists}
+            corePlaylists={course.corePlaylists}
+            challengePlaylists={course.challengePlaylists}
             subject={course.subject}
             key={course._id}
           />

@@ -12,7 +12,17 @@ const ENROLLED_COURSES_QUERY = gql`
       _id
       name
       subject
-      playlists {
+      essentialPlaylists {
+        _id
+        name
+        type
+      }
+      corePlaylists {
+        _id
+        name
+        type
+      }
+      challengePlaylists {
         _id
         name
         type
@@ -30,12 +40,14 @@ const studentClasses = () => {
       <PageTitle>All Classes</PageTitle>
       {data.getEnrolledCourses && (
         data.getEnrolledCourses.map(course => {
-          if (course.playlists.length > 0) {
+          if (course.essentialPlaylists.length > 0 || course.corePlaylists.length) {
             return (
               <CourseTimeline
                 name={course.name}
                 courseId={course._id}
-                playlists={course.playlists}
+                essentialPlaylists={course.essentialPlaylists}
+                corePlaylists={course.corePlaylists}
+                challengePlaylists={course.challengePlaylists}
                 subject={course.subject}
                 key={course._id}
               />
