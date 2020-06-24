@@ -87,6 +87,12 @@ const typeDefs = gql`
       source: Int!,
       destination: Int!, 
     ): Objective!,
+
+    updateObjectiveOrder(
+      playlistId: String!,
+      source: Int!,
+      destination: Int!,
+    ): Playlist!
   }
 
   # # # # # # # # # # # #

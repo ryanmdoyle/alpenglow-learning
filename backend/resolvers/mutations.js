@@ -176,12 +176,23 @@ const mutations = {
   async updateResourceOrder(parent, args, context, info) {
     const { objectiveId, source, destination } = args;
     const objective = await Objective.findById(objectiveId);
-    const objectiveIds = objective.resources.map(resource => resource._id);
+    const resourceIds = objective.resources.map(resource => resource._id);
+    const movedResource = resourceIds[source];
+    resourceIds.splice(source, 1);
+    resourceIds.splice(destination, 0, movedResource);
+    objective.resources = [...resourceIds];
+    return await objective.save();
+  },
+
+  async updateObjectiveOrder(parent, args, context, info) {
+    const { playlistId, source, destination } = args;
+    const playlist = await Playlist.findById(playlistId);
+    const objectiveIds = playlist.objectives.map(objective => objective._id);
     const movedObjective = objectiveIds[source];
     objectiveIds.splice(source, 1);
     objectiveIds.splice(destination, 0, movedObjective);
-    objective.resources = [...objectiveIds];
-    return await objective.save();
+    playlist.objectives = [...objectiveIds];
+    return await playlist.save();
   },
 }
 module.exports = mutations;

@@ -2,10 +2,8 @@ import React, { useContext } from 'react';
 import { css } from '@emotion/core';
 import { useRouter } from 'next/router';
 
-import PlaylistRequestButton from './PlaylistRequestButton';
-import PlaylistCreateQuizButton from './PlaylistCreateQuizButton';
-import PlaylistNewObjectiveButton from './PlaylistNewObjectiveButton';
-import { PLAYLIST_QUERY } from '../../pages/'
+import PlaylistDetailsDescription from './PlaylistDetailsDescription';
+import PlaylistDetailsObjectives from './PlaylistDetailsObjectives';
 
 const details = css`
   width: 100%;
@@ -45,27 +43,15 @@ const PlaylistDetails = ({ title, description, id, objectives }) => {
 
   return (
     <div css={details}>
-      <div className='flex-item'>
-        <h5>Description</h5>
-        <p>{description}</p>
-        {studentView && <PlaylistRequestButton playlistId={id} />}
-        {!studentView && <PlaylistCreateQuizButton playlistId={id} />}
-      </div>
-      <div className='flex-item objectives'>
-        <h5>Objectives</h5>
-        <ol>
-          {objectives && objectives.map(objective => (
-            <li key={objective._id}>
-              <a href={`#${objective._id}`}>
-                <strong>{objective.name}: </strong>
-              </a>
-              <br></br>
-              {objective.description}
-            </li>
-          ))}
-        </ol>
-        {!studentView && <PlaylistNewObjectiveButton name={title} playlistId={id} />}
-      </div>
+      <PlaylistDetailsDescription
+        playlistId={id}
+        playlistDescription={description}
+      />
+      <PlaylistDetailsObjectives
+        playlistId={id}
+        playlistTitle={title}
+        objectives={objectives}
+      />
     </div>
   );
 };
