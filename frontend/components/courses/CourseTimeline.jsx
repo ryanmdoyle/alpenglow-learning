@@ -49,7 +49,9 @@ const CourseTimeline = ({ name, essentialPlaylists, corePlaylists, challengePlay
 
 CourseTimeline.propTypes = {
   name: PropTypes.string,
-  playlists: PropTypes.array,
+  essentialPlaylists: PropTypes.array,
+  corePlaylists: PropTypes.array,
+  challengePlaylists: PropTypes.array,
   courseId: PropTypes.string,
   subject: PropTypes.string,
 }

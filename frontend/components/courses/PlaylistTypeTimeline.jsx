@@ -1,13 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
+import gql from 'graphql-tag';
 import { css } from '@emotion/core';
 import { useRouter } from 'next/router';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { useMutation } from '@apollo/react-hooks';
 
 import PlaylistBox from './PlaylistBox';
 import PlusButton from '../styled/elements/PlusButton';
 import CreatePlaylistForm from '../forms/CreatePlaylistForm';
 import ModalContext from '../context/ModalContext';
+import AlertContext from '../context/AlertContext';
 
 const playlistsContainer = css`
   box-sizing: border-box;
@@ -16,10 +19,34 @@ const playlistsContainer = css`
   display: flex;
 `;
 
-const PlaylistTypeTimeline = ({ type, playlists, courseId, subject }) => {
+const UPDATE_PLAYLIST_ORDER = gql`
+  mutation UPDATE_PLAYLIST_ORDER(
+    $courseId: String!,
+    $playlistType: String!,
+    $source: Int!,
+    $destination: Int!,
+  ) {
+    updatePlaylistOrder(
+      courseId: $courseId,
+      playlistType: $playlistType,
+      source: $source,
+      destination: $destination,
+    ) {
+      _id
+    }
+  }
+`;
+
+const PlaylistTypeTimeline = ({ type, playlists: queriedPlaylists, courseId, subject }) => {
   const modal = useContext(ModalContext);
+  const alert = useContext(AlertContext);
   const router = useRouter();
   const studentView = router.pathname.startsWith('/student');
+
+  const [playlists, setPlaylists] = useState(queriedPlaylists);
+  useEffect(() => {
+    setPlaylists(queriedPlaylists);
+  }, [queriedPlaylists])
 
   const toggleModal = (courseData) => {
     modal.setChildComponent(
@@ -32,8 +59,33 @@ const PlaylistTypeTimeline = ({ type, playlists, courseId, subject }) => {
     modal.open();
   }
 
+  const [updateOrder, { data }] = useMutation(UPDATE_PLAYLIST_ORDER, {
+    // refetchQueries: [{ query: PLAYLIST_QUERY, variables: { playlistId: playlistId } }],
+    onCompleted: (data) => {
+      alert.success(`Successfully reordered playlists!`, 2)
+    },
+    onError: (data) => (alert.error(`Ooops, looks like there was a problem. ${data}`)),
+  })
+
   const handleDrag = result => {
-    console.log(result)
+    const { source, destination } = result;
+    if (!destination) return;
+    if (destination.droppableId === source.droppableId && destination.index === source.index) return;
+    // update order in local state
+    const draggedItem = playlists[source.index];
+    const newOrderArr = [...playlists];
+    newOrderArr.splice(source.index, 1);
+    newOrderArr.splice(destination.index, 0, draggedItem)
+    setPlaylists([...newOrderArr]);
+    // update order in db
+    updateOrder({
+      variables: {
+        courseId: courseId,
+        playlistType: type,
+        source: source.index,
+        destination: destination.index,
+      }
+    })
   }
 
   // If no playlists and not a student, show button to add playlist

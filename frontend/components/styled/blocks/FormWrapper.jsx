@@ -11,7 +11,6 @@ justify-content: center;
     display: flex;
     flex-direction: column;
     max-width: 600px;
-    padding-bottom: 3rem;
   }
 
   label {

@@ -92,7 +92,19 @@ const typeDefs = gql`
       playlistId: String!,
       source: Int!,
       destination: Int!,
-    ): Playlist!
+    ): Playlist!,
+
+    updatePlaylistOrder(
+      courseId: String!,
+      playlistType: String!,
+      source: Int!,
+      destination: Int!,
+    ): Course!,
+
+    deletePlaylist(
+      playlistId: String!,
+      playlistName: String!,
+    ): Playlist!,
   }
 
   # # # # # # # # # # # #

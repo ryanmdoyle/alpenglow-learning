@@ -194,5 +194,34 @@ const mutations = {
     playlist.objectives = [...objectiveIds];
     return await playlist.save();
   },
+
+  async updatePlaylistOrder(parent, args, context, info) {
+    const { courseId, playlistType, source, destination } = args;
+    const course = await Course.findById(courseId);
+    const playlistIds = course[`${playlistType.toLowerCase()}Playlists`].map(playlist => playlist._id);
+    const movedPlaylist = playlistIds[source];
+    playlistIds.splice(source, 1);
+    playlistIds.splice(destination, 0, movedPlaylist);
+    course[`${playlistType.toLowerCase()}Playlists`] = [...playlistIds];
+    return await course.save();
+  },
+
+  async deletePlaylist(parent, args, context, info) {
+    const { currentUser } = context;
+    const { playlistId } = args;
+    const playlist = await Playlist.findById(playlistId);
+    const course = await Course.findById(playlist.course);
+    if (course.owner == currentUser._id) {
+      // delete playlist from array of playlists in course
+      const typePlaylists = [...course[`${playlist.type.toLowerCase()}Playlists`]]; //array of course.[type]Playlists
+      const playlistToRemoveIndex = typePlaylists.findIndex(playlist => playlist._id == playlistId); //index of PL to delete
+      typePlaylists.splice(playlistToRemoveIndex, 1);
+      course[`${playlist.type.toLowerCase()}Playlists`] = [...typePlaylists];
+      // delete actual playlist object and save updated course
+      await course.save()
+      await playlist.remove()
+      return playlist
+    } else { return null }
+  },
 }
 module.exports = mutations;
