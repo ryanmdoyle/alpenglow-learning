@@ -34,7 +34,7 @@ const styledBox = css`
   }
 `;
 
-const PlaylistBox = ({ name, playlistId, index }) => {
+const CoursePlaylistBox = ({ name, playlistId, index }) => {
   const router = useRouter();
   const pathname = router.pathname.startsWith('/teacher') ? '/teacher/manage' : '/student';
   return (
@@ -60,10 +60,10 @@ const PlaylistBox = ({ name, playlistId, index }) => {
   );
 };
 
-PlaylistBox.propTypes = {
+CoursePlaylistBox.propTypes = {
   name: PropTypes.string.isRequired,
   playlistId: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
 }
 
-export default PlaylistBox;
+export default CoursePlaylistBox;

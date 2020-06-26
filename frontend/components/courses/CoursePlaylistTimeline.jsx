@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { useMutation } from '@apollo/react-hooks';
 
-import PlaylistBox from './PlaylistBox';
+import CoursePlaylistBox from './CoursePlaylistBox';
 import PlusButton from '../styled/elements/PlusButton';
 import CreatePlaylistForm from '../forms/CreatePlaylistForm';
 import ModalContext from '../context/ModalContext';
@@ -37,7 +37,7 @@ const UPDATE_PLAYLIST_ORDER = gql`
   }
 `;
 
-const PlaylistTypeTimeline = ({ type, playlists: queriedPlaylists, courseId, subject }) => {
+const CoursePlaylistTimeline = ({ type, playlists: queriedPlaylists, courseId, subject }) => {
   const modal = useContext(ModalContext);
   const alert = useContext(AlertContext);
   const router = useRouter();
@@ -114,7 +114,7 @@ const PlaylistTypeTimeline = ({ type, playlists: queriedPlaylists, courseId, sub
               >
                 {/* Render the playlists in a row */}
                 {playlists.map((playlist, index) => {
-                  return <PlaylistBox name={playlist.name} playlistId={playlist._id} key={playlist._id} index={index} />
+                  return <CoursePlaylistBox name={playlist.name} playlistId={playlist._id} key={playlist._id} index={index} />
                 })}
                 {provided.placeholder}
               </div>
@@ -135,11 +135,11 @@ const PlaylistTypeTimeline = ({ type, playlists: queriedPlaylists, courseId, sub
   return null;
 };
 
-PlaylistTypeTimeline.propTypes = {
+CoursePlaylistTimeline.propTypes = {
   type: PropTypes.string,
   playlists: PropTypes.array,
   courseId: PropTypes.string,
   subject: PropTypes.string,
 }
 
-export default PlaylistTypeTimeline;
+export default CoursePlaylistTimeline;

@@ -11,6 +11,7 @@ import TextButton from '../styled/elements/TextButton';
 import ModalContext from '../context/ModalContext';
 import AlertContext from '../context/AlertContext';
 import CreateResource from '../forms/CreateResource';
+import Header4Settings from '../styled/elements/Header4Settings';
 import { PLAYLIST_QUERY } from '../../gql/queries';
 
 const objectiveStyles = css`
@@ -95,7 +96,7 @@ const PlaylistObjective = ({ objectiveId, objectiveName, objectiveDescription, r
   }, [resources])
 
   return (
-    <div css={objectiveStyles}>
+    <div>
       <a name={objectiveId}></a>
       <h4>{objectiveName}</h4>
       <small>{objectiveDescription}</small>

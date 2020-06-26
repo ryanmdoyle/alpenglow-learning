@@ -223,5 +223,18 @@ const mutations = {
       return playlist
     } else { return null }
   },
+
+  async updatePlaylistDescription(parent, args, context, info) {
+    const { playlistId, description } = args;
+    return await Playlist.updateOne({ _id: playlistId }, { description: description });
+  },
+
+  async updateObjective(parent, args, context, info) {
+    const { name, objectiveId, description } = args;
+    return await Objective.updateOne({ _id: objectiveId }, {
+      name: name,
+      description: description,
+    })
+  },
 }
 module.exports = mutations;

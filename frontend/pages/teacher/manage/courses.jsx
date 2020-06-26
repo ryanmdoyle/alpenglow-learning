@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/react-hooks'
 
 import PageTitle from '../../../components/PageTitle';
 import Loading from '../../../components/Loading';
-import CourseTimeline from '../../../components/courses/CourseTimeline';
+import CourseTimelines from '../../../components/courses/CourseTimelines';
 import { INSTRUCTING_COURSES_QUERY } from '../../../gql/queries';
 
 const teacherCourses = () => {
@@ -16,7 +16,7 @@ const teacherCourses = () => {
       <PageTitle>Manage Course Curriculum</PageTitle>
       {data.getInstructingCourses && (
         data.getInstructingCourses.map(course => (
-          <CourseTimeline
+          <CourseTimelines
             name={course.name}
             courseId={course._id}
             essentialPlaylists={course.essentialPlaylists}

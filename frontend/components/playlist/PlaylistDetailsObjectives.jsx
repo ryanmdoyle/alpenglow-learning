@@ -8,6 +8,9 @@ import { useMutation } from '@apollo/react-hooks';
 
 import PlaylistNewObjectiveButton from './PlaylistNewObjectiveButton';
 import AlertContext from '../context/AlertContext';
+import ModalContext from '../context/ModalContext';
+import Header5Settings from '../styled/elements/Header5Settings';
+import UpdatePlaylistObjectivesForm from '../forms/update/UpdatePlaylistObjectivesForm';
 import { PLAYLIST_QUERY } from '../../gql/queries';
 
 const UPDATE_OBJECTIVE_ORDER = gql`
@@ -28,6 +31,7 @@ const UPDATE_OBJECTIVE_ORDER = gql`
 
 const PlaylistDetailsObjectives = ({ objectives: queriedObjectives, playlistTitle, playlistId }) => {
   const alert = useContext(AlertContext);
+  const modal = useContext(ModalContext);
   const { pathname } = useRouter();
   const studentView = pathname.startsWith('/student');
 
@@ -43,6 +47,11 @@ const PlaylistDetailsObjectives = ({ objectives: queriedObjectives, playlistTitl
     },
     onError: (data) => (alert.error(`Ooops, looks like there was a problem. ${data}`)),
   });
+
+  const updateObjectives = (playlistId) => {
+    modal.setChildComponent(<UpdatePlaylistObjectivesForm playlistId={playlistId} objectives={objectives} />)
+    modal.open();
+  }
 
   const handleDrag = result => {
     const { source, destination } = result;
@@ -79,7 +88,7 @@ const PlaylistDetailsObjectives = ({ objectives: queriedObjectives, playlistTitl
 
   return (
     <div className='flex-item objectives'>
-      <h5>Objectives</h5>
+      <Header5Settings onClick={() => { updateObjectives(playlistId) }}>Objectives</Header5Settings>
       <DragDropContext onDragEnd={handleDrag}>
         <Droppable droppableId={playlistId}>
           {provided => (

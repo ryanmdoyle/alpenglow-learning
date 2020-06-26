@@ -3,7 +3,7 @@ import { css } from '@emotion/core';
 
 const PagePaddingStyled = css`
   display: relative;
-  padding: 0 2rem 3rem 2rem;
+  padding: 0 2rem 1rem 2rem;
 `;
 
 const PagePadding = ({ children }) => {

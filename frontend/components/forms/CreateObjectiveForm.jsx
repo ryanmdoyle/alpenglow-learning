@@ -95,7 +95,7 @@ const CreateObjectiveForm = () => {
             </> :
             (coursePlaylists && <p>No playlists in course.  Please create playlist first</p>)
           }
-
+          <h1>PLAYLIST BROKEN FIX LATER</h1>
           <label htmlFor='description'>description</label>
           <textarea name="description" ref={register({ required: true, maxLength: 255 })} />
           {errors.description?.type === "required" && "Description is required."}

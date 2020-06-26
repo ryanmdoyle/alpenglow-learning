@@ -84,7 +84,7 @@ const global = css`
 
   h3 {font-size: 1.953em;}
 
-  h4 {font-size: 1.563em;}
+  h4 { font-size: 1.563em;}
 
   h5 {font-size: 1.25em;}
 

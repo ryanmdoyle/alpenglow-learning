@@ -101,6 +101,17 @@ const typeDefs = gql`
       destination: Int!,
     ): Course!,
 
+    updatePlaylistDescription(
+      playlistId: String!,
+      description: String!,
+    ): Playlist!,
+
+    updateObjective(
+      name: String!,
+      objectiveId: String!,
+      description: String!,
+    ): Objective!,
+
     deletePlaylist(
       playlistId: String!,
       playlistName: String!,
