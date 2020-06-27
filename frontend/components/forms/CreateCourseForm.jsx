@@ -5,9 +5,9 @@ import { useMutation } from '@apollo/react-hooks';
 
 import FormWrapper from '../styled/blocks/FormWrapper';
 import PagePadding from '../styled/PagePadding';
-import gradeLevels from '../../lib/gradeLevels';
 import AlertContext from '../context/AlertContext';
-import { subjectsEnum } from '../../lib/subjectsEnum';
+import gradeLevels from '../../lib/gradeLevels';
+import subjects from '../../lib/subjects';
 import { INSTRUCTING_COURSES_QUERY } from '../../gql/queries';
 
 const CREATE_COURSE = gql`
@@ -76,7 +76,7 @@ const CreateCourseForm = () => {
           <label htmlFor='subject'>subject*</label>
           <select name='subject' ref={register({ required: true })}>
             <option disabled="" value="">Select one of the Options Below</option>
-            {subjectsEnum.map(subject => (
+            {subjects.map(subject => (
               <option value={subject} key={subject}>{subject}</option>
             ))}
           </select>

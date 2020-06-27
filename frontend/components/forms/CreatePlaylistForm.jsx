@@ -9,7 +9,7 @@ import PagePadding from '../styled/PagePadding';
 import Loading from '../Loading';
 import AlertContext from '../context/AlertContext';
 import ModalContext from '../context/ModalContext';
-import { subjectsEnum } from '../../lib/subjectsEnum';
+import subjects from '../../lib/subjects';
 import { INSTRUCTING_COURSES_QUERY } from '../../gql/queries';
 
 const GET_USER_COURSES_QUERY = gql`
@@ -118,7 +118,7 @@ const CreatePlaylistForm = ({ course, subject, type }) => {
             <>
               <label htmlFor='subject'>subject*</label>
               <select name='subject' value={courseSubject || ''} ref={register({ required: true })} onChange={() => { setCourseSubject(event.target.value) }}>
-                {subjectsEnum.map(subject => (
+                {subjects.map(subject => (
                   <option value={subject} key={subject} >{subject}</option>
                 ))}
               </select>

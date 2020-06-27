@@ -8,7 +8,6 @@ import FormWrapper from '../../styled/blocks/FormWrapper';
 import AlertContext from '../../context/AlertContext';
 import ModalContext from '../../context/ModalContext';
 import PagePadding from '../../styled/PagePadding';
-import { subjectsEnum } from '../../../lib/subjectsEnum';
 import { PLAYLIST_QUERY } from '../../../gql/queries';
 
 const UPDATE_PLAYLIST = gql`

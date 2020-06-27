@@ -4,19 +4,6 @@ enum AlertStatus {
   None = "NONE",
 }
 
-enum Subjects {
-  LanguageArts = 'Language Arts',
-  Mathematics = 'Mathematics',
-  History = 'History',
-  Science = 'Science',
-  VisualArts = 'Visual Arts',
-  PerformingArts = 'Performing Arts',
-  Technology = 'Technology',
-  PhysicalEducation = 'Physical Education',
-  ForeignLanguages = 'Foreign Languages',
-  Elective = 'Elective',
-}
-
 enum PlaylistEnum {
   Essential = 'ESSENTIAL',
   Core = 'CORE',
@@ -30,4 +17,4 @@ enum Roles {
   SuperAdmin = 'SUPER_ADMIN',
 }
 
-export { AlertStatus, Subjects, PlaylistEnum, Roles }
+export { AlertStatus, PlaylistEnum, Roles }

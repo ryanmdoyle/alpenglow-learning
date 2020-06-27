@@ -1,4 +1,4 @@
-export const subjectsEnum = [
+const subjects: string[] = [
   'Language Arts',
   'Mathematics',
   'History',
@@ -10,3 +10,5 @@ export const subjectsEnum = [
   'Foreign Languages',
   'Elective'
 ];
+
+export default subjects;

@@ -10,7 +10,7 @@ import ModalContext from '../../context/ModalContext';
 import PagePadding from '../../styled/PagePadding';
 import Loading from '../../Loading';
 import gradeLevels from '../../../lib/gradeLevels';
-import { subjectsEnum } from '../../../lib/subjectsEnum';
+import subjects from '../../../lib/subjects';
 import { INSTRUCTING_COURSES_QUERY } from '../../../gql/queries';
 
 const UPDATE_COURSE = gql`
@@ -106,7 +106,7 @@ const UpdateCourseForm = ({ courseId }) => {
 
           <label htmlFor='subject'>subject*</label>
           <select name='subject' defaultValue={subject} ref={register({ required: true })}>
-            {subjectsEnum.map(subject => (
+            {subjects.map(subject => (
               <option value={subject} key={subject}>{subject}</option>
             ))}
           </select>
