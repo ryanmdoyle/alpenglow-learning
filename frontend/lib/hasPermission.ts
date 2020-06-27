@@ -1,4 +1,7 @@
-const hasPermission = (user, roles) => {
+import { Roles } from './enums';
+import User from './interfaces/User';
+
+const hasPermission = (user: User, roles: Roles): boolean => {
   let hasPermission = false;
   if (user && user.roles) {
     user.roles.forEach(userRole => {
