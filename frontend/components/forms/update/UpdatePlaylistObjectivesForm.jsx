@@ -98,8 +98,8 @@ const UpdatePlaylistObjectivesForm = ({ playlistId, objectives }) => {
 };
 
 UpdatePlaylistObjectivesForm.propTypes = {
-  playlistId: PropTypes.string.isRequierd,
-  objectives: PropTypes.object.isRequired,
+  playlistId: PropTypes.string.isRequired,
+  objectives: PropTypes.array.isRequired,
 }
 
 export default UpdatePlaylistObjectivesForm;

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { css } from '@emotion/core';
+import { useRouter } from 'next/router';
 
 const icon = css`
   position: relative;
@@ -20,10 +21,14 @@ const icon = css`
 `;
 
 const Header4Settings = ({ children, onClick }) => {
+  const { pathname } = useRouter();
+  const studentView = pathname.startsWith('/student');
   return (
     <div css={icon}>
       <h4>{children}</h4>
-      <i className="material-icons icon" onClick={onClick}>settings</i>
+      {!studentView && (
+        <i className="material-icons icon" onClick={onClick}>settings</i>
+      )}
     </div>
   );
 };

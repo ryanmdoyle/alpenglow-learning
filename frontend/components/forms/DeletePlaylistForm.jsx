@@ -57,12 +57,12 @@ const DeletePlaylistForm = ({ playlistId, playlistName }) => {
       <h4>Delete {playlistName} Playlist</h4>
       <FormWrapper>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <span css={css`margin: 1rem 0;`}>Enter Playlist name below to confirm deletion.</span>
+          <span css={css`margin: 0rem 0;`}>Enter Playlist name below to confirm deletion.</span>
           <label htmlFor='name'>Type <span css={css`font-style:italic;color: var(--red);`}>{playlistName} </span>below:</label>
           <input type="text" name="name" ref={register({ validate: value => value.toLowerCase() === playlistName.toLowerCase() })} />
           {errors.name && "Playlist name is required"}
 
-          <button type="submit" css={css`border-color: var(--red);background-color: var(--red);`}>Delete Playlist</button>
+          <button type="submit" className='delete'>Delete Playlist</button>
         </form>
       </FormWrapper>
     </PagePadding>

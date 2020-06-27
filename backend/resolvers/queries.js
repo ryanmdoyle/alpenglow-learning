@@ -27,6 +27,10 @@ const queries = {
 		return await User.find();
 	},
 
+	async getCourse(parent, args, context, info) {
+		return await Course.findById(args.courseId);
+	},
+
 	async getInstructingStudents(parent, args, context, info) {
 		const userId = args.user_id ? args.user_id : context.currentUser._id;
 		const classes = await Class.find({ primaryInstructor: userId });

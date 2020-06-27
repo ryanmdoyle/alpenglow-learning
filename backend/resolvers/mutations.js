@@ -236,5 +236,41 @@ const mutations = {
       description: description,
     })
   },
+
+  async updateCourse(parent, args, context, info) {
+    const { currentUser } = context;
+    const { courseId, name, subject, grade, section, description, startDate, endDate } = args;
+    const course = await Course.findById(courseId).select('owner');
+    if (course.owner != currentUser._id) return new ApolloError(`You do not own this course!`)
+    course.courseId = courseId;
+    course.name = name;
+    course.subject = subject;
+    course.grade = grade;
+    course.section = section;
+    course.description = description;
+    course.startDate = startDate;
+    course.endDate = endDate;
+    return await course.save();
+  },
+
+  async updatePlaylist(parent, args, context, info) {
+    const { currentUser } = context;
+    const { playlistId, name, description, type } = args;
+    const playlist = await Playlist.findById(playlistId);
+    const course = await Course.findById(playlist.course._id)
+    if (currentUser._id != course.owner) return new ApolloError('You do not hav permission to edit this playlist');
+
+    if (playlist.type != type) {
+      const oldTypeArray = `${playlist.type.toLowerCase()}Playlists`;
+      const oldTypeArrayIndex = course[oldTypeArray].findIndex(playlist => playlist._id == playlistId);
+      course[oldTypeArray].splice(oldTypeArrayIndex, 1);
+      course[`${type.toLowerCase()}Playlists`].push(playlistId);
+      await course.save();
+    }
+    playlist.name = name;
+    playlist.description = description;
+    playlist.type = type;
+    return await playlist.save()
+  },
 }
 module.exports = mutations;

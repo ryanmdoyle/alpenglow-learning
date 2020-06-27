@@ -10,6 +10,7 @@ const typeDefs = gql`
     getCurrentUser: User,
     getUser(user_id: ID): User!,
     getAllUsers: [User]!,
+    getCourse(courseId: ID): Course,
 
     getPlaylist(playlistId: ID): Playlist!,
     getPlaylistRequest(playlistId: ID): Request,
@@ -111,6 +112,24 @@ const typeDefs = gql`
       objectiveId: String!,
       description: String!,
     ): Objective!,
+
+    updateCourse(
+      courseId: ID!,
+      name: String!,
+      subject: String!,
+      grade: Int!,
+      section: String,
+      description: String,
+      startDate: String,
+      endDate: String,
+    ): Course!,
+
+    updatePlaylist(
+      playlistId: ID!,
+      name: String!,
+      description: String!,
+      type: String!,
+    ): Playlist!,
 
     deletePlaylist(
       playlistId: String!,

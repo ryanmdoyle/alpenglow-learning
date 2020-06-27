@@ -11,25 +11,28 @@ import TextButton from '../styled/elements/TextButton';
 import AlertContext from '../context/AlertContext';
 import ModalContext from '../context/ModalContext';
 import DeletePlaylistForm from '../forms/DeletePlaylistForm';
+import UpdatePlaylistForm from '../forms/update/UpdatePlaylistForm';
 import { PLAYLIST_QUERY } from '../../gql/queries';
 
-const deleteButton = css`
+const editButton = css`
   position: fixed; 
   right: 10px;
-  bottom:10px; 
-  background-color: var(--red);
-  border-color: var(--red);
+  bottom:10px;
 `
 
 const Playlist = ({ playlistId }) => {
   const modal = useContext(ModalContext);
-  const alert = useContext(AlertContext);
   const { loading, error, data } = useQuery(PLAYLIST_QUERY, {
     variables: { playlistId },
   })
 
-  const deletePlaylist = () => {
-    modal.setChildComponent(<DeletePlaylistForm playlistId={playlistId} playlistName={data.getPlaylist.name} />);
+  const editPlaylist = () => {
+    modal.setChildComponent(
+      <>
+        <UpdatePlaylistForm playlistData={data.getPlaylist} />
+        <DeletePlaylistForm playlistId={playlistId} playlistName={data.getPlaylist.name} />
+      </>
+    );
     modal.open();
   }
 
@@ -56,7 +59,7 @@ const Playlist = ({ playlistId }) => {
             />
           ))
         )}
-        <TextButton css={deleteButton} onClick={deletePlaylist}>Delete Playlist</TextButton>
+        <TextButton css={editButton} onClick={editPlaylist}>Edit Playlist</TextButton>
       </PagePadding>
     </>
   );

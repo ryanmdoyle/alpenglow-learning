@@ -34,6 +34,13 @@ justify-content: center;
     align-self: flex-start;
   }
 
+  textarea {
+    font-family: 'Hind Madurai', sans-serif;
+    font-weight: 400;
+    line-height: 1.65;
+    color: var(--blueDark);
+  }
+
   select {
     height: 2.2rem;
   }
@@ -56,10 +63,9 @@ justify-content: center;
       transition: color 0.15s, background-color 0.15s;
     }
   }
-
 `;
 
-const FormWrapper = ({ children, onSubmit }) => {
+const FormWrapper = ({ children }) => {
   return (
     <div css={StyledForm}>
       {children}

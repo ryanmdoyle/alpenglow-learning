@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { css } from '@emotion/core';
 
 const titleStyles = css`
+  position: relative;
   width: 100%;
   min-height: 75px;
   padding: 1.2rem 2rem;

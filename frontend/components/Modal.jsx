@@ -20,14 +20,14 @@ const modal = css`
   position: relative;
   width: 80%;
   max-width: 800px;
+  max-height: 90%;
+  overflow: hidden;
+  overflow-y: scroll;
   background-color: white;
   border-radius: var(--borderRadius);
-  box-shadow: var(--shadowHeavy);
   padding: 1rem;
   
-  h4 {
-    margin: 0;
-  }
+  h4 { margin: 0; }
 
   .close {
     position: relative;

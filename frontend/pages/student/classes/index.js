@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/react-hooks'
 
 import PageTitle from '../../../components/PageTitle';
 import Loading from '../../../components/Loading';
-import CourseTimeline from '../../../components/courses/CourseTimeline';
+import CourseTimelines from '../../../components/courses/CourseTimelines';
 
 const ENROLLED_COURSES_QUERY = gql`
   query ENROLLED_COURSES_QUERY {
@@ -42,7 +42,7 @@ const studentClasses = () => {
         data.getEnrolledCourses.map(course => {
           if (course.essentialPlaylists.length > 0 || course.corePlaylists.length) {
             return (
-              <CourseTimeline
+              <CourseTimelines
                 name={course.name}
                 courseId={course._id}
                 essentialPlaylists={course.essentialPlaylists}
