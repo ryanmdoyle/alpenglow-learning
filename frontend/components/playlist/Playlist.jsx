@@ -10,7 +10,7 @@ import PlaylistObjective from './PlaylistObjective';
 import TextButton from '../styled/elements/TextButton';
 import AlertContext from '../context/AlertContext';
 import ModalContext from '../context/ModalContext';
-import DeletePlaylistForm from '../forms/DeletePlaylistForm';
+import DeletePlaylistForm from '../forms/delete/DeletePlaylistForm';
 import UpdatePlaylistForm from '../forms/update/UpdatePlaylistForm';
 import { PLAYLIST_QUERY } from '../../gql/queries';
 

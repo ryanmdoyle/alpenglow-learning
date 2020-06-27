@@ -3,13 +3,13 @@ import gql from 'graphql-tag';
 import { css } from '@emotion/core'
 import { useRouter } from 'next/router';
 
-import FormWrapper from '../styled/blocks/FormWrapper';
-import AlertContext from '../context/AlertContext';
-import ModalContext from '../context/ModalContext';
-import PagePadding from '../styled/PagePadding';
+import FormWrapper from '../../styled/blocks/FormWrapper';
+import AlertContext from '../../context/AlertContext';
+import ModalContext from '../../context/ModalContext';
+import PagePadding from '../../styled/PagePadding';
 import { useMutation } from '@apollo/react-hooks';
 import { useForm } from 'react-hook-form';
-import { INSTRUCTING_COURSES_QUERY } from '../../gql/queries';
+import { INSTRUCTING_COURSES_QUERY } from '../../../gql/queries';
 
 const DELETE_PLAYLIST = gql`
   mutation DELETE_PLAYLIST(
