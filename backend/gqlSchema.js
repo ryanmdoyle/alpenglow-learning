@@ -131,10 +131,22 @@ const typeDefs = gql`
       type: String!,
     ): Playlist!,
 
+    updateResource(
+      resourceId: ID!,
+      name: String!,
+      description: String!,
+      type: String!,
+      href: String!,
+    ): Resource!,
+
     deletePlaylist(
       playlistId: String!,
       playlistName: String!,
     ): Playlist!,
+
+    deleteResource(
+      resourceId: ID!,
+    ): Resource!, 
   }
 
   # # # # # # # # # # # #

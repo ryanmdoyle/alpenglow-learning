@@ -78,10 +78,13 @@ const PlaylistDetailsObjectives = ({ objectives: queriedObjectives, playlistTitl
   margin: 0;
   padding: 0;
   li {
-    padding: 0 0.25rem;
+    padding: 0.4rem 0.75rem 0.25rem 0rem;
     border-radius: var(--borderRadius);
+    transition: padding 0.3s, box-shadow 0.3s;
     :hover {
       box-shadow: var(--shadowMedium);
+      padding: 0.4rem 0.75rem 0.25rem 0.75rem;
+      transition: padding 0.3s, box-shadow 0.3s;
     }
   }
   `;

@@ -7,7 +7,6 @@ const resourceSchema = new Schema({
   name: String,
   description: String,
   href: String,
-  order: Number,
   objective: {
     type: mongoose.ObjectId,
     ref: 'Objective',

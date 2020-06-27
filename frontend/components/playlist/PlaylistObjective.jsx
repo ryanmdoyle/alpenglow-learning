@@ -101,7 +101,7 @@ const PlaylistObjective = ({ objectiveId, objectiveName, objectiveDescription, r
       <h4>{objectiveName}</h4>
       <small>{objectiveDescription}</small>
       <DragDropContext onDragEnd={handleDrag}>
-        <PlaylistResourceList resources={resourceArr} objectiveId={objectiveId} />
+        <PlaylistResourceList resources={resourceArr} objectiveId={objectiveId} playlistId={playlistId} />
       </DragDropContext>
       {!studentView && (
         <TextButton onClick={addResourceModal}>Add Resource</TextButton>

@@ -10,30 +10,9 @@ const list = css`
 list-style: none;
 margin: 0;
 padding: 0;
-  li {
-    min-height: 65px;
-    border-radius: var(--borderRadius);
-    display: flex;
-    align-items: center;
-    padding: 1rem 0.5rem;
-    overflow: hidden;
-    box-sizing: border-box;
-    transition: box-shadow 0.15s;
-    :hover {
-      box-shadow: var(--shadowMedium);
-      transition: box-shadow 0.15s;
-    }
-  }
-  i {
-    padding-left: 0.5rem;
-    font-size: 2rem;
-  }
-  span, small {
-    padding-left: 1rem;
-  }
 `;
 
-const PlaylistResourceList = ({ resources, objectiveId }) => {
+const PlaylistResourceList = ({ resources, objectiveId, playlistId }) => {
   return (
     <Droppable droppableId={objectiveId}>
       {provided => (
@@ -44,7 +23,7 @@ const PlaylistResourceList = ({ resources, objectiveId }) => {
         >
           {resources &&
             resources.map((resource, index) => (
-              <PlaylistResourceListItem resource={resource} key={resource._id} index={index} />
+              <PlaylistResourceListItem resource={resource} key={resource._id} index={index} playlistId={playlistId} />
             ))
           }
           {provided.placeholder}

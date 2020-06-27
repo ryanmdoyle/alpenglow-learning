@@ -272,5 +272,26 @@ const mutations = {
     playlist.type = type;
     return await playlist.save()
   },
+
+  async updateResource(parent, args, context, info) {
+    const { resourceId, name, description, type, href } = args;
+    return await Resource.updateOne({ _id: resourceId }, {
+      name: name,
+      description: description,
+      type: type,
+      href: href,
+    })
+  },
+
+  async deleteResource(parent, args, context, info) {
+    // remove from parent objective
+    const { objective: objId } = await Resource.findById(args.resourceId).select('objective');
+    const objective = await Objective.findById(objId);
+    const resourceToRemove = objective.resources.findIndex(resource => resource._id == args.resourceId);
+    objective.resources.splice(resourceToRemove, 1);
+    objective.save()
+    // remove actual resource
+    return await Resource.deleteOne({ _id: args.resourceId });
+  }
 }
 module.exports = mutations;
