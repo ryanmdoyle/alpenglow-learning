@@ -19,6 +19,7 @@ const buttonStyles = css`
     border: 2px solid var(--pink);
     color: white;
     background-color: var(--pink);
+    outline-color: var(--pink);
     transition: color 0.15s, background-color 0.15s, border 0.15s;
   }
 `;

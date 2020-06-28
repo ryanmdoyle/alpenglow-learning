@@ -4,17 +4,18 @@ enum AlertStatus {
   None = "NONE",
 }
 
-enum PlaylistEnum {
+enum PlaylistType {
   Essential = 'ESSENTIAL',
   Core = 'CORE',
   Challenge = 'CHALLENGE',
 }
 
-enum Roles {
+enum Role {
   Student = 'STUDENT',
   Teacher = 'TEACHER',
   Admin = 'ADMIN',
   SuperAdmin = 'SUPER_ADMIN',
+  Parent = 'PARENT',
 }
 
-export { AlertStatus, PlaylistEnum, Roles }
+export { AlertStatus, PlaylistType, Role }

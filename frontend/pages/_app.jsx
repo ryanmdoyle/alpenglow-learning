@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Head from 'next/head';
 import { ThemeProvider } from 'emotion-theming';
 import { Global, css } from '@emotion/core';
@@ -9,6 +9,8 @@ import global from '../styles/global';
 import { theme } from '../styles/theme';
 
 // Components
+import Layout from '../components/styled/blocks/Layout';
+
 import NavPanel from '../components/Nav/NavPanel';
 import Alert from '../components/Alert';
 import Modal from '../components/Modal';
@@ -58,14 +60,24 @@ function MyApp({ Component, pageProps }) {
             <Head>
               <script src="https://apis.google.com/js/platform.js" async defer></script>
             </Head>
-            <div css={layout}>
+            {/* <UserContext.Consumer>
+              {(data) => {
+                console.log(data)
+                return data ?
+                  <Layout Component={Component} pageProps={pageProps} />
+                  :
+                  <LayoutLanding Component={Component} pageProps={pageProps} />
+              }}
+            </UserContext.Consumer> */}
+            {/* <div css={layout}>
               <NavPanel />
               <main>
                 <ComponentWithRoles Component={Component} pageProps={pageProps} />
                 <Alert />
                 <Modal />
               </main>
-            </div>
+            </div> */}
+            <Layout Component={Component} pageProps={pageProps} />
           </ModalProvider>
         </AlertProvider>
       </UserProvider>

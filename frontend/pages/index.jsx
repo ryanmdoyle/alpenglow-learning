@@ -10,7 +10,7 @@ import PageTitle from '../components/PageTitle';
 import PagePadding from '../components/styled/blocks/PagePadding';
 import StudentWelcome from '../components/welcome/StudentWelcome';
 import TeacherWelcome from '../components/welcome/TeacherWelcome';
-import { Roles } from '../lib/enums';
+import { Role } from '../lib/enums';
 
 const HomePage = ({ }) => {
   const user = useContext(UserContext);
@@ -18,10 +18,10 @@ const HomePage = ({ }) => {
     <div>
       <PageTitle>Welcome to Alpenglow!</PageTitle>
       <PagePadding>
-        {hasPermission(user, [Roles.Student, Roles.SuperAdmin]) && (
+        {hasPermission(user, [Role.Student, Role.SuperAdmin]) && (
           <StudentWelcome user={user} />
         )}
-        {hasPermission(user, [Roles.Teacher, Roles.SuperAdmin]) && (
+        {hasPermission(user, [Role.Teacher, Role.SuperAdmin]) && (
           <TeacherWelcome user={user} />
         )}
       </PagePadding>

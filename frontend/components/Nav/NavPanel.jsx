@@ -12,7 +12,7 @@ import Loading from '../Loading';
 import UserContext from '../context/UserContext';
 import NavStudentDashboard from './NavStudentDashboard';
 import hasPermission from '../../lib/hasPermission';
-import { Roles } from '../../lib/enums';
+import { Role } from '../../lib/enums';
 
 const navStyles = css`
   display: flex;
@@ -43,12 +43,12 @@ const NavPanel = () => {
         </NavSection>
         {user && (
           <>
-            {hasPermission(user, [Roles.SuperAdmin, Roles.Student]) && (
+            {hasPermission(user, [Role.SuperAdmin, Role.Student]) && (
               <NavSection>
                 <NavStudentDashboard />
               </NavSection>
             )}
-            {hasPermission(user, [Roles.Admin, Roles.SuperAdmin]) && (
+            {hasPermission(user, [Role.Admin, Role.SuperAdmin]) && (
               <>
                 <NavSection>
                   <NavStudentProgress />
@@ -63,14 +63,7 @@ const NavPanel = () => {
       </div>
       <div id='nav-bottom'>
         <UserSection>
-          {(!user) ? <Login disabled={false} /> :
-            (
-              <>
-                <Login disabled={true} />
-                <Logout />
-              </>
-            )
-          }
+          <Logout />
         </UserSection>
       </div>
     </nav>
