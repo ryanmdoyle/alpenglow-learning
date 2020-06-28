@@ -5,7 +5,7 @@ import { useQuery } from '@apollo/react-hooks'
 import PageTitle from '../../../../components/PageTitle';
 import PagePadding from '../../../../components/styled/blocks/PagePadding';
 import ProgressTable_Courses from '../../../../components/progress/ProgressTable_Courses';
-// import { GET_INSTRUCTING_STUDENTS_QUERY } from '../../../../gql/queries';
+// import { GET_INSTRUCTING_STUDENTS } from '../../../../gql/queries';
 
 const STUDENT_PROGRESS_QUERY = gql`
   query STUDENT_PROGRESS_QUERY {
@@ -21,7 +21,7 @@ const STUDENT_PROGRESS_QUERY = gql`
 `;
 
 const teacherStudents = () => {
-  // const { loading: studentsLoading, error: studentsError, data: studentsData } = useQuery(GET_INSTRUCTING_STUDENTS_QUERY);
+  // const { loading: studentsLoading, error: studentsError, data: studentsData } = useQuery(GET_INSTRUCTING_STUDENTS);
   const { loading, error, data } = useQuery(STUDENT_PROGRESS_QUERY);
 
   return (

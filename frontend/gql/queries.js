@@ -44,8 +44,8 @@ query GET_ENROLLED_CLASSES {
 }
 `;
 
-export const GET_INSTRUCTING_STUDENTS_QUERY = gql`
-  query GET_INSTRUCTING_STUDENTS_QUERY {
+export const GET_INSTRUCTING_STUDENTS = gql`
+  query GET_INSTRUCTING_STUDENTS {
     getInstructingStudents {
       _id
       name

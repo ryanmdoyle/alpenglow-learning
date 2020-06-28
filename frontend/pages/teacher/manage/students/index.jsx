@@ -6,10 +6,10 @@ import PageTitle from '../../../../components/PageTitle';
 import PagePadding from '../../../../components/styled/blocks/PagePadding';
 import Loading from '../../../../components/Loading';
 import { ListContainer, ListRow } from '../../../../components/styled/blocks/List';
-import { GET_INSTRUCTING_STUDENTS_QUERY } from '../../../../gql/queries';
+import { GET_INSTRUCTING_STUDENTS } from '../../../../gql/queries';
 
 const studentList = () => {
-  const { loading, error, data } = useQuery(GET_INSTRUCTING_STUDENTS_QUERY);
+  const { loading, error, data } = useQuery(GET_INSTRUCTING_STUDENTS);
 
   if (error) return null;
   if (loading) return <Loading />;
