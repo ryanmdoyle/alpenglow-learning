@@ -9,7 +9,7 @@ import ModalContext from '../../context/ModalContext';
 import PagePadding from '../../styled/PagePadding';
 import { useMutation } from '@apollo/react-hooks';
 import { useForm } from 'react-hook-form';
-import { INSTRUCTING_COURSES_QUERY } from '../../../gql/queries';
+import { GET_INSTRUCTING_COURSES } from '../../../gql/queries';
 
 const DELETE_PLAYLIST = gql`
   mutation DELETE_PLAYLIST(
@@ -30,7 +30,7 @@ const DeletePlaylistForm = ({ playlistId, playlistName }) => {
   const router = useRouter();
 
   const [deletePlaylist, { data }] = useMutation(DELETE_PLAYLIST, {
-    refetchQueries: [{ query: INSTRUCTING_COURSES_QUERY }],
+    refetchQueries: [{ query: GET_INSTRUCTING_COURSES }],
     onCompleted: (data) => {
       if (modal.isOpen) {
         modal.close();

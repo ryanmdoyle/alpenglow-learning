@@ -11,7 +11,7 @@ import PagePadding from '../../styled/PagePadding';
 import Loading from '../../Loading';
 import gradeLevels from '../../../lib/gradeLevels';
 import subjects from '../../../lib/subjects';
-import { INSTRUCTING_COURSES_QUERY } from '../../../gql/queries';
+import { GET_INSTRUCTING_COURSES } from '../../../gql/queries';
 
 const UPDATE_COURSE = gql`
     mutation UPDATE_COURSE(
@@ -64,7 +64,7 @@ const UpdateCourseForm = ({ courseId }) => {
 
   const [updateCourse, { data }] = useMutation(UPDATE_COURSE, {
     refetchQueries: [
-      { query: INSTRUCTING_COURSES_QUERY },
+      { query: GET_INSTRUCTING_COURSES },
       { query: GET_COURSE_DETAILS, variables: { courseId: courseId } }
     ],
     onCompleted: (data) => {

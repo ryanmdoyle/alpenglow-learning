@@ -7,7 +7,7 @@ import FormWrapper from '../../styled/blocks/FormWrapper';
 import PagePadding from '../../styled/PagePadding';
 import Loading from '../../Loading';
 import AlertContext from '../../context/AlertContext';
-import { INSTRUCTING_COURSES_QUERY } from '../../../gql/queries';
+import { GET_INSTRUCTING_COURSES } from '../../../gql/queries';
 
 const CREATE_OBJECTIVE_MUTATION = gql`
   mutation CREATE_OBJECTIVE(
@@ -30,7 +30,7 @@ const CreateObjectiveForm = () => {
   const { register, handleSubmit, errors, reset } = useForm();
   const [coursePlaylists, setCoursePlaylists] = useState(null);
   const alert = useContext(AlertContext);
-  const courseQuery = useQuery(INSTRUCTING_COURSES_QUERY);
+  const courseQuery = useQuery(GET_INSTRUCTING_COURSES);
 
   const [createObjective, { data }] = useMutation(CREATE_OBJECTIVE_MUTATION, {
     onCompleted: data => {

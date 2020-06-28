@@ -10,7 +10,7 @@ import Loading from '../../Loading';
 import AlertContext from '../../context/AlertContext';
 import ModalContext from '../../context/ModalContext';
 import subjects from '../../../lib/subjects';
-import { INSTRUCTING_COURSES_QUERY } from '../../../gql/queries';
+import { GET_INSTRUCTING_COURSES } from '../../../gql/queries';
 
 const GET_USER_COURSES_QUERY = gql`
   # currently gets all courses, but should later only get courses for logged in user
@@ -57,7 +57,7 @@ const CreatePlaylistForm = ({ course, subject, type }) => {
 
   const [createPlaylist, { data, client }] = useMutation(CREATE_PLAYLIST_MUTATION, {
     awaitRefetchQueries: true,
-    refetchQueries: [{ query: INSTRUCTING_COURSES_QUERY }],
+    refetchQueries: [{ query: GET_INSTRUCTING_COURSES }],
     onCompleted: (data) => {
       modal.close();
       alert.success(`Successfully created playlist: ${data.createPlaylist.name}`);

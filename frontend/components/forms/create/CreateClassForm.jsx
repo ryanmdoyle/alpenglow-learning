@@ -10,7 +10,7 @@ import Loading from '../../Loading';
 import AlertContext from '../../context/AlertContext';
 import ModalContext from '../../context/ModalContext';
 import { INSTRUCTING_CLASSES_QUERY } from '../../Nav/NavStudentProgress';
-import { INSTRUCTING_COURSES_QUERY } from '../../../gql/queries';
+import { GET_INSTRUCTING_COURSES } from '../../../gql/queries';
 
 const CREATE_CLASS = gql`
     mutation CREATE_CLASS(
@@ -31,10 +31,10 @@ const CreateClassForm = ({ courseId }) => {
   const alert = useContext(AlertContext)
   const modal = useContext(ModalContext);
 
-  const courseQuery = useQuery(INSTRUCTING_COURSES_QUERY)
+  const courseQuery = useQuery(GET_INSTRUCTING_COURSES)
   const [createClass, { data }] = useMutation(CREATE_CLASS, {
     awaitRefetchQueries: true,
-    refetchQueries: [{ query: INSTRUCTING_CLASSES_QUERY }, { query: INSTRUCTING_COURSES_QUERY }],
+    refetchQueries: [{ query: INSTRUCTING_CLASSES_QUERY }, { query: GET_INSTRUCTING_COURSES }],
     onCompleted: data => {
       reset();
       modal.close();

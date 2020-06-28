@@ -8,7 +8,7 @@ import PagePadding from '../../styled/PagePadding';
 import AlertContext from '../../context/AlertContext';
 import gradeLevels from '../../../lib/gradeLevels';
 import subjects from '../../../lib/subjects';
-import { INSTRUCTING_COURSES_QUERY } from '../../../gql/queries';
+import { GET_INSTRUCTING_COURSES } from '../../../gql/queries';
 
 const CREATE_COURSE = gql`
     mutation CREATE_COURSE(
@@ -40,7 +40,7 @@ const CreateCourseForm = () => {
 
   const [createCourse, { data }] = useMutation(CREATE_COURSE, {
     awaitRefetchQueries: true,
-    refetchQueries: [{ query: INSTRUCTING_COURSES_QUERY }],
+    refetchQueries: [{ query: GET_INSTRUCTING_COURSES }],
     onCompleted: data => {
       reset();
       alert.success(`Successfully created course ${data.createCourse.name}!`, 10);

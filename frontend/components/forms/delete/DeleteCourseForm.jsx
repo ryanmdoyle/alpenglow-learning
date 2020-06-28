@@ -8,7 +8,7 @@ import ModalContext from '../../context/ModalContext';
 import PagePadding from '../../styled/PagePadding';
 import { useMutation } from '@apollo/react-hooks';
 import { useForm } from 'react-hook-form';
-import { INSTRUCTING_COURSES_QUERY } from '../../../gql/queries';
+import { GET_INSTRUCTING_COURSES } from '../../../gql/queries';
 
 const DELETE_COURSE = gql`
   mutation DELETE_COURSE(
@@ -28,7 +28,7 @@ const DeleteCourseForm = ({ courseId, courseName }) => {
   const modal = useContext(ModalContext);
 
   const [deleteCourse, { data }] = useMutation(DELETE_COURSE, {
-    refetchQueries: [{ query: INSTRUCTING_COURSES_QUERY }],
+    refetchQueries: [{ query: GET_INSTRUCTING_COURSES }],
     onCompleted: (data) => {
       if (modal.isOpen) {
         modal.close();

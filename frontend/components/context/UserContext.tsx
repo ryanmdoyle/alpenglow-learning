@@ -8,6 +8,7 @@ UserContext.displayName = 'UserContext';
 const GET_CURRENT_USER = gql`
   query GET_CURRENT_USER {
     getCurrentUser {
+      _id
       firstName
       roles
     }

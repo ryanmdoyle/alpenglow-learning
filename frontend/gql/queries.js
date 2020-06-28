@@ -1,12 +1,13 @@
 import gql from 'graphql-tag';
 
-export const INSTRUCTING_COURSES_QUERY = gql`
-  query INSTRUCTING_COURSES_QUERY {
+export const GET_INSTRUCTING_COURSES = gql`
+  query GET_INSTRUCTING_COURSES {
     getInstructingCourses {
       _id
       name
       subject
       description
+      owner
       essentialPlaylists {
         _id
         name
@@ -32,15 +33,6 @@ export const INSTRUCTING_COURSES_QUERY = gql`
       }
     }
   }
-`;
-
-export const GET_ENROLLED_COURSES_QUERY = gql`
-query GET_ENROLLED_COURSES_QUERY {
-  getEnrolledCourses {
-    name
-    _id
-  }
-}
 `;
 
 export const GET_ENROLLED_CLASSES_QUERY = gql`

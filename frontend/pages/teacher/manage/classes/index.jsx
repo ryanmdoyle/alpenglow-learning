@@ -10,12 +10,12 @@ import PagePadding from '../../../../components/styled/blocks/PagePadding';
 import CreateClassForm from '../../../../components/forms/create/CreateClassForm';
 import TextButton from '../../../../components/styled/elements/TextButton';
 import ModalContext from '../../../../components/context/ModalContext';
-import { INSTRUCTING_COURSES_QUERY } from '../../../../gql/queries';
+import { GET_INSTRUCTING_COURSES } from '../../../../gql/queries';
 
 import { TextTableContainer, TextTableHeader, TextTableRow} from '../../../../components/styled/tables/TextTable';
 
 const teacherClasses = () => {
-  const { loading, error, data } = useQuery(INSTRUCTING_COURSES_QUERY);
+  const { loading, error, data } = useQuery(GET_INSTRUCTING_COURSES);
   const modal = useContext(ModalContext);
 
   if (error) return null;

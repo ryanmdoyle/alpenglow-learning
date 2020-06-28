@@ -6,6 +6,7 @@ import CoursePlaylistTimeline from './CoursePlaylistTimeline';
 import Header4Settings from '../styled/elements/Header4Settings';
 import AlertContext from '../context/AlertContext';
 import ModalContext from '../context/ModalContext';
+import UserContext from '../context/UserContext';
 import UpdateCourseForm from '../forms/update/UpdateCourseForm';
 import DeleteCourseForm from '../forms/delete/DeleteCourseForm';
 
@@ -37,15 +38,19 @@ const courseContainer = css`
   }
 `;
 
-const CourseTimelines = ({ name, essentialPlaylists, corePlaylists, challengePlaylists, courseId, subject }) => {
+const CourseTimelines = ({ name, essentialPlaylists, corePlaylists, challengePlaylists, courseId, subject, owner }) => {
   const alert = useContext(AlertContext);
   const modal = useContext(ModalContext);
+  const user = useContext(UserContext);
 
+  console.log('match', user._id, owner);
   const toggleCourseSettings = (courseId) => {
     modal.setChildComponent(
       <>
         <UpdateCourseForm courseId={courseId} />
-        <DeleteCourseForm courseId={courseId} courseName={name} />
+        {(user._id == owner) && (
+          <DeleteCourseForm courseId={courseId} courseName={name} />
+        )}
       </>
     )
     modal.open();

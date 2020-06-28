@@ -4,10 +4,10 @@ import { useQuery } from '@apollo/react-hooks'
 import PageTitle from '../../../components/PageTitle';
 import Loading from '../../../components/Loading';
 import CourseTimelines from '../../../components/courses/CourseTimelines';
-import { INSTRUCTING_COURSES_QUERY } from '../../../gql/queries';
+import { GET_INSTRUCTING_COURSES } from '../../../gql/queries';
 
 const teacherCourses = () => {
-  const { loading, error, data } = useQuery(INSTRUCTING_COURSES_QUERY);
+  const { loading, error, data } = useQuery(GET_INSTRUCTING_COURSES);
 
   if (error) return null;
   if (loading) return <Loading />;
@@ -24,6 +24,7 @@ const teacherCourses = () => {
             challengePlaylists={course.challengePlaylists}
             subject={course.subject}
             key={course._id}
+            owner={course.owner}
           />
         ))
       )}
