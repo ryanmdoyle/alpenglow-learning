@@ -13,6 +13,33 @@ const Request = require('../models/Request');
 const Resource = require('../models/Resource');
 
 const mutations = {
+  async enroll(parent, args, context, info) {
+    const { currentUser } = context;
+
+    if (currentUser) {
+      const userInDb = await User.findById(currentUser._id);
+      const classToEnroll = await Class.findOne({ enrollId: args.enrollId });
+
+      // Add class to a Users enrolledClasses
+      if (!userInDb.enrolledClasses.includes(classToEnroll._id)) {
+        userInDb.enrolledClasses.push(classToEnroll._id);
+        await userInDb.save();
+      } else {
+        return new ApolloError(`User is already enrolled in this class.`);
+      }
+
+      // Adds User to list of enrolled students in Class
+      if (!classToEnroll.enrolled.includes(userInDb._id)) {
+        classToEnroll.enrolled.push(userInDb._id);
+        await classToEnroll.save();
+      } else {
+        return new ApolloError(`Class already has this user as an enrolled student.`);
+      }
+      return userInDb;
+    }
+    return 'Not logged in!'
+  },
+
   async createCourse(parent, args, context, info) {
     const { currentUser } = context;
     if (!currentUser.roles.includes('STUDENT')) {
@@ -88,33 +115,6 @@ const mutations = {
       return createdObjective;
     }
     return 'Permission Denied!';
-  },
-
-  async enroll(parent, args, context, info) {
-    const { currentUser } = context;
-
-    if (currentUser) {
-      const userInDb = await User.findById(currentUser._id);
-      const classToEnroll = await Class.findOne({ enrollId: args.enrollId });
-
-      // Add class to a Users enrolledClasses
-      if (!userInDb.enrolledClasses.includes(classToEnroll._id)) {
-        userInDb.enrolledClasses.push(classToEnroll._id);
-        await userInDb.save();
-      } else {
-        return new ApolloError(`User is already enrolled in this class.`);
-      }
-
-      // Adds User to list of enrolled students in Class
-      if (!classToEnroll.enrolled.includes(userInDb._id)) {
-        classToEnroll.enrolled.push(userInDb._id);
-        await classToEnroll.save();
-      } else {
-        return new ApolloError(`Class already has this user as an enrolled student.`);
-      }
-      return userInDb;
-    }
-    return 'Not logged in!'
   },
 
   async createRequest(parent, args, context, info) {
@@ -206,24 +206,6 @@ const mutations = {
     return await course.save();
   },
 
-  async deletePlaylist(parent, args, context, info) {
-    const { currentUser } = context;
-    const { playlistId } = args;
-    const playlist = await Playlist.findById(playlistId);
-    const course = await Course.findById(playlist.course);
-    if (course.owner == currentUser._id) {
-      // delete playlist from array of playlists in course
-      const typePlaylists = [...course[`${playlist.type.toLowerCase()}Playlists`]]; //array of course.[type]Playlists
-      const playlistToRemoveIndex = typePlaylists.findIndex(playlist => playlist._id == playlistId); //index of PL to delete
-      typePlaylists.splice(playlistToRemoveIndex, 1);
-      course[`${playlist.type.toLowerCase()}Playlists`] = [...typePlaylists];
-      // delete actual playlist object and save updated course
-      await course.save()
-      await playlist.remove()
-      return playlist
-    } else { return null }
-  },
-
   async updatePlaylistDescription(parent, args, context, info) {
     const { playlistId, description } = args;
     return await Playlist.updateOne({ _id: playlistId }, { description: description });
@@ -312,6 +294,24 @@ const mutations = {
       return await Course.deleteOne({ _id: courseId });
     }
     return new ApolloError('Cannot remove course. You must be the owner to remove the course.')
-  }
+  },
+
+  async deletePlaylist(parent, args, context, info) {
+    const { currentUser } = context;
+    const { playlistId } = args;
+    const playlist = await Playlist.findById(playlistId);
+    const course = await Course.findById(playlist.course);
+    if (course.owner == currentUser._id) {
+      // delete playlist from array of playlists in course
+      const typePlaylists = [...course[`${playlist.type.toLowerCase()}Playlists`]]; //array of course.[type]Playlists
+      const playlistToRemoveIndex = typePlaylists.findIndex(playlist => playlist._id == playlistId); //index of PL to delete
+      typePlaylists.splice(playlistToRemoveIndex, 1);
+      course[`${playlist.type.toLowerCase()}Playlists`] = [...typePlaylists];
+      // delete actual playlist object and save updated course
+      await course.save()
+      await playlist.remove()
+      return playlist
+    } else { return null }
+  },
 }
 module.exports = mutations;
