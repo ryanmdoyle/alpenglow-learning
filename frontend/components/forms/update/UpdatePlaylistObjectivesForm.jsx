@@ -8,6 +8,7 @@ import FormWrapper from '../../styled/blocks/FormWrapper';
 import AlertContext from '../../context/AlertContext';
 import ModalContext from '../../context/ModalContext';
 import PagePadding from '../../styled/PagePadding';
+import DeleteObjectiveForm from '../../forms/delete/DeleteObjectiveForm';
 import { PLAYLIST_QUERY } from '../../../gql/queries';
 
 const UPDATE_OBJECTIVE = gql`
@@ -62,38 +63,41 @@ const UpdatePlaylistObjectivesForm = ({ playlistId, objectives }) => {
 
   return (
     <PagePadding>
-      <h4>Update Objective</h4>
-      <FormWrapper>
-        <form onSubmit={handleSubmit(onSubmit)}>
+      <>
+        <h4>Update Objective</h4>
+        <FormWrapper>
+          <form onSubmit={handleSubmit(onSubmit)}>
 
-          <label htmlFor='objective'>Objective to Update</label>
-          <select name='objective' onChange={() => { setEditingObjective(event.target.value) }} ref={register({ required: true })}>
-            <option disabled="" value="">Select objective to edit:</option>
-            {objectives.map(objective => (
-              <option value={objective._id} key={objective._id}>{objective.name}</option>
-            ))}
-          </select>
-          {errors.objective && "Course is required"}
+            <label htmlFor='objective'>Objective to Update</label>
+            <select name='objective' onChange={() => { setEditingObjective(event.target.value) }} ref={register({ required: true })}>
+              <option disabled="" value="">Select objective to edit:</option>
+              {objectives.map(objective => (
+                <option value={objective._id} key={objective._id}>{objective.name}</option>
+              ))}
+            </select>
+            {errors.objective && "Course is required"}
 
-          {selectedObjective && (
-            <>
-              <label htmlFor='name'>name</label>
-              <input type="text" name="name" defaultValue={selectedObjective.name} ref={register({ required: true })} />
-              {errors.name && "Name is required"}
+            {selectedObjective && (
+              <>
+                <label htmlFor='name'>name</label>
+                <input type="text" name="name" defaultValue={selectedObjective.name} ref={register({ required: true })} />
+                {errors.name && "Name is required"}
 
-              <label htmlFor='description'>description</label>
-              <textarea name="description" defaultValue={selectedObjective.description} ref={register({ required: true, maxLength: 255 })} />
-              {errors.description?.type === "required" && "Description is required."}
-              {errors.description?.type === "maxLength" && "Maximum description length is 255 characters."}
-            </>
-          )}
+                <label htmlFor='description'>description</label>
+                <textarea name="description" defaultValue={selectedObjective.description} ref={register({ required: true, maxLength: 255 })} />
+                {errors.description?.type === "required" && "Description is required."}
+                {errors.description?.type === "maxLength" && "Maximum description length is 255 characters."}
+              </>
+            )}
 
-
-          <button type="submit">Update Description</button>
-
-        </form>
-      </FormWrapper>
-    </PagePadding>
+            <button type="submit">Update Description</button>
+          </form>
+        </FormWrapper >
+        {selectedObjective && (
+          <DeleteObjectiveForm objectiveName={selectedObjective.name} objectiveId={selectedObjective._id} playlistId={playlistId} />
+        )}
+      </>
+    </PagePadding >
   );
 };
 

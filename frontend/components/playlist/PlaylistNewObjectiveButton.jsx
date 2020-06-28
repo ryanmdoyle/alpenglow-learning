@@ -5,7 +5,7 @@ import { css } from '@emotion/core';
 
 import TextButton from '../styled/elements/TextButton';
 import ModalContext from '../context/ModalContext';
-import AddObjectiveButtonForm from '../forms/AddObjectiveButtonForm';
+import CreateObjectiveButtonForm from '../forms/CreateObjectiveButtonForm';
 import { useContext } from 'react';
 
 const PlaylistNewObjectiveButton = ({ playlistId, name }) => {
@@ -13,7 +13,7 @@ const PlaylistNewObjectiveButton = ({ playlistId, name }) => {
 
   const addObjective = () => {
     modal.setChildComponent(
-      <AddObjectiveButtonForm playlistId={playlistId} playlistName={name} />
+      <CreateObjectiveButtonForm playlistId={playlistId} playlistName={name} />
     )
     modal.open();
   }

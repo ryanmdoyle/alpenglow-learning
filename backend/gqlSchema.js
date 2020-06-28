@@ -141,12 +141,15 @@ const typeDefs = gql`
 
     deletePlaylist(
       playlistId: String!,
-      playlistName: String!,
     ): Playlist!,
 
     deleteResource(
       resourceId: ID!,
     ): Resource!, 
+
+    deleteObjective(
+      objectiveId: ID!,
+    ): Objective!,
   }
 
   # # # # # # # # # # # #

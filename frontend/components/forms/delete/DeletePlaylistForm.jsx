@@ -14,11 +14,9 @@ import { INSTRUCTING_COURSES_QUERY } from '../../../gql/queries';
 const DELETE_PLAYLIST = gql`
   mutation DELETE_PLAYLIST(
     $playlistId: String!,
-    $playlistName: String!,
   ) {
     deletePlaylist(
       playlistId: $playlistId,
-      playlistName: $playlistName,
     ) {
       _id
     }
@@ -47,7 +45,6 @@ const DeletePlaylistForm = ({ playlistId, playlistName }) => {
     deletePlaylist({
       variables: {
         playlistId: playlistId,
-        playlistName: data.name,
       }
     })
   }

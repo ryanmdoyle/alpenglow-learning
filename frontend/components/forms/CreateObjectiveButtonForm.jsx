@@ -26,7 +26,7 @@ const CREATE_OBJECTIVE_MUTATION = gql`
   }
 `;
 
-const AddObjectiveButtonForm = ({ playlistName, playlistId }) => {
+const CreateObjectiveButtonForm = ({ playlistName, playlistId }) => {
   const { register, handleSubmit, errors } = useForm();
   const alert = useContext(AlertContext);
   const modal = useContext(ModalContext);
@@ -73,4 +73,4 @@ const AddObjectiveButtonForm = ({ playlistName, playlistId }) => {
   );
 };
 
-export default AddObjectiveButtonForm;
+export default CreateObjectiveButtonForm;

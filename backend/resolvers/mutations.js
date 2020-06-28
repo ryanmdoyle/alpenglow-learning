@@ -292,6 +292,16 @@ const mutations = {
     objective.save()
     // remove actual resource
     return await Resource.deleteOne({ _id: args.resourceId });
-  }
+  },
+
+  async deleteObjective(parent, args, context, info) {
+    const { objectiveId } = args;
+    const objective = await Objective.findById(objectiveId);
+    const parentPlaylist = await Playlist.findById(objective.playlist)
+    const objArrIndex = parentPlaylist.objectives.findIndex(obj => obj._id == objectiveId);
+    parentPlaylist.objectives.splice(objArrIndex, 1);
+    parentPlaylist.save()
+    return await Objective.deleteOne({ _id: objectiveId });
+  },
 }
 module.exports = mutations;
