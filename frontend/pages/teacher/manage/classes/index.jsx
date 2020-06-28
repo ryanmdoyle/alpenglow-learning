@@ -7,7 +7,7 @@ import Router from 'next/router';
 import PageTitle from '../../../../components/PageTitle';
 import Loading from '../../../../components/Loading';
 import PagePadding from '../../../../components/styled/blocks/PagePadding';
-import CreateClassForm from '../../../../components/forms/CreateClassForm';
+import CreateClassForm from '../../../../components/forms/create/CreateClassForm';
 import TextButton from '../../../../components/styled/elements/TextButton';
 import ModalContext from '../../../../components/context/ModalContext';
 import { INSTRUCTING_COURSES_QUERY } from '../../../../gql/queries';

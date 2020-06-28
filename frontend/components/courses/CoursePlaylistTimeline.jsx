@@ -8,7 +8,7 @@ import { useMutation } from '@apollo/react-hooks';
 
 import CoursePlaylistBox from './CoursePlaylistBox';
 import PlusButton from '../styled/elements/PlusButton';
-import CreatePlaylistForm from '../forms/CreatePlaylistForm';
+import CreatePlaylistForm from '../forms/create/CreatePlaylistForm';
 import ModalContext from '../context/ModalContext';
 import AlertContext from '../context/AlertContext';
 

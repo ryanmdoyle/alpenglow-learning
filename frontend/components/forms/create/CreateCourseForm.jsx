@@ -3,12 +3,12 @@ import { useForm } from 'react-hook-form';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 
-import FormWrapper from '../styled/blocks/FormWrapper';
-import PagePadding from '../styled/PagePadding';
-import AlertContext from '../context/AlertContext';
-import gradeLevels from '../../lib/gradeLevels';
-import subjects from '../../lib/subjects';
-import { INSTRUCTING_COURSES_QUERY } from '../../gql/queries';
+import FormWrapper from '../../styled/blocks/FormWrapper';
+import PagePadding from '../../styled/PagePadding';
+import AlertContext from '../../context/AlertContext';
+import gradeLevels from '../../../lib/gradeLevels';
+import subjects from '../../../lib/subjects';
+import { INSTRUCTING_COURSES_QUERY } from '../../../gql/queries';
 
 const CREATE_COURSE = gql`
     mutation CREATE_COURSE(

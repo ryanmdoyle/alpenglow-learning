@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { css } from '@emotion/core';
 
-import CreateCourseForm from '../forms/CreateCourseForm';
+import CreateCourseForm from '../forms/create/CreateCourseForm';
 
 const TeacherWelcome = ({ user }) => {
   return (

@@ -5,7 +5,7 @@ import { css } from '@emotion/core';
 
 import TextButton from '../styled/elements/TextButton';
 import ModalContext from '../context/ModalContext';
-import CreateObjectiveButtonForm from '../forms/CreateObjectiveButtonForm';
+import CreateObjectiveButtonForm from '../forms/create/CreateObjectiveButtonForm';
 import { useContext } from 'react';
 
 const PlaylistNewObjectiveButton = ({ playlistId, name }) => {

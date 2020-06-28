@@ -10,7 +10,7 @@ import PlaylistResourceList from './PlaylistResourceList';
 import TextButton from '../styled/elements/TextButton';
 import ModalContext from '../context/ModalContext';
 import AlertContext from '../context/AlertContext';
-import CreateResource from '../forms/CreateResource';
+import CreateResourceForm from '../forms/create/CreateResourceForm';
 import Header4Settings from '../styled/elements/Header4Settings';
 import { PLAYLIST_QUERY } from '../../gql/queries';
 
@@ -63,7 +63,7 @@ const PlaylistObjective = ({ objectiveId, objectiveName, objectiveDescription, r
 
   const addResourceModal = () => {
     modal.setChildComponent(
-      <CreateResource
+      <CreateResourceForm
         objectiveName={objectiveName}
         objectiveId={objectiveId}
         playlistId={playlistId}

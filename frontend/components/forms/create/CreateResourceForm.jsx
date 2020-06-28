@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
 import gql from 'graphql-tag';
 
-import FormWrapper from '../styled/blocks/FormWrapper';
-import AlertContext from '../context/AlertContext';
-import ModalContext from '../context/ModalContext';
-import PagePadding from '../styled/PagePadding';
+import FormWrapper from '../../styled/blocks/FormWrapper';
+import AlertContext from '../../context/AlertContext';
+import ModalContext from '../../context/ModalContext';
+import PagePadding from '../../styled/PagePadding';
 import { useMutation } from '@apollo/react-hooks';
 import { useForm } from 'react-hook-form';
-import { PLAYLIST_QUERY } from '../../gql/queries';
+import { PLAYLIST_QUERY } from '../../../gql/queries';
 
 const CREATE_RESOURCE_MUTATION = gql`
   mutation CREATE_RESOURCE(
@@ -30,7 +30,7 @@ const CREATE_RESOURCE_MUTATION = gql`
   }
 `;
 
-const AddResourceButtonForm = ({ objectiveName, objectiveId, playlistId }) => {
+const CreateResourceForm = ({ objectiveName, objectiveId, playlistId }) => {
   const { register, handleSubmit, errors } = useForm();
   const alert = useContext(AlertContext);
   const modal = useContext(ModalContext);
@@ -91,4 +91,4 @@ const AddResourceButtonForm = ({ objectiveName, objectiveId, playlistId }) => {
   );
 };
 
-export default AddResourceButtonForm;
+export default CreateResourceForm;

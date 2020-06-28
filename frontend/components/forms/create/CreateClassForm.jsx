@@ -4,13 +4,13 @@ import { useForm } from 'react-hook-form';
 import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
-import FormWrapper from '../styled/blocks/FormWrapper';
-import PagePadding from '../styled/PagePadding';
-import Loading from '../Loading';
-import AlertContext from '../context/AlertContext';
-import ModalContext from '../context/ModalContext';
-import { INSTRUCTING_CLASSES_QUERY } from '../Nav/NavStudentProgress';
-import { INSTRUCTING_COURSES_QUERY } from '../../gql/queries';
+import FormWrapper from '../../styled/blocks/FormWrapper';
+import PagePadding from '../../styled/PagePadding';
+import Loading from '../../Loading';
+import AlertContext from '../../context/AlertContext';
+import ModalContext from '../../context/ModalContext';
+import { INSTRUCTING_CLASSES_QUERY } from '../../Nav/NavStudentProgress';
+import { INSTRUCTING_COURSES_QUERY } from '../../../gql/queries';
 
 const CREATE_CLASS = gql`
     mutation CREATE_CLASS(

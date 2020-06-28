@@ -4,13 +4,13 @@ import gql from 'graphql-tag';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
 
-import FormWrapper from '../styled/blocks/FormWrapper';
-import PagePadding from '../styled/PagePadding';
-import Loading from '../Loading';
-import AlertContext from '../context/AlertContext';
-import ModalContext from '../context/ModalContext';
-import subjects from '../../lib/subjects';
-import { INSTRUCTING_COURSES_QUERY } from '../../gql/queries';
+import FormWrapper from '../../styled/blocks/FormWrapper';
+import PagePadding from '../../styled/PagePadding';
+import Loading from '../../Loading';
+import AlertContext from '../../context/AlertContext';
+import ModalContext from '../../context/ModalContext';
+import subjects from '../../../lib/subjects';
+import { INSTRUCTING_COURSES_QUERY } from '../../../gql/queries';
 
 const GET_USER_COURSES_QUERY = gql`
   # currently gets all courses, but should later only get courses for logged in user
