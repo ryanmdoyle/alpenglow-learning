@@ -35,8 +35,8 @@ export const GET_INSTRUCTING_COURSES = gql`
   }
 `;
 
-export const GET_ENROLLED_CLASSES_QUERY = gql`
-query GET_ENROLLED_CLASSES_QUERY {
+export const GET_ENROLLED_CLASSES = gql`
+query GET_ENROLLED_CLASSES {
   getEnrolledClasses {
     name
     _id

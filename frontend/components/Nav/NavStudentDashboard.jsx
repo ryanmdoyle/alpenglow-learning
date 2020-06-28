@@ -7,12 +7,12 @@ import NavSectionPadding from '../styled/blocks/NavSectionPadding';
 import NavSectionHeader from '../styled/elements/NavSectionHeader';
 import NavItem from './NavItem';
 import Loading from '../Loading';
-import { GET_ENROLLED_CLASSES_QUERY } from '../../gql/queries';
+import { GET_ENROLLED_CLASSES } from '../../gql/queries';
 
 const enrolledClasses = css`padding-left: 1rem;`;
 
 const NavStudentDashboard = props => {
-  const { loading, error, data } = useQuery(GET_ENROLLED_CLASSES_QUERY);
+  const { loading, error, data } = useQuery(GET_ENROLLED_CLASSES);
   const studentHasEnrollments = data?.getEnrolledClasses?.length > 0;
   if (loading) return <Loading />;
   return (
