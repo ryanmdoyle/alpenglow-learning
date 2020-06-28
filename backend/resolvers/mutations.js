@@ -303,5 +303,15 @@ const mutations = {
     parentPlaylist.save()
     return await Objective.deleteOne({ _id: objectiveId });
   },
+
+  async deleteCourse(parent, args, context, info) {
+    const { currentUser } = context;
+    const { courseId } = args;
+    const course = await Course.findById(args.courseId).select('owner');
+    if (currentUser._id == course.owner) {
+      return await Course.deleteOne({ _id: courseId });
+    }
+    return new ApolloError('Cannot remove course. You must be the owner to remove the course.')
+  }
 }
 module.exports = mutations;

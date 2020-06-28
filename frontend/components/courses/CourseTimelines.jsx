@@ -7,6 +7,7 @@ import Header4Settings from '../styled/elements/Header4Settings';
 import AlertContext from '../context/AlertContext';
 import ModalContext from '../context/ModalContext';
 import UpdateCourseForm from '../forms/update/UpdateCourseForm';
+import DeleteCourseForm from '../forms/delete/DeleteCourseForm';
 
 const courseContainer = css`
   box-sizing: border-box;
@@ -41,7 +42,12 @@ const CourseTimelines = ({ name, essentialPlaylists, corePlaylists, challengePla
   const modal = useContext(ModalContext);
 
   const toggleCourseSettings = (courseId) => {
-    modal.setChildComponent(<UpdateCourseForm courseId={courseId} />)
+    modal.setChildComponent(
+      <>
+        <UpdateCourseForm courseId={courseId} />
+        <DeleteCourseForm courseId={courseId} courseName={name} />
+      </>
+    )
     modal.open();
   }
 

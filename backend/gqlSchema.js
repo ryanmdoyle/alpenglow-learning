@@ -150,6 +150,10 @@ const typeDefs = gql`
     deleteObjective(
       objectiveId: ID!,
     ): Objective!,
+
+    deleteCourse(
+      courseId: ID!,
+    ): Course!,
   }
 
   # # # # # # # # # # # #
