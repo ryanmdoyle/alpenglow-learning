@@ -8,7 +8,7 @@ import ModalContext from '../../context/ModalContext';
 import PagePadding from '../../styled/PagePadding';
 import { useMutation } from '@apollo/react-hooks';
 import { useForm } from 'react-hook-form';
-import { PLAYLIST_QUERY } from '../../../gql/queries';
+import { GET_PLAYLIST } from '../../../gql/queries';
 
 const DELETE_OBJECTIVE = gql`
   mutation DELETE_OBJECTIVE(
@@ -28,7 +28,7 @@ const DeleteObjectiveForm = ({ objectiveId, objectiveName, playlistId }) => {
   const modal = useContext(ModalContext);
 
   const [deleteObjective, { data }] = useMutation(DELETE_OBJECTIVE, {
-    refetchQueries: [{ query: PLAYLIST_QUERY, variables: { playlistId: playlistId } }],
+    refetchQueries: [{ query: GET_PLAYLIST, variables: { playlistId: playlistId } }],
     onCompleted: (data) => {
       if (modal.isOpen) {
         modal.close();

@@ -12,7 +12,7 @@ import AlertContext from '../context/AlertContext';
 import ModalContext from '../context/ModalContext';
 import DeletePlaylistForm from '../forms/delete/DeletePlaylistForm';
 import UpdatePlaylistForm from '../forms/update/UpdatePlaylistForm';
-import { PLAYLIST_QUERY } from '../../gql/queries';
+import { GET_PLAYLIST } from '../../gql/queries';
 
 const editButton = css`
   position: fixed; 
@@ -22,7 +22,7 @@ const editButton = css`
 
 const Playlist = ({ playlistId }) => {
   const modal = useContext(ModalContext);
-  const { loading, error, data } = useQuery(PLAYLIST_QUERY, {
+  const { loading, error, data } = useQuery(GET_PLAYLIST, {
     variables: { playlistId },
   })
 

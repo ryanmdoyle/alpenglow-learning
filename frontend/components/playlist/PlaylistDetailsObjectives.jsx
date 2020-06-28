@@ -11,7 +11,7 @@ import AlertContext from '../context/AlertContext';
 import ModalContext from '../context/ModalContext';
 import Header5Settings from '../styled/elements/Header5Settings';
 import UpdatePlaylistObjectivesForm from '../forms/update/UpdatePlaylistObjectivesForm';
-import { PLAYLIST_QUERY } from '../../gql/queries';
+import { GET_PLAYLIST } from '../../gql/queries';
 
 const UPDATE_OBJECTIVE_ORDER = gql`
   mutation UPDATE_OBJECTIVE_ORDER(
@@ -41,7 +41,7 @@ const PlaylistDetailsObjectives = ({ objectives: queriedObjectives, playlistTitl
   }, [queriedObjectives]);
 
   const [updateOrder, { data }] = useMutation(UPDATE_OBJECTIVE_ORDER, {
-    refetchQueries: [{ query: PLAYLIST_QUERY, variables: { playlistId: playlistId } }],
+    refetchQueries: [{ query: GET_PLAYLIST, variables: { playlistId: playlistId } }],
     onCompleted: (data) => {
       alert.success(`Successfully reordered objectives!`, 2)
     },

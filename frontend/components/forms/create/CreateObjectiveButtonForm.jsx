@@ -7,7 +7,7 @@ import ModalContext from '../../context/ModalContext';
 import PagePadding from '../../styled/PagePadding';
 import { useMutation } from '@apollo/react-hooks';
 import { useForm } from 'react-hook-form';
-import { PLAYLIST_QUERY } from '../../../gql/queries';
+import { GET_PLAYLIST } from '../../../gql/queries';
 
 const CREATE_OBJECTIVE_MUTATION = gql`
   mutation CREATE_OBJECTIVE(
@@ -32,7 +32,7 @@ const CreateObjectiveButtonForm = ({ playlistName, playlistId }) => {
   const modal = useContext(ModalContext);
 
   const [addObjective, { data }] = useMutation(CREATE_OBJECTIVE_MUTATION, {
-    refetchQueries: [{ query: PLAYLIST_QUERY, variables: { playlistId: playlistId } }],
+    refetchQueries: [{ query: GET_PLAYLIST, variables: { playlistId: playlistId } }],
     onCompleted: (data) => {
       if (modal.isOpen) {
         modal.close();

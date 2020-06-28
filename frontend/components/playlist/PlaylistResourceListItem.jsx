@@ -9,7 +9,7 @@ import { useMutation } from '@apollo/react-hooks';
 import AlertContext from '../context/AlertContext';
 import ModalContext from '../context/ModalContext';
 import UpdateResourceForm from '../forms/update/UpdateResourceForm'
-import { PLAYLIST_QUERY } from '../../gql/queries';
+import { GET_PLAYLIST } from '../../gql/queries';
 
 const item = css`
   border-radius: var(--borderRadius);
@@ -81,7 +81,7 @@ const PlaylistResourceListItem = ({ resource, index, playlistId }) => {
   const modal = useContext(ModalContext);
 
   const [remove, { data: deleteData }] = useMutation(DELETE_RESOURCE, {
-    refetchQueries: [{ query: PLAYLIST_QUERY, variables: { playlistId: playlistId } }],
+    refetchQueries: [{ query: GET_PLAYLIST, variables: { playlistId: playlistId } }],
     onCompleted: data => {
       alert.success(`Sucessfully deleted!`, 3);
     },

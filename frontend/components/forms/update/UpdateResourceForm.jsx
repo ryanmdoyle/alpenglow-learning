@@ -8,7 +8,7 @@ import ModalContext from '../../context/ModalContext';
 import PagePadding from '../../styled/PagePadding';
 import { useMutation } from '@apollo/react-hooks';
 import { useForm } from 'react-hook-form';
-import { PLAYLIST_QUERY } from '../../../gql/queries';
+import { GET_PLAYLIST } from '../../../gql/queries';
 
 const UPDATE_RESOURCE = gql`
   mutation UPDATE_RESOURCE(
@@ -36,7 +36,7 @@ const UpdateResourceForm = ({ resourceId, playlistId, name, description, type, h
   const modal = useContext(ModalContext);
 
   const [update, { data: editData }] = useMutation(UPDATE_RESOURCE, {
-    refetchQueries: [{ query: PLAYLIST_QUERY, variables: { playlistId: playlistId } }],
+    refetchQueries: [{ query: GET_PLAYLIST, variables: { playlistId: playlistId } }],
     onCompleted: editData => {
       modal.close();
       alert.success(`Sucessfully updated resource!`, 3);

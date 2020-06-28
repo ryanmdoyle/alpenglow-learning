@@ -54,8 +54,8 @@ export const GET_INSTRUCTING_STUDENTS = gql`
   }
 `;
 
-export const PLAYLIST_QUERY = gql`
-  query PLAYLIST_QUERY(
+export const GET_PLAYLIST = gql`
+  query GET_PLAYLIST(
     $playlistId: ID!
   ) {
     getPlaylist(playlistId: $playlistId) {

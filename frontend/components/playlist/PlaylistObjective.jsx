@@ -12,7 +12,7 @@ import ModalContext from '../context/ModalContext';
 import AlertContext from '../context/AlertContext';
 import CreateResourceForm from '../forms/create/CreateResourceForm';
 import Header4Settings from '../styled/elements/Header4Settings';
-import { PLAYLIST_QUERY } from '../../gql/queries';
+import { GET_PLAYLIST } from '../../gql/queries';
 
 const objectiveStyles = css`
   h4 {
@@ -54,7 +54,7 @@ const PlaylistObjective = ({ objectiveId, objectiveName, objectiveDescription, r
   const { pathname } = useRouter();
   const studentView = pathname.startsWith('/student');
   const [updateOrder, { data }] = useMutation(UPDATE_RESOURCE_ORDER, {
-    refetchQueries: [{ query: PLAYLIST_QUERY, variables: { playlistId: playlistId } }],
+    refetchQueries: [{ query: GET_PLAYLIST, variables: { playlistId: playlistId } }],
     onCompleted: (data) => {
       alert.success(`Successfully reordered!`, 2)
     },

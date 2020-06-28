@@ -9,7 +9,7 @@ import AlertContext from '../../context/AlertContext';
 import ModalContext from '../../context/ModalContext';
 import PagePadding from '../../styled/PagePadding';
 import DeleteObjectiveForm from '../../forms/delete/DeleteObjectiveForm';
-import { PLAYLIST_QUERY } from '../../../gql/queries';
+import { GET_PLAYLIST } from '../../../gql/queries';
 
 const UPDATE_OBJECTIVE = gql`
   mutation UPDATE_OBJECTIVE(
@@ -34,7 +34,7 @@ const UpdatePlaylistObjectivesForm = ({ playlistId, objectives }) => {
   const [selectedObjective, setSelectedObjective] = useState(null);
 
   const [updateObjective, { data }] = useMutation(UPDATE_OBJECTIVE, {
-    refetchQueries: [{ query: PLAYLIST_QUERY, variables: { playlistId: playlistId } }],
+    refetchQueries: [{ query: GET_PLAYLIST, variables: { playlistId: playlistId } }],
     onCompleted: (data) => {
       if (modal.isOpen) {
         modal.close();

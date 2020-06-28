@@ -60,7 +60,7 @@ const CoursePlaylistTimeline = ({ type, playlists: queriedPlaylists, courseId, s
   }
 
   const [updateOrder, { data }] = useMutation(UPDATE_PLAYLIST_ORDER, {
-    // refetchQueries: [{ query: PLAYLIST_QUERY, variables: { playlistId: playlistId } }],
+    // refetchQueries: [{ query: GET_PLAYLIST, variables: { playlistId: playlistId } }],
     onCompleted: (data) => {
       alert.success(`Successfully reordered playlists!`, 2)
     },

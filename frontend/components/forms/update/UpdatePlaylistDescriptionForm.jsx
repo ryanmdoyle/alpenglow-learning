@@ -8,7 +8,7 @@ import FormWrapper from '../../styled/blocks/FormWrapper';
 import AlertContext from '../../context/AlertContext';
 import ModalContext from '../../context/ModalContext';
 import PagePadding from '../../styled/PagePadding';
-import { PLAYLIST_QUERY } from '../../../gql/queries';
+import { GET_PLAYLIST } from '../../../gql/queries';
 
 const UPDATE_PLAYLIST_DESCRIPTION = gql`
   mutation UPDATE_PLAYLIST_DESCRIPTION(
@@ -30,7 +30,7 @@ const UpdatePlaylistDescriptionForm = ({ playlistId }) => {
   const modal = useContext(ModalContext);
 
   const [updateDescription, { data }] = useMutation(UPDATE_PLAYLIST_DESCRIPTION, {
-    refetchQueries: [{ query: PLAYLIST_QUERY, variables: { playlistId: playlistId } }],
+    refetchQueries: [{ query: GET_PLAYLIST, variables: { playlistId: playlistId } }],
     onCompleted: (data) => {
       if (modal.isOpen) {
         modal.close();
