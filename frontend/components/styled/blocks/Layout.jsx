@@ -61,7 +61,7 @@ const landing = css`
       margin: auto;
       display: flex;
       align-items: center;
-      h3 {
+      h2 {
         margin: 0;
         color: var(--pink);
         flex-grow: 1;
@@ -100,8 +100,8 @@ const Layout = ({ Component, pageProps }) => {
     <div css={landing}>
       <nav>
         <div className='content-container'>
-          <img src='/alpenglow.svg' height='80px' width></img>
-          <h3>Alpenglow Learning</h3>
+          <img src='/alpenglow.svg' height='80px'></img>
+          <h2>Alpenglow Learning</h2>
           <Login css={css`justify-self: flex-end;`} />
         </div>
       </nav>

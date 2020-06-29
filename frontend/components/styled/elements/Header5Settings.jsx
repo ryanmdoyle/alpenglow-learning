@@ -18,6 +18,20 @@ const icon = css`
       transform: rotate(180deg);
     }
   }
+  h5 {
+    position: relative;
+    ::after {
+      position: absolute;
+      top: 100%;
+      transform: skew(45deg);
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: var(--pink50);
+      content: '';
+      z-index: -100;
+    }
+  }
 `;
 
 const Header5Settings = ({ children, onClick }) => {

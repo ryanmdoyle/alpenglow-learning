@@ -95,7 +95,7 @@ const global = css`
     text-decoration: none;
   }
 
-  h4, h5 {
+  h3, h4 {
     position: relative;
     ::after {
       position: absolute;
