@@ -11,11 +11,9 @@ const Request = require('../models/Request');
 // currentUser data from JWT token available on context.currentUser
 const queries = {
 	async getCurrentUser(parent, args, context, info) {
-		const { currentUser: { _id } } = context;
-		if (!_id) {
-			return null;
-		}
-		return await User.findById(_id);
+		if (!context.currentUser) return null;
+		if (!context.currentUser._id) return null;
+		return await User.findById(context.currentUser._id);
 	},
 
 	async getUser(parent, args, context, info) {
