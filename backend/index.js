@@ -30,9 +30,6 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(cookieParser());
-// Pass into ApolloServer below?
-// app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(bodyParser.json());
 
 //// TEMP REST LOGIN/LOGOUT ////
 const login = require('./controllers/login');
@@ -52,7 +49,7 @@ const server = new ApolloServer({
       const tokenData = jwt.verify(token, process.env.SECRET);
       req.currentUser = tokenData;
     } else {
-      req.userId = null;
+      req.currentUser = null;
     }
     return { ...req }
   },
