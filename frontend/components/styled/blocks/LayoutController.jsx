@@ -4,7 +4,7 @@ import { css } from '@emotion/core';
 import NavPanel from '../../Nav/NavPanel';
 import Alert from '../../Alert';
 import Modal from '../../Modal'
-import ComponentWithRoles from '../../ComponentWithRoles';
+import ComponentWithRouteProtection from '../../ComponentWithRouteProtection';
 import UserContext from '../../context/UserContext';
 import Login from '../../Nav/Login';
 import TextButton from '../elements/TextButton';
@@ -92,9 +92,11 @@ const landing = css`
   }
 `;
 
-const Layout = ({ Component, pageProps }) => {
+const LayoutController = ({ Component, pageProps }) => {
   const user = useContext(UserContext);
   const [signupRole, setSignupRole] = useState(null);
+
+  // Renders a different layout based on user being logged in or out
 
   if (!user) return (
     <div css={landing}>
@@ -106,16 +108,7 @@ const Layout = ({ Component, pageProps }) => {
         </div>
       </nav>
       <main>
-        <h1>Welcome!</h1>
-        <h3>Get started as a:</h3>
-        <div className='buttons'>
-          <TextButton css={css`width: 150px;`} onClick={() => { setSignupRole(Role.Teacher) }} >Teacher</TextButton>
-          <TextButton css={css`width: 150px;`} onClick={() => { setSignupRole(Role.Student) }} >Student</TextButton>
-          <TextButton css={css`width: 150px;`} onClick={() => { setSignupRole(Role.Parent) }} >Parent</TextButton>
-        </div>
-        {signupRole && (
-          <h1 css={css`margin-top: 2rem;`}>{signupRole} Form</h1>
-        )}
+        <ComponentWithRouteProtection Component={Component} pageProps={pageProps} />
       </main>
     </div>
   )
@@ -124,7 +117,7 @@ const Layout = ({ Component, pageProps }) => {
     <div css={dashboard}>
       <NavPanel />
       <main>
-        <ComponentWithRoles Component={Component} pageProps={pageProps} />
+        <ComponentWithRouteProtection Component={Component} pageProps={pageProps} />
         <Alert />
         <Modal />
       </main>
@@ -132,4 +125,4 @@ const Layout = ({ Component, pageProps }) => {
   );
 };
 
-export default Layout;
+export default LayoutController;

@@ -9,12 +9,7 @@ import global from '../styles/global';
 import { theme } from '../styles/theme';
 
 // Components
-import Layout from '../components/styled/blocks/Layout';
-
-import NavPanel from '../components/Nav/NavPanel';
-import Alert from '../components/Alert';
-import Modal from '../components/Modal';
-import ComponentWithRoles from '../components/ComponentWithRoles';
+import LayoutController from '../components/styled/blocks/LayoutController';
 import { UserProvider, UserContext } from '../components/context/UserContext';
 import { AlertProvider } from '../components/context/AlertContext';
 import { ModalProvider } from '../components/context/ModalContext';
@@ -60,24 +55,7 @@ function MyApp({ Component, pageProps }) {
             <Head>
               <script src="https://apis.google.com/js/platform.js" async defer></script>
             </Head>
-            {/* <UserContext.Consumer>
-              {(data) => {
-                console.log(data)
-                return data ?
-                  <Layout Component={Component} pageProps={pageProps} />
-                  :
-                  <LayoutLanding Component={Component} pageProps={pageProps} />
-              }}
-            </UserContext.Consumer> */}
-            {/* <div css={layout}>
-              <NavPanel />
-              <main>
-                <ComponentWithRoles Component={Component} pageProps={pageProps} />
-                <Alert />
-                <Modal />
-              </main>
-            </div> */}
-            <Layout Component={Component} pageProps={pageProps} />
+            <LayoutController Component={Component} pageProps={pageProps} />
           </ModalProvider>
         </AlertProvider>
       </UserProvider>
