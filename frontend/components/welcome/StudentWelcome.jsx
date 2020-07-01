@@ -4,8 +4,12 @@ import PropTypes from 'prop-types';
 import EnrollForm from '../forms/EnrollForm';
 import PagePadding from '../styled/blocks/PagePadding';
 import PageTitle from '../PageTitle';
+import Loading from '../Loading';
 
 const StudentWelcome = ({ user }) => {
+
+  if (!user) return <Loading />
+
   return (
     <>
       <PageTitle>Welcome!</PageTitle>
@@ -21,7 +25,7 @@ const StudentWelcome = ({ user }) => {
 };
 
 StudentWelcome.propTypes = {
-  user: PropTypes.object.isRequired,
+  user: PropTypes.object,
 }
 
 export default StudentWelcome;
