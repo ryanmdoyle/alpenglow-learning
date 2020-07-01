@@ -6,6 +6,7 @@ import { useMutation } from '@apollo/react-hooks';
 import FormWrapper from '../../styled/blocks/FormWrapper';
 import PagePadding from '../../styled/PagePadding';
 import AlertContext from '../../context/AlertContext';
+import ModalContext from '../../context/ModalContext';
 import gradeLevels from '../../../lib/gradeLevels';
 import subjects from '../../../lib/subjects';
 import { GET_INSTRUCTING_COURSES } from '../../../gql/queries';
@@ -36,13 +37,15 @@ const CREATE_COURSE = gql`
 
 const CreateCourseForm = () => {
   const { register, handleSubmit, errors, reset } = useForm();
-  const alert = useContext(AlertContext)
+  const alert = useContext(AlertContext);
+  const modal = useContext(ModalContext);
 
   const [createCourse, { data }] = useMutation(CREATE_COURSE, {
     awaitRefetchQueries: true,
     refetchQueries: [{ query: GET_INSTRUCTING_COURSES }],
     onCompleted: data => {
       reset();
+      if (modal.isOpen) { modal.close() };
       alert.success(`Successfully created course ${data.createCourse.name}!`, 10);
     },
     onError: () => {

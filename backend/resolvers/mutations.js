@@ -43,7 +43,6 @@ const mutations = {
   async createCourse(parent, args, context, info) {
     const { currentUser } = context;
     if (!currentUser.roles.includes('STUDENT')) {
-      const userInDb = await User.findById(currentUser._id);
       const shortuid = new ShortUniqueId();
       const newCourse = new Course({
         enrollId: await shortuid.randomUUID(8),
@@ -51,10 +50,6 @@ const mutations = {
         ...args //spread incomming data from form
       })
       const createdCourse = await newCourse.save().catch((err) => { console.error(err) });
-      if (!userInDb.instructingCourses.includes(createdCourse._id)) {
-        userInDb.instructingCourses.push(createdCourse._id);
-        await userInDb.save();
-      }
       return createdCourse;
     }
     return 'Permission Denied!';

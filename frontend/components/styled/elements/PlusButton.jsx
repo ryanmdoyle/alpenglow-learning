@@ -28,3 +28,4 @@ const PlusButton = (props) => {
 };
 
 export default PlusButton;
+export { plus };

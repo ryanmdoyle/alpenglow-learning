@@ -8,6 +8,7 @@ import { useMutation } from '@apollo/react-hooks';
 
 import CoursePlaylistBox from './CoursePlaylistBox';
 import PlusButton from '../styled/elements/PlusButton';
+import PlusButtonWithText from '../styled/elements/PlusButtonWithText';
 import CreatePlaylistForm from '../forms/create/CreatePlaylistForm';
 import ModalContext from '../context/ModalContext';
 import AlertContext from '../context/AlertContext';
@@ -92,10 +93,7 @@ const CoursePlaylistTimeline = ({ type, playlists: queriedPlaylists, courseId, s
   if (playlists.length == 0 && !studentView) return (
     <>
       <h5>{type}</h5>
-      <div css={css`min-width: 3rem;display: flex;align-items:center;padding-left: 1rem;`}>
-        <PlusButton onClick={toggleModal} />
-        <p css={css`margin: 0;padding-left:0.5rem; color: var(--blueMedium);`}>Create a {type} playlist</p>
-      </div>
+      <PlusButtonWithText onClick={toggleModal}>Create a {type} playlist!</PlusButtonWithText>
     </>
   );
 
