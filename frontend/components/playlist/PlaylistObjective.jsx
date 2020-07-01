@@ -8,10 +8,10 @@ import { useMutation } from '@apollo/react-hooks';
 
 import PlaylistResourceList from './PlaylistResourceList';
 import TextButton from '../styled/elements/TextButton';
+import PlusButtonWithText from '../styled/elements/PlusButtonWithText';
 import ModalContext from '../context/ModalContext';
 import AlertContext from '../context/AlertContext';
 import CreateResourceForm from '../forms/create/CreateResourceForm';
-import Header4Settings from '../styled/elements/Header4Settings';
 import { GET_PLAYLIST } from '../../gql/queries';
 
 const objectiveStyles = css`
@@ -104,7 +104,7 @@ const PlaylistObjective = ({ objectiveId, objectiveName, objectiveDescription, r
         <PlaylistResourceList resources={resourceArr} objectiveId={objectiveId} playlistId={playlistId} />
       </DragDropContext>
       {!studentView && (
-        <TextButton onClick={addResourceModal}>Add Resource</TextButton>
+        <PlusButtonWithText onClick={addResourceModal} css={css`padding-left: 0.65rem;padding-top: 0.5rem;`}>Add Resource</PlusButtonWithText>
       )}
     </div>
   );

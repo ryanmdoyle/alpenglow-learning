@@ -17,7 +17,7 @@ const style = css`
 
 const PlusButtonWithText = ({ children, onClick, ...props }) => {
   return (
-    <div css={style} onClick={onClick}>
+    <div css={style} onClick={onClick} {...props}>
       <PlusButton />
       <p>{children}</p>
     </div>
