@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { css } from '@emotion/core';
 
 const mainContainer = css`
@@ -31,34 +32,18 @@ const mainContainer = css`
   }
 `;
 
-// const logo = css`
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   /* h1 { margin: 2rem 0; } */
-// `
-
-// const title = css`
-//   /* reset h1 size so site title is h1 while the other headers are h2 or less */
-//   display: flex;
-//   align-items: center;
-//   h1 {
-//     font-size: 1.4rem;
-//     color: var(--pink);
-//     margin-left: 1rem;
-//   }
-// `;
-
 const SiteTitle = () => {
   return (
-    <div css={mainContainer}>
-      <div className='logo'>
-        <img src='/alpenglow.svg' width='60px' />
+    <Link href='/'>
+      <div css={mainContainer}>
+        <div className='logo'>
+          <img src='/alpenglow.svg' width='60px' />
+        </div>
+        <div className='title'>
+          <h1>Alpenglow Learning</h1>
+        </div>
       </div>
-      <div className='title'>
-        <h1>Alpenglow Learning</h1>
-      </div>
-    </div>
+    </Link>
   );
 };
 
