@@ -43,7 +43,6 @@ const CourseTimelines = ({ name, essentialPlaylists, corePlaylists, challengePla
   const modal = useContext(ModalContext);
   const user = useContext(UserContext);
 
-  console.log('match', user._id, owner);
   const toggleCourseSettings = (courseId) => {
     modal.setChildComponent(
       <>
