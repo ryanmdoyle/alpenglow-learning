@@ -11,12 +11,10 @@ const ComponentWithRouteProtection = ({ Component, pageProps }) => {
   const router = useRouter();
 
   // if at /teach route, user must be teacher or Admin
-  if (typeof window !== 'undefined') {
-    if (
-      router.pathname.startsWith('/teacher')
-      &&
-      !hasPermission(user, [Role.Teacher, Role.SuperAdmin])
-    ) router.push('/student');
+  if (user && (typeof window !== 'undefined')) {
+    if (router.pathname.startsWith('/teacher') && !hasPermission(user, [Role.Teacher, Role.Admin, Role.SuperAdmin])) {
+      router.push('/student');
+    }
   }
 
   return <Component {...pageProps} />
