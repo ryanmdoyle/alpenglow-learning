@@ -20,7 +20,7 @@ const row = css`
   }
   span { color: var(--blueDark);}
   small { color: var(--pink);}
-  span:nth-child(n+2) {
+  span:nth-of-type(n+2) {
     color: var(--blueDark50);
   }
 `;
