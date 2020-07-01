@@ -22,7 +22,7 @@ const studentList = () => {
           {data.getInstructingStudents.map(student => {
             const enrolled = '5';
             return (
-              <ListRow>
+              <ListRow key={student._id}>
                 <span>{student.name}</span>
                 <span>{student.email}</span>
                 <span>{enrolled > 1 ? `${enrolled} classes` : `${enrolled} class`}</span>
