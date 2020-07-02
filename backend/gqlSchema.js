@@ -139,6 +139,12 @@ const typeDefs = gql`
       href: String!,
     ): Resource!,
 
+    manageQuiz(
+      playlistId: ID!,
+      type: String!,
+      externalLink: String!,
+    ): Quiz,
+
     deletePlaylist(
       playlistId: String!,
     ): Playlist!,
@@ -237,10 +243,10 @@ const typeDefs = gql`
 
   type Quiz {
     _id: ID,
-    playlist: String,
-    user: User,
-    score: String,
-    questions: [ String ],
+    playlist: ID!,
+    questions: [Question],
+    type: String!,
+    externalLink: String!,
   }
 
   type Score {
@@ -261,7 +267,7 @@ const typeDefs = gql`
   type Request {
     _id: ID,
     user: User,
-    playlist: String,
+    playlist: Playlist,
     approved: Boolean,
     approvalAccepted: Boolean,
   }

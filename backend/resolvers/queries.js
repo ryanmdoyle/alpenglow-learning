@@ -82,17 +82,14 @@ const queries = {
 	async getStudentRequests(parent, args, context, info) {
 		const { currentUser } = context;
 		// Create array of users classes they instruct
-		let classList = [];
-		await Class.find({ primaryInstructor: currentUser._id }).then(classes => {
-			classes.forEach(clas => classList.push(clas._id))
+		let students = [];
+		await Class.find({ primaryInstructor: currentUser._id }).select('enrolled').then(classes => {
+			classes.forEach(instructingClass => {
+				instructingClass.enrolled.forEach(student => students.push(student._id));
+			})
 		});
-		// create list of students
-		let studentList = [];
-		await User.find({ enrolledClasses: { $in: classList } }).then(students => {
-			students.forEach(student => studentList.push(student._id));
-		})
 		// get all request for students you instruct
-		return await Request.find({ user: { $in: studentList } });
+		return await Request.find({ user: { $in: students } });
 	}
 
 }

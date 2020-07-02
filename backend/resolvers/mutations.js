@@ -11,6 +11,8 @@ const Playlist = require('../models/Playlist');
 const Objective = require('../models/Objective');
 const Request = require('../models/Request');
 const Resource = require('../models/Resource');
+const Quiz = require('../models/Quiz');
+const Question = require('../models/Question');
 
 const mutations = {
   async enroll(parent, args, context, info) {
@@ -308,5 +310,19 @@ const mutations = {
       return playlist
     } else { return null }
   },
+
+  async manageQuiz(parent, args, context, info) {
+    const quizExists = await Quiz.exists({ playlist: args.playlistId });
+    if (!quizExists) {
+      const newQuiz = new Quiz({
+        playlist: args.playlistId,
+        type: args.type,
+        externalLink: args.externalLink,
+      })
+      console.log(newQuiz);
+      return await newQuiz.save();
+    }
+    return null
+  }
 }
 module.exports = mutations;

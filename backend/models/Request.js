@@ -10,6 +10,7 @@ const requestSchema = new Schema({
   playlist: {
     type: mongoose.ObjectId,
     ref: 'Playlist',
+    autopopulate: { maxDepth: 1 },
   },
   approved: Boolean,
   approvalAccepted: Boolean,

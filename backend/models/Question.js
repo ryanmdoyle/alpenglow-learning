@@ -10,7 +10,7 @@ const questionSchema = new Schema({
   responses: [String],
 })
 
-questionsSchema.plugin(require('mongoose-autopopulate'));
-questionsSchema.options.selectPopulatedPaths = false;
+questionSchema.plugin(require('mongoose-autopopulate'));
+questionSchema.options.selectPopulatedPaths = false;
 const Question = mongoose.model('Question', questionSchema);
 module.exports = Question;

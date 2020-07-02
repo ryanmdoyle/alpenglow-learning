@@ -15,14 +15,14 @@ const PlaylistDetailsDescription = ({ playlistId, playlistDescription }) => {
   const modal = useContext(ModalContext);
   const alert = useContext(AlertContext);
 
-  const updateDescription = (id) => {
-    modal.setChildComponent(<UpdatePlaylistDescriptionForm playlistId={id} />);
+  const updateDescription = () => {
+    modal.setChildComponent(<UpdatePlaylistDescriptionForm playlistId={playlistId} />);
     modal.open();
   }
 
   return (
     <div className='flex-item'>
-      <Header5Settings onClick={() => { updateDescription(playlistId) }}>Description</Header5Settings>
+      <Header5Settings onClick={() => { updateDescription() }}>Description</Header5Settings>
       <p>{playlistDescription}</p>
       {studentView && <PlaylistRequestButton playlistId={playlistId} />}
       {!studentView && <PlaylistCreateQuizButton playlistId={playlistId} />}
