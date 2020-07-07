@@ -5,7 +5,7 @@ const quizSchema = new Schema({
   playlist: {
     type: mongoose.ObjectId,
     ref: 'Playlist',
-    autopopulate: { maxDepth: 1 },
+    // autopopulate: { maxDepth: 1 },
   },
   questions: [{
     type: mongoose.ObjectId,

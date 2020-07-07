@@ -4,19 +4,20 @@ import { useForm } from 'react-hook-form';
 import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
+import Loading from '../../Loading';
 import FormWrapper from '../../styled/blocks/FormWrapper';
 import PagePadding from '../../styled/PagePadding';
 import AlertContext from '../../context/AlertContext';
 import ModalContext from '../../context/ModalContext';
 import { GET_QUIZ_FOR_PLAYLIST } from '../../../gql/queries';
 
-const CREATE_QUIZ = gql`
-  mutation CREATE_QUIZ(
+const UPDATE_QUIZ = gql`
+  mutation UPDATE_QUIZ(
     $playlistId: ID!,
     $type: String!,
     $externalLink: String!,
   ) {
-    createQuiz(
+    updateQuiz(
       playlistId: $playlistId,
       type: $type,
       externalLink: $externalLink,
@@ -26,25 +27,29 @@ const CREATE_QUIZ = gql`
   }
 `;
 
-const CreateQuizForm = ({ playlistId }) => {
+const UpdateQuizForm = ({ playlistId }) => {
   const { register, handleSubmit, errors, reset } = useForm();
   const alert = useContext(AlertContext)
   const modal = useContext(ModalContext);
 
-  const [createQuiz, { data }] = useMutation(CREATE_QUIZ, {
+  const { data: queryData, loading, error } = useQuery(GET_QUIZ_FOR_PLAYLIST, {
+    variables: { playlistId: playlistId }
+  })
+
+  const [updateQuiz, { data }] = useMutation(UPDATE_QUIZ, {
     refetchQueries: [{ query: GET_QUIZ_FOR_PLAYLIST, variables: { playlistId: playlistId } }],
     onCompleted: data => {
       reset();
       modal.close();
-      alert.success(`Successfully created quiz!`, 10);
+      alert.success(`Successfully updated quiz!`, 3);
     },
     onError: (error) => {
-      alert.error('Sorry, there was a problem creating the quiz.');
+      alert.error('Sorry, there was a problem updating the quiz.');
     }
   });
 
   const onSubmit = data => {
-    createQuiz({
+    updateQuiz({
       variables: {
         playlistId: playlistId,
         type: data.type || "EXTERNAL",
@@ -53,7 +58,7 @@ const CreateQuizForm = ({ playlistId }) => {
     })
   };
 
-  // if (courseQuery.loading) return <Loading />;
+  if (loading) return <Loading />;
   return (
     <PagePadding>
       <h4>Create Quiz</h4>
@@ -68,7 +73,7 @@ const CreateQuizForm = ({ playlistId }) => {
           {errors.type && 'Type of quiz is required!'} */}
 
           <label htmlFor='externalLink'>Link to Quiz*</label>
-          <input type="text" name="externalLink" ref={register({ required: true })} />
+          <input type="text" name="externalLink" defaultValue={queryData?.getQuizForPlaylist?.externalLink} ref={register({ required: true })} />
           {errors.externalLink && 'A link to an external quiz is required in order for students to assess this playlist.'}
 
           <button type='submit'>Save Quiz</button>
@@ -78,8 +83,8 @@ const CreateQuizForm = ({ playlistId }) => {
   );
 };
 
-CreateQuizForm.propTypes = {
+UpdateQuizForm.propTypes = {
   playlistId: PropTypes.string.isRequired,
 }
 
-export default CreateQuizForm;
+export default UpdateQuizForm;

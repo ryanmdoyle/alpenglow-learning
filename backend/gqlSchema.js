@@ -25,6 +25,8 @@ const typeDefs = gql`
     getInstructingCourses(user_id: ID): [Course],
     getInstructingClasses(user_id: ID): [Class],
     getInstructingPlaylists(user_id: ID): [Playlist],
+
+    getQuizForPlaylist(playlistId: ID!): Quiz,
   }
 
   # # # # # # # # # # # #
@@ -144,6 +146,12 @@ const typeDefs = gql`
       type: String!,
       href: String!,
     ): Resource!,
+
+    updateQuiz(
+      playlistId: ID!,
+      type: String!,
+      externalLink: String!,
+    ): Quiz,
 
     deletePlaylist(
       playlistId: String!,

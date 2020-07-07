@@ -7,6 +7,7 @@ const Class = require('../models/Class');
 const Playlist = require('../models/Playlist');
 const Objective = require('../models/Objective');
 const Request = require('../models/Request');
+const Quiz = require('../models/Quiz');
 
 // currentUser data from JWT token available on context.currentUser
 const queries = {
@@ -90,7 +91,11 @@ const queries = {
 		});
 		// get all request for students you instruct
 		return await Request.find({ user: { $in: students } });
-	}
+	},
+
+	async getQuizForPlaylist(parent, args, context, info) {
+		return await Quiz.findOne({ playlist: args.playlistId })
+	},
 
 }
 

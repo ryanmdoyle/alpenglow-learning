@@ -322,6 +322,12 @@ const mutations = {
       return await newQuiz.save();
     }
     return null
+  },
+
+  async updateQuiz(parent, args, context, info) {
+    return await Quiz.updateOne({ playlist: args.playlistId }, {
+      externalLink: args.externalLink,
+    });
   }
 }
 module.exports = mutations;
