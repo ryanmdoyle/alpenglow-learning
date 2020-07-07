@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { css } from '@emotion/core';
 
 import TextButton from '../styled/elements/TextButton';
+import PlaylistQuizAccept from './PlaylistQuizAccept';
+import ModalContext from '../context/ModalContext';
+import AlertContext from '../context/AlertContext';
+import { GET_QUIZ_FOR_PLAYLIST } from '../../gql/queries';
 
 const GET_PLAYLIST_REQUEST = gql`
   query GET_PLAYLIST_REQUEST(
@@ -31,10 +35,14 @@ const CREATE_REQUEST = gql`
 `;
 
 const PlaylistRequestButton = ({ playlistId }) => {
+  const modal = useContext(ModalContext);
+  const alert = useContext(AlertContext);
+
   const { loading, error, data: queryData } = useQuery(GET_PLAYLIST_REQUEST, {
     variables: { playlistId: playlistId },
     pollInterval: 3000,
   });
+
   const [createRequest, { data }] = useMutation(CREATE_REQUEST, {
     refetchQueries: [{ query: GET_PLAYLIST_REQUEST, variables: { playlistId: playlistId } }],
   });
@@ -47,11 +55,16 @@ const PlaylistRequestButton = ({ playlistId }) => {
     })
   }
 
+  const acceptQuiz = () => {
+    modal.setChildComponent(<PlaylistQuizAccept playlistId={playlistId} />)
+    modal.open();
+  }
+
   const isRequested = queryData?.getPlaylistRequest ? true : false;
   const isApproved = isRequested && queryData?.getPlaylistRequest.approved;
 
   if (isApproved) {
-    return <TextButton onClick={() => console.log("Already requested!")}>Approved! Take Quiz</TextButton>
+    return <TextButton onClick={acceptQuiz}>Approved! Take Quiz</TextButton>
   }
 
   if (isRequested) {
