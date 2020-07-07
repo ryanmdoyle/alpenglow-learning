@@ -311,7 +311,7 @@ const mutations = {
     } else { return null }
   },
 
-  async manageQuiz(parent, args, context, info) {
+  async createQuiz(parent, args, context, info) {
     const quizExists = await Quiz.exists({ playlist: args.playlistId });
     if (!quizExists) {
       const newQuiz = new Quiz({
@@ -319,7 +319,6 @@ const mutations = {
         type: args.type,
         externalLink: args.externalLink,
       })
-      console.log(newQuiz);
       return await newQuiz.save();
     }
     return null

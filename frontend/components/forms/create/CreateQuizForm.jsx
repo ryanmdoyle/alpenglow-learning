@@ -12,13 +12,13 @@ import ModalContext from '../../context/ModalContext';
 import { INSTRUCTING_CLASSES_QUERY } from '../../Nav/NavStudentProgress';
 import { GET_INSTRUCTING_COURSES } from '../../../gql/queries';
 
-const MANAGE_QUIZ = gql`
-  mutation MANAGE_QUIZ(
+const CREATE_QUIZ = gql`
+  mutation CREATE_QUIZ(
     $playlistId: ID!,
     $type: String!,
     $externalLink: String!,
   ) {
-    manageQuiz(
+    createQuiz(
       playlistId: $playlistId,
       type: $type,
       externalLink: $externalLink,
@@ -33,8 +33,7 @@ const CreateQuizForm = ({ playlistId }) => {
   const alert = useContext(AlertContext)
   const modal = useContext(ModalContext);
 
-  const [manageQuiz, { data }] = useMutation(MANAGE_QUIZ, {
-    // awaitRefetchQueries: true,
+  const [manageQuiz, { data }] = useMutation(CREATE_QUIZ, {
     // refetchQueries: [{ query: INSTRUCTING_CLASSES_QUERY }, { query: GET_INSTRUCTING_COURSES }],
     onCompleted: data => {
       reset();
@@ -47,8 +46,7 @@ const CreateQuizForm = ({ playlistId }) => {
   });
 
   const onSubmit = data => {
-    console.log('submit', playlistId)
-    manageQuiz({
+    createQuiz({
       variables: {
         playlistId: playlistId,
         type: data.type || "EXTERNAL",
@@ -60,7 +58,7 @@ const CreateQuizForm = ({ playlistId }) => {
   // if (courseQuery.loading) return <Loading />;
   return (
     <PagePadding>
-      <h4>Manage Quiz {playlistId}</h4>
+      <h4>Create Quiz</h4>
       <FormWrapper>
         <form onSubmit={handleSubmit(onSubmit)}>
 

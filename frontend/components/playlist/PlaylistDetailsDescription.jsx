@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 
 import PlaylistRequestButton from './PlaylistRequestButton';
-import PlaylistCreateQuizButton from './PlaylistCreateQuizButton';
+import PlaylistManageQuizButton from './PlaylistManageQuizButton';
 import Header5Settings from '../styled/elements/Header5Settings';
 import AlertContext from '../context/AlertContext';
 import ModalContext from '../context/ModalContext';
@@ -25,7 +25,7 @@ const PlaylistDetailsDescription = ({ playlistId, playlistDescription }) => {
       <Header5Settings onClick={() => { updateDescription() }}>Description</Header5Settings>
       <p>{playlistDescription}</p>
       {studentView && <PlaylistRequestButton playlistId={playlistId} />}
-      {!studentView && <PlaylistCreateQuizButton playlistId={playlistId} />}
+      {!studentView && <PlaylistManageQuizButton playlistId={playlistId} />}
     </div>
   );
 };

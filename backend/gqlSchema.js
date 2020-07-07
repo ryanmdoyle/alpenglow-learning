@@ -76,6 +76,12 @@ const typeDefs = gql`
       objective: String!
     ) : Resource!,
 
+    createQuiz(
+      playlistId: ID!,
+      type: String!,
+      externalLink: String!,
+    ): Quiz,
+
     enroll(enrollId: String!) : User!,
 
     createRequest(playlistId: ID!) : Request!,
@@ -138,12 +144,6 @@ const typeDefs = gql`
       type: String!,
       href: String!,
     ): Resource!,
-
-    manageQuiz(
-      playlistId: ID!,
-      type: String!,
-      externalLink: String!,
-    ): Quiz,
 
     deletePlaylist(
       playlistId: String!,
