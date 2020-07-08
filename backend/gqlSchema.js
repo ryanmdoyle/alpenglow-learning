@@ -168,6 +168,8 @@ const typeDefs = gql`
     deleteCourse(
       courseId: ID!,
     ): Course!,
+
+    acceptQuizApproval(requestId: ID!): Request!,
   }
 
   # # # # # # # # # # # #

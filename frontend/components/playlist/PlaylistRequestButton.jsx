@@ -16,6 +16,7 @@ const GET_PLAYLIST_REQUEST = gql`
     getPlaylistRequest(
       playlistId: $playlistId,
     ) {
+      _id
       approved
     }
   }
@@ -42,6 +43,7 @@ const PlaylistRequestButton = ({ playlistId }) => {
     variables: { playlistId: playlistId },
     pollInterval: 3000,
   });
+  const requestId = queryData?.getPlaylistRequest?._id;
 
   const [createRequest, { data }] = useMutation(CREATE_REQUEST, {
     refetchQueries: [{ query: GET_PLAYLIST_REQUEST, variables: { playlistId: playlistId } }],
@@ -56,7 +58,7 @@ const PlaylistRequestButton = ({ playlistId }) => {
   }
 
   const acceptQuiz = () => {
-    modal.setChildComponent(<PlaylistQuizAccept playlistId={playlistId} />)
+    modal.setChildComponent(<PlaylistQuizAccept playlistId={playlistId} requestId={requestId} />)
     modal.open();
   }
 

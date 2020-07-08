@@ -328,6 +328,12 @@ const mutations = {
     return await Quiz.updateOne({ playlist: args.playlistId }, {
       externalLink: args.externalLink,
     });
-  }
+  },
+
+  async acceptQuizApproval(parent, args, context, info) {
+    return await Request.updateOne({ _id: args.requestId }, {
+      approvalAccepted: true,
+    });
+  },
 }
 module.exports = mutations;
