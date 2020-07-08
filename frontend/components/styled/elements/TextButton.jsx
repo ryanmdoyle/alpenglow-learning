@@ -24,7 +24,8 @@ const buttonStyles = css`
   }
 `;
 
-const TextButton = ({ children, onClick, ...props }) => {
+const TextButton = (props) => {
+  const { children, onClick } = props;
   return (
     <button type='button' css={buttonStyles} onClick={() => onClick()} {...props}>
       {children}
