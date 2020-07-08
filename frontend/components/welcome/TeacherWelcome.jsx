@@ -29,7 +29,7 @@ const TeacherWelcome = ({ user }) => {
 };
 
 TeacherWelcome.propTypes = {
-  user: PropTypes.object.isRequired,
+  user: PropTypes.object,
 }
 
 export default TeacherWelcome;

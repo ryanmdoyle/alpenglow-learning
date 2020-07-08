@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { css } from '@emotion/core';
 
 import NavPanel from '../../Nav/NavPanel';
@@ -7,8 +7,7 @@ import Modal from '../../Modal'
 import ComponentWithRouteProtection from '../../ComponentWithRouteProtection';
 import UserContext from '../../context/UserContext';
 import Login from '../../Nav/Login';
-import TextButton from '../elements/TextButton';
-import { Role } from '../../../lib/enums';
+import Loading from '../../Loading';
 
 
 const dashboard = css`
@@ -94,11 +93,9 @@ const landing = css`
 
 const LayoutController = ({ Component, pageProps }) => {
   const user = useContext(UserContext);
-  const [signupRole, setSignupRole] = useState(null);
 
   // Renders a different layout based on user being logged in or out
-
-  if (!user) return (
+  if (!user) return ( // once context fetches user, it will be null if loaidng is complete and there is no user
     <div css={landing}>
       <nav>
         <div className='content-container'>
@@ -112,7 +109,7 @@ const LayoutController = ({ Component, pageProps }) => {
       </main>
     </div>
   )
-
+  if (user.loading) return <Loading /> // checks whether there is no user, ot user is loading
   return (
     <div css={dashboard}>
       <NavPanel />
