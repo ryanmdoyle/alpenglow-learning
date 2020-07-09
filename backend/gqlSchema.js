@@ -87,9 +87,9 @@ const typeDefs = gql`
     enroll(enrollId: String!) : User!,
 
     createRequest(playlistId: ID!) : Request!,
-    approveRequest(playlistId: ID!): Request!,
-    cancelRequest(playlistId: ID!): Request!
-    deleteRequest(playlistId: ID!): ID!,
+    approveRequest(requestId: ID!): Request!,
+    cancelRequest(requestId: ID!): Request!
+    deleteRequest(requestId: ID!): ID!,
 
     updateResourceOrder(
       objectiveId: String!,

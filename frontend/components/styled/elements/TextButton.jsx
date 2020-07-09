@@ -6,8 +6,6 @@ const buttonStyles = css`
   margin-top: 0.5rem;
   align-self: flex-end;
   height: 2.5rem;
-  min-width: 6rem;
-  max-width: 10rem;
   padding: 0 1rem;
   border-radius: 3px;
   border: 2px solid var(--blueMedium);

@@ -24,7 +24,7 @@ const requestContainer = css`
 
 const oneWide = css`
   height: 30px;
-  width: 210px;
+  width: 170px;
   margin: 0;
   @media (max-width: 750px) {
     width: 150px;
@@ -36,7 +36,7 @@ const twoWide = css`
   align-items: center;
   button {
     height: 30px;
-    width: 100px;
+    width: 80px;
     margin: 0;
   }
   button:last-of-type {
@@ -48,38 +48,38 @@ const twoWide = css`
 `;
 
 const APPROVE_QUIZ_REQUEST = gql`
-  mutation APPROVE_QUIZ_REQUEST($playlistId: ID!) {
-    approveRequest(playlistId: $playlistId) {
+  mutation APPROVE_QUIZ_REQUEST($requestId: ID!) {
+    approveRequest(requestId: $requestId) {
       _id
     }
   }
 `;
 
 const CANCEL_APPROVE_QUIZ_REQUEST = gql`
-  mutation CANCEL_APPROVE_QUIZ_REQUEST($playlistId: ID!) {
-    cancelRequest(playlistId: $playlistId) {
+  mutation CANCEL_APPROVE_QUIZ_REQUEST($requestId: ID!) {
+    cancelRequest(requestId: $requestId) {
       _id
     }
   }
 `;
 
 const DENY_QUIZ_REQUEST = gql`
-  mutation DENY_QUIZ_REQUEST($playlistId: ID!) {
-    deleteRequest(playlistId: $playlistId)
+  mutation DENY_QUIZ_REQUEST($requestId: ID!) {
+    deleteRequest(requestId: $requestId)
   }
 `;
 
-const QuizRequest = ({ id, name, playlist, approved, approvalAccepted }) => {
+const QuizRequest = ({ requestId, name, playlistName, approved, approvalAccepted }) => {
   const [approve, { data: approveData }] = useMutation(APPROVE_QUIZ_REQUEST, {
-    variables: { playlistId: id },
+    variables: { requestId: requestId },
     refetchQueries: [{ query: GET_STUDENT_QUIZ_REQUESTS }],
   })
   const [deny, { data: denyData }] = useMutation(DENY_QUIZ_REQUEST, {
-    variables: { playlistId: id },
+    variables: { requestId: requestId },
     refetchQueries: [{ query: GET_STUDENT_QUIZ_REQUESTS }],
   })
   const [cancel, { data: cancelData }] = useMutation(CANCEL_APPROVE_QUIZ_REQUEST, {
-    variables: { playlistId: id },
+    variables: { requestId: requestId },
     refetchQueries: [{ query: GET_STUDENT_QUIZ_REQUESTS }],
   })
 
@@ -87,12 +87,12 @@ const QuizRequest = ({ id, name, playlist, approved, approvalAccepted }) => {
     <div css={requestContainer}>
       <div>
         <span>{name}</span>
-        <span css={css`margin-left: 1rem;color: var(--blueMedium);`}><small>{playlist}</small></span>
+        <span css={css`margin-left: 1rem;color: var(--blueMedium);`}><small>{playlistName}</small></span>
         <span>{approved}</span>
       </div>
       <div>
         {approved ?
-          <TextButton onClick={cancel} css={[oneWide, css`:hover{background-color: var(--red);border-color: var(--red);}`]}>Cancel Quiz Approval</TextButton>
+          <CancelButton approvalAccepted={approvalAccepted} cancel={cancel} />
           :
           <div css={twoWide}>
             <TextButton onClick={approve}
@@ -104,9 +104,16 @@ const QuizRequest = ({ id, name, playlist, approved, approvalAccepted }) => {
           </div>
         }
       </div>
-    </div>
+    </div >
   );
 };
+
+const CancelButton = ({ approvalAccepted, cancel }) => {
+  if (approvalAccepted) {
+    return <TextButton onClick={cancel} css={[oneWide, css`:hover{background-color: var(--red);border-color: var(--red);}`]}>Stop Quiz</TextButton>
+  }
+  return <TextButton onClick={cancel} css={[oneWide, css`:hover{background-color: var(--red);border-color: var(--red);}`]}>Cancel Quiz Approval</TextButton>
+}
 
 QuizRequest.propTypes = {
   id: PropTypes.string.isRequired,

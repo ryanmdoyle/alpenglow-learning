@@ -23,14 +23,18 @@ const GET_PLAYLIST_REQUEST = gql`
 `;
 
 const CREATE_REQUEST = gql`
-  mutation CREATE_REQUEST(
-    $playlistId: ID!,
-  ) {
-    createRequest(
-      playlistId: $playlistId,
-    ) {
+  mutation CREATE_REQUEST($playlistId: ID!,) {
+    createRequest(playlistId: $playlistId,) {
       approved
       approvalAccepted
+    }
+  }
+`;
+
+const CANCEL_REQUEST = gql`
+  mutation CANCEL_REQUEST($playlistId: ID!,) {
+    deleteRequest(playlistId: $playlistId,) {
+      _id
     }
   }
 `;
@@ -46,6 +50,10 @@ const PlaylistRequestButton = ({ playlistId }) => {
   const requestId = queryData?.getPlaylistRequest?._id;
 
   const [createRequest, { data }] = useMutation(CREATE_REQUEST, {
+    refetchQueries: [{ query: GET_PLAYLIST_REQUEST, variables: { playlistId: playlistId } }],
+  });
+
+  const [cancelRequest, { data: cancelData }] = useMutation(CANCEL_REQUEST, {
     refetchQueries: [{ query: GET_PLAYLIST_REQUEST, variables: { playlistId: playlistId } }],
   });
 

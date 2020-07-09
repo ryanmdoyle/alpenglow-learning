@@ -147,29 +147,6 @@ const mutations = {
     return savedResource;
   },
 
-  async approveRequest(parent, args, context, info) {
-    const request = await Request.findOne({ _id: args.playlistId });
-    request.approved = true;
-    return await request.save();
-    // return request;
-  },
-
-  async cancelRequest(parent, args, context, info) {
-    const request = await Request.findOne({ _id: args.playlistId });
-    request.approved = false;
-    return await request.save();
-    // return request;
-  },
-
-  async deleteRequest(parent, args, context, info) {
-    const request = await Request.deleteOne({ _id: args.playlistId });
-    if (request.deletedCount) {
-      return args.playlistId
-    } else {
-      return new ApolloError('Error deleting the current quiz request.');
-    }
-  },
-
   async updateResourceOrder(parent, args, context, info) {
     const { objectiveId, source, destination } = args;
     const objective = await Objective.findById(objectiveId);
@@ -309,6 +286,29 @@ const mutations = {
       await playlist.remove()
       return playlist
     } else { return null }
+  },
+
+  async approveRequest(parent, args, context, info) {
+    const request = await Request.findById(args.requestId);
+    request.approved = true;
+    return await request.save();
+    // return request;
+  },
+
+  async cancelRequest(parent, args, context, info) {
+    const request = await Request.findById(args.requestId);
+    request.approved = false;
+    return await request.save();
+    // return request;
+  },
+
+  async deleteRequest(parent, args, context, info) {
+    const request = await Request.deleteOne({ _id: args.requestId });
+    if (request.deletedCount) {
+      return args.playlistId
+    } else {
+      return new ApolloError('Error deleting the current quiz request.');
+    }
   },
 
   async createQuiz(parent, args, context, info) {
