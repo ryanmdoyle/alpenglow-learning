@@ -84,6 +84,10 @@ const typeDefs = gql`
       externalLink: String!,
     ): Quiz,
 
+    createScore(
+      playlistId: ID!
+    ): Score,
+
     enroll(enrollId: String!) : User!,
 
     createRequest(playlistId: ID!) : Request!,
@@ -261,10 +265,10 @@ const typeDefs = gql`
 
   type Score {
     _id: ID,
+    playlist: String,
     user: User,
     possibleScore: Int,
     score: Int,
-    playlist: String,
   }
 
   type Question {

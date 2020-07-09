@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const scoreSchema = new Schema({
+  playlist: {
+    type: mongoose.ObjectId,
+    ref: 'Playlist',
+  },
   user: {
     type: mongoose.ObjectId,
     ref: 'User',
@@ -9,10 +13,6 @@ const scoreSchema = new Schema({
   },
   possibleScore: Number,
   score: Number,
-  playlist: {
-    type: mongoose.ObjectId,
-    ref: 'Playlist',
-  },
 })
 
 scoreSchema.plugin(require('mongoose-autopopulate'));

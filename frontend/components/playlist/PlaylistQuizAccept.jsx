@@ -17,6 +17,18 @@ const ACCEPT_QUIZ_APPROVAL = gql`
   }
 `;
 
+const MARK_QUIZ_COMPLETE = gql`
+  mutation MARK_QUIZ_COMPLETE(
+    $playlistId: ID!,
+    $requestId: ID!,
+  ) {
+    createScore(playlistId: $playlistId) {
+      _id
+    }
+    deleteRequest(requestId: $requestId)
+  }
+`;
+
 const PlaylistQuizAccept = ({ playlistId, requestId }) => {
   const modal = useContext(ModalContext)
   const [inProgress, toggleInProgress] = useState(false);
@@ -26,12 +38,12 @@ const PlaylistQuizAccept = ({ playlistId, requestId }) => {
   })
   const quizLink = quizData?.getQuizForPlaylist?.externalLink;
 
-  const [acceptQuizApproval, { data }] = useMutation(ACCEPT_QUIZ_APPROVAL);
+  const [acceptQuizApproval, { data: acceptData }] = useMutation(ACCEPT_QUIZ_APPROVAL);
+  const [markQuizComplete, { data: completedData }] = useMutation(MARK_QUIZ_COMPLETE);
 
   const beginQuiz = () => {
     window.open(`http://${quizLink}`, '_blank');
     toggleInProgress(true);
-    console.log(inProgress);
     acceptQuizApproval({
       variables: { requestId: requestId }
     })
@@ -39,7 +51,13 @@ const PlaylistQuizAccept = ({ playlistId, requestId }) => {
 
   const endQuiz = () => {
     toggleInProgress(false);
-    console.log(inProgress);
+    markQuizComplete({
+      variables: {
+        playlistId: playlistId,
+        requestId: requestId,
+      }
+    })
+
     modal.close();
   }
 

@@ -13,6 +13,7 @@ const Request = require('../models/Request');
 const Resource = require('../models/Resource');
 const Quiz = require('../models/Quiz');
 const Question = require('../models/Question');
+const Score = require('../models/Score');
 
 const mutations = {
   async enroll(parent, args, context, info) {
@@ -145,6 +146,17 @@ const mutations = {
     await parentObjective.resources.push(savedResource._id);
     await parentObjective.save();
     return savedResource;
+  },
+
+  async createScore(parent, args, context, info) {
+    const { currentUser } = context;
+    const score = new Score({
+      user: currentUser._id,
+      playlist: args.playlistID,
+      score: null,
+      possibleScore: null,
+    })
+    return await score.save().catch(() => { return new ApolloError('Unable to create a new score') });
   },
 
   async updateResourceOrder(parent, args, context, info) {
@@ -305,7 +317,7 @@ const mutations = {
   async deleteRequest(parent, args, context, info) {
     const request = await Request.deleteOne({ _id: args.requestId });
     if (request.deletedCount) {
-      return args.playlistId
+      return 1
     } else {
       return new ApolloError('Error deleting the current quiz request.');
     }
