@@ -77,6 +77,7 @@ const DELETE_RESOURCE = gql`
 
 const PlaylistResourceListItem = ({ resource, index, playlistId }) => {
   const { pathname } = useRouter();
+  const studentView = pathname.startsWith('/student');
   const alert = useContext(AlertContext);
   const modal = useContext(ModalContext);
 
@@ -128,7 +129,7 @@ const PlaylistResourceListItem = ({ resource, index, playlistId }) => {
   }
 
   return (
-    <Draggable draggableId={resource._id} index={index}>
+    <Draggable draggableId={resource._id} index={index} isDragDisabled={studentView}>
       {provided => (
         <div
           ref={provided.innerRef}
@@ -150,10 +151,12 @@ const PlaylistResourceListItem = ({ resource, index, playlistId }) => {
                 </div>
               </div>
             </a>
-            <div css={controls}>
-              <i className="material-icons edit" onClick={() => { editResource(resource._id) }}>create</i>
-              <i className="material-icons delete" onClick={() => { removeResource(resource._id) }}>delete</i>
-            </div>
+            {!studentView && (
+              <div css={controls}>
+                <i className="material-icons edit" onClick={() => { editResource(resource._id) }}>create</i>
+                <i className="material-icons delete" onClick={() => { removeResource(resource._id) }}>delete</i>
+              </div>
+            )}
           </li>
         </div>
       )

@@ -35,12 +35,14 @@ const styledBox = css`
 `;
 
 const CoursePlaylistBox = ({ name, playlistId, index }) => {
-  const router = useRouter();
-  const pathname = router.pathname.startsWith('/teacher') ? '/teacher/manage' : '/student';
+  const { pathname } = useRouter();
+  const path = pathname.startsWith('/teacher') ? '/teacher/manage' : '/student';
+  const studentView = pathname.startsWith('/student');
   return (
     <Draggable
       draggableId={playlistId}
       index={index}
+      isDragDisabled={studentView}
     >
       {provided => (
         <div
@@ -49,7 +51,7 @@ const CoursePlaylistBox = ({ name, playlistId, index }) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <Link href={`${pathname}/playlists/${playlistId}`}>
+          <Link href={`${path}/playlists/${playlistId}`}>
             <div>
               <span>{name}</span>
             </div>

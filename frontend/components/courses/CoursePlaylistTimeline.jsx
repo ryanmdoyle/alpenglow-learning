@@ -103,7 +103,7 @@ const CoursePlaylistTimeline = ({ type, playlists: queriedPlaylists, courseId, s
       <h5>{type}</h5>
       <div css={playlistsContainer}>
         <DragDropContext onDragEnd={handleDrag}>
-          <Droppable droppableId={type} direction='horizontal'>
+          <Droppable droppableId={type} direction='horizontal' isDropDisabled={studentView} >
             {provided => (
               <div
                 css={playlistsContainer}

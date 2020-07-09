@@ -29,6 +29,22 @@ const UPDATE_OBJECTIVE_ORDER = gql`
   }
 `;
 
+const itemStyle = css`
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  li {
+    padding: 0.4rem 0.75rem 0.25rem 0rem;
+    border-radius: var(--borderRadius);
+    transition: padding 0.3s, box-shadow 0.3s;
+    :hover {
+      box-shadow: var(--shadowMedium);
+      padding: 0.4rem 0.75rem 0.25rem 0.75rem;
+      transition: padding 0.3s, box-shadow 0.3s;
+    }
+  }
+`;
+
 const PlaylistDetailsObjectives = ({ objectives: queriedObjectives, playlistTitle, playlistId }) => {
   const alert = useContext(AlertContext);
   const modal = useContext(ModalContext);
@@ -73,27 +89,11 @@ const PlaylistDetailsObjectives = ({ objectives: queriedObjectives, playlistTitl
     })
   }
 
-  const itemStyle = css`
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  li {
-    padding: 0.4rem 0.75rem 0.25rem 0rem;
-    border-radius: var(--borderRadius);
-    transition: padding 0.3s, box-shadow 0.3s;
-    :hover {
-      box-shadow: var(--shadowMedium);
-      padding: 0.4rem 0.75rem 0.25rem 0.75rem;
-      transition: padding 0.3s, box-shadow 0.3s;
-    }
-  }
-  `;
-
   return (
     <div className='flex-item objectives'>
       <Header5Settings onClick={() => { updateObjectives(playlistId) }}>Objectives</Header5Settings>
       <DragDropContext onDragEnd={handleDrag}>
-        <Droppable droppableId={playlistId}>
+        <Droppable droppableId={playlistId} isDropDisabled={studentView} >
           {provided => (
             <div
               ref={provided.innerRef}
@@ -101,7 +101,12 @@ const PlaylistDetailsObjectives = ({ objectives: queriedObjectives, playlistTitl
             >
               <ul css={itemStyle}>
                 {objectives && objectives.map((objective, index) => (
-                  <Draggable draggableId={objective._id} index={index} key={objective._id}>
+                  <Draggable
+                    draggableId={objective._id}
+                    isDragDisabled={studentView}
+                    index={index}
+                    key={objective._id}
+                  >
                     {provided => (
                       <div
                         ref={provided.innerRef}

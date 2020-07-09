@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { css } from "@emotion/core";
 import { useQuery } from '@apollo/react-hooks';
+import { useRouter } from 'next/router';
 
 import Loading from '../../components/Loading';
 import PageTitle from '../PageTitle';
@@ -21,7 +22,10 @@ const editButton = css`
 `
 
 const Playlist = ({ playlistId }) => {
+  const { pathname } = useRouter();
+  const studentView = pathname.startsWith('/student');
   const modal = useContext(ModalContext);
+
   const { loading, error, data } = useQuery(GET_PLAYLIST, {
     variables: { playlistId },
   })
@@ -59,7 +63,7 @@ const Playlist = ({ playlistId }) => {
             />
           ))
         )}
-        <TextButton css={editButton} onClick={editPlaylist}>Edit Playlist</TextButton>
+        {!studentView && <TextButton css={editButton} onClick={editPlaylist}>Edit Playlist</TextButton>}
       </PagePadding>
     </>
   );

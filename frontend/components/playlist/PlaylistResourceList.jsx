@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { css } from '@emotion/core';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
+import { useRouter } from 'next/router';
 
 
 import PlaylistResourceListItem from './PlaylistResourceListItem';
@@ -13,8 +14,11 @@ padding: 0;
 `;
 
 const PlaylistResourceList = ({ resources, objectiveId, playlistId }) => {
+  const { pathname } = useRouter();
+  const studentView = pathname.startsWith('/student');
+
   return (
-    <Droppable droppableId={objectiveId}>
+    <Droppable droppableId={objectiveId} isDropDisabled={studentView} >
       {provided => (
         <ul
           css={list}
