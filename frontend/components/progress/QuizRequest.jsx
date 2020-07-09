@@ -92,7 +92,7 @@ const QuizRequest = ({ requestId, name, playlistName, approved, approvalAccepted
       </div>
       <div>
         {approved ?
-          <CancelButton approvalAccepted={approvalAccepted} cancel={cancel} />
+          <CancelButton approvalAccepted={approvalAccepted} cancel={cancel} deny={deny} />
           :
           <div css={twoWide}>
             <TextButton onClick={approve}
@@ -108,9 +108,9 @@ const QuizRequest = ({ requestId, name, playlistName, approved, approvalAccepted
   );
 };
 
-const CancelButton = ({ approvalAccepted, cancel }) => {
+const CancelButton = ({ approvalAccepted, cancel, deny }) => {
   if (approvalAccepted) {
-    return <TextButton onClick={cancel} css={[oneWide, css`:hover{background-color: var(--red);border-color: var(--red);}`]}>Stop Quiz</TextButton>
+    return <TextButton onClick={deny} css={[oneWide, css`:hover{background-color: var(--red);border-color: var(--red);}`]}>Stop Quiz</TextButton>
   }
   return <TextButton onClick={cancel} css={[oneWide, css`:hover{background-color: var(--red);border-color: var(--red);}`]}>Cancel Quiz Approval</TextButton>
 }
