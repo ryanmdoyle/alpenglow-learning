@@ -19,7 +19,7 @@ const queries = {
 	},
 
 	async getUser(parent, args, context, info) {
-		const userId = args.user_id ? args.user_id : context.currentUser._id;
+		const userId = args.userId ? args.userId : context.currentUser._id;
 		return await User.findOne({ _id: userId });
 	},
 
@@ -32,7 +32,7 @@ const queries = {
 	},
 
 	async getInstructingStudents(parent, args, context, info) {
-		const userId = args.user_id ? args.user_id : context.currentUser._id;
+		const userId = args.userId ? args.userId : context.currentUser._id;
 		const classes = await Class.find({ primaryInstructor: userId });
 		let students = [];
 		classes.forEach(c => {
@@ -46,28 +46,28 @@ const queries = {
 	},
 
 	async getInstructingCourse(parent, args, context, info) {
-		const userId = args.user_id ? args.user_id : context.currentUser._id;
+		const userId = args.userId ? args.userId : context.currentUser._id;
 		return await Course.findOne({ owner: userId });
 	},
 
 	async getInstructingCourses(parent, args, context, info) {
-		const userId = args.user_id ? args.user_id : context.currentUser._id;
+		const userId = args.userId ? args.userId : context.currentUser._id;
 		return await Course.find({ owner: userId });
 	},
 
 	async getEnrolledClasses(parent, args, context, info) {
-		const userId = args.user_id ? args.user_id : context.currentUser._id;
+		const userId = args.userId ? args.userId : context.currentUser._id;
 		return await Class.find({ enrolled: { $in: userId } });
 	},
 
 	async getEnrolledCourses(parent, args, context, info) {
-		const userId = args.user_id ? args.user_id : context.currentUser._id;
+		const userId = args.userId ? args.userId : context.currentUser._id;
 		const enrolledClasses = await Class.find({ enrolled: { $in: userId } }).select('_id');
 		return await Course.find({ classes: { $in: enrolledClasses } });
 	},
 
 	async getInstructingClasses(parent, args, context, info) {
-		const userId = args.user_id ? args.user_id : context.currentUser._id;
+		const userId = args.userId ? args.userId : context.currentUser._id;
 		return await Class.find({ primaryInstructor: userId });
 	},
 
