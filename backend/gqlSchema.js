@@ -14,7 +14,7 @@ const typeDefs = gql`
 
     getPlaylist(playlistId: ID): Playlist!,
     getPlaylistRequest(playlistId: ID): Request,
-    getStudentRequests: [Request],
+    getRequests: [Request],
     
     getEnrolledCourses(user_id: ID): [Course],
     getEnrolledClasses(user_id: ID): [Class],
@@ -25,6 +25,8 @@ const typeDefs = gql`
     getInstructingCourses(user_id: ID): [Course],
     getInstructingClasses(user_id: ID): [Class],
     getInstructingPlaylists(user_id: ID): [Playlist],
+
+    getScoresPending: [Score],
 
     getQuizForPlaylist(playlistId: ID!): Quiz,
   }
@@ -157,6 +159,12 @@ const typeDefs = gql`
       externalLink: String!,
     ): Quiz,
 
+    updateScore(
+      scoreId: ID!,
+      score: Int!,
+      possibleScore: Int!,
+    ): Score!,
+
     deletePlaylist(
       playlistId: String!,
     ): Playlist!,
@@ -265,7 +273,7 @@ const typeDefs = gql`
 
   type Score {
     _id: ID,
-    playlist: String,
+    playlist: Playlist,
     user: User,
     possibleScore: Int,
     score: Int,

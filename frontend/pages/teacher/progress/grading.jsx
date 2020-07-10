@@ -7,10 +7,11 @@ import PageTitle from '../../../components/PageTitle';
 import Loading from '../../../components/Loading';
 import PagePadding from '../../../components/styled/blocks/PagePadding';
 import QuizRequest from '../../../components/progress/QuizRequest';
+import ProgressScoreEntry from '../../../components/progress/ProgressScoreEntry';
 
 const GET_STUDENT_QUIZ_REQUESTS = gql`
   query GET_STUDENT_QUIZ_REQUESTS {
-    getStudentRequests {
+    getRequests {
       _id
       approved
       approvalAccepted
@@ -23,14 +24,34 @@ const GET_STUDENT_QUIZ_REQUESTS = gql`
     }
   }
 `;
+// LATER COMBINE BOTH OF THESE QUERIES FOR POLLING PURPOSES
+const GET_PENDING_SCORES = gql`
+  query GET_PENDING_SCORES {
+    getScoresPending {
+      _id
+      user {
+        name
+      }
+      playlist {
+        name
+      }
+      score
+      possibleScore
+    }
+  }
+`;
 
 const grading = () => {
   const { loading, error, data: requestData } = useQuery(GET_STUDENT_QUIZ_REQUESTS, {
     pollInterval: 3000,
   });
 
-  const pending = requestData?.getStudentRequests.filter(request => request.approvalAccepted == false)
-  const inProgress = requestData?.getStudentRequests.filter(request => request.approvalAccepted)
+  const { data: scoreData } = useQuery(GET_PENDING_SCORES, {
+    pollInterval: 3000,
+  });
+
+  const pending = requestData?.getRequests.filter(request => request.approvalAccepted == false)
+  const inProgress = requestData?.getRequests.filter(request => request.approvalAccepted)
 
   if (loading) return <Loading />
   return (
@@ -40,7 +61,7 @@ const grading = () => {
         <div css={css`display: flex;`}>
           <div css={css`width: 49%;`}>
             <h4>Pending Quiz Requests</h4>
-            {requestData?.getStudentRequests && (
+            {requestData?.getRequests && (
               pending?.map(request => (
                 <QuizRequest
                   requestId={request._id}
@@ -69,10 +90,20 @@ const grading = () => {
           </div>
         </div>
         <h4>Pending Scores</h4>
+        {scoreData && scoreData?.getScoresPending.map(score => (
+          <ProgressScoreEntry
+            scoreId={score._id}
+            studentName={score?.user?.name}
+            playlistName={score?.playlist?.name}
+            score={score.score}
+            possibleScore={score.possibleScore}
+            key={score._id}
+          />
+        ))}
       </PagePadding>
     </div>
   );
 };
 
 export default grading;
-export { GET_STUDENT_QUIZ_REQUESTS };
+export { GET_STUDENT_QUIZ_REQUESTS, GET_PENDING_SCORES };

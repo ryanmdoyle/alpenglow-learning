@@ -152,7 +152,7 @@ const mutations = {
     const { currentUser } = context;
     const score = new Score({
       user: currentUser._id,
-      playlist: args.playlistID,
+      playlist: args.playlistId,
       score: null,
       possibleScore: null,
     })
@@ -249,6 +249,14 @@ const mutations = {
       type: type,
       href: href,
     })
+  },
+
+  async updateScore(parent, args, context, info) {
+    const { scoreId, score, possibleScore } = args;
+    return await Score.updateOne({ _id: scoreId }, {
+      score: score,
+      possibleScore: possibleScore,
+    });
   },
 
   async deleteResource(parent, args, context, info) {

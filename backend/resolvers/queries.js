@@ -8,6 +8,7 @@ const Playlist = require('../models/Playlist');
 const Objective = require('../models/Objective');
 const Request = require('../models/Request');
 const Quiz = require('../models/Quiz');
+const Score = require('../models/Score');
 
 // currentUser data from JWT token available on context.currentUser
 const queries = {
@@ -80,7 +81,7 @@ const queries = {
 		return await Request.findOne({ user: context.currentUser, playlist: args.playlistId });
 	},
 
-	async getStudentRequests(parent, args, context, info) {
+	async getRequests(parent, args, context, info) {
 		const { currentUser } = context;
 		// Create array of users classes they instruct
 		let students = [];
@@ -96,6 +97,29 @@ const queries = {
 	async getQuizForPlaylist(parent, args, context, info) {
 		return await Quiz.findOne({ playlist: args.playlistId })
 	},
+
+	async getScoresPending(parent, args, context, info) {
+		const { currentUser } = context;
+		// Create array of users classes they instruct
+		let students = [];
+		await Class.find({ primaryInstructor: currentUser._id }).select('enrolled').then(classes => {
+			classes.forEach(instructingClass => {
+				instructingClass.enrolled.forEach(student => students.push(student._id));
+			})
+		});
+		const scores = await Score.find({
+			$and: [
+				{ user: { $in: students } },
+				{
+					$or: [
+						{ score: null },
+						{ possibleScore: null }
+					]
+				}
+			]
+		})
+		return scores
+	}
 
 }
 
