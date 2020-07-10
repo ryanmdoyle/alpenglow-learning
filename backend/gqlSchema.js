@@ -28,6 +28,7 @@ const typeDefs = gql`
 
     getScores(userId: ID): [Score],
     getScoresPending: [Score],
+    getScoresForPlaylist(playlistId: ID!): [Score],
 
     getQuizForPlaylist(playlistId: ID!): Quiz,
   }

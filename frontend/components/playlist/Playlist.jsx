@@ -9,7 +9,6 @@ import PlaylistDetails from './PlaylistDetails';
 import PagePadding from '../styled/PagePadding'
 import PlaylistObjective from './PlaylistObjective';
 import TextButton from '../styled/elements/TextButton';
-import AlertContext from '../context/AlertContext';
 import ModalContext from '../context/ModalContext';
 import DeletePlaylistForm from '../forms/delete/DeletePlaylistForm';
 import UpdatePlaylistForm from '../forms/update/UpdatePlaylistForm';
@@ -18,8 +17,8 @@ import { GET_PLAYLIST } from '../../gql/queries';
 const editButton = css`
   position: fixed; 
   right: 10px;
-  bottom:10px;
-`
+  bottom: 10px;
+`;
 
 const Playlist = ({ playlistId }) => {
   const { pathname } = useRouter();

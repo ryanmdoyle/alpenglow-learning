@@ -129,6 +129,10 @@ const queries = {
 		return await Score.find({ user: currentUser._id });
 	},
 
+	async getScoresForPlaylist(parent, args, context, info) {
+		return await Score.find({ playlist: args.playlistId });
+	}
+
 }
 
 module.exports = queries;
