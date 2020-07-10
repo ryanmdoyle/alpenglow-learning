@@ -119,7 +119,15 @@ const queries = {
 			]
 		})
 		return scores
-	}
+	},
+
+	async getScores(parent, args, context, info) {
+		const { currentUser } = context;
+		if (args.userId) {
+			return await Score.find({ user: args.userId })
+		}
+		return await Score.find({ user: currentUser._id });
+	},
 
 }
 

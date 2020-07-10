@@ -30,7 +30,8 @@ const global = css`
     --blueDark50: #1F2A4080;
     --green: #57C295;
     --red: #E34451;
-    --yellow: #F0D655;
+    /* --yellow: #F0D655; */
+    --yellow: #F5C912;
     --headerFontFamily: 'Montserrat', sans-serif;
     --borderRadius: 5px;
     --navWidth: 240px;

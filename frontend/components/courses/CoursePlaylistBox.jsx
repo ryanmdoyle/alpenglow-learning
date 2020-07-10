@@ -5,6 +5,8 @@ import { css } from '@emotion/core';
 import { useRouter } from 'next/router';
 import { Draggable } from 'react-beautiful-dnd';
 
+import playlistBoxAssessed from '../../styles/playlistBoxAssessed';
+
 const styledBox = css`
   margin-right: 3px;
   padding: 2px 8px;
@@ -34,10 +36,27 @@ const styledBox = css`
   }
 `;
 
-const CoursePlaylistBox = ({ name, playlistId, index }) => {
+const spreadNameAndScore = css`
+  display: flex;
+  justify-content: space-between;
+  .percent {
+    color: rgba(0,0,0,0);
+    text-shadow: none;
+    transition: color 0.5s;
+  }
+  .percent:hover { 
+    color: white;
+    transition: color 0.5s;
+  }
+`;
+
+const CoursePlaylistBox = ({ name, playlistId, index, best }) => {
   const { pathname } = useRouter();
   const path = pathname.startsWith('/teacher') ? '/teacher/manage' : '/student';
   const studentView = pathname.startsWith('/student');
+
+  const assessedStyle = studentView ? playlistBoxAssessed(best) : null;
+
   return (
     <Draggable
       draggableId={playlistId}
@@ -46,14 +65,15 @@ const CoursePlaylistBox = ({ name, playlistId, index }) => {
     >
       {provided => (
         <div
-          css={styledBox}
+          css={[styledBox, assessedStyle]}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
           <Link href={`${path}/playlists/${playlistId}`}>
-            <div>
+            <div css={spreadNameAndScore}>
               <span>{name}</span>
+              {best && <span className='percent'>{best}%</span>}
             </div>
           </Link>
         </div>

@@ -112,7 +112,7 @@ const CoursePlaylistTimeline = ({ type, playlists: queriedPlaylists, courseId, s
               >
                 {/* Render the playlists in a row */}
                 {playlists.map((playlist, index) => {
-                  return <CoursePlaylistBox name={playlist.name} playlistId={playlist._id} key={playlist._id} index={index} />
+                  return <CoursePlaylistBox name={playlist.name} playlistId={playlist._id} best={playlist.best} key={playlist._id} index={index} />
                 })}
                 {provided.placeholder}
               </div>
