@@ -39,10 +39,14 @@ const teacherClasses = () => {
                 </TextTableHeader>
                 {course.classes.map(c => {
                   return (
-                      <TextTableRow key={c._id} linkHref='/teacher/manage/classes/[classId]' linkAs={`/teacher/manage/classes/${c._id}`}>
-                        <span className='first-column'>{c.name}</span>
+                      <TextTableRow key={c._id}>
+                        <Link href='/teacher/manage/classes/[classId]' as={`/teacher/manage/classes/${c._id}`}>
+                          <span className='first-column'>{c.name}</span>
+                        </Link>
                         <span>{c.enrollId}</span>
-                        <span>{c.enrolled.length}</span>
+                        <Link href='/teacher/manage/classes/[classId]' as={`/teacher/manage/classes/${c._id}`}>
+                          <span>{c.enrolled.length}</span>
+                        </Link>
                     </TextTableRow>
                   )
                 })}

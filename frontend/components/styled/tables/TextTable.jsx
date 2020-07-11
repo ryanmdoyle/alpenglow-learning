@@ -66,11 +66,9 @@ const TextTableHeader = ({ children }) => (
 const TextTableRow = ({ children, linkHref, linkAs }) => {
   if (linkAs && linkHref) {
     return (
-      <Link href={linkHref} as={linkAs}>
-        <div css={[classTable, row]}>
-          {children}
-        </div>
-      </Link>
+      <div css={[classTable, row]}>
+        {children}
+      </div>
     )
   }
   return (
