@@ -30,8 +30,7 @@ const header = css`
   padding: 0.4rem 1rem;
   font-size: 0.85rem;
   line-height: 0.5rem;
-  color: var(--blueMedium);
-  text-decoration-line: underline;
+  color: var(--pink);
 `;
 
 const tableContainer = css`

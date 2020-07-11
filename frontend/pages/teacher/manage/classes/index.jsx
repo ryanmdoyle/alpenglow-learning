@@ -33,7 +33,7 @@ const teacherClasses = () => {
             {course.classes.length !== 0 && (
               <TextTableContainer>
                 <TextTableHeader>
-                  <span>Class Name</span>
+                  <span>Class</span>
                   <span>Enroll ID</span>
                   <span>Students Enrolled</span>
                 </TextTableHeader>
