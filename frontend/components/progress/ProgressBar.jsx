@@ -3,7 +3,7 @@ import { css } from '@emotion/core';
 import PropTypes from 'prop-types';
 
 const progressContainer = css`
-  height: 12px;
+  height: 1rem;
   width: 80%;
   min-width: 100px;
   border: 1px solid var(--blueDark50);

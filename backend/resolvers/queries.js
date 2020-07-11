@@ -131,6 +131,29 @@ const queries = {
 
 	async getScoresForPlaylist(parent, args, context, info) {
 		return await Score.find({ playlist: args.playlistId });
+	},
+
+	async getInstructingScores(parent, args, context, info) {
+		const { currentUser } = context;
+		// Create array of users classes they instruct
+		let students = [];
+		await Class.find({ primaryInstructor: currentUser._id }).select('enrolled').then(classes => {
+			classes.forEach(instructingClass => {
+				instructingClass.enrolled.forEach(student => students.push(student._id));
+			})
+		});
+		const scores = await Score.find({
+			$and: [
+				{ user: { $in: students } },
+				{
+					$nor: [
+						{ score: null },
+						{ possibleScore: null }
+					]
+				}
+			]
+		})
+		return scores
 	}
 
 }

@@ -1,16 +1,22 @@
 import React from 'react';
-import { css } from '@emotion/core';
 import PropTypes from 'prop-types';
+import gql from 'graphql-tag';
+import { css } from '@emotion/core';
+import { useQuery } from '@apollo/react-hooks';
 
+import Loading from '../Loading';
 import ProgressBox_Course from './ProgressBox_Course';
 
 const tableStyles = css`
   width: 100%;
-  padding: 1rem;
+  padding: 1rem 0;
   border-collapse: collapse;
 
-  tr {
-    border-bottom: 1px solid var(--blueMedium);
+  tbody > tr {
+    :hover {
+      box-shadow: var(--shadowMedium);
+      border-radius: var(--borderRadius);
+    }
   }
 
   thead > tr > th {
@@ -22,6 +28,7 @@ const tableStyles = css`
   }
 
   thead > tr > th:first-of-type {
+    padding-left: 1rem;
     text-align: left;
   }
   
@@ -30,7 +37,7 @@ const tableStyles = css`
     font-family: var(--headerFontFamily);
     font-size: 0.9rem;
     vertical-align: center;
-    padding: 1rem 0;
+    padding: 1rem 0 1rem 1rem;
   }
   
   tbody > tr > td {
@@ -39,78 +46,141 @@ const tableStyles = css`
   }
 `;
 
-const ProgressTable_Courses = ({ courses, students }) => {
+const GET_ALL_PROGRESS = gql`
+  query GET_ALL_PROGRESS {
+    getInstructingCourses {
+      _id
+      name
+      essentialPlaylists {
+        _id
+        name
+      }
+      corePlaylists {
+        _id
+        name
+      }
+      challengePlaylists {
+        _id
+        name
+      }
+      classes {
+        _id
+        enrolled {
+          _id
+          name
+        }
+      }
+    }
+    getInstructingStudents {
+      _id
+      name
+    }
+    getInstructingScores {
+      _id
+      score
+      possibleScore
+      user {
+        _id
+      }
+      playlist {
+        _id
+      }
+    }
+  }
+`;
+
+const ProgressTable_Courses = () => {
+  const { loading, error, data } = useQuery(GET_ALL_PROGRESS);
+  const courses = data?.getInstructingCourses;
+  const scores = data?.getInstructingScores;
+  const students = data?.getInstructingStudents;
+
+  if (loading) return <Loading />
+
   return (
     <table css={tableStyles}>
       <thead>
         <tr>
           <th scope='col'>Student</th>
-          <th scope='col'>Course 1</th>
-          <th scope='col'>Course 2</th>
-          <th scope='col'>Course 3</th>
-          <th scope='col'>Course 4</th>
+          {courses && (
+            courses.map(course => (
+              <th scope='col' key={course._id}>{course.name}</th>
+            ))
+          )}
         </tr>
       </thead>
 
       <tbody>
-        <tr>
-          <th scope='row'>Student Name</th>
-          <td><ProgressBox_Course /></td>
-          <td><ProgressBox_Course /></td>
-          <td><ProgressBox_Course /></td>
-          <td><ProgressBox_Course /></td>
-        </tr>
-        <tr>
-          <th scope='row'>Student Name</th>
-          <td><ProgressBox_Course /></td>
-          <td><ProgressBox_Course /></td>
-          <td><ProgressBox_Course /></td>
-          <td><ProgressBox_Course /></td>
-        </tr>
-        <tr>
-          <th scope='row'>Student Name</th>
-          <td><ProgressBox_Course /></td>
-          <td><ProgressBox_Course /></td>
-          <td><ProgressBox_Course /></td>
-          <td><ProgressBox_Course /></td>
-        </tr>
-        <tr>
-          <th scope='row'>Student Name</th>
-          <td><ProgressBox_Course /></td>
-          <td><ProgressBox_Course /></td>
-          <td><ProgressBox_Course /></td>
-          <td><ProgressBox_Course /></td>
-        </tr>
-        <tr>
-          <th scope='row'>Student Name</th>
-          <td><ProgressBox_Course /></td>
-          <td><ProgressBox_Course /></td>
-          <td><ProgressBox_Course /></td>
-          <td><ProgressBox_Course /></td>
-        </tr>
-        <tr>
-          <th scope='row'>Student Name</th>
-          <td><ProgressBox_Course /></td>
-          <td><ProgressBox_Course /></td>
-          <td><ProgressBox_Course /></td>
-          <td><ProgressBox_Course /></td>
-        </tr>
-        <tr>
-          <th scope='row'>Student Name</th>
-          <td><ProgressBox_Course /></td>
-          <td><ProgressBox_Course /></td>
-          <td><ProgressBox_Course /></td>
-          <td><ProgressBox_Course /></td>
-        </tr>
-        <tr>
-          <th scope='row'>Student Name</th>
-          <td><ProgressBox_Course /></td>
-          <td><ProgressBox_Course /></td>
-          <td><ProgressBox_Course /></td>
-          <td><ProgressBox_Course /></td>
-        </tr>
-      </tbody>
+        {students && (
+          students.map(student => {
+            // filter all scores for only current student;
+            const studentScores = scores.filter(score => score.user._id === student._id);
 
+            // return row of student progress
+            return (
+              <tr key={student._id}>
+                <th scope='row'>{student.name}</th>
+                {courses.map(course => {
+                  // if student not in course, don't return a progress bar
+                  const studentsInCourse = [];
+                  course.classes.forEach(classs => {
+                    classs.enrolled.forEach(student => {
+                      if (!studentsInCourse.includes(student._id)) {
+                        studentsInCourse.push(student._id)
+                      }
+                    })
+                  })
+                  if (!studentsInCourse.includes(student._id)) return null;
+
+                  // if student is on course, calculate progress and show bar
+                  const { essentialPlaylists, corePlaylists, challengePlaylists, name, _id } = course;
+                  // Make array of playlists in current course
+                  const coursePlaylists = [...essentialPlaylists, ...corePlaylists, ...challengePlaylists];
+                  const coursePlaylistIds = coursePlaylists.map(course => course._id);
+                  // filter scores to only includes ones for current 
+                  const studentsCourseScores = studentScores.filter(score => coursePlaylistIds.includes(score.playlist._id));
+                  // make new array of playlist Id's and score percents, then sort greatest to least
+                  const studentPlaylistPercents = studentsCourseScores.map(score => {
+                    const percent = parseInt(score.score / score.possibleScore * 100);
+                    return {
+                      playlistId: score.playlist._id,
+                      percent: percent,
+                    }
+                  })
+                  studentPlaylistPercents.sort((a, b) => b.percent - a.percent);
+
+                  // START HERE, fogure out some way to remove all but highest score from above array
+                  let complete = 0;
+                  let partial = 0;
+                  let low = 0;
+                  const checkedPlaylists = [];
+
+                  studentPlaylistPercents.forEach(score => {
+                    if (!checkedPlaylists.includes(score.playlistId)) {
+                      checkedPlaylists.push(score.playlistId);
+                      if (score.percent >= 80) { complete += 1; }
+                      else if (score.percent >= 70) { partial += 1; }
+                      else if (score.percent >= 0) { low += 1; }
+                    }
+                  })
+
+                  return (
+                    <td key={course._id}>
+                      <ProgressBox_Course
+                        totalPlaylists={essentialPlaylists.length + corePlaylists.length + challengePlaylists.length}
+                        totalAttempts={checkedPlaylists.length}
+                        completeAttempts={complete}
+                        partialAttempts={partial}
+                        lowAttempts={low}
+                      />
+                    </td>
+                  )
+                })}
+              </tr>
+            )
+          })
+        )}
+      </tbody>
     </table>
   );
 };

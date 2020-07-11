@@ -10,21 +10,20 @@ const box = css`
 `;
 
 const counter = css`
-  /* font-family: var(--headerFontFamily); */
   color: var(--blueDark);
   font-size: 1rem;
 `;
 
-const ProgressBox_Course = (props) => {
+const ProgressBox_Course = ({ totalPlaylists, totalAttempts, completeAttempts, partialAttempts, lowAttempts }) => {
   return (
     <div css={box}>
-      <span css={counter}>12/34</span>
+      {/* <span css={counter}>12/34</span> */}
       <ProgressBar
-        totalPlaylists={20}
-        totalAttempts={15}
-        completeAttempts={9}
-        partialAttempts={4}
-        lowAttempts={2}
+        totalPlaylists={totalPlaylists}
+        totalAttempts={totalAttempts}
+        completeAttempts={completeAttempts}
+        partialAttempts={partialAttempts}
+        lowAttempts={lowAttempts}
       />
     </div>
   );

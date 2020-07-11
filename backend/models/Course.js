@@ -15,13 +15,6 @@ const courseSchema = new Schema({
   description: String,
   startDate: Date,
   endDate: Date,
-  playlists: [
-    {
-      type: mongoose.ObjectId,
-      ref: 'Playlist',
-      autopopulate: { maxDepth: 1 },
-    }
-  ],
   essentialPlaylists: [
     {
       type: mongoose.ObjectId,
@@ -47,7 +40,7 @@ const courseSchema = new Schema({
     {
       type: mongoose.ObjectId,
       ref: 'Class',
-      autopopulate: { maxDepth: 1 },
+      autopopulate: { maxDepth: 2 },
     }
   ],
 })
