@@ -6,7 +6,7 @@ import PageTitle from '../../components/PageTitle';
 const enroll = () => {
   return (
     <div>
-      <PageTitle>Welcome To Alpenglow</PageTitle>
+      <PageTitle>Add A New Class!</PageTitle>
       <EnrollForm />
     </div>
   );
