@@ -14,10 +14,12 @@ const scoreContainer = css`
     transition: box-shadow 0.3s;
   }
   .score {
+    width: 3rem;
     max-height: 1.7rem;
     background-color: var(--green);
     border-radius: 2px;
     padding: 0 0.5rem;
+    text-align: center;
   }
   .none {
     background-color: lightGray;
@@ -25,10 +27,12 @@ const scoreContainer = css`
 `;
 
 const scoreStyle = css`
+width: 3rem;
     max-height: 1.7rem;
     background-color: var(--green);
     border-radius: 2px;
     padding: 0 0.5rem;
+    text-align: center;
 `;
 
 const scoreColors = (score) => {
