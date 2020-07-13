@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import gql from 'graphql-tag';
+import { useRouter } from 'next/router';
 
 import FormWrapper from '../styled/blocks/FormWrapper';
 import AlertContext from '../context/AlertContext';
@@ -21,6 +22,7 @@ const EnrollForm = () => {
   const { register, handleSubmit, errors } = useForm();
   const alert = useContext(AlertContext);
   const modal = useContext(ModalContext);
+  const router = useRouter();
 
   const [enroll, { data }] = useMutation(ENROLL_MUTATION, {
     refetchQueries: [{ query: GET_ENROLLED_CLASSES }],
@@ -28,6 +30,7 @@ const EnrollForm = () => {
       if (modal.isOpen) {
         modal.close();
       }
+      router.push('/student/classes')
       alert.success(`Successfully enrolled in class!`)
     },
     onError: (data) => (alert.error(`Ooops, looks like there was a problem. ${data}`)),
@@ -50,5 +53,4 @@ const EnrollForm = () => {
     </PagePadding>
   );
 };
-
 export default EnrollForm;
