@@ -18,20 +18,13 @@ const Score = require('../models/Score');
 const mutations = {
   async enroll(parent, args, context, info) {
     const { currentUser } = context;
-
-    if (currentUser) {
-      const classToEnroll = await Class.findOne({ enrollId: args.enrollId });
-
-      // Adds User to list of enrolled students in Class
-      if (!classToEnroll.enrolled.includes(currentUser._id)) {
-        classToEnroll.enrolled.push(currentUser._id);
-        await classToEnroll.save();
-      } else {
-        return new ApolloError(`Class already has this user as an enrolled student.`);
-      }
-      return classToEnroll;
-    }
-    return new ApolloError('Unable to enroll in course, must log in.')
+    if (!currentUser) return new ApolloError('Unable to enroll in course, must log in.')
+    const classEnrolled = await Class.findOne({ enrollId: args.enrollId }).select('enrolled');
+    const enrolledIds = classEnrolled.enrolled.map(enrolled => enrolled._id);
+    if (enrolledIds.includes(currentUser._id)) return new ApolloError('Already enrolled in this class!')
+    classEnrolled.enrolled.push(currentUser._id);
+    await classEnrolled.save();
+    return classEnrolled;
   },
 
   async createCourse(parent, args, context, info) {
