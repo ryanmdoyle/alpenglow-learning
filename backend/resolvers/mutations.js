@@ -20,27 +20,18 @@ const mutations = {
     const { currentUser } = context;
 
     if (currentUser) {
-      const userInDb = await User.findById(currentUser._id);
       const classToEnroll = await Class.findOne({ enrollId: args.enrollId });
 
-      // Add class to a Users enrolledClasses
-      if (!userInDb.enrolledClasses.includes(classToEnroll._id)) {
-        userInDb.enrolledClasses.push(classToEnroll._id);
-        await userInDb.save();
-      } else {
-        return new ApolloError(`User is already enrolled in this class.`);
-      }
-
       // Adds User to list of enrolled students in Class
-      if (!classToEnroll.enrolled.includes(userInDb._id)) {
-        classToEnroll.enrolled.push(userInDb._id);
+      if (!classToEnroll.enrolled.includes(currentUser._id)) {
+        classToEnroll.enrolled.push(currentUser._id);
         await classToEnroll.save();
       } else {
         return new ApolloError(`Class already has this user as an enrolled student.`);
       }
-      return userInDb;
+      return classToEnroll;
     }
-    return 'Not logged in!'
+    return new ApolloError('Unable to enroll in course, must log in.')
   },
 
   async createCourse(parent, args, context, info) {

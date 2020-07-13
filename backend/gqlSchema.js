@@ -93,7 +93,7 @@ const typeDefs = gql`
       playlistId: ID!
     ): Score,
 
-    enroll(enrollId: String!) : User!,
+    enroll(enrollId: String!) : Class!,
 
     createRequest(playlistId: ID!) : Request!,
     approveRequest(requestId: ID!): Request!,
