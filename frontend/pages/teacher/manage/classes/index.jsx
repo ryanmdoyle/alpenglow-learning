@@ -15,7 +15,9 @@ import { GET_INSTRUCTING_COURSES } from '../../../../gql/queries';
 import { TextTableContainer, TextTableHeader, TextTableRow} from '../../../../components/styled/tables/TextTable';
 
 const teacherClasses = () => {
-  const { loading, error, data } = useQuery(GET_INSTRUCTING_COURSES);
+  const { loading, error, data } = useQuery(GET_INSTRUCTING_COURSES, {
+    pollInterval: 20000,
+  });
   const modal = useContext(ModalContext);
 
   if (error) return null;
