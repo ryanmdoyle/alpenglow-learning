@@ -30,9 +30,9 @@ const NavStudentDashboard = props => {
               </div>
             )}
             <NavItem href='/student/grades'>Grades</NavItem>
-            <NavItem href='/student/enroll'>Enroll in New Class</NavItem>
           </>
         )}
+        <NavItem href='/student/enroll'>Enroll in New Class</NavItem>
       </ul>
     </NavSectionPadding>
   );
