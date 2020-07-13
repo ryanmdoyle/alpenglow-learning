@@ -61,6 +61,9 @@ const grading = () => {
         <div css={css`display: flex;`}>
           <div css={css`width: 49%;`}>
             <h4>Pending Quiz Requests</h4>
+            {(requestData?.getRequests && pending.length == 0) && (
+              <em>No current quiz requests.</em>
+            )}
             {requestData?.getRequests && (
               pending?.map(request => (
                 <QuizRequest
@@ -77,6 +80,9 @@ const grading = () => {
           </div>
           <div css={css`width: 49%; margin-left: 2%;`}>
             <h4>In Progress</h4>
+            {(requestData?.getRequests && inProgress.length == 0) && (
+              <em>No quizzes are in progress.</em>
+            )}
             {inProgress?.map(request => (
               <QuizRequest
                 requestId={request._id}
@@ -90,6 +96,9 @@ const grading = () => {
           </div>
         </div>
         <h4>Pending Scores</h4>
+        {(scoreData?.getScoresPending.length == 0) && (
+          <em>All quizzes have been scored.</em>
+        )}
         {scoreData && scoreData?.getScoresPending.map(score => (
           <ProgressScoreEntry
             scoreId={score._id}
