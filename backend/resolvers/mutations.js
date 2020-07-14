@@ -29,9 +29,10 @@ const mutations = {
 
   async removeEnrollment(parent, args, context, info) {
     const aClass = await Class.findById(args.classId);
-    const studentToRemove = aClass.enrolled.indexOf(args.studentId);
-    console.log(studentToRemove);
-    return 'hi';
+    const studentIds = aClass.enrolled.map(student => student._id);
+    const studentToRemove = studentIds.indexOf(args.studentId);
+    aClass.enrolled.splice(studentToRemove, 1);
+    return await aClass.save();
   },
 
   async createCourse(parent, args, context, info) {

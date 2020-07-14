@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import gql from 'graphql-tag';
 import { css } from '@emotion/core';
 import { useQuery, useMutation } from '@apollo/react-hooks'
@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import PageTitle from '../../../../components/PageTitle';
 import Loading from '../../../../components/Loading';
 import PagePadding from '../../../../components/styled/blocks/PagePadding';
+import AlertContext from '../../../../components/context/AlertContext';
 import { ListContainer, ListRow } from '../../../../components/styled/blocks/List';
 
 const trash = css`
@@ -47,6 +48,7 @@ const REMOVE_STUDENT_FROM_CLASS = gql`
 const manageClass = () => {
   const router = useRouter();
   const { classId } = router.query;
+  const alert = useContext(AlertContext);
 
   const { loading, error, data } = useQuery(GET_CLASS_TO_MANAGE, {
     variables: {
@@ -55,9 +57,9 @@ const manageClass = () => {
   })
 
   const [unenroll, { data: unenrollData }] = useMutation(REMOVE_STUDENT_FROM_CLASS, {
-    refetchQueries: [{ query: GET_CLASS_TO_MANAGE }],
+    refetchQueries: [{ query: GET_CLASS_TO_MANAGE, variables: {classId: classId} }],
     onCompleted: (data) => {
-      // alert.success(`Successfully updated course.`)
+      alert.success(`Successfully updated course.`)
     },
   });
 
