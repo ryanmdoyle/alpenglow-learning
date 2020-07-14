@@ -146,6 +146,12 @@ const typeDefs = gql`
       endDate: String,
     ): Course!,
 
+    updateClass(
+      classId: ID!,
+      name: String,
+      courseId: ID!,
+    ): Class!,
+
     updatePlaylist(
       playlistId: ID!,
       name: String!,

@@ -96,7 +96,7 @@ const UpdateCourseForm = ({ courseId }) => {
   const { name, subject, grade, section, description, startDate, endDate } = queryData?.getCourse;
   return (
     <PagePadding>
-      <h4>Update Playlist Description</h4>
+      <h4>Update Course Description</h4>
       <FormWrapper>
         <form onSubmit={handleSubmit(onSubmit)}>
 

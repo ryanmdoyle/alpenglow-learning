@@ -347,5 +347,31 @@ const mutations = {
       approvalAccepted: true,
     });
   },
+
+  async updateClass(parent, args, context, info) {
+    const { currentUser } = context;
+    const aClass = await Class.findById(args.classId);
+    // return error if user isn't owner of course
+    if (currentUser._id != aClass.primaryInstructor._id || aClass.secondaryInstructors.map(i => i._id).includes(currentUser._id)) {
+      return new ApolloError('Must be instructor in order to update')
+    }
+    // update course if class is moved.
+    if (aClass.course != args.courseId) {
+      //remove class from old course
+      const oldCourse = await Course.findById(aClass.course);
+      const oldCourseClasses = oldCourse.classes.map(c => c._id);
+      const classToRemove = oldCourseClasses.indexOf(aClass._id);
+      oldCourse.classes.splice(classToRemove, 1);
+      oldCourse.save();
+      // add class to new course
+      const newCourse = await Course.findById(args.courseId);
+      newCourse.classes.push(args.classId);
+      newCourse.save();
+    }
+    //update actual class
+    aClass.course = args.courseId;
+    aClass.name = args.name;
+    return await aClass.save();
+  },
 }
 module.exports = mutations;
