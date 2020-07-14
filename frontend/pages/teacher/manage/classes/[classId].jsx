@@ -12,6 +12,7 @@ import ModalContext from '../../../../components/context/ModalContext';
 import TextButton from '../../../../components/styled/elements/TextButton';
 import { ListContainer, ListRow } from '../../../../components/styled/blocks/List';
 import UpdateClassForm from '../../../../components/forms/update/UpdateClassForm';
+import DeleteClassForm from '../../../../components/forms/delete/DeleteClassForm';
 
 const trash = css`
   :hover {
@@ -30,6 +31,11 @@ const GET_CLASS_TO_MANAGE = gql`
     getInstructingClass(classId: $classId) {
       _id
       name
+      enrollId
+      primaryInstructor {
+        name
+        email
+      }
       enrolled {
         _id
         name
@@ -67,7 +73,7 @@ const manageClass = () => {
   })
 
   const [unenroll, { data: unenrollData }] = useMutation(REMOVE_STUDENT_FROM_CLASS, {
-    refetchQueries: [{ query: GET_CLASS_TO_MANAGE, variables: {classId: classId} }],
+    refetchQueries: [{ query: GET_CLASS_TO_MANAGE, variables: { classId: classId } }],
     onCompleted: (data) => {
       alert.success(`Successfully updated course.`)
     },
@@ -83,18 +89,28 @@ const manageClass = () => {
   }
 
   const toggleEdit = () => {
-    modal.setChildComponent(<UpdateClassForm classId={classId} courseId={course} name={name}/>);
+    modal.setChildComponent(
+      <>
+        <UpdateClassForm classId={classId} courseId={course} name={name} />
+        <DeleteClassForm classId={classId} name={name} />
+      </>
+    );
     modal.open();
   }
 
   if (loading) return <Loading />
-  const { course, enrolled, name } = data?.getInstructingClass;
+  const { course, enrolled, name, primaryInstructor, enrollId } = data?.getInstructingClass;
 
   return (
     <>
       <PageTitle>{`Manage ${name}`}</PageTitle>
       <PagePadding>
-        <h4>Students Enrolled in {name}</h4>
+        <h4>Class Info</h4>
+        <strong>Enroll ID: </strong><span>{enrollId}</span>
+        <br></br>
+        <strong>Primary Instructor: </strong><span>{`${primaryInstructor.name} (${primaryInstructor.email})`}</span>
+        {/* <strong>Secondary Instructors: </strong><span>{`${primaryInstructor.name} (${primaryInstructor.email})`}</span> */}
+        <h4>Students in {name}</h4>
         <ListContainer>
           {enrolled.map(student => {
             const enrolled = '5';
@@ -106,6 +122,9 @@ const manageClass = () => {
               </ListRow>
             )
           })}
+          {enrolled.length == 0 && (
+            <em>No students are currently enrolled in this class. To add students, have them enter the enroll Id.</em>
+          )}
         </ListContainer>
         <TextButton css={editButton} onClick={toggleEdit}>Edit Class</TextButton>
       </PagePadding>
