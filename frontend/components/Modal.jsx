@@ -7,13 +7,15 @@ import CloseButton from './styled/elements/CloseButton';
 const modalContainer = css`
   position: fixed;
   top: 0;
-  left: var(--navWidth);
-  width: calc(100% - var(--navWidth));
+  left: 0;
+  width: 100%;
+  padding-left: var(--navWidth);
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: var(--blueDark50);
+  z-index: 101;
 `;
 
 const modal = css`
@@ -40,9 +42,15 @@ const modal = css`
 const Modal = () => {
   const modalCtx = useContext(ModalContext);
 
+  const onClick = () => {
+    if (event.target.className.endsWith('modalContainer')) {
+      modalCtx.close();
+    }
+  }
+
   if (modalCtx.isOpen) { //modal context IS open
     return (
-      <div css={modalContainer}>
+      <div css={modalContainer} onClick={onClick}>
         <div css={modal}>
           <div className='close'>
             <CloseButton onClick={() => { modalCtx.close() }} />
