@@ -373,5 +373,17 @@ const mutations = {
     aClass.name = args.name;
     return await aClass.save();
   },
+
+  async deleteClass(parent, args, context, info) {
+    const { currentUser } = context;
+    const classToDelete = await Class.findById(args.classId);
+    if (classToDelete.primaryInstructor._id != currentUser._id) return new ApolloError('Cannot delete class unless you are the primary instructor.')
+    const aClass = await Class.deleteOne({ _id: args.classId });
+    if (aClass.deletedCount) {
+      return 1
+    } else {
+      return new ApolloError('Error deleting the class.');
+    }
+  },
 }
 module.exports = mutations;

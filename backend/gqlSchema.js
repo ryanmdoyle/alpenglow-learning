@@ -195,6 +195,10 @@ const typeDefs = gql`
       courseId: ID!,
     ): Course!,
 
+    deleteClass(
+      classId: ID!,
+    ): Class!,
+
     acceptQuizApproval(requestId: ID!): Request!,
   }
 
