@@ -37,7 +37,7 @@ const teacherClasses = () => {
           <div key={course._id}>
             <h4>{course.name}</h4>
             {course.classes.length === 0 && (
-              <p>You currently don't have any classes enrolled in Math 6. Click below to add your first class!</p>
+              <p>You currently don't have any classes enrolled in {course.name}. Click below to add your first class!</p>
             )}
             {course.classes.length !== 0 && (
               <TextTableContainer>
