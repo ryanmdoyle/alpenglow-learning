@@ -19,13 +19,17 @@ const HomePage = ({ }) => {
   const user = useContext(UserContext);
   const [signupType, setSignupType] = useState(null);
   const router = useRouter();
+  // a valid user should have either a teacher role or student (by default)
   if (hasPermission(user, [Role.Teacher, Role.Admin, Role.SuperAdmin])) {
     router.push('/teacher')
   }
   if (hasPermission(user, [Role.Student])) {
     router.push('/student')
   }
-  return (
+  // if the user is undefined because it has not returned a valid user or returned null, show loading
+  if (user != null && !user) return <Loading />
+  // user context returns null if no user is logged in, in this case, render the welcome.
+  if (user === null) return (
     <div>
       <h1>Welcome!</h1>
       <h3>Get started as a{signupType ? ` ${signupType.toLowerCase()}:` : '...'}</h3>
