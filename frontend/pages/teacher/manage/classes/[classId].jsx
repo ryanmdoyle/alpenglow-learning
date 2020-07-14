@@ -13,6 +13,7 @@ import TextButton from '../../../../components/styled/elements/TextButton';
 import { ListContainer, ListRow } from '../../../../components/styled/blocks/List';
 import UpdateClassForm from '../../../../components/forms/update/UpdateClassForm';
 import DeleteClassForm from '../../../../components/forms/delete/DeleteClassForm';
+import TrashCanButton from '../../../../components/styled/elements/TrashCanButton';
 
 const trash = css`
   :hover {
@@ -113,12 +114,11 @@ const manageClass = () => {
         <h4>Students in {name}</h4>
         <ListContainer>
           {enrolled.map(student => {
-            const enrolled = '5';
             return (
               <ListRow key={student._id}>
                 <span>{student.name}</span>
                 <span>{student.email}</span>
-                <i css={trash} className="material-icons delete" onClick={() => { handleUnenroll(student._id) }}>delete</i>
+                <TrashCanButton onClick={() => { handleUnenroll(student._id) }} />
               </ListRow>
             )
           })}

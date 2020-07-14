@@ -198,6 +198,10 @@ const typeDefs = gql`
     deleteClass(
       classId: ID!,
     ): Class!,
+    # deleteStudent removes a student from a teacher/all enrolled classses.  If does NOT delete the USER
+    deleteStudent(
+      studentId: ID!,
+    ): User!,
 
     acceptQuizApproval(requestId: ID!): Request!,
   }

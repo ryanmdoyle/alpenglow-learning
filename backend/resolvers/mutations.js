@@ -385,5 +385,27 @@ const mutations = {
       return new ApolloError('Error deleting the class.');
     }
   },
+
+  async deleteStudent(parent, args, context, info) {
+    const { currentUser } = context;
+
+    const classesToRemoveStudent = await Class.find({
+      $or: [
+        { primaryInstructor: currentUser._id }, // user is primary
+        { secondaryInstructors: { $in: currentUser._id } } // or user is in the secondary
+      ]
+    })
+    classesToRemoveStudent.forEach(async enrolledClass => {
+      const classToUnenroll = await Class.findById(enrolledClass._id);
+      const arrayOfEnrolled = classToUnenroll.enrolled.map(student => student._id);
+      const studentInEnrolledArray = arrayOfEnrolled.indexOf(args.studentId);
+      if (studentInEnrolledArray != -1) {
+        // if you don't check for -1 (no in array), splice will delete starting from end
+        classToUnenroll.enrolled.splice(studentInEnrolledArray, 1);
+      }
+      await classToUnenroll.save()
+    })
+    return args.studentId;
+  },
 }
 module.exports = mutations;
