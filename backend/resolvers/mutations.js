@@ -27,6 +27,13 @@ const mutations = {
     return classEnrolled;
   },
 
+  async removeEnrollment(parent, args, context, info) {
+    const aClass = await Class.findById(args.classId);
+    const studentToRemove = aClass.enrolled.indexOf(args.studentId);
+    console.log(studentToRemove);
+    return 'hi';
+  },
+
   async createCourse(parent, args, context, info) {
     const { currentUser } = context;
     if (!currentUser.roles.includes('STUDENT')) {

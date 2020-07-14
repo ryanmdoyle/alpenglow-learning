@@ -27,6 +27,13 @@ const queries = {
 		return await User.find();
 	},
 
+	async getInstructingClass(parent, args, context, info) {
+		const { currentUser } = context;
+		const aClass = await Class.findById(args.classId);
+		if (aClass.primaryInstructor._id != currentUser._id) return ApolloError('Must be owner of class to view.')
+		return aClass;
+	},
+
 	async getCourse(parent, args, context, info) {
 		return await Course.findById(args.courseId);
 	},

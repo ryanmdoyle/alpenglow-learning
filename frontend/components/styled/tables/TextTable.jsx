@@ -11,10 +11,14 @@ const classTable = css`
     flex: 0 1 20%;
     text-align: right;
     padding: 0;
+    padding-right: 0.75rem;
   }
   span:first-of-type {
     flex: 1 1 50%;
     text-align: left;
+  }
+  span:last-of-type {
+    padding-right: 0rem;
   }
 `;
 
@@ -63,16 +67,16 @@ const TextTableHeader = ({ children }) => (
   </div>
 )
 
-const TextTableRow = ({ children, linkHref, linkAs }) => {
+const TextTableRow = ({ children, linkHref, linkAs, onClick }) => {
   if (linkAs && linkHref) {
     return (
-      <div css={[classTable, row]}>
+      <div css={[classTable, row]} onClick={onClick}>
         {children}
       </div>
     )
   }
   return (
-    <div css={[classTable, row]}>
+    <div css={[classTable, row]} onClick={onClick}>
       {children}
     </div>
   )

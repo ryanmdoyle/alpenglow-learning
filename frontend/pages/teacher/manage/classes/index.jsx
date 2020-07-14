@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
 import { css } from '@emotion/core';
 import { useQuery } from '@apollo/react-hooks'
-import Link from 'next/link';
-import Router from 'next/router';
+import {useRouter} from 'next/router';
 
 import PageTitle from '../../../../components/PageTitle';
 import Loading from '../../../../components/Loading';
@@ -19,6 +18,14 @@ const teacherClasses = () => {
     pollInterval: 20000,
   });
   const modal = useContext(ModalContext);
+  const router = useRouter();
+
+  const handleLink = (classId) => {
+    console.log(event.target.className)
+    if (event.target.className != 'enrollId') {
+      router.push(`/teacher/manage/classes/${classId}`)
+    }
+  }
 
   if (error) return null;
   if (loading) return <Loading />
@@ -41,14 +48,10 @@ const teacherClasses = () => {
                 </TextTableHeader>
                 {course.classes.map(c => {
                   return (
-                      <TextTableRow key={c._id}>
-                        <Link href='/teacher/manage/classes/[classId]' as={`/teacher/manage/classes/${c._id}`}>
-                          <span className='first-column'>{c.name}</span>
-                        </Link>
-                        <span>{c.enrollId}</span>
-                        <Link href='/teacher/manage/classes/[classId]' as={`/teacher/manage/classes/${c._id}`}>
-                          <span>{c.enrolled.length}</span>
-                        </Link>
+                      <TextTableRow key={c._id} onClick={() => {handleLink(c._id)}}>
+                        <span className='first-column'>{c.name}</span>
+                        <span className='enrollId'>{c.enrollId}</span>
+                        <span>{c.enrolled.length}</span>
                     </TextTableRow>
                   )
                 })}

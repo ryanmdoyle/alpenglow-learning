@@ -23,6 +23,7 @@ const typeDefs = gql`
     getInstructingStudents: [User],
     getInstructingCourse(userId: ID!): Course,
     getInstructingCourses(userId: ID): [Course],
+    getInstructingClass(classId: ID!): Class,
     getInstructingClasses(userId: ID): [Class],
     getInstructingPlaylists(userId: ID): [Playlist],
     getInstructingScores(userId: ID): [Score],
@@ -94,6 +95,10 @@ const typeDefs = gql`
     ): Score,
 
     enroll(enrollId: String!) : Class!,
+    removeEnrollment(
+      studentId: ID!,
+      classId: ID!,
+    ): Class,
 
     createRequest(playlistId: ID!) : Request!,
     approveRequest(requestId: ID!): Request!,
