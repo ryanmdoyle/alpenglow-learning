@@ -58,7 +58,7 @@ const studentList = () => {
               <ListRow key={student._id}>
                 <span>{student.name}</span>
                 <span>{student.email}</span>
-                <span>{enrolled > 1 ? `${enrolled} classes` : `${enrolled} class`}</span>
+                <span>{enrolled > 1 ? `${enrolled} classes` : (enrolled == 0 ? 'not enrolled' : `${enrolled} class`)}</span>
                 <TrashCanButton onClick={() => { trashClick(student._id, student.name) }} />
               </ListRow>
             )
