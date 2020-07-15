@@ -12,25 +12,18 @@ import AlertContext from '../../../../components/context/AlertContext';
 import ModalContext from '../../../../components/context/ModalContext';
 import DeleteStudentForm from '../../../../components/forms/delete/DeleteStudentForm';
 import { ListContainer, ListRow } from '../../../../components/styled/blocks/List';
-import { GET_INSTRUCTING_STUDENTS } from '../../../../gql/queries';
-
-const GET_INSTRUCTING_CLASSES = gql`
-  query GET_INSTRUCTING_CLASSES {
-    getInstructingClasses {
-      _id
-      enrolled {
-        _id
-      }
-    }
-  }
-`
+import { GET_INSTRUCTING_STUDENTS, GET_INSTRUCTING_CLASSES } from '../../../../gql/queries';
 
 const studentList = () => {
   const alert = useContext(AlertContext);
   const modal = useContext(ModalContext);
 
-  const { loading, error, data } = useQuery(GET_INSTRUCTING_STUDENTS);
-  const { data: classesData } = useQuery(GET_INSTRUCTING_CLASSES);
+  const { loading, error, data } = useQuery(GET_INSTRUCTING_STUDENTS, {
+    pollInterval: 5000,
+  });
+  const { data: classesData } = useQuery(GET_INSTRUCTING_CLASSES, {
+    pollInterval: 5000,
+  });
   // returns one array which contains arrays of enrolled student IDs for each class
   const unpopulatedEnrolledClasses = classesData?.getInstructingClasses.map(aClass => aClass.enrolled.map(student => student._id))
 

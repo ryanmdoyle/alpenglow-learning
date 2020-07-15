@@ -88,3 +88,14 @@ query GET_QUIZ_FOR_PLAYLIST($playlistId: ID!) {
   }
 }
 `;
+
+export const GET_INSTRUCTING_CLASSES = gql`
+  query GET_INSTRUCTING_CLASSES {
+    getInstructingClasses {
+      _id
+      enrolled {
+        _id
+      }
+    }
+  }
+`;

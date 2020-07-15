@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import gql from 'graphql-tag';
 import { css } from '@emotion/core'
+import { useRouter } from 'next/router';
 
 import FormWrapper from '../../styled/blocks/FormWrapper';
 import AlertContext from '../../context/AlertContext';
@@ -8,7 +9,7 @@ import ModalContext from '../../context/ModalContext';
 import PagePadding from '../../styled/PagePadding';
 import { useMutation } from '@apollo/react-hooks';
 import { useForm } from 'react-hook-form';
-import { GET_INSTRUCTING_STUDENTS } from '../../../gql/queries';
+import { GET_INSTRUCTING_STUDENTS, GET_INSTRUCTING_CLASSES } from '../../../gql/queries';
 
 const DELETE_STUDENT = gql`
   mutation DELETE_STUDENT($studentId: ID!) {
@@ -22,12 +23,15 @@ const DeleteStudentForm = ({ studentId, studentName }) => {
   const { register, handleSubmit, errors } = useForm();
   const alert = useContext(AlertContext);
   const modal = useContext(ModalContext);
+  const router = useRouter();
 
   const [deleteStudent, { data }] = useMutation(DELETE_STUDENT, {
-    refetchQueries: [{ query: GET_INSTRUCTING_STUDENTS }],
+    awaitRefetchQueries: true,
+    refetchQueries: [{query: GET_INSTRUCTING_STUDENTS}, { query: GET_INSTRUCTING_CLASSES }],
     onCompleted: (data) => {
       if (modal.isOpen) {
         modal.close();
+        router.push('/teacher/manage/students')
       }
       alert.success(`Successfully removed student!`)
     },

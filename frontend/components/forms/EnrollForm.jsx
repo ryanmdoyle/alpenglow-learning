@@ -19,7 +19,7 @@ const ENROLL_MUTATION = gql`
 `;
 
 const EnrollForm = () => {
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors, reset } = useForm();
   const alert = useContext(AlertContext);
   const modal = useContext(ModalContext);
   const router = useRouter();
@@ -28,6 +28,7 @@ const EnrollForm = () => {
     refetchQueries: [{ query: GET_ENROLLED_CLASSES }],
     onCompleted: (data) => {
       if (modal.isOpen) {
+        reset();
         modal.close();
       }
       router.push('/student/classes')
