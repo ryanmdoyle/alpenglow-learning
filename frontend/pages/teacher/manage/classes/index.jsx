@@ -15,7 +15,7 @@ import { TextTableContainer, TextTableHeader, TextTableRow} from '../../../../co
 
 const teacherClasses = () => {
   const { loading, error, data } = useQuery(GET_INSTRUCTING_COURSES, {
-    pollInterval: 20000,
+    pollInterval: 10000,
   });
   const modal = useContext(ModalContext);
   const router = useRouter();
