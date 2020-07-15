@@ -41,6 +41,9 @@ const studentList = () => {
       <PageTitle>Manage Your Students</PageTitle>
       <PagePadding>
         <h4>All Students Enrolled in Classes</h4>
+        {data.getInstructingStudents.length == 0 && (
+          <em>Currently you have no students enrolled in any classes. Once a student enrolls in one of your classes, their information will show here.</em>
+        )}
         <ListContainer>
           {data.getInstructingStudents.map(student => {
             let enrolled = 0;
