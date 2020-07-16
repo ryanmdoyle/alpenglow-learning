@@ -1,6 +1,8 @@
 import React from 'react';
 import { css } from '@emotion/core';
 
+import PercentScoreRectangle from '../styled/elements/PercentScoreRectangle';
+
 const scoreContainer = css`
   width: 100%;
   padding: 0.5rem 0.5rem;
@@ -26,45 +28,14 @@ const scoreContainer = css`
   }
 `;
 
-const scoreStyle = css`
-width: 3rem;
-    max-height: 1.7rem;
-    background-color: var(--green);
-    border-radius: 2px;
-    padding: 0 0.5rem;
-    text-align: center;
-`;
-
-const scoreColors = (score) => {
-  if (score >= 80) {
-    return css`
-      background-color: var(--green);
-    `
-  }
-
-  if (score >= 70) {
-    return css`
-      background-color: var(--yellow);
-    `
-  }
-
-  if (score !== null && score >= 0) {
-    return css`
-      background-color: var(--red);
-    `
-  }
-  return null
-};
-
 const GradesPlaylistScore = ({ name, percent, score, possibleScore }) => {
-  const colorCoded = scoreColors(percent);
 
   return (
     <div css={scoreContainer}>
       <span>{name}</span>
       {
         percent ?
-          <div css={[scoreStyle, colorCoded]}>{percent}%</div>
+          <PercentScoreRectangle percent={percent} />
           :
           <div className='score none'>n/a</div>
       }
