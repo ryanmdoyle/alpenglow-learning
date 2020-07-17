@@ -22,9 +22,10 @@ const classProgress = () => {
     variables: { classId },
   })
   const name = data?.getInstructingClass?.name;
+  const title = name ? `Student Progress - ${name}` : `Student Progress`
   return (
     <div>
-      <PageTitle>Student Progress{name ? ` - ${name}` : null}</PageTitle>
+      <PageTitle>{title}</PageTitle>
       <PagePadding>
         <ClassProgressTable />
       </PagePadding>
