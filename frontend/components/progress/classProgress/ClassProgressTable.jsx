@@ -9,7 +9,7 @@ import Loading from '../../Loading';
 
 const tableWrapper = css`
   position: relative;
-  overflow-x: scroll;
+  overflow-x: auto;
   white-space: nowrap;
   width: 100%;
   padding-top: 3rem;
