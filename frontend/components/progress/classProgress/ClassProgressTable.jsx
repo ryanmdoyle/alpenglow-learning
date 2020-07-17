@@ -1,7 +1,11 @@
 import React from 'react';
+import gql from 'graphql-tag';
 import { css } from '@emotion/core';
+import { useQuery } from '@apollo/react-hooks';
+import { useRouter } from 'next/router';
 
 import PercentScoreRectangle from '../../styled/elements/PercentScoreRectangle';
+import Loading from '../../Loading';
 
 const tableWrapper = css`
   position: relative;
@@ -11,8 +15,10 @@ const tableWrapper = css`
   padding-top: 3rem;
 
   table {
-    border-collapse: collapse;
+    /* border-collapse: collapse; */
+    border-spacing: 0;
     table-layout: fixed;
+    border-bottom: 1px solid var(--pink);
   }
   
   td {
@@ -25,7 +31,6 @@ const tableWrapper = css`
     /* transform: rotate(-10deg); */
     max-width: 200px;
     max-height: 50px;
-    /* height: 3rem; */
     color: var(--pink);
     border-bottom: 1px solid var(--pink);
     padding: 0.5rem 0.25rem;
@@ -54,19 +59,22 @@ const tableWrapper = css`
   td:first-of-type {
     /* background-color: #DDE6F9; */
     padding-left: 1rem;
+    border-right: 1px solid var(--pink);
   }
 
-  tr:nth-child(even) {
-    /* background-color: var(--blueLight50); */
+  tr:hover {
+    td {
+    background-color: #ECF0F9;
+    }
   }
 
   small {
-    display: block;
-    height: 50px;
+    display: flex;
+    height: 60px;
     width: 100%;
-    /* overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis; */
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
   }
 
   .score {
@@ -78,205 +86,140 @@ const tableWrapper = css`
   }
 `;
 
+const GET_CLASS_PROGRESS = gql`
+  query GET_CLASS_PROGRESS($classId: ID!) {
+    getInstructingClass(classId: $classId) {
+      _id
+      name
+      enrolled {
+        _id
+        name
+      }
+    }
+    getParentCourse(classId: $classId) {
+      _id
+      name
+      essentialPlaylists {
+        _id
+        name
+      }
+      corePlaylists {
+        _id
+        name
+      }
+      challengePlaylists {
+        _id
+        name
+      }
+    }
+    getScoresForClass(classId: $classId) {
+      _id
+      score
+      possibleScore
+      user {
+        _id
+      }
+      playlist {
+        _id
+      }
+    }
+  }
+`;
+
+const clipTitle = (text) => {
+  const textArr = text.split('');
+  if (textArr.length <= 45) {
+    console.log('not too long')
+    return text
+  };
+  const shortArr = [];
+  textArr.forEach((char, index) => {
+    if (index <= 44) shortArr.push(char);
+  })
+  const shortString = shortArr.join('');
+  return shortString + '...';
+}
+
+const longname = 'Hello this is a playlist name that is way too long for the purposes of the name.'
+
 const ClassProgressTable = () => {
+  const { query: { classId } } = useRouter();
+  const { loading, error, data } = useQuery(GET_CLASS_PROGRESS, {
+    pollInterval: 60000,
+    variables: {
+      classId
+    }
+  });
+  if (loading) return <Loading />
+  const essential = data?.getParentCourse?.essentialPlaylists;
+  const core = data?.getParentCourse?.corePlaylists;
+  const challenge = data?.getParentCourse?.challengePlaylists;
+  const students = data?.getInstructingClass?.enrolled;
   return (
     <div css={tableWrapper}>
       <table>
         <thead>
           <tr>
             <th>Student</th>
-            <th>
-              <small title='playlist'>Playlist 1</small>
-            </th>
-            <th>
-              <small title='playlist'>Playlist 2</small>
-            </th>
-            <th>
-              <small title='playlist'>Playlist 3</small>
-            </th>
-            <th>
-              <small title='playlist'>Playlist 4</small>
-            </th>
-            <th>
-              <small title='playlist'>Playlist 5</small>
-            </th>
-            <th>
-              <small title='playlist'>Playlist 6</small>
-            </th>
-            <th>
-              <small title='playlist'>Playlist 7</small>
-            </th>
-            <th>
-              <small title='playlist'>Playlist 8</small>
-            </th>
-            <th>
-              <small title='playlist'>Playlist 9</small>
-            </th>
-            <th>
-              <small title='playlist'>Playlist 10</small>
-            </th>
+            {essential.map(essential => (
+              <th>
+                <small title={essential.name}>{clipTitle(essential.name)}</small>
+              </th>
+            ))}
+            {core.map(core => (
+              <th>
+                <small title={core.name}>{clipTitle(core.name)}</small>
+              </th>
+            ))}
+            {challenge.map(challenge => (
+              <th>
+                <small title={challenge.name}>{clipTitle(challenge.name)}</small>
+              </th>
+            ))}
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Ryan</td>
-            <td>
-              <div className='score'>
-                <PercentScoreRectangle percent={65} />
-              </div>
-            </td>
-            <td>
-              <div className='score'>
-                <PercentScoreRectangle percent={85} />
-              </div>
-            </td>
-            <td>
-              <div className='score'>
-                <PercentScoreRectangle percent={95} />
-              </div>
-            </td>
-            <td>
-              <div className='score'>
-                <PercentScoreRectangle percent={75} />
-              </div>
-            </td>
-            <td>
-              <div className='score'>
-                <PercentScoreRectangle percent={55} />
-              </div>
-            </td>
-            <td>
-              <div className='score'>
-                <PercentScoreRectangle percent={100} />
-              </div>
-            </td>
-            <td>
-              <div className='score'>
-                <PercentScoreRectangle percent={99} />
-              </div>
-            </td>
-            <td>
-              <div className='score'>
-                <PercentScoreRectangle percent={85} />
-              </div>
-            </td>
-            <td>
-              <div className='score'>
-                <PercentScoreRectangle percent={75} />
-              </div>
-            </td>
-            <td>
-              <div className='score'>
-                <PercentScoreRectangle percent={95} />
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>Alissa</td>
-            <td>
-              <div className='score'>
-                <PercentScoreRectangle percent={95} />
-              </div>
-            </td>
-            <td>
-              <div className='score'>
-                <PercentScoreRectangle percent={95} />
-              </div>
-            </td>
-            <td>
-              <div className='score'>
-                <PercentScoreRectangle percent={95} />
-              </div>
-            </td>
-            <td>
-              <div className='score'>
-                <PercentScoreRectangle percent={75} />
-              </div>
-            </td>
-            <td>
-              <div className='score'>
-                <PercentScoreRectangle percent={85} />
-              </div>
-            </td>
-            <td>
-              <div className='score'>
-                <PercentScoreRectangle percent={100} />
-              </div>
-            </td>
-            <td>
-              <div className='score'>
-                <PercentScoreRectangle percent={55} />
-              </div>
-            </td>
-            <td>
-              <div className='score'>
-                <PercentScoreRectangle percent={71} />
-              </div>
-            </td>
-            <td>
-              <div className='score'>
-                <PercentScoreRectangle percent={90} />
-              </div>
-            </td>
-            <td>
-              <div className='score'>
-                <PercentScoreRectangle percent={93} />
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td className='fixed-col first-col'>Brynlee</td>
-            <td>
-              <div className='score'>
-                <PercentScoreRectangle percent={100} />
-              </div>
-            </td>
-            <td>
-              <div className='score'>
-                <PercentScoreRectangle percent={96} />
-              </div>
-            </td>
-            <td>
-              <div className='score'>
-                <PercentScoreRectangle percent={93} />
-              </div>
-            </td>
-            <td>
-              <div className='score'>
-                <PercentScoreRectangle percent={95} />
-              </div>
-            </td>
-            <td>
-              <div className='score'>
-                <PercentScoreRectangle percent={96} />
-              </div>
-            </td>
-            <td>
-              <div className='score'>
-                <PercentScoreRectangle percent={93} />
-              </div>
-            </td>
-            <td>
-              <div className='score'>
-                <PercentScoreRectangle percent={76} />
-              </div>
-            </td>
-            <td>
-              <div className='score'>
-                <PercentScoreRectangle percent={85} />
-              </div>
-            </td>
-            <td>
-              <div className='score'>
-                <PercentScoreRectangle percent={99} />
-              </div>
-            </td>
-            <td>
-              <div className='score'>
-                <PercentScoreRectangle percent={75} />
-              </div>
-            </td>
-          </tr>
+          {students.map(student => {
+            const studentScores = data?.getScoresForClass?.filter(score => score.user._id == student._id);
+            return (
+              <tr>
+                <td>{student.name}</td>
+                {essential.map(essentialPl => {
+                  const score = studentScores?.filter(score => score.playlist._id == essentialPl._id);
+                  const percent = score.length > 0 ? (score[0].score / score[0].possibleScore * 100) : null;
+                  return (
+                    <td>
+                      <div className='score'>
+                        <PercentScoreRectangle percent={percent} />
+                      </div>
+                    </td>
+                  )
+                })}
+                {core.map(corePl => {
+                  const score = studentScores?.filter(score => score.playlist._id == corePl._id);
+                  const percent = score.length > 0 ? (score[0].score / score[0].possibleScore * 100) : null;
+                  return (
+                    <td>
+                      <div className='score'>
+                        <PercentScoreRectangle percent={percent} />
+                      </div>
+                    </td>
+                  )
+                })}
+                {challenge.map(challengePl => {
+                  const score = studentScores?.filter(score => score.playlist._id == challengePl._id);
+                  const percent = score.length > 0 ? (score[0].score / score[0].possibleScore * 100) : null;
+                  return (
+                    <td>
+                      <div className='score'>
+                        <PercentScoreRectangle percent={percent} />
+                      </div>
+                    </td>
+                  )
+                })}
+              </tr>
+            )
+          })}
         </tbody>
       </table>
     </div>
