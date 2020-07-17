@@ -161,7 +161,22 @@ const queries = {
 			]
 		})
 		return scores
-	}
+	},
+
+	async getParentCourse(parent, args, context, info) {
+		return await Course.findOne({ classes: { $in: { _id: args.classId } } });
+	},
+
+	async getScoresForClass(parent, args, context, info) {
+		const parentCourse = await Course.findOne({ classes: { $in: { _id: args.classId } } });
+		const playlists = [
+			...parentCourse.essentialPlaylists,
+			...parentCourse.corePlaylists,
+			...parentCourse.challengePlaylists,
+		];
+		const playlistIds = playlists.map(playlist => playlist._id);
+		return await Score.find({ playlist: { $in: playlistIds } });
+	},
 
 }
 

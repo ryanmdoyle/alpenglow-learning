@@ -28,9 +28,12 @@ const typeDefs = gql`
     getInstructingPlaylists(userId: ID): [Playlist],
     getInstructingScores(userId: ID): [Score],
 
+    getParentCourse(classId: ID!): Course!,
+
     getScores(userId: ID): [Score],
     getScoresPending: [Score],
     getScoresForPlaylist(playlistId: ID!): [Score],
+    getScoresForClass(classId: ID!): [Score],
 
     getQuizForPlaylist(playlistId: ID!): Quiz,
   }
