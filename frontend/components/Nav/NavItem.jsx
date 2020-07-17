@@ -39,20 +39,7 @@ const activeLink = css`
 
 const NavItem = ({ children, href, as }) => {
   const router = useRouter();
-  const linkWithoutQuery = (router) => {
-    if (Object.keys(router.query).length !== 0) {
-      // remove query from pathname
-      // get query key, get length (with []), returns beginning of string - key and the ending / in path name
-      const queryKey = Object.keys(router.query)[0];
-      const queryLength = queryKey.length + 2;
-      return router.pathname.substr(0, (router.pathname.length - queryLength - 1))
-    } else {
-      return router.pathname;
-    }
-  }
-
-  const pathnameNoQuery = linkWithoutQuery(router);
-  const isActiveLink = pathnameNoQuery.includes(href) ? [item, activeLink] : [item];
+  const isActiveLink = router.asPath === as ? [item, activeLink] : [item];
 
   return (
     <Link href={href} as={as}>
@@ -66,7 +53,7 @@ const NavItem = ({ children, href, as }) => {
 NavItem.propTypes = {
   children: PropTypes.node.isRequired,
   href: PropTypes.string.isRequired,
-  as: PropTypes.string,
+  as: PropTypes.string.isRequired,
 }
 
 export default NavItem;

@@ -57,7 +57,7 @@ const studentGrades = () => {
       <PageTitle>Your Grades</PageTitle>
       <PagePadding>
         {classes && classes.map(clas => (
-          <>
+          <div key={clas._id}>
             <h4>{clas.name}</h4>
             <div css={playlistColumns}>
               <div className='playlistType'>
@@ -70,6 +70,7 @@ const studentGrades = () => {
                     <GradesPlaylistScore
                       name={playlist.name}
                       percent={percents[0]}
+                      key={playlist._id}
                     />
                   )
                 })}
@@ -84,6 +85,7 @@ const studentGrades = () => {
                     <GradesPlaylistScore
                       name={playlist.name}
                       percent={percents[0]}
+                      key={playlist._id}
                     />
                   )
                 })}
@@ -98,12 +100,13 @@ const studentGrades = () => {
                     <GradesPlaylistScore
                       name={playlist.name}
                       percent={percents[0]}
+                      key={playlist._id}
                     />
                   )
                 })}
               </div>
             </div>
-          </>
+          </div>
         ))
         }
 
