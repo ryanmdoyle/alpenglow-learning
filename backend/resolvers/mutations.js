@@ -340,6 +340,7 @@ const mutations = {
   async updateQuiz(parent, args, context, info) {
     return await Quiz.updateOne({ playlist: args.playlistId }, {
       externalLink: args.externalLink,
+      possibleScore: args.possibleScore,
     });
   },
 

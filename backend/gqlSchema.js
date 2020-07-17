@@ -175,6 +175,7 @@ const typeDefs = gql`
       playlistId: ID!,
       type: String!,
       externalLink: String!,
+      possibleScore: Int,
     ): Quiz,
 
     updateScore(
