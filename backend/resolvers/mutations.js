@@ -330,6 +330,7 @@ const mutations = {
         playlist: args.playlistId,
         type: args.type,
         externalLink: args.externalLink,
+        possibleScore: args.possibleScore,
       })
       return await newQuiz.save();
     }

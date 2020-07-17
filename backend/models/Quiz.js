@@ -18,6 +18,7 @@ const quizSchema = new Schema({
     default: 'EXTERNAL'
   },
   externalLink: String,
+  possibleScore: Number,
 })
 
 quizSchema.plugin(require('mongoose-autopopulate'));

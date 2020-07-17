@@ -15,11 +15,13 @@ const CREATE_QUIZ = gql`
     $playlistId: ID!,
     $type: String!,
     $externalLink: String!,
+    $possibleScore: Int,
   ) {
     createQuiz(
       playlistId: $playlistId,
       type: $type,
       externalLink: $externalLink,
+      possibleScore: $possibleScore,
     ) {
       _id
     }
@@ -44,11 +46,13 @@ const CreateQuizForm = ({ playlistId }) => {
   });
 
   const onSubmit = data => {
+    const possibleScore = data.possibleScore == '' ? null : data.possibleScore;
     createQuiz({
       variables: {
         playlistId: playlistId,
         type: data.type || "EXTERNAL",
         externalLink: data.externalLink,
+        possibleScore: possibleScore,
       }
     })
   };
@@ -70,6 +74,11 @@ const CreateQuizForm = ({ playlistId }) => {
           <label htmlFor='externalLink'>Link to Quiz*</label>
           <input type="text" name="externalLink" ref={register({ required: true })} />
           {errors.externalLink && 'A link to an external quiz is required in order for students to assess this playlist.'}
+
+          <label htmlFor='possibleScore'>Possible Score (Highest Points Possible)</label>
+          <small><em>If needed, you can change this when you enter a students final score.</em></small>
+          <input type='number' name='possibleScore' ref={register()} />
+          {errors.possibleScore && 'The possible score must be a interger value.'}
 
           <button type='submit'>Save Quiz</button>
         </form>

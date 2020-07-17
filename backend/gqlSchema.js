@@ -91,6 +91,7 @@ const typeDefs = gql`
       playlistId: ID!,
       type: String!,
       externalLink: String!,
+      possibleScore: Int,
     ): Quiz,
 
     createScore(
@@ -294,6 +295,7 @@ const typeDefs = gql`
     questions: [Question],
     type: String!,
     externalLink: String!,
+    possibleScore: Int,
   }
 
   type Score {
