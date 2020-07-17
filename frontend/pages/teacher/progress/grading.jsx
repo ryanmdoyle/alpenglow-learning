@@ -50,6 +50,8 @@ const grading = () => {
     pollInterval: 3000,
   });
 
+  console.log(scoreData)
+
   const pending = requestData?.getRequests.filter(request => request.approvalAccepted == false)
   const inProgress = requestData?.getRequests.filter(request => request.approvalAccepted)
 
