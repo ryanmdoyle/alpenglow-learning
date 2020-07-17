@@ -15,17 +15,6 @@ const scoreContainer = css`
     box-shadow: var(--shadowMedium);
     transition: box-shadow 0.3s;
   }
-  .score {
-    width: 3rem;
-    max-height: 1.7rem;
-    background-color: var(--green);
-    border-radius: 2px;
-    padding: 0 0.5rem;
-    text-align: center;
-  }
-  .none {
-    background-color: lightGray;
-  }
 `;
 
 const GradesPlaylistScore = ({ name, percent, score, possibleScore }) => {
@@ -33,12 +22,7 @@ const GradesPlaylistScore = ({ name, percent, score, possibleScore }) => {
   return (
     <div css={scoreContainer}>
       <span>{name}</span>
-      {
-        percent ?
-          <PercentScoreRectangle percent={percent} />
-          :
-          <div className='score none'>n/a</div>
-      }
+      <PercentScoreRectangle percent={percent} />
     </div>
   );
 };

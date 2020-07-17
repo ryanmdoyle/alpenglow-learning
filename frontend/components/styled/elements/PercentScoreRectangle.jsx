@@ -3,7 +3,7 @@ import React from 'react';
 import { css } from '@emotion/core';
 
 const scoreStyle = css`
-  width: 3rem;
+  width: 3.5rem;
   max-height: 1.7rem;
   background-color: var(--green);
   border-radius: 2px;
@@ -29,14 +29,20 @@ const scoreColors = (score) => {
       background-color: var(--red);
     `
   }
-  return null
+  return css`background-color: lightGray;`
 };
 
 const PercentScoreRectangle = ({ percent }) => {
   const scoreColorCoded = scoreColors(percent);
 
   return (
-    <div css={[scoreStyle, scoreColorCoded]}>{percent}%</div>
+    <div css={[scoreStyle, scoreColorCoded]}>
+      {percent ?
+        `${percent}%`
+        :
+        '-'
+      }
+    </div>
   );
 };
 
