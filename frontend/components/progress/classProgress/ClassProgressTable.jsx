@@ -129,7 +129,6 @@ const GET_CLASS_PROGRESS = gql`
 const clipTitle = (text) => {
   const textArr = text.split('');
   if (textArr.length <= 45) {
-    console.log('not too long')
     return text
   };
   const shortArr = [];
