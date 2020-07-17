@@ -11,12 +11,15 @@ const GET_PLAYLIST_REQUEST = gql`
   query GET_PLAYLIST_REQUEST(
     $playlistId: ID!,
   ) {
-    getPlaylistRequest(
-      playlistId: $playlistId,
-    ) {
+    getPlaylistRequest(playlistId: $playlistId) {
       _id
       approved
     }
+    getQuizForPlaylist(playlistId: $playlistId) {
+      _id
+      externalLink
+      possibleScore
+  }
   }
 `;
 
@@ -73,8 +76,11 @@ const PlaylistRequestButton = ({ playlistId }) => {
     modal.open();
   }
 
+  const isQuiz = requestData?.getQuizForPlaylist;
   const isRequested = requestData?.getPlaylistRequest ? true : false;
   const isApproved = isRequested && requestData?.getPlaylistRequest.approved;
+
+  if (!isQuiz) return <em css={css`color: var(--pink);`}>Quiz has not been created for this playlist.</em>
 
   if (isApproved) {
     return <TextButton onClick={acceptQuiz}>Approved! Take Quiz</TextButton>
