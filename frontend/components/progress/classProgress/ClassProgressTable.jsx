@@ -161,17 +161,17 @@ const ClassProgressTable = () => {
           <tr>
             <th>Student</th>
             {essential.map(essential => (
-              <th>
+              <th key={essential._id}>
                 <small title={essential.name}>{clipTitle(essential.name)}</small>
               </th>
             ))}
             {core.map(core => (
-              <th>
+              <th key={core._id}>
                 <small title={core.name}>{clipTitle(core.name)}</small>
               </th>
             ))}
             {challenge.map(challenge => (
-              <th>
+              <th key={challenge._id}>
                 <small title={challenge.name}>{clipTitle(challenge.name)}</small>
               </th>
             ))}
@@ -181,13 +181,13 @@ const ClassProgressTable = () => {
           {students.map(student => {
             const studentScores = data?.getScoresForClass?.filter(score => score.user._id == student._id);
             return (
-              <tr>
+              <tr key={student._id}>
                 <td>{student.name}</td>
                 {essential.map(essentialPl => {
                   const score = studentScores?.filter(score => score.playlist._id == essentialPl._id);
                   const percent = score.length > 0 ? (score[0].score / score[0].possibleScore * 100) : null;
                   return (
-                    <td>
+                    <td key={essentialPl._id}>
                       <div className='score'>
                         <PercentScoreRectangle percent={percent} />
                       </div>
@@ -198,7 +198,7 @@ const ClassProgressTable = () => {
                   const score = studentScores?.filter(score => score.playlist._id == corePl._id);
                   const percent = score.length > 0 ? (score[0].score / score[0].possibleScore * 100) : null;
                   return (
-                    <td>
+                    <td key={corePl._id}>
                       <div className='score'>
                         <PercentScoreRectangle percent={percent} />
                       </div>
@@ -209,7 +209,7 @@ const ClassProgressTable = () => {
                   const score = studentScores?.filter(score => score.playlist._id == challengePl._id);
                   const percent = score.length > 0 ? (score[0].score / score[0].possibleScore * 100) : null;
                   return (
-                    <td>
+                    <td key={challengePl._id}>
                       <div className='score'>
                         <PercentScoreRectangle percent={percent} />
                       </div>
