@@ -9,7 +9,7 @@ import Loading from '../../Loading';
 
 const tableWrapper = css`
   position: relative;
-	overflow-y: scroll;
+  overflow-x: scroll;
   white-space: nowrap;
   width: 100%;
   padding-top: 3rem;
@@ -19,6 +19,7 @@ const tableWrapper = css`
     border-spacing: 0;
     table-layout: fixed;
     border-bottom: 1px solid var(--pink);
+    margin-bottom: 0.5rem;
   }
   
   td {
