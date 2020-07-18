@@ -10,22 +10,21 @@ const Request = require('../models/Request');
 const Quiz = require('../models/Quiz');
 const Score = require('../models/Score');
 
-// currentUser data from JWT token available on context.currentUser
 const queries = {
-	async getCurrentUser(parent, args, context, info) {
-		if (!context.currentUser) return null;
-		if (!context.currentUser._id) return null;
-		return await User.findById(context.currentUser._id);
-	},
+		async getCurrentUser(parent, args, context, info) {
+			if (!context.currentUser) return null;
+			if (!context.currentUser._id) return null;
+			return await User.findById(context.currentUser._id);
+		},
 
-	async getUser(parent, args, context, info) {
-		const userId = args.userId ? args.userId : context.currentUser._id;
-		return await User.findOne({ _id: userId });
-	},
+		async getUser(parent, args, context, info) {
+			const userId = args.userId ? args.userId : context.currentUser._id;
+			return await User.findOne({ _id: userId });
+		},
 
-	async getAllUsers(parent, args, context, info) {
-		return await User.find();
-	},
+		async getAllUsers(parent, args, context, info) {
+			return await User.find();
+		},
 
 	async getInstructingClass(parent, args, context, info) {
 		const { currentUser } = context;
@@ -179,5 +178,4 @@ const queries = {
 	},
 
 }
-
 module.exports = queries;

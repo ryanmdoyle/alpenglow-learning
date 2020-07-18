@@ -1,16 +1,10 @@
 import React, { useState, useContext } from 'react';
-import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
 import { css } from '@emotion/core';
 import { useRouter } from 'next/router';
 
 import Loading from '../components/Loading';
 import UserContext from '../components/context/UserContext';
 import hasPermission from '../lib/hasPermission';
-import PageTitle from '../components/PageTitle';
-import PagePadding from '../components/styled/blocks/PagePadding';
-import StudentWelcome from '../components/welcome/StudentWelcome';
-import TeacherWelcome from '../components/welcome/TeacherWelcome';
 import TextButton from '../components/styled/elements/TextButton';
 import { Role } from '../lib/enums';
 
