@@ -5,7 +5,7 @@ import { css } from '@emotion/core';
 import { useMutation } from '@apollo/react-hooks';
 
 import TextButton from '../../components/styled/elements/TextButton';
-import { GET_STUDENT_QUIZ_REQUESTS } from '../../pages/teacher/progress/grading';
+import { GET_STUDENT_REQS_AND_PENDING_SCORES } from '../../pages/teacher/progress/grading';
 
 const requestContainer = css`
   width: 100%;
@@ -72,15 +72,15 @@ const DENY_QUIZ_REQUEST = gql`
 const QuizRequest = ({ requestId, name, playlistName, approved, approvalAccepted }) => {
   const [approve, { data: approveData }] = useMutation(APPROVE_QUIZ_REQUEST, {
     variables: { requestId: requestId },
-    refetchQueries: [{ query: GET_STUDENT_QUIZ_REQUESTS }],
+    refetchQueries: [{ query: GET_STUDENT_REQS_AND_PENDING_SCORES }],
   })
   const [deny, { data: denyData }] = useMutation(DENY_QUIZ_REQUEST, {
     variables: { requestId: requestId },
-    refetchQueries: [{ query: GET_STUDENT_QUIZ_REQUESTS }],
+    refetchQueries: [{ query: GET_STUDENT_REQS_AND_PENDING_SCORES }],
   })
   const [cancel, { data: cancelData }] = useMutation(CANCEL_APPROVE_QUIZ_REQUEST, {
     variables: { requestId: requestId },
-    refetchQueries: [{ query: GET_STUDENT_QUIZ_REQUESTS }],
+    refetchQueries: [{ query: GET_STUDENT_REQS_AND_PENDING_SCORES }],
   })
 
   return (

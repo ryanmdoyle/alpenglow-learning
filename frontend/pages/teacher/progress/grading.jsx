@@ -9,8 +9,8 @@ import PagePadding from '../../../components/styled/blocks/PagePadding';
 import QuizRequest from '../../../components/progress/QuizRequest';
 import ProgressScoreEntry from '../../../components/progress/ProgressScoreEntry';
 
-const GET_STUDENT_QUIZ_REQUESTS = gql`
-  query GET_STUDENT_QUIZ_REQUESTS {
+const GET_STUDENT_REQS_AND_PENDING_SCORES = gql`
+  query GET_STUDENT_REQS_AND_PENDING_SCORES {
     getRequests {
       _id
       approved
@@ -22,11 +22,6 @@ const GET_STUDENT_QUIZ_REQUESTS = gql`
         name
       }
     }
-  }
-`;
-// LATER COMBINE BOTH OF THESE QUERIES FOR POLLING PURPOSES
-const GET_PENDING_SCORES = gql`
-  query GET_PENDING_SCORES {
     getScoresPending {
       _id
       user {
@@ -42,18 +37,15 @@ const GET_PENDING_SCORES = gql`
 `;
 
 const grading = () => {
-  const { loading, error, data: requestData } = useQuery(GET_STUDENT_QUIZ_REQUESTS, {
+
+  const { loading, data } = useQuery(GET_STUDENT_REQS_AND_PENDING_SCORES, {
     pollInterval: 3000,
-  });
+  })
 
-  const { data: scoreData } = useQuery(GET_PENDING_SCORES, {
-    pollInterval: 3000,
-  });
-
-  console.log(scoreData)
-
-  const pending = requestData?.getRequests.filter(request => request.approvalAccepted == false)
-  const inProgress = requestData?.getRequests.filter(request => request.approvalAccepted)
+  const scoreData = data?.getScoresPending;
+  const requestData = data?.getRequests;
+  const pending = requestData?.filter(request => request.approvalAccepted == false)
+  const inProgress = requestData?.filter(request => request.approvalAccepted)
 
   if (loading) return <Loading />
   return (
@@ -63,10 +55,10 @@ const grading = () => {
         <div css={css`display: flex;`}>
           <div css={css`width: 49%;`}>
             <h4>Pending Quiz Requests</h4>
-            {(requestData?.getRequests && pending.length == 0) && (
+            {(requestData && pending.length == 0) && (
               <em>No current quiz requests.</em>
             )}
-            {requestData?.getRequests && (
+            {requestData && (
               pending?.map(request => (
                 <QuizRequest
                   requestId={request._id}
@@ -82,7 +74,7 @@ const grading = () => {
           </div>
           <div css={css`width: 49%; margin-left: 2%;`}>
             <h4>In Progress</h4>
-            {(requestData?.getRequests && inProgress.length == 0) && (
+            {(requestData && inProgress.length == 0) && (
               <em>No quizzes are in progress.</em>
             )}
             {inProgress?.map(request => (
@@ -98,10 +90,10 @@ const grading = () => {
           </div>
         </div>
         <h4>Pending Scores</h4>
-        {(scoreData?.getScoresPending.length == 0) && (
+        {(scoreData.length == 0) && (
           <em>All quizzes have been scored.</em>
         )}
-        {scoreData && scoreData?.getScoresPending.map(score => (
+        {scoreData && scoreData.map(score => (
           <ProgressScoreEntry
             scoreId={score._id}
             studentName={score?.user?.name}
@@ -117,4 +109,4 @@ const grading = () => {
 };
 
 export default grading;
-export { GET_STUDENT_QUIZ_REQUESTS, GET_PENDING_SCORES };
+export { GET_STUDENT_REQS_AND_PENDING_SCORES };

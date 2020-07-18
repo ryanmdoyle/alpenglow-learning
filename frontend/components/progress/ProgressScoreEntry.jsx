@@ -5,9 +5,8 @@ import { css } from '@emotion/core';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@apollo/react-hooks';
 
-import TextButton from '../styled/elements/TextButton';
 import AlertContext from '../context/AlertContext';
-import { GET_PENDING_SCORES } from '../../pages/teacher/progress/grading';
+import { GET_STUDENT_REQS_AND_PENDING_SCORES } from '../../pages/teacher/progress/grading';
 
 const pendingScoreStyle = css`
   width: 100%;
@@ -95,7 +94,7 @@ const ProgressScoreEntry = ({ scoreId, studentName, playlistName, score, possibl
 
   const [update, { data: updateData }] = useMutation(UPDATE_SCORE, {
     onCompleted: () => { alert.success('Successfully saved score!', 2) },
-    refetchQueries: [{ query: GET_PENDING_SCORES }]
+    refetchQueries: [{ query: GET_STUDENT_REQS_AND_PENDING_SCORES }]
   });
 
   const onSubmit = data => {
