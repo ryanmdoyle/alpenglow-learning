@@ -72,7 +72,7 @@ const queries = {
 		return await Course.find({ classes: { $in: enrolledClasses } });
 	},
 
-	async getInstructingClasses(parent, args, context, info) {
+	async getClassesInstructing(parent, args, context, info) {
 		const userId = args.userId ? args.userId : context.currentUser._id;
 		return await Class.find({ primaryInstructor: userId });
 	},

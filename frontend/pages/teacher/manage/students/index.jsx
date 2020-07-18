@@ -25,7 +25,7 @@ const studentList = () => {
     pollInterval: 5000,
   });
   // returns one array which contains arrays of enrolled student IDs for each class
-  const unpopulatedEnrolledClasses = classesData?.getInstructingClasses.map(aClass => aClass.enrolled.map(student => student._id))
+  const unpopulatedEnrolledClasses = classesData?.getClassesInstructing.map(aClass => aClass.enrolled.map(student => student._id))
 
   const trashClick = (studentId, studentName) => {
     modal.setChildComponent(

@@ -24,7 +24,7 @@ const typeDefs = gql`
     getInstructingCourse(userId: ID!): Course,
     getInstructingCourses(userId: ID): [Course],
     getInstructingClass(classId: ID!): Class,
-    getInstructingClasses(userId: ID): [Class],
+    getClassesInstructing(userId: ID): [Class],
     getInstructingPlaylists(userId: ID): [Playlist],
     getScoresInstructing(userId: ID): [Score],
 

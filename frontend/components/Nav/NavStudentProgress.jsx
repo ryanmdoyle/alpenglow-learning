@@ -12,7 +12,7 @@ const innerPadding = css`padding-left: 1rem;`;
 
 const INSTRUCTING_CLASSES_QUERY = gql`
   query INSTRUCTING_CLASSES_QUERY {
-    getInstructingClasses {
+    getClassesInstructing {
       _id
       name
     }
@@ -27,7 +27,7 @@ const NavStudentProgress = () => {
       <NavSectionHeader title='Student Progress' />
       <ul css={css`list-style:none;margin:1rem 0.2rem;padding:0;`}>
         <NavItem href='/teacher/progress/students' as='/teacher/progress/students' css={css`padding-left: 2rem;`}>All Students</NavItem>
-        {data?.getInstructingClasses?.map(c => (
+        {data?.getClassesInstructing?.map(c => (
           <div css={innerPadding} key={c._id}>
             <NavItem href='/teacher/progress/students/[classId]' as={`/teacher/progress/students/${c._id}`}>{c.name}</NavItem>
           </div>
