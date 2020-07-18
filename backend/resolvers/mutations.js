@@ -111,11 +111,13 @@ const mutations = {
     const { currentUser } = context;
     const requestExists = await Request.exists({ playlist: args.playlistId });
     if (!requestExists) {
+      const currentTime = Date.now();
       const request = new Request({
         approved: false,
         approvalAccepted: false,
         user: currentUser._id,
         playlist: args.playlistId,
+        timeRequested: currentTime,
         ...args,
       })
       const newRequest = await request.save().catch(err => { console.log(err) });
@@ -148,6 +150,7 @@ const mutations = {
       playlist: args.playlistId,
       score: null,
       possibleScore: quiz.possibleScore,
+      timeCreated: Date.now(),
     })
     return await score.save().catch(() => { return new ApolloError('Unable to create a new score') });
   },
@@ -236,12 +239,14 @@ const mutations = {
 
   async updateResource(parent, args, context, info) {
     const { resourceId, name, description, type, href } = args;
-    return await Resource.updateOne({ _id: resourceId }, {
-      name: name,
-      description: description,
-      type: type,
-      href: href,
-    })
+    const resource = await Resource.findOne({ _id: resourceId });
+    resource.name = name,
+      resource.description = description,
+      resource.type = type,
+      resource.href = href,
+      resource.timeScored = Date.now(),
+      resource.markModified('timeScored')
+    return await resource.save();
   },
 
   async updateScore(parent, args, context, info) {
@@ -249,6 +254,7 @@ const mutations = {
     return await Score.updateOne({ _id: scoreId }, {
       score: score,
       possibleScore: possibleScore,
+      timeScored: Date.now(),
     });
   },
 
@@ -304,15 +310,16 @@ const mutations = {
   async approveRequest(parent, args, context, info) {
     const request = await Request.findById(args.requestId);
     request.approved = true;
+    const currentTime = Date.now();
+    request.timeApproved = currentTime;
+    request.markModified('timeApproved');
     return await request.save();
-    // return request;
   },
 
   async cancelRequest(parent, args, context, info) {
     const request = await Request.findById(args.requestId);
     request.approved = false;
     return await request.save();
-    // return request;
   },
 
   async deleteRequest(parent, args, context, info) {
@@ -346,9 +353,12 @@ const mutations = {
   },
 
   async acceptQuizApproval(parent, args, context, info) {
-    return await Request.updateOne({ _id: args.requestId }, {
-      approvalAccepted: true,
-    });
+    const request = await Request.findOne({ _id: args.requestId });
+    request.approvalAccepted = true,
+      request.timeAccepted = Date.now();
+    request.markModified('timeAccepted');
+    await request.save();
+    return request;
   },
 
   async updateClass(parent, args, context, info) {
@@ -412,7 +422,7 @@ const mutations = {
   },
 
   async deleteScore(parent, args, context, info) {
-    const deleted = await Score.deleteOne({_id: args.scoreId });
+    const deleted = await Score.deleteOne({ _id: args.scoreId });
     if (deleted == 1) {
       return args.scoreId
     } else {

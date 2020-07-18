@@ -309,6 +309,8 @@ const typeDefs = gql`
     user: User,
     possibleScore: Int,
     score: Int,
+    timeCreated: Date,
+    timeScored: Date,
   }
 
   type Question {
@@ -324,6 +326,9 @@ const typeDefs = gql`
     playlist: Playlist,
     approved: Boolean,
     approvalAccepted: Boolean,
+    timeRequested: Date,
+    timeApproved: Date,
+    timeAccepted: Date,
   }
 `;
 
