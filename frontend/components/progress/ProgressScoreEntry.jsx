@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { useMutation } from '@apollo/react-hooks';
 
 import AlertContext from '../context/AlertContext';
+import TrashCanButton from '../styled/elements/TrashCanButton';
 import { GET_STUDENT_REQS_AND_PENDING_SCORES } from '../../pages/teacher/progress/grading';
 
 const pendingScoreStyle = css`
@@ -88,14 +89,27 @@ const UPDATE_SCORE = gql`
   }
 `;
 
+const DELETE_SCORE = gql`
+  mutation DELETE_SCORE($scoreId: ID!) {
+    deleteScore(scoreId: $scoreId) {
+      _id
+    }
+  }
+`;
+
 const ProgressScoreEntry = ({ scoreId, studentName, playlistName, score, possibleScore }) => {
   const { register, handleSubmit, errors } = useForm();
   const alert = useContext(AlertContext);
 
   const [update, { data: updateData }] = useMutation(UPDATE_SCORE, {
     onCompleted: () => { alert.success('Successfully saved score!', 2) },
-    refetchQueries: [{ query: GET_STUDENT_REQS_AND_PENDING_SCORES }]
+    refetchQueries: [{ query: GET_STUDENT_REQS_AND_PENDING_SCORES }],
   });
+
+  const [removeScore, { data: deleteData }] = useMutation(DELETE_SCORE, {
+    onCompleted: () => { alert.success('Removed score.')},
+    refetchQueries: [{ query: GET_STUDENT_REQS_AND_PENDING_SCORES }],
+  })
 
   const onSubmit = data => {
     update({
@@ -106,6 +120,13 @@ const ProgressScoreEntry = ({ scoreId, studentName, playlistName, score, possibl
       }
     })
   }
+
+  const trashScore = () => {
+    removeScore({
+      variables: { scoreId: scoreId }
+    })
+  }
+
   return (
     <div css={pendingScoreStyle}>
       <div className='studentInfo'>
@@ -124,7 +145,8 @@ const ProgressScoreEntry = ({ scoreId, studentName, playlistName, score, possibl
             <input type='number' min='0' name='possibleScore' placeholder='Possible Score' defaultValue={possibleScore} ref={register({ required: true, min: 0 })} />
             {errors.score && 'Score must be a numerical value'}
           </div>
-          <input type='submit' value='Save Score'></input>
+          <input type='submit' value='Save Score' css={css`margin-right: 0.5rem;`} ></input>
+          <TrashCanButton onClick={trashScore}/>
         </form>
       </div>
     </div>

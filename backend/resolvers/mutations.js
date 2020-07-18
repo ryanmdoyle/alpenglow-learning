@@ -410,5 +410,14 @@ const mutations = {
     })
     return args.studentId;
   },
+
+  async deleteScore(parent, args, context, info) {
+    const deleted = await Score.deleteOne({_id: args.scoreId });
+    if (deleted == 1) {
+      return args.scoreId
+    } else {
+      return new ApolloError('Unable to delete score.')
+    }
+  }
 }
 module.exports = mutations;

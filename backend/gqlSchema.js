@@ -208,6 +208,10 @@ const typeDefs = gql`
       studentId: ID!,
     ): User!,
 
+    deleteScore(
+      scoreId: ID!
+    ): Score!,
+
     acceptQuizApproval(requestId: ID!): Request!,
   }
 
