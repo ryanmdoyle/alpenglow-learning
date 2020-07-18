@@ -139,7 +139,7 @@ const queries = {
 		return await Score.find({ playlist: args.playlistId });
 	},
 
-	async getInstructingScores(parent, args, context, info) {
+	async getScoresInstructing(parent, args, context, info) {
 		const { currentUser } = context;
 		// Create array of users classes they instruct
 		let students = [];

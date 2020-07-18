@@ -75,7 +75,7 @@ const GET_ALL_PROGRESS = gql`
       _id
       name
     }
-    getInstructingScores {
+    getScoresInstructing {
       _id
       score
       possibleScore
@@ -92,7 +92,7 @@ const GET_ALL_PROGRESS = gql`
 const ProgressTable_Courses = () => {
   const { loading, error, data } = useQuery(GET_ALL_PROGRESS);
   const courses = data?.getInstructingCourses;
-  const scores = data?.getInstructingScores;
+  const scores = data?.getScoresInstructing;
   const students = data?.getInstructingStudents;
 
   if (loading) return <Loading />
