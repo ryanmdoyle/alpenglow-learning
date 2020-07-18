@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import gql from 'graphql-tag';
 import { css } from '@emotion/core';
 import { useQuery } from '@apollo/react-hooks';
@@ -10,7 +10,7 @@ import QuizRequest from '../../../components/progress/QuizRequest';
 import ProgressScoreEntry from '../../../components/progress/ProgressScoreEntry';
 
 const GET_STUDENT_REQS_AND_PENDING_SCORES = gql`
-  query GET_STUDENT_REQS_AND_PENDING_SCORES {
+  query GET_STUDENT_REQS_AND_PENDING_SCORES($timeFrom: Date) {
     getRequests {
       _id
       approved
@@ -33,19 +33,35 @@ const GET_STUDENT_REQS_AND_PENDING_SCORES = gql`
       score
       possibleScore
     }
+    getScores(timeFrom: $timeFrom) {
+      _id
+      score
+      possibleScore
+      timeScored
+      user {
+        name
+      }
+      playlist {
+        name
+      }
+    }
   }
 `;
 
 const grading = () => {
-
   const { loading, data } = useQuery(GET_STUDENT_REQS_AND_PENDING_SCORES, {
     pollInterval: 3000,
+    variables: {
+      timeFrom: three,
+    }
   })
 
   const scoreData = data?.getScoresPending;
   const requestData = data?.getRequests;
+  const recentScores = data?.getScores;
   const pending = requestData?.filter(request => request.approvalAccepted == false)
   const inProgress = requestData?.filter(request => request.approvalAccepted)
+  const three = Date.now() - (1000 * 60 * 60 * 24 * 3);
 
   if (loading) return <Loading />
   return (
@@ -103,6 +119,24 @@ const grading = () => {
             key={score._id}
           />
         ))}
+        <h4>Recently Scored</h4>
+        {(recentScores.length == 0) && (
+          <em>No scores from the last day.</em>
+        )}
+        {recentScores && recentScores.map(score => {
+          if (score.timeScored) {
+            return (
+              <ProgressScoreEntry
+                scoreId={score._id}
+                studentName={score?.user?.name}
+                playlistName={score?.playlist?.name}
+                score={score.score}
+                possibleScore={score.possibleScore}
+                key={score._id}
+              />
+            )
+          }
+        })}
       </PagePadding>
     </div>
   );

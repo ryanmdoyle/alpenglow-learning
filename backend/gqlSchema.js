@@ -30,7 +30,10 @@ const typeDefs = gql`
 
     getCourseOfClass(classId: ID!): Course!,
 
-    getScores(userId: ID): [Score],
+    getScores(
+      userId: ID,
+      timeFrom: Date,
+    ): [Score],
     getScoresPending: [Score],
     getScoresForPlaylist(playlistId: ID!): [Score],
     getScoresForClass(classId: ID!): [Score],
