@@ -5,9 +5,8 @@ import { css } from '@emotion/core';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@apollo/react-hooks';
 
-import TextButton from '../styled/elements/TextButton';
 import AlertContext from '../context/AlertContext';
-import { GET_PENDING_SCORES } from '../../pages/teacher/progress/grading';
+import { GET_STUDENT_REQS_AND_PENDING_SCORES } from '../../pages/teacher/progress/grading';
 
 const pendingScoreStyle = css`
   width: 100%;
@@ -18,7 +17,7 @@ const pendingScoreStyle = css`
   p { margin: 0; }
   small { color: var(--pink);}
   input {
-    width: 140px;
+    width: 100px;
     margin-left: 1rem;
     height: 2rem;
     border: 1px solid var(--blueMedium);
@@ -41,11 +40,35 @@ const pendingScoreStyle = css`
   }
   .studentInfo {
     height: 100%;
+    width: 20%;
   }
   .scoreEntry {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    width: 80%;
+    overflow: hidden;
+    form {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      flex-wrap: wrap;
+      .inputContainer {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        top: -13px;
+      }
+      small { 
+        margin-left: 1rem;
+        position: relative;
+        top: 5px;
+      }
+    }
+
   }
 `;
 
@@ -71,7 +94,7 @@ const ProgressScoreEntry = ({ scoreId, studentName, playlistName, score, possibl
 
   const [update, { data: updateData }] = useMutation(UPDATE_SCORE, {
     onCompleted: () => { alert.success('Successfully saved score!', 2) },
-    refetchQueries: [{ query: GET_PENDING_SCORES }]
+    refetchQueries: [{ query: GET_STUDENT_REQS_AND_PENDING_SCORES }]
   });
 
   const onSubmit = data => {
@@ -91,10 +114,16 @@ const ProgressScoreEntry = ({ scoreId, studentName, playlistName, score, possibl
       </div>
       <div className='scoreEntry'>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <input type='number' min='0' name='score' placeholder='Score' ref={register({ required: true, min: 0 })} />
-          {errors.score && 'Score must be a numerical value'}
-          <input type='number' min='0' name='possibleScore' placeholder='Possible Score' ref={register({ required: true, min: 0 })} />
-          {errors.score && 'Score must be a numerical value'}
+          <div className='inputContainer'>
+            <label htmlFor='score'><small>Score</small></label>
+            <input type='number' min='0' name='score' ref={register({ required: true, min: 0 })} />
+            {errors.score && 'Score must be a numerical value'}
+          </div>
+          <div className='inputContainer'>
+            <label htmlFor='possibleScore'><small>Possible Score</small></label>
+            <input type='number' min='0' name='possibleScore' placeholder='Possible Score' defaultValue={possibleScore} ref={register({ required: true, min: 0 })} />
+            {errors.score && 'Score must be a numerical value'}
+          </div>
           <input type='submit' value='Save Score'></input>
         </form>
       </div>

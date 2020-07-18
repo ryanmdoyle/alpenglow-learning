@@ -142,11 +142,12 @@ const mutations = {
 
   async createScore(parent, args, context, info) {
     const { currentUser } = context;
+    const quiz = await Quiz.findOne({ playlist: args.playlistId });
     const score = new Score({
       user: currentUser._id,
       playlist: args.playlistId,
       score: null,
-      possibleScore: null,
+      possibleScore: quiz.possibleScore,
     })
     return await score.save().catch(() => { return new ApolloError('Unable to create a new score') });
   },

@@ -46,7 +46,7 @@ const CreateQuizForm = ({ playlistId }) => {
   });
 
   const onSubmit = data => {
-    const possibleScore = data.possibleScore == '' ? null : data.possibleScore;
+    const possibleScore = data.possibleScore == '' ? null : parseInt(data.possibleScore);
     createQuiz({
       variables: {
         playlistId: playlistId,

@@ -6,6 +6,12 @@ import { css } from '@emotion/core';
 import TextButton from '../styled/elements/TextButton';
 import PlaylistQuizAccept from './PlaylistQuizAccept';
 import ModalContext from '../context/ModalContext';
+import AlertContext from '../context/AlertContext';
+
+const cancelButton = css`
+  background-color: white;
+  color: var(--blueMedium);
+`;
 
 const GET_PLAYLIST_REQUEST = gql`
   query GET_PLAYLIST_REQUEST(
@@ -14,11 +20,10 @@ const GET_PLAYLIST_REQUEST = gql`
     getRequest(playlistId: $playlistId) {
       _id
       approved
+      approvalAccepted
     }
     getQuizForPlaylist(playlistId: $playlistId) {
       _id
-      externalLink
-      possibleScore
   }
   }
 `;
@@ -39,13 +44,15 @@ const CANCEL_REQUEST = gql`
 `;
 
 const PlaylistRequestButton = ({ playlistId }) => {
-  const modal = useContext(ModalContext);
+  const alert = useContext(AlertContext);
 
   const { loading, error, data: requestData } = useQuery(GET_PLAYLIST_REQUEST, {
     variables: { playlistId: playlistId },
     pollInterval: 3000,
   });
+
   const requestId = requestData?.getRequest?._id;
+  const approvalAccepted = requestData?.getRequest?.approvalAccepted;
 
   const [createRequest, { data }] = useMutation(CREATE_REQUEST, {
     refetchQueries: [{ query: GET_PLAYLIST_REQUEST, variables: { playlistId: playlistId } }],
@@ -71,11 +78,6 @@ const PlaylistRequestButton = ({ playlistId }) => {
     })
   }
 
-  const acceptQuiz = () => {
-    modal.setChildComponent(<PlaylistQuizAccept playlistId={playlistId} requestId={requestId} />)
-    modal.open();
-  }
-
   const isQuiz = requestData?.getQuizForPlaylist;
   const isRequested = requestData?.getRequest ? true : false;
   const isApproved = isRequested && requestData?.getRequest.approved;
@@ -83,26 +85,27 @@ const PlaylistRequestButton = ({ playlistId }) => {
   if (!isQuiz) return <em css={css`color: var(--pink);`}>Quiz has not been created for this playlist.</em>
 
   if (isApproved) {
-    return <TextButton onClick={acceptQuiz}>Approved! Take Quiz</TextButton>
+    return (
+      <>
+        <TextButton onClick={cancelRequest} css={cancelButton}>Cancel Request</TextButton>
+        <PlaylistQuizAccept playlistId={playlistId} requestId={requestId} approvalAccepted={approvalAccepted} />
+      </>
+    )
   }
 
   if (isRequested) {
-    return <TextButton
-      onClick={cancelRequest}
-      css={css`
-        background-color: white;
-        color: var(--blueMedium);
-        :hover, :focus  {
-          background-color: white;
-          color: var(--blueMedium);
-          border-color: var(--blueMedium);
-        }
-      `}
-    >Cancel Request</TextButton>
+    return (
+      <>
+        <TextButton onClick={cancelRequest} css={cancelButton}>Cancel Request</TextButton>
+        <TextButton onClick={() => { alert.error("Quiz must be approved by instructor!", 3) }} css={css`margin-left: 1rem;`}>Wating on Approval...</TextButton>
+      </>
+    )
   }
 
   return (
-    <TextButton onClick={requestQuiz}>Request Quiz</TextButton>
+    <>
+      <TextButton onClick={requestQuiz}>Request Quiz</TextButton>
+    </>
   );
 };
 

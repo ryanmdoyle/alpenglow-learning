@@ -4,9 +4,16 @@ import { css } from '@emotion/core';
 import ProgressBar from './ProgressBar';
 
 const box = css`
+  position: relative;
+  top: 0.75rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  small {
+    color: var(--green);
+    position: relative;
+    top: -4px;
+  }
 `;
 
 const counter = css`
@@ -17,7 +24,6 @@ const counter = css`
 const ProgressBox_Course = ({ totalPlaylists, totalAttempts, completeAttempts, partialAttempts, lowAttempts }) => {
   return (
     <div css={box}>
-      {/* <span css={counter}>12/34</span> */}
       <ProgressBar
         totalPlaylists={totalPlaylists}
         totalAttempts={totalAttempts}
@@ -25,6 +31,7 @@ const ProgressBox_Course = ({ totalPlaylists, totalAttempts, completeAttempts, p
         partialAttempts={partialAttempts}
         lowAttempts={lowAttempts}
       />
+      <small css={counter}>12/34</small>
     </div>
   );
 };
