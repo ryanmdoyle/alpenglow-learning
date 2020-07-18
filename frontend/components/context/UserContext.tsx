@@ -7,7 +7,7 @@ UserContext.displayName = 'UserContext';
 
 const GET_CURRENT_USER = gql`
   query GET_CURRENT_USER {
-    getCurrentUser {
+    getUserCurrent {
       _id
       firstName
       roles
@@ -18,11 +18,11 @@ const GET_CURRENT_USER = gql`
 const UserProvider = ({ children }) => {
   const { loading, error, data } = useQuery(GET_CURRENT_USER);
   const contextValue = (!data) ? null : data;
-  const userData = loading ? { loading: true } : contextValue?.getCurrentUser;
+  const userData = loading ? { loading: true } : contextValue?.getUserCurrent;
   return (
     <UserContext.Provider
       value={
-        // contextValue?.getCurrentUser
+        // contextValue?.getUserCurrent
         userData
       }
     >

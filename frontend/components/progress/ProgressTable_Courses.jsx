@@ -48,7 +48,7 @@ const tableStyles = css`
 
 const GET_ALL_PROGRESS = gql`
   query GET_ALL_PROGRESS {
-    getInstructingCourses {
+    getCoursesInstructing {
       _id
       name
       essentialPlaylists {
@@ -71,7 +71,7 @@ const GET_ALL_PROGRESS = gql`
         }
       }
     }
-    getInstructingStudents {
+    getStudentsInstructing {
       _id
       name
     }
@@ -91,9 +91,9 @@ const GET_ALL_PROGRESS = gql`
 
 const ProgressTable_Courses = () => {
   const { loading, error, data } = useQuery(GET_ALL_PROGRESS);
-  const courses = data?.getInstructingCourses;
+  const courses = data?.getCoursesInstructing;
   const scores = data?.getScoresInstructing;
-  const students = data?.getInstructingStudents;
+  const students = data?.getStudentsInstructing;
 
   if (loading) return <Loading />
 

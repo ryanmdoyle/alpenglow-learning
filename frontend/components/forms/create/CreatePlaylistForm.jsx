@@ -15,7 +15,7 @@ import { GET_INSTRUCTING_COURSES } from '../../../gql/queries';
 const GET_USER_COURSES_QUERY = gql`
   # currently gets all courses, but should later only get courses for logged in user
   query GET_USER_COURSES {
-    getInstructingCourses {
+    getCoursesInstructing {
       _id
       name
       subject
@@ -84,9 +84,9 @@ const CreatePlaylistForm = ({ course, subject, type }) => {
 
   const onCourseSelect = optionValue => {
     // iterates through courses and sets selectedSubject to subject that matches course with same _id in option selected
-    for (let i = 0; i < query.data.getInstructingCourses.length; i++) {
-      if (query.data.getInstructingCourses[i]._id === optionValue) {
-        setCourseSubject(query.data.getInstructingCourses[i].subject);
+    for (let i = 0; i < query.data.getCoursesInstructing.length; i++) {
+      if (query.data.getCoursesInstructing[i]._id === optionValue) {
+        setCourseSubject(query.data.getCoursesInstructing[i].subject);
       }
     }
   }
@@ -101,12 +101,12 @@ const CreatePlaylistForm = ({ course, subject, type }) => {
           <input type="text" name="name" ref={register({ required: true })} />
 
           {!course && (
-            query.data && (query.data.getInstructingCourses.length >= 0) && (
+            query.data && (query.data.getCoursesInstructing.length >= 0) && (
               <>
                 <label htmlFor='course'>Course*</label>
                 <select name='course' ref={register({ required: true })} onChange={() => { onCourseSelect(event.target.value) }}>
                   <option disabled="" value="">Select the Course this Playlist will be in below:</option>
-                  {query.data.getInstructingCourses.map((course) => (
+                  {query.data.getCoursesInstructing.map((course) => (
                     <option value={course._id} key={course._id}>{course.name}</option>
                   ))}
                 </select>

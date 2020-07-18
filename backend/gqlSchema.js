@@ -7,28 +7,28 @@ const typeDefs = gql`
   # QUERIES
   # # # # # # # # # # # #
   type Query {
-    getCurrentUser: User,
+    getUserCurrent: User,
     getUser(userId: ID): User!,
-    getAllUsers: [User]!,
+    getUsersAll: [User]!,
     getCourse(courseId: ID): Course,
 
     getPlaylist(playlistId: ID): Playlist!,
     getRequest(playlistId: ID): Request,
     getRequests: [Request],
     
-    getEnrolledCourses(userId: ID): [Course],
-    getEnrolledClasses(userId: ID): [Class],
+    getCoursesEnrolled(userId: ID): [Course],
+    getClassesEnrolled(userId: ID): [Class],
     getEnrolledPlaylists(userId: ID): [Playlist],
     
-    getInstructingStudents: [User],
-    getInstructingCourse(userId: ID!): Course,
-    getInstructingCourses(userId: ID): [Course],
-    getInstructingClass(classId: ID!): Class,
+    getStudentsInstructing: [User],
+    getCourseInstructing(userId: ID!): Course,
+    getCoursesInstructing(userId: ID): [Course],
+    getClassInstructing(classId: ID!): Class,
     getClassesInstructing(userId: ID): [Class],
     getInstructingPlaylists(userId: ID): [Playlist],
     getScoresInstructing(userId: ID): [Score],
 
-    getParentCourse(classId: ID!): Course!,
+    getCourseOfClass(classId: ID!): Course!,
 
     getScores(userId: ID): [Score],
     getScoresPending: [Score],

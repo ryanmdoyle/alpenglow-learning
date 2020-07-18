@@ -33,8 +33,8 @@ const teacherCourses = () => {
   return (
     <div>
       <PageTitle>Manage Course Curriculum</PageTitle>
-      {data.getInstructingCourses && (
-        data.getInstructingCourses.map(course => (
+      {data.getCoursesInstructing && (
+        data.getCoursesInstructing.map(course => (
           <CourseTimelines
             name={course.name}
             courseId={course._id}

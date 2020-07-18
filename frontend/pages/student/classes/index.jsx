@@ -8,7 +8,7 @@ import CourseTimelines from '../../../components/courses/CourseTimelines';
 
 const ENROLLED_COURSES_QUERY = gql`
   query ENROLLED_COURSES_QUERY {
-    getEnrolledCourses {
+    getCoursesEnrolled {
       _id
       name
       subject
@@ -45,7 +45,7 @@ const studentClasses = () => {
   if (error) return null;
   if (loading) return <Loading />;
 
-  const coursesWithScores = data.getEnrolledCourses.map(course => {
+  const coursesWithScores = data.getCoursesEnrolled.map(course => {
     // for essential playlists
     course.essentialPlaylists.map(playlist => {
       playlist.best = null;

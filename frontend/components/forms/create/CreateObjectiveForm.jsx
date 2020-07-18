@@ -54,9 +54,9 @@ const CreateObjectiveForm = () => {
   };
 
   const extractCoursePlaylists = id => {
-    const { getInstructingCourses } = courseQuery.data;
-    for (let i = 0; i < getInstructingCourses.length; i++) {
-      if (getInstructingCourses[i]._id === id) setCoursePlaylists(getInstructingCourses[i].playlists)
+    const { getCoursesInstructing } = courseQuery.data;
+    for (let i = 0; i < getCoursesInstructing.length; i++) {
+      if (getCoursesInstructing[i]._id === id) setCoursePlaylists(getCoursesInstructing[i].playlists)
     }
   }
 
@@ -74,7 +74,7 @@ const CreateObjectiveForm = () => {
               <label htmlFor='course'>Course*</label>
               <select name='course' onChange={(event) => { extractCoursePlaylists(event.target.value) }} ref={register({ required: true })}>
                 <option disabled="" value="">Select the Course this objective will be in:</option>
-                {courseQuery.data.getInstructingCourses.map(course => (
+                {courseQuery.data.getCoursesInstructing.map(course => (
                   <option value={course._id} key={course._id}>{course.name}</option>
                 ))}
               </select>

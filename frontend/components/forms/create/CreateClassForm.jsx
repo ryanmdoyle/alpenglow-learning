@@ -71,7 +71,7 @@ const CreateClassForm = ({ courseId }) => {
               <label htmlFor='course'>course*</label>
               <select name='course' ref={register({ required: true })}>
                 <option disabled="" value="">Select the course this class is a part of:</option>
-                {courseQuery.data.getInstructingCourses.map(course => (
+                {courseQuery.data.getCoursesInstructing.map(course => (
                   <option value={course._id} key={course._id}>{course.name}</option>
                 ))}
               </select>

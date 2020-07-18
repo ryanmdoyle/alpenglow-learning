@@ -89,7 +89,7 @@ const tableWrapper = css`
 
 const GET_CLASS_PROGRESS = gql`
   query GET_CLASS_PROGRESS($classId: ID!) {
-    getInstructingClass(classId: $classId) {
+    getClassInstructing(classId: $classId) {
       _id
       name
       enrolled {
@@ -97,7 +97,7 @@ const GET_CLASS_PROGRESS = gql`
         name
       }
     }
-    getParentCourse(classId: $classId) {
+    getCourseOfClass(classId: $classId) {
       _id
       name
       essentialPlaylists {
@@ -151,10 +151,10 @@ const ClassProgressTable = () => {
     }
   });
   if (loading) return <Loading />
-  const essential = data?.getParentCourse?.essentialPlaylists;
-  const core = data?.getParentCourse?.corePlaylists;
-  const challenge = data?.getParentCourse?.challengePlaylists;
-  const students = data?.getInstructingClass?.enrolled;
+  const essential = data?.getCourseOfClass?.essentialPlaylists;
+  const core = data?.getCourseOfClass?.corePlaylists;
+  const challenge = data?.getCourseOfClass?.challengePlaylists;
+  const students = data?.getClassInstructing?.enrolled;
   return (
     <div css={tableWrapper}>
       <table>

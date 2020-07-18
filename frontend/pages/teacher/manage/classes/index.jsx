@@ -33,7 +33,7 @@ const teacherClasses = () => {
     <div>
       <PageTitle>Manage Your Classes</PageTitle>
       <PagePadding>
-        {data?.getInstructingCourses?.map(course => (
+        {data?.getCoursesInstructing?.map(course => (
           <div key={course._id}>
             <h4>{course.name}</h4>
             {course.classes.length === 0 && (

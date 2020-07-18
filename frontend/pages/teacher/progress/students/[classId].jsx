@@ -9,7 +9,7 @@ import ClassProgressTable from '../../../../components/progress/classProgress/Cl
 
 const GET_CLASS_TITLE = gql`
   query GET_CLASS_TITLE($classId: ID!) {
-    getInstructingClass(classId: $classId) {
+    getClassInstructing(classId: $classId) {
       _id
       name
     }
@@ -21,7 +21,7 @@ const classProgress = () => {
   const { data } = useQuery(GET_CLASS_TITLE, {
     variables: { classId },
   })
-  const name = data?.getInstructingClass?.name;
+  const name = data?.getClassInstructing?.name;
   const title = name ? `Student Progress - ${name}` : `Student Progress`
   return (
     <div>

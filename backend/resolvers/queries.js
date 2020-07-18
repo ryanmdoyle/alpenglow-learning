@@ -11,22 +11,22 @@ const Quiz = require('../models/Quiz');
 const Score = require('../models/Score');
 
 const queries = {
-		async getCurrentUser(parent, args, context, info) {
-			if (!context.currentUser) return null;
-			if (!context.currentUser._id) return null;
-			return await User.findById(context.currentUser._id);
-		},
+	async getUserCurrent(parent, args, context, info) {
+		if (!context.currentUser) return null;
+		if (!context.currentUser._id) return null;
+		return await User.findById(context.currentUser._id);
+	},
 
-		async getUser(parent, args, context, info) {
-			const userId = args.userId ? args.userId : context.currentUser._id;
-			return await User.findOne({ _id: userId });
-		},
+	async getUser(parent, args, context, info) {
+		const userId = args.userId ? args.userId : context.currentUser._id;
+		return await User.findOne({ _id: userId });
+	},
 
-		async getAllUsers(parent, args, context, info) {
-			return await User.find();
-		},
+	async getUsersAll(parent, args, context, info) {
+		return await User.find();
+	},
 
-	async getInstructingClass(parent, args, context, info) {
+	async getClassInstructing(parent, args, context, info) {
 		const { currentUser } = context;
 		const aClass = await Class.findById(args.classId);
 		if (aClass.primaryInstructor._id != currentUser._id) return ApolloError('Must be owner of class to view.')
@@ -37,7 +37,7 @@ const queries = {
 		return await Course.findById(args.courseId);
 	},
 
-	async getInstructingStudents(parent, args, context, info) {
+	async getStudentsInstructing(parent, args, context, info) {
 		const userId = args.userId ? args.userId : context.currentUser._id;
 		const classes = await Class.find({ primaryInstructor: userId });
 		let students = [];
@@ -51,22 +51,22 @@ const queries = {
 		return students;
 	},
 
-	async getInstructingCourse(parent, args, context, info) {
+	async getCourseInstructing(parent, args, context, info) {
 		const userId = args.userId ? args.userId : context.currentUser._id;
 		return await Course.findOne({ owner: userId });
 	},
 
-	async getInstructingCourses(parent, args, context, info) {
+	async getCoursesInstructing(parent, args, context, info) {
 		const userId = args.userId ? args.userId : context.currentUser._id;
 		return await Course.find({ owner: userId });
 	},
 
-	async getEnrolledClasses(parent, args, context, info) {
+	async getClassesEnrolled(parent, args, context, info) {
 		const userId = args.userId ? args.userId : context.currentUser._id;
 		return await Class.find({ enrolled: { $in: userId } });
 	},
 
-	async getEnrolledCourses(parent, args, context, info) {
+	async getCoursesEnrolled(parent, args, context, info) {
 		const userId = args.userId ? args.userId : context.currentUser._id;
 		const enrolledClasses = await Class.find({ enrolled: { $in: userId } }).select('_id');
 		return await Course.find({ classes: { $in: enrolledClasses } });
@@ -162,7 +162,7 @@ const queries = {
 		return scores
 	},
 
-	async getParentCourse(parent, args, context, info) {
+	async getCourseOfClass(parent, args, context, info) {
 		return await Course.findOne({ classes: { $in: { _id: args.classId } } });
 	},
 

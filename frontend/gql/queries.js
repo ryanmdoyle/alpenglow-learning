@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 
 export const GET_INSTRUCTING_COURSES = gql`
   query GET_INSTRUCTING_COURSES {
-    getInstructingCourses {
+    getCoursesInstructing {
       _id
       name
       subject
@@ -37,7 +37,7 @@ export const GET_INSTRUCTING_COURSES = gql`
 
 export const GET_ENROLLED_CLASSES = gql`
 query GET_ENROLLED_CLASSES {
-  getEnrolledClasses {
+  getClassesEnrolled {
     name
     _id
   }
@@ -46,7 +46,7 @@ query GET_ENROLLED_CLASSES {
 
 export const GET_INSTRUCTING_STUDENTS = gql`
   query GET_INSTRUCTING_STUDENTS {
-    getInstructingStudents {
+    getStudentsInstructing {
       _id
       name
       email

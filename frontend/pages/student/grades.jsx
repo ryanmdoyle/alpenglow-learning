@@ -29,7 +29,7 @@ const GET_GRADES = gql`
         _id
       }
     }
-    getEnrolledCourses {
+    getCoursesEnrolled {
       _id
       name
       essentialPlaylists {
@@ -50,7 +50,7 @@ const GET_GRADES = gql`
 
 const studentGrades = () => {
   const { loading, error, data } = useQuery(GET_GRADES);
-  const classes = data?.getEnrolledCourses;
+  const classes = data?.getCoursesEnrolled;
   const scores = data?.getScores;
   return (
     <div>

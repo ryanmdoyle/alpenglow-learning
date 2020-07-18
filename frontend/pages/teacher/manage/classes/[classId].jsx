@@ -29,7 +29,7 @@ const editButton = css`
 
 const GET_CLASS_TO_MANAGE = gql`
   query GET_CLASS_TO_MANAGE($classId: ID!) {
-    getInstructingClass(classId: $classId) {
+    getClassInstructing(classId: $classId) {
       _id
       name
       enrollId
@@ -100,7 +100,7 @@ const manageClass = () => {
   }
 
   if (loading) return <Loading />
-  const { course, enrolled, name, primaryInstructor, enrollId } = data?.getInstructingClass;
+  const { course, enrolled, name, primaryInstructor, enrollId } = data?.getClassInstructing;
 
   return (
     <>

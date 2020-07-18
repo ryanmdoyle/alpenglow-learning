@@ -13,7 +13,7 @@ const enrolledClasses = css`padding-left: 1rem;`;
 
 const NavStudentDashboard = props => {
   const { loading, error, data } = useQuery(GET_ENROLLED_CLASSES);
-  const studentHasEnrollments = data?.getEnrolledClasses?.length > 0;
+  const studentHasEnrollments = data?.getClassesEnrolled?.length > 0;
   if (loading) return <Loading />;
   return (
     <NavSectionPadding>
@@ -22,9 +22,9 @@ const NavStudentDashboard = props => {
         {studentHasEnrollments && (
           <>
             <NavItem href='/student/classes' as='/student/classes'>All Classes</NavItem>
-            {data.getEnrolledClasses && (
+            {data.getClassesEnrolled && (
               <div css={enrolledClasses}>
-                {data.getEnrolledClasses.map(c => (
+                {data.getClassesEnrolled.map(c => (
                   <NavItem href='/student/classes/[classId]' as={`/student/classes/${c._id}`} key={c._id}>{c.name}</NavItem>
                 ))}
               </div>
