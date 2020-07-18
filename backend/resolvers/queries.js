@@ -83,7 +83,7 @@ const queries = {
 		return playlist;
 	},
 
-	async getPlaylistRequest(parent, args, context, info) {
+	async getRequest(parent, args, context, info) {
 		return await Request.findOne({ user: context.currentUser, playlist: args.playlistId });
 	},
 

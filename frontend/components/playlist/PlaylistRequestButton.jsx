@@ -11,7 +11,7 @@ const GET_PLAYLIST_REQUEST = gql`
   query GET_PLAYLIST_REQUEST(
     $playlistId: ID!,
   ) {
-    getPlaylistRequest(playlistId: $playlistId) {
+    getRequest(playlistId: $playlistId) {
       _id
       approved
     }
@@ -45,7 +45,7 @@ const PlaylistRequestButton = ({ playlistId }) => {
     variables: { playlistId: playlistId },
     pollInterval: 3000,
   });
-  const requestId = requestData?.getPlaylistRequest?._id;
+  const requestId = requestData?.getRequest?._id;
 
   const [createRequest, { data }] = useMutation(CREATE_REQUEST, {
     refetchQueries: [{ query: GET_PLAYLIST_REQUEST, variables: { playlistId: playlistId } }],
@@ -77,8 +77,8 @@ const PlaylistRequestButton = ({ playlistId }) => {
   }
 
   const isQuiz = requestData?.getQuizForPlaylist;
-  const isRequested = requestData?.getPlaylistRequest ? true : false;
-  const isApproved = isRequested && requestData?.getPlaylistRequest.approved;
+  const isRequested = requestData?.getRequest ? true : false;
+  const isApproved = isRequested && requestData?.getRequest.approved;
 
   if (!isQuiz) return <em css={css`color: var(--pink);`}>Quiz has not been created for this playlist.</em>
 
