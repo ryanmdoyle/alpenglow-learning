@@ -149,7 +149,6 @@ const ProgressTable_Courses = () => {
                   })
                   studentPlaylistPercents.sort((a, b) => b.percent - a.percent);
 
-                  // START HERE, fogure out some way to remove all but highest score from above array
                   let complete = 0;
                   let partial = 0;
                   let low = 0;
