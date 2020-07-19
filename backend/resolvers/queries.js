@@ -108,7 +108,7 @@ const queries = {
 		const { currentUser } = context;
 		const query = {};
 		if (args.userId) {
-			query.user = args._id;
+			query.user = args.userId;
 		} else {
 			query.user = currentUser._id;
 		}
