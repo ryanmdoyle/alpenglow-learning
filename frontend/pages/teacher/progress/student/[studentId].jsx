@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import PageTitle from '../../../../components/PageTitle';
 import PagePadding from '../../../../components/styled/PagePadding';
 import GradesPlaylistScore from '../../../../components/grades/GradesPlaylistScore';
+import Loading from '../../../../components/Loading';
 
 const playlistColumns = css`
   width: 100%;
@@ -62,6 +63,7 @@ const studentProgress = () => {
   });
   const classes = data?.getCoursesEnrolled;
   const scores = data?.getScores;
+  if (loading) return <Loading />
   return (
     <div>
       <PageTitle>Progress for {data.getUser.name}</PageTitle>

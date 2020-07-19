@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
+import Link from 'next/link';
 import { css } from '@emotion/core';
 import { useQuery } from '@apollo/react-hooks';
 
@@ -118,64 +119,66 @@ const ProgressTable_Courses = () => {
 
             // return row of student progress
             return (
-              <tr key={student._id}>
-                <th scope='row'>{student.name}</th>
-                {courses.map(course => {
-                  // if student not in course, don't return a progress bar
-                  const studentsInCourse = [];
-                  course.classes.forEach(classs => {
-                    classs.enrolled.forEach(student => {
-                      if (!studentsInCourse.includes(student._id)) {
-                        studentsInCourse.push(student._id)
+              <Link href='/teacher/progress/student/[studentId]' as={`/teacher/progress/student/${student._id}`}>
+                <tr key={student._id}>
+                  <th scope='row'>{student.name}</th>
+                  {courses.map(course => {
+                    // if student not in course, don't return a progress bar
+                    const studentsInCourse = [];
+                    course.classes.forEach(classs => {
+                      classs.enrolled.forEach(student => {
+                        if (!studentsInCourse.includes(student._id)) {
+                          studentsInCourse.push(student._id)
+                        }
+                      })
+                    })
+                    if (!studentsInCourse.includes(student._id)) return null;
+
+                    // if student is on course, calculate progress and show bar
+                    const { essentialPlaylists, corePlaylists, challengePlaylists, name, _id } = course;
+                    // Make array of playlists in current course
+                    const coursePlaylists = [...essentialPlaylists, ...corePlaylists, ...challengePlaylists];
+                    const coursePlaylistIds = coursePlaylists.map(course => course._id);
+                    // filter scores to only includes ones for current 
+                    const studentsCourseScores = studentScores.filter(score => coursePlaylistIds.includes(score.playlist._id));
+                    // make new array of playlist Id's and score percents, then sort greatest to least
+                    const studentPlaylistPercents = studentsCourseScores.map(score => {
+                      const percent = parseInt(score.score / score.possibleScore * 100);
+                      return {
+                        playlistId: score.playlist._id,
+                        percent: percent,
                       }
                     })
-                  })
-                  if (!studentsInCourse.includes(student._id)) return null;
+                    studentPlaylistPercents.sort((a, b) => b.percent - a.percent);
 
-                  // if student is on course, calculate progress and show bar
-                  const { essentialPlaylists, corePlaylists, challengePlaylists, name, _id } = course;
-                  // Make array of playlists in current course
-                  const coursePlaylists = [...essentialPlaylists, ...corePlaylists, ...challengePlaylists];
-                  const coursePlaylistIds = coursePlaylists.map(course => course._id);
-                  // filter scores to only includes ones for current 
-                  const studentsCourseScores = studentScores.filter(score => coursePlaylistIds.includes(score.playlist._id));
-                  // make new array of playlist Id's and score percents, then sort greatest to least
-                  const studentPlaylistPercents = studentsCourseScores.map(score => {
-                    const percent = parseInt(score.score / score.possibleScore * 100);
-                    return {
-                      playlistId: score.playlist._id,
-                      percent: percent,
-                    }
-                  })
-                  studentPlaylistPercents.sort((a, b) => b.percent - a.percent);
+                    let complete = 0;
+                    let partial = 0;
+                    let low = 0;
+                    const checkedPlaylists = [];
 
-                  let complete = 0;
-                  let partial = 0;
-                  let low = 0;
-                  const checkedPlaylists = [];
+                    studentPlaylistPercents.forEach(score => {
+                      if (!checkedPlaylists.includes(score.playlistId)) {
+                        checkedPlaylists.push(score.playlistId);
+                        if (score.percent >= 80) { complete += 1; }
+                        else if (score.percent >= 70) { partial += 1; }
+                        else if (score.percent >= 0) { low += 1; }
+                      }
+                    })
 
-                  studentPlaylistPercents.forEach(score => {
-                    if (!checkedPlaylists.includes(score.playlistId)) {
-                      checkedPlaylists.push(score.playlistId);
-                      if (score.percent >= 80) { complete += 1; }
-                      else if (score.percent >= 70) { partial += 1; }
-                      else if (score.percent >= 0) { low += 1; }
-                    }
-                  })
-
-                  return (
-                    <td key={course._id}>
-                      <ProgressBox_Course
-                        totalPlaylists={essentialPlaylists.length + corePlaylists.length + challengePlaylists.length}
-                        totalAttempts={checkedPlaylists.length}
-                        completeAttempts={complete}
-                        partialAttempts={partial}
-                        lowAttempts={low}
-                      />
-                    </td>
-                  )
-                })}
-              </tr>
+                    return (
+                      <td key={course._id}>
+                        <ProgressBox_Course
+                          totalPlaylists={essentialPlaylists.length + corePlaylists.length + challengePlaylists.length}
+                          totalAttempts={checkedPlaylists.length}
+                          completeAttempts={complete}
+                          partialAttempts={partial}
+                          lowAttempts={low}
+                        />
+                      </td>
+                    )
+                  })}
+                </tr>
+              </Link>
             )
           })
         )}
