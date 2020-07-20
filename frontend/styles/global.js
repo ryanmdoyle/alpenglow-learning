@@ -111,17 +111,22 @@ const global = css`
     }
   }
 
-  body::-webkit-scrollbar {
-    width: 0.5em;
+    /* width */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
   }
-  
-  body::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    border-radius: 5px;
+    box-shadow: inset 0 0 2px grey
   }
-  
-  body::-webkit-scrollbar-thumb {
-    background-color: var(---blueLight50);
-    outline: 1px solid var(---blueLight50);
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: var(--blueLight);
+    border-radius: 5px;
   }
 `;
 
