@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
+import Link from 'next/link';
 import { css } from '@emotion/core';
 import { useQuery } from '@apollo/react-hooks';
 
@@ -118,18 +119,20 @@ const ProgressTable_Courses = () => {
 
             // return row of student progress
             return (
-              <tr key={student._id}>
-                <th scope='row'>{student.name}</th>
-                {courses.map(course => {
-                  // if student not in course, don't return a progress bar
-                  const studentsInCourse = [];
-                  course.classes.forEach(classs => {
-                    classs.enrolled.forEach(student => {
-                      if (!studentsInCourse.includes(student._id)) {
-                        studentsInCourse.push(student._id)
-                      }
+              <Link href='/teacher/progress/student/[studentId]' as={`/teacher/progress/student/${student._id}`}>
+                <tr key={student._id}>
+                  <th scope='row'>{student.name}</th>
+                  {courses.map(course => {
+                    // if student not in course, don't return a progress bar
+                    const studentsInCourse = [];
+                    course.classes.forEach(classs => {
+                      classs.enrolled.forEach(student => {
+                        if (!studentsInCourse.includes(student._id)) {
+                          studentsInCourse.push(student._id)
+                        }
+                      })
                     })
-                  })
+                    
                   // return if the the student is not enrolled in the class/course
                   if (!studentsInCourse.includes(student._id)) return (
                     <td><small>n/a</small></td>
@@ -177,8 +180,9 @@ const ProgressTable_Courses = () => {
                       />
                     </td>
                   )
-                })}
-              </tr>
+                  })}
+                </tr>
+              </Link>
             )
           })
         )}

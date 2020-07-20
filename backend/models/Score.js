@@ -14,6 +14,8 @@ const scoreSchema = new Schema({
   },
   possibleScore: Number,
   score: Number,
+  timeCreated: Date,
+  timeScored: Date,
 })
 
 scoreSchema.plugin(require('mongoose-autopopulate'));

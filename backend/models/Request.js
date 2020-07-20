@@ -14,6 +14,9 @@ const requestSchema = new Schema({
   },
   approved: Boolean,
   approvalAccepted: Boolean,
+  timeRequested: Date,
+  timeApproved: Date,
+  timeAccepted: Date,
 })
 
 requestSchema.plugin(require('mongoose-autopopulate'));

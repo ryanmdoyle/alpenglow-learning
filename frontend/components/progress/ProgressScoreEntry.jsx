@@ -107,7 +107,7 @@ const ProgressScoreEntry = ({ scoreId, studentName, playlistName, score, possibl
   });
 
   const [removeScore, { data: deleteData }] = useMutation(DELETE_SCORE, {
-    onCompleted: () => { alert.success('Removed score.')},
+    onCompleted: () => { alert.success('Removed score.') },
     refetchQueries: [{ query: GET_STUDENT_REQS_AND_PENDING_SCORES }],
   })
 
@@ -137,7 +137,7 @@ const ProgressScoreEntry = ({ scoreId, studentName, playlistName, score, possibl
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className='inputContainer'>
             <label htmlFor='score'><small>Score</small></label>
-            <input type='number' min='0' name='score' ref={register({ required: true, min: 0 })} />
+            <input type='number' min='0' name='score' defaultValue={score ? score : null} ref={register({ required: true, min: 0 })} />
             {errors.score && 'Score must be a numerical value'}
           </div>
           <div className='inputContainer'>
@@ -145,8 +145,8 @@ const ProgressScoreEntry = ({ scoreId, studentName, playlistName, score, possibl
             <input type='number' min='0' name='possibleScore' placeholder='Possible Score' defaultValue={possibleScore} ref={register({ required: true, min: 0 })} />
             {errors.score && 'Score must be a numerical value'}
           </div>
-          <input type='submit' value='Save Score' css={css`margin-right: 0.5rem;`} ></input>
-          <TrashCanButton onClick={trashScore}/>
+          <input type='submit' value={score && possibleScore ? 'Update' : 'Save Score'} css={css`margin-right: 0.5rem;`} ></input>
+          <TrashCanButton onClick={trashScore} />
         </form>
       </div>
     </div>

@@ -30,7 +30,10 @@ const typeDefs = gql`
 
     getCourseOfClass(classId: ID!): Course!,
 
-    getScores(userId: ID): [Score],
+    getScores(
+      userId: ID,
+      timeFrom: Date,
+    ): [Score],
     getScoresPending: [Score],
     getScoresForPlaylist(playlistId: ID!): [Score],
     getScoresForClass(classId: ID!): [Score],
@@ -309,6 +312,8 @@ const typeDefs = gql`
     user: User,
     possibleScore: Int,
     score: Int,
+    timeCreated: Date,
+    timeScored: Date,
   }
 
   type Question {
@@ -324,6 +329,9 @@ const typeDefs = gql`
     playlist: Playlist,
     approved: Boolean,
     approvalAccepted: Boolean,
+    timeRequested: Date,
+    timeApproved: Date,
+    timeAccepted: Date,
   }
 `;
 

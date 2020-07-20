@@ -1,5 +1,6 @@
 import React from 'react';
 import gql from 'graphql-tag';
+import Link from 'next/link';
 import { css } from '@emotion/core';
 import { useQuery } from '@apollo/react-hooks';
 import { useRouter } from 'next/router';
@@ -182,47 +183,49 @@ const ClassProgressTable = () => {
           {students.map(student => {
             const studentScores = data?.getScoresForClass?.filter(score => score.user._id == student._id);
             return (
-              <tr key={student._id}>
-                <td>{student.name}</td>
-                {essential.map(essentialPl => {
-                  const score = studentScores?.filter(score => score.playlist._id == essentialPl._id);
-                  const percent = score.length > 0 ? (score[0].score / score[0].possibleScore * 100) : null;
-                  return (
-                    <td key={essentialPl._id}>
-                      <div className='score'>
-                        <PercentScoreRectangle percent={percent} />
-                      </div>
-                    </td>
-                  )
-                })}
-                {core.map(corePl => {
-                  const score = studentScores?.filter(score => score.playlist._id == corePl._id);
-                  const percent = score.length > 0 ? (score[0].score / score[0].possibleScore * 100) : null;
-                  return (
-                    <td key={corePl._id}>
-                      <div className='score'>
-                        <PercentScoreRectangle percent={percent} />
-                      </div>
-                    </td>
-                  )
-                })}
-                {challenge.map(challengePl => {
-                  const score = studentScores?.filter(score => score.playlist._id == challengePl._id);
-                  const percent = score.length > 0 ? (score[0].score / score[0].possibleScore * 100) : null;
-                  return (
-                    <td key={challengePl._id}>
-                      <div className='score'>
-                        <PercentScoreRectangle percent={percent} />
-                      </div>
-                    </td>
-                  )
-                })}
-              </tr>
+              <Link href='/teacher/progress/student/[studentId]' as={`/teacher/progress/student/${student._id}`}>
+                <tr key={student._id}>
+                  <td>{student.name}</td>
+                  {essential.map(essentialPl => {
+                    const score = studentScores?.filter(score => score.playlist._id == essentialPl._id);
+                    const percent = score.length > 0 ? (score[0].score / score[0].possibleScore * 100) : null;
+                    return (
+                      <td key={essentialPl._id}>
+                        <div className='score'>
+                          <PercentScoreRectangle percent={percent} />
+                        </div>
+                      </td>
+                    )
+                  })}
+                  {core.map(corePl => {
+                    const score = studentScores?.filter(score => score.playlist._id == corePl._id);
+                    const percent = score.length > 0 ? (score[0].score / score[0].possibleScore * 100) : null;
+                    return (
+                      <td key={corePl._id}>
+                        <div className='score'>
+                          <PercentScoreRectangle percent={percent} />
+                        </div>
+                      </td>
+                    )
+                  })}
+                  {challenge.map(challengePl => {
+                    const score = studentScores?.filter(score => score.playlist._id == challengePl._id);
+                    const percent = score.length > 0 ? (score[0].score / score[0].possibleScore * 100) : null;
+                    return (
+                      <td key={challengePl._id}>
+                        <div className='score'>
+                          <PercentScoreRectangle percent={percent} />
+                        </div>
+                      </td>
+                    )
+                  })}
+                </tr>
+              </Link>
             )
           })}
         </tbody>
       </table>
-    </div>
+    </div >
   );
 };
 

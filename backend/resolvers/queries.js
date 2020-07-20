@@ -104,6 +104,20 @@ const queries = {
 		return await Quiz.findOne({ playlist: args.playlistId })
 	},
 
+	async getScores(parent, args, context, info) {
+		const { currentUser } = context;
+		const query = {};
+		if (args.userId) {
+			query.user = args.userId;
+		} else {
+			query.user = currentUser._id;
+		}
+		if (args.fromDate) {
+			query.timeScored = { $gt: args.timeFrom };
+		}
+		return await Score.find(query);
+	},
+
 	async getScoresPending(parent, args, context, info) {
 		const { currentUser } = context;
 		// Create array of users classes they instruct
@@ -125,14 +139,6 @@ const queries = {
 			]
 		})
 		return scores
-	},
-
-	async getScores(parent, args, context, info) {
-		const { currentUser } = context;
-		if (args.userId) {
-			return await Score.find({ user: args.userId })
-		}
-		return await Score.find({ user: currentUser._id });
 	},
 
 	async getScoresForPlaylist(parent, args, context, info) {
