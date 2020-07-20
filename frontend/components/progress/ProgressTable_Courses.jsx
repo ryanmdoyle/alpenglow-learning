@@ -130,7 +130,10 @@ const ProgressTable_Courses = () => {
                       }
                     })
                   })
-                  if (!studentsInCourse.includes(student._id)) return null;
+                  // return if the the student is not enrolled in the class/course
+                  if (!studentsInCourse.includes(student._id)) return (
+                    <td><small>n/a</small></td>
+                  )
 
                   // if student is on course, calculate progress and show bar
                   const { essentialPlaylists, corePlaylists, challengePlaylists, name, _id } = course;

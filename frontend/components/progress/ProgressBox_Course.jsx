@@ -31,7 +31,7 @@ const ProgressBox_Course = ({ totalPlaylists, totalAttempts, completeAttempts, p
         partialAttempts={partialAttempts}
         lowAttempts={lowAttempts}
       />
-      <small css={counter}>12/34</small>
+      <small css={counter}>{completeAttempts}/{totalPlaylists}</small>
     </div>
   );
 };
