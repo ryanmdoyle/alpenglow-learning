@@ -21,7 +21,7 @@ const counter = css`
   font-size: 1rem;
 `;
 
-const ProgressBox_Course = ({ totalPlaylists, totalAttempts, completeAttempts, partialAttempts, lowAttempts }) => {
+const ProgressCourseBox = ({ totalPlaylists, totalAttempts, completeAttempts, partialAttempts, lowAttempts }) => {
   return (
     <div css={box}>
       <ProgressBar
@@ -36,4 +36,4 @@ const ProgressBox_Course = ({ totalPlaylists, totalAttempts, completeAttempts, p
   );
 };
 
-export default ProgressBox_Course;
+export default ProgressCourseBox;

@@ -6,7 +6,7 @@ import { css } from '@emotion/core';
 import { useQuery } from '@apollo/react-hooks';
 
 import Loading from '../Loading';
-import ProgressBox_Course from './ProgressBox_Course';
+import ProgressCourseBox from './ProgressCourseBox';
 
 const tableStyles = css`
   width: 100%;
@@ -90,7 +90,7 @@ const GET_ALL_PROGRESS = gql`
   }
 `;
 
-const ProgressTable_Courses = () => {
+const ProgressCoursesTable = () => {
   const { loading, error, data } = useQuery(GET_ALL_PROGRESS);
   const courses = data?.getCoursesInstructing;
   const scores = data?.getScoresInstructing;
@@ -171,7 +171,7 @@ const ProgressTable_Courses = () => {
 
                   return (
                     <td key={course._id}>
-                      <ProgressBox_Course
+                      <ProgressCourseBox
                         totalPlaylists={essentialPlaylists.length + corePlaylists.length + challengePlaylists.length}
                         totalAttempts={checkedPlaylists.length}
                         completeAttempts={complete}
@@ -191,9 +191,9 @@ const ProgressTable_Courses = () => {
   );
 };
 
-ProgressTable_Courses.proptypes = {
+ProgressCoursesTable.proptypes = {
   courses: PropTypes.array.isRequired,
   students: PropTypes.array.isRequired,
 }
 
-export default ProgressTable_Courses;
+export default ProgressCoursesTable;
