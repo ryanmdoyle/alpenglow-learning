@@ -119,14 +119,12 @@ const global = css`
 
   /* Track */
   ::-webkit-scrollbar-track {
-    border-radius: 5px;
     box-shadow: inset 0 0 2px grey
   }
 
   /* Handle */
   ::-webkit-scrollbar-thumb {
     background: var(--blueLight);
-    border-radius: 5px;
   }
 `;
 
