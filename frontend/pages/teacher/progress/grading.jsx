@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 import { css } from '@emotion/core';
 import { useQuery } from '@apollo/react-hooks';
 
-import PageTitle from '../../../components/PageTitle';
+import PageTitle from '../../../components/styled/PageTitle';
 import Loading from '../../../components/Loading';
 import PagePadding from '../../../components/styled/blocks/PagePadding';
 import QuizRequest from '../../../components/progress/QuizRequest';

@@ -1,5 +1,6 @@
 const { ApolloError } = require('apollo-server-express')
 const ShortUniqueId = require('short-unique-id').default;
+const { OAuth2Client } = require('google-auth-library');
 
 const { pubsub } = require('./pubsub');
 
@@ -14,8 +15,107 @@ const Resource = require('../models/Resource');
 const Quiz = require('../models/Quiz');
 const Question = require('../models/Question');
 const Score = require('../models/Score');
+const Task = require('../models/Task');
+const jwt = require('jsonwebtoken');
 
 const mutations = {
+  async login(parent, args, context, info) {
+    const client = new OAuth2Client('740708519996-jckm5svthu1lh5fv35jc55pp54kam9br');
+    const token = args.authToken;
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: '740708519996-jckm5svthu1lh5fv35jc55pp54kam9br.apps.googleusercontent.com',  // Specify the CLIENT_ID of the app that accesses the backend
+    });
+    const payload = ticket.getPayload();
+    const user = await User.findOne({ googleId: payload.sub });
+
+    // If user already exists, authorize login
+    if (user !== null) {
+      const alpenglowToken = jwt.sign({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        roles: user.roles,
+        _id: user._id,
+      }, process.env.SECRET)
+      const cookie = await context.res.cookie('token', alpenglowToken);
+      return user;
+    }
+
+    // if user does not exists, add user to db and login
+    if (user === null) {
+      const newUser = new User({
+        firstName: payload.given_name,
+        lastName: payload.family_name,
+        name: payload.name,
+        email: payload.email,
+        googleId: payload.sub,
+        picture: payload.picture,
+        roles: ['STUDENT'],
+      })
+      newUser
+        .save()
+        .then(async () => {
+
+          const newUser = User.findOne({ googleId: payload.sub }, async (err, newUserRes) => {
+
+            const alpenglowToken = jwt.sign({
+              firstName: newUserRes.firstName,
+              lastName: newUserRes.lastName,
+              roles: newUserRes.roles,
+              _id: newUserRes._id,
+            }, process.env.SECRET);
+
+            const cookie = await context.res.cookie('token', alpenglowToken);
+            return newUser;
+          })
+        })
+        .catch((err) => { console.error('error in user creation', err) })
+    }
+  },
+
+  async createAccount(parent, args, context, info) {
+    const client = new OAuth2Client('740708519996-jckm5svthu1lh5fv35jc55pp54kam9br');
+    const token = args.authToken;
+    const userType = args.userType;
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: '740708519996-jckm5svthu1lh5fv35jc55pp54kam9br.apps.googleusercontent.com',  // Specify the CLIENT_ID of the app that accesses the backend
+    });
+    const payload = ticket.getPayload();
+    const userCheck = await User.findOne({ googleId: payload.sub });
+
+    if (userCheck) {
+      return new ApolloError('Account already exists, please log in to your account.')
+    }
+
+    const user = new User({
+      firstName: payload.given_name,
+      lastName: payload.family_name,
+      name: payload.name,
+      email: payload.email,
+      googleId: payload.sub,
+      picture: payload.picture,
+      roles: userType,
+    })
+    const newUser = await user.save()
+    const createdUser = await User.findOne({ googleId: payload.sub });
+
+    const alpenglowToken = jwt.sign({
+      firstName: createdUser.firstName,
+      lastName: createdUser.lastName,
+      roles: createdUser.roles,
+      _id: createdUser._id,
+    }, process.env.SECRET);
+
+    const cookie = await context.res.cookie('token', alpenglowToken);
+    return newUser;
+  },
+
+  async logout(parent, args, context, info) {
+    const clearCookie = await context.res.clearCookie('token');
+    return 'Bye!'
+  },
+
   async enroll(parent, args, context, info) {
     const { currentUser } = context;
     if (!currentUser) return new ApolloError('Unable to enroll in course, must log in.')
@@ -428,6 +528,19 @@ const mutations = {
     } else {
       return new ApolloError('Unable to delete score.')
     }
-  }
+  },
+
+  async createTask(parent, args, context, info) {
+    const { currentUser } = context;
+    const task = new Task({
+      user: currentUser._id,
+      description: args.description,
+      type: args.type,
+      playlist: args.playlist || null,
+      class: args.playlist || null,
+    })
+    const saved = await task.save().catch(err => { return new ApolloError('Problem saving!')});
+    return task;
+  },
 }
 module.exports = mutations;

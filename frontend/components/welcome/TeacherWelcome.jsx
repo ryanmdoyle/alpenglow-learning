@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { css } from '@emotion/core';
 
 import PagePadding from '../styled/blocks/PagePadding';
-import PageTitle from '../PageTitle';
+import PageTitle from '../styled/PageTitle';
 
 const TeacherWelcome = ({ user }) => {
 

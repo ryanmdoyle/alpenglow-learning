@@ -22,6 +22,10 @@ const queries = {
 		return await User.findOne({ _id: userId });
 	},
 
+	async getClass(parent, args, context, info) {
+    return await Class.findById(args.classId);
+	},
+
 	async getUsersAll(parent, args, context, info) {
 		return await User.find();
 	},

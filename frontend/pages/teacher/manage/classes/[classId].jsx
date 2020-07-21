@@ -4,7 +4,7 @@ import { css } from '@emotion/core';
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import { useRouter } from 'next/router';
 
-import PageTitle from '../../../../components/PageTitle';
+import PageTitle from '../../../../components/styled/PageTitle';
 import Loading from '../../../../components/Loading';
 import PagePadding from '../../../../components/styled/blocks/PagePadding';
 import AlertContext from '../../../../components/context/AlertContext';

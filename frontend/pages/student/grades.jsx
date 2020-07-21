@@ -1,5 +1,5 @@
 import React from 'react';
-import PageTitle from '../../components/PageTitle';
+import PageTitle from '../../components/styled/PageTitle';
 import gql from 'graphql-tag';
 import { css } from '@emotion/core';
 import { useQuery } from '@apollo/react-hooks';

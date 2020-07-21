@@ -2,7 +2,7 @@ import React from 'react';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks'
 
-import PageTitle from '../../../components/PageTitle';
+import PageTitle from '../../../components/styled/PageTitle';
 import Loading from '../../../components/Loading';
 import CourseTimelines from '../../../components/courses/CourseTimelines';
 

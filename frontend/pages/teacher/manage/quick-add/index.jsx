@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 
-import PageTitle from '../../../../components/PageTitle';
+import PageTitle from '../../../../components/styled/PageTitle';
 import CreateContentNav from '../../../../components/CreateContentNav';
 import CreatePlaylistForm from '../../../../components/forms/create/CreatePlaylistForm';
 import CreateCourseForm from '../../../../components/forms/create/CreateCourseForm';

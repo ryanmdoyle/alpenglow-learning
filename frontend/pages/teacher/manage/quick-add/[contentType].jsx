@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 
-import PageTitle from '../../../components/PageTitle';
+import PageTitle from '../../../components/styled/PageTitle';
 import CreateContentNav from '../../../components/CreateContentNav';
 
 import CreatePlaylist from '../../../components/CreatePlaylist';

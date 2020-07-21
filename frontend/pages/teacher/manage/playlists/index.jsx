@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/react-hooks';
 import gql from 'apollo-boost';
 
 import Loading from '../../../../components/Loading';
-import PageTitle from '../../../../components/PageTitle';
+import PageTitle from '../../../../components/styled/PageTitle';
 import PagePadding from '../../../../components/styled/blocks/PagePadding';
 import PlaylistItem from '../../../../components/playlist/PlaylistItem';
 

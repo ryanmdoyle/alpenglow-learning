@@ -15,6 +15,7 @@ const typeDefs = gql`
     getPlaylist(playlistId: ID): Playlist!,
     getRequest(playlistId: ID): Request,
     getRequests: [Request],
+    getClass(classId: ID!): Class,
     
     getCoursesEnrolled(userId: ID): [Course],
     getClassesEnrolled(userId: ID): [Class],
@@ -100,6 +101,13 @@ const typeDefs = gql`
     createScore(
       playlistId: ID!
     ): Score,
+
+    createTask(
+      playlistId: ID,
+      classId: ID,
+      description: String!,
+      type: String!,
+    ): Task,
 
     enroll(enrollId: String!) : Class!,
     removeEnrollment(
@@ -216,6 +224,10 @@ const typeDefs = gql`
     ): Score!,
 
     acceptQuizApproval(requestId: ID!): Request!,
+
+    login(authToken: String!): User!,
+    logout: String!,
+    createAccount(authToken: String!, userType: String!): User!,
   }
 
   # # # # # # # # # # # #
@@ -332,6 +344,14 @@ const typeDefs = gql`
     timeRequested: Date,
     timeApproved: Date,
     timeAccepted: Date,
+  }
+
+  type Task {
+    description: String!,
+    user: User!,
+    class: Class,
+    playlist: Playlist,
+    type: String!,
   }
 `;
 

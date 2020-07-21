@@ -1,6 +1,6 @@
 import React from 'react';
 
-import PageTitle from '../../../../components/PageTitle';
+import PageTitle from '../../../../components/styled/PageTitle';
 import PagePadding from '../../../../components/styled/blocks/PagePadding';
 import ProgressCoursesTable from '../../../../components/progress/ProgressCoursesTable';
 

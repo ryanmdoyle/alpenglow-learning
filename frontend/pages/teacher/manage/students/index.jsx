@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks'
 import { css } from '@emotion/core';
 
-import PageTitle from '../../../../components/PageTitle';
+import PageTitle from '../../../../components/styled/PageTitle';
 import PagePadding from '../../../../components/styled/blocks/PagePadding';
 import Loading from '../../../../components/Loading';
 import TrashCanButton from '../../../../components/styled/elements/TrashCanButton';

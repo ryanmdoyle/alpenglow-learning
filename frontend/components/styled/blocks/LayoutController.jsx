@@ -94,8 +94,10 @@ const landing = css`
 const LayoutController = ({ Component, pageProps }) => {
   const user = useContext(UserContext);
 
+  if (!user && user !== null) return <Loading />
+  
   // Renders a different layout based on user being logged in or out
-  if (!user) return ( // once context fetches user, it will be null if loaidng is complete and there is no user
+  if (user == null) return ( // once context fetches user, it will be null if loaidng is complete and there is no user
     <div css={landing}>
       <nav>
         <div className='content-container'>
@@ -109,7 +111,7 @@ const LayoutController = ({ Component, pageProps }) => {
       </main>
     </div>
   )
-  if (user.loading) return <Loading /> // checks whether there is no user, ot user is loading
+  if (user.loading) return <Loading /> // user exists, but is loading
   return (
     <div css={dashboard}>
       <NavPanel />

@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { useRouter } from 'next/router';
 
 import Loading from '../../components/Loading';
-import PageTitle from '../PageTitle';
+import PageTitle from '../styled/PageTitle';
 import PlaylistDetails from './PlaylistDetails';
 import PagePadding from '../styled/PagePadding'
 import PlaylistObjective from './PlaylistObjective';

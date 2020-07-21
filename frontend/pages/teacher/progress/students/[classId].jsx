@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import { useRouter } from 'next/router';
 
-import PageTitle from '../../../../components/PageTitle';
+import PageTitle from '../../../../components/styled/PageTitle';
 import PagePadding from '../../../../components/styled/PagePadding';
 import ClassProgressTable from '../../../../components/progress/classProgress/ClassProgressTable';
 
