@@ -11,21 +11,13 @@ import AlertContext from '../../../components/context/AlertContext';
 import ModalContext from '../../../components/context/ModalContext';
 import CreateTaskForm from '../../../components/forms/create/CreateTaskForm';
 import PlusButtonWithText from '../../../components/styled/elements/PlusButtonWithText';
+import { GET_STUDENT_CLASS } from '../../../gql/queries';
 
 const doubleHeader = css`
   display: flex;
   div {
     width: 49%;
     padding-right: 1%; 
-  }
-`;
-
-const GET_STUDENT_CLASS = gql`
-  query GET_STUDENT_CLASS($classId: ID!) {
-    getClass(classId: $classId) {
-      _id
-      name
-    }
   }
 `;
 
@@ -38,30 +30,56 @@ const studentClass = () => {
   const { loading, error, data } = useQuery(GET_STUDENT_CLASS, {
     variables: { classId: classId },
   })
-  // const { name } = data?.getClass;
-
+  
   const addGoal = () => {
     modal.setChildComponent(
       <CreateTaskForm
-        classId={classId}
-        taskType='GOAL'
+      classId={classId}
+      taskType='Goal'
       />
-    )
-    modal.open();
+      )
+      modal.open();
   }
-
+  
+  const addTodo = () => {
+    modal.setChildComponent(
+      <CreateTaskForm
+      classId={classId}
+      taskType='Todo'
+      />
+      )
+      modal.open();
+    }
+    
   if (loading) return <Loading />
+
+  const { name } = data?.getClass;
   return (
     <>
-      <PageTitle>Class Name</PageTitle>
+      <PageTitle>{name}</PageTitle>
       <PagePadding>
         <div css={doubleHeader}>
           <div>
-            <h4>Weekly Goal</h4>
+            <h4>Weekly Goals</h4>
+            <ul>
+            {data?.getTasks.map(task => {
+              if (task.type == 'GOAL') return (
+              <li>{task.description}</li>
+              ) 
+            })}
+            </ul>
             <PlusButtonWithText onClick={addGoal}>Add Goal</PlusButtonWithText>
           </div>
           <div>
             <h4>To-Do's</h4>
+            <ul>
+            {data?.getTasks.map(task => {
+              if (task.type == 'TODO') return (
+              <li>{task.description}</li>
+              ) 
+            })}
+            </ul>
+            <PlusButtonWithText onClick={addTodo}>Add Todo</PlusButtonWithText>
           </div>
         </div>
         <h4>Past Scores</h4>

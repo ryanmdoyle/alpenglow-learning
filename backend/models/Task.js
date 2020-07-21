@@ -17,13 +17,11 @@ const taskSchema = new Schema({
     ref: 'Playlist',
     autopopulate: { maxDepth: 1 },
   },
-  type: [
-    {
-      type: String,
-      enum: ['TODO', 'GOAL'],
-      default: 'TODO'
-    }
-  ],
+  type: {
+    type: String,
+    enum: ['TODO', 'GOAL'],
+    default: 'TODO'
+  },
 })
 
 taskSchema.options.selectPopulatedPaths = false;

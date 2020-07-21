@@ -9,6 +9,7 @@ const Objective = require('../models/Objective');
 const Request = require('../models/Request');
 const Quiz = require('../models/Quiz');
 const Score = require('../models/Score');
+const Task = require('../models/Task');
 
 const queries = {
 	async getUserCurrent(parent, args, context, info) {
@@ -187,5 +188,14 @@ const queries = {
 		return await Score.find({ playlist: { $in: playlistIds } });
 	},
 
+	async getTasks(parent, args, context, info) {
+		const { userId, playlistId, classId } = args;
+		const query = {};
+		if (!userId) query.user = context.currentUser._id;
+		if (userId) query.user = userId;
+		if (classId) query.class = classId;
+		if (playlistId) query.playlist = playlistId;
+		return await Task.find(query);
+	},
 }
 module.exports = queries;

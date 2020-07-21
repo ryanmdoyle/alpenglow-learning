@@ -536,8 +536,8 @@ const mutations = {
       user: currentUser._id,
       description: args.description,
       type: args.type,
-      playlist: args.playlist || null,
-      class: args.playlist || null,
+      playlist: args.playlistId || null,
+      class: args.classId || null,
     })
     const saved = await task.save().catch(err => { return new ApolloError('Problem saving!')});
     return task;

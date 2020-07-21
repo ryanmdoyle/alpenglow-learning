@@ -16,6 +16,11 @@ const typeDefs = gql`
     getRequest(playlistId: ID): Request,
     getRequests: [Request],
     getClass(classId: ID!): Class,
+    getTasks(
+      userId: ID,
+      classId: ID,
+      playlistId: ID,
+    ): [Task],
     
     getCoursesEnrolled(userId: ID): [Course],
     getClassesEnrolled(userId: ID): [Class],
@@ -347,6 +352,7 @@ const typeDefs = gql`
   }
 
   type Task {
+    _id: ID,
     description: String!,
     user: User!,
     class: Class,

@@ -100,3 +100,17 @@ export const GET_INSTRUCTING_CLASSES = gql`
     }
   }
 `;
+
+export const GET_STUDENT_CLASS = gql`
+query GET_STUDENT_CLASS($classId: ID!) {
+  getClass(classId: $classId) {
+    _id
+    name
+  }
+  getTasks(classId: $classId) {
+    _id
+    description
+    type
+  }
+}
+`;

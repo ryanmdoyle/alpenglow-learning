@@ -7,13 +7,14 @@ import ModalContext from '../../context/ModalContext';
 import PagePadding from '../../styled/PagePadding';
 import { useMutation } from '@apollo/react-hooks';
 import { useForm } from 'react-hook-form';
+import { GET_STUDENT_CLASS } from '../../../gql/queries';
 
 const CREATE_TASK = gql`
   mutation CREATE_TASK(
     $description: String!,
     $type: String!,
-    $classId: String!,
-    $playlistId: String!,
+    $classId: ID,
+    $playlistId: ID,
   ) {
     createTask(
       description: $description,
@@ -32,12 +33,12 @@ const CreateTaskForm = ({ classId, playlistId, taskType }) => {
   const modal = useContext(ModalContext);
 
   const [addTask, { data }] = useMutation(CREATE_TASK, {
-    // refetchQueries: [{ query: GET_PLAYLIST, variables: { playlistId: playlistId } }],
+    refetchQueries: [{ query: GET_STUDENT_CLASS, variables: { classId: classId } }],
     onCompleted: (data) => {
       if (modal.isOpen) {
         modal.close();
       }
-      // alert.success(`Successfully added!`)
+      alert.success(`Successfully added ${taskType}!`)
     },
     onError: (data) => (alert.error(`Ooops, looks like there was a problem. ${data}`)),
   }
@@ -47,9 +48,9 @@ const CreateTaskForm = ({ classId, playlistId, taskType }) => {
     addTask({
       variables: {
         description: data.description,
-        type: taskType,
-        classId: data.classId || null,
-        playlistId: data.playlistId || null,
+        type: taskType.toUpperCase(),
+        classId: classId || null,
+        playlistId: playlistId || null,
       }
     })
   }
