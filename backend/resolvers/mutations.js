@@ -542,5 +542,14 @@ const mutations = {
     const saved = await task.save().catch(err => { return new ApolloError('Problem saving!')});
     return task;
   },
+
+  async deleteTask(parent, args, context, info) {
+    const deleted = await Task.deleteOne({ _id: args.taskId });
+    if (deleted.deletedCount == 1) {
+      return args.taskId;
+    } else {
+      return new ApolloError('Unable to delete task.');
+    }
+  },
 }
 module.exports = mutations;

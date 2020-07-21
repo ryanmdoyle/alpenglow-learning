@@ -228,6 +228,8 @@ const typeDefs = gql`
       scoreId: ID!
     ): Score!,
 
+    deleteTask(taskId: ID!): Task!,
+
     acceptQuizApproval(requestId: ID!): Request!,
 
     login(authToken: String!): User!,

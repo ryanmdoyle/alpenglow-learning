@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import gql from 'graphql-tag';
 import { css } from '@emotion/core';
 import { useRouter } from 'next/router';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import PageTitle from '../../../components/styled/PageTitle';
 import PagePadding from '../../../components/styled/PagePadding';
@@ -21,6 +21,21 @@ const doubleHeader = css`
   }
 `;
 
+const removeTask = css`
+  :hover {
+    color: var(--red);
+    text-decoration: line-through;
+  }
+`;
+
+const REMOVE_TASK = gql`
+  mutation REMOVE_TASK($taskId: ID!) {
+    deleteTask(taskId: $taskId) {
+      _id
+    }
+  }
+`;
+
 const studentClass = () => {
   const router = useRouter();
   const { classId } = router.query;
@@ -30,6 +45,16 @@ const studentClass = () => {
   const { loading, error, data } = useQuery(GET_STUDENT_CLASS, {
     variables: { classId: classId },
   })
+
+  const [deleteTask, { data: removeTaskData }] = useMutation(REMOVE_TASK, {
+    refetchQueries: [{ query: GET_STUDENT_CLASS, variables: { classId: classId } }],
+  });
+
+  const handleTaskRemove = (taskId) => {
+    deleteTask({
+      variables: { taskId: taskId}
+    })
+  }
   
   const addGoal = () => {
     modal.setChildComponent(
@@ -64,7 +89,7 @@ const studentClass = () => {
             <ul>
             {data?.getTasks.map(task => {
               if (task.type == 'GOAL') return (
-              <li>{task.description}</li>
+              <li css={removeTask} onClick={() => {handleTaskRemove(task._id)}} key={task._id}>{task.description}</li>
               ) 
             })}
             </ul>
@@ -75,7 +100,7 @@ const studentClass = () => {
             <ul>
             {data?.getTasks.map(task => {
               if (task.type == 'TODO') return (
-              <li>{task.description}</li>
+              <li css={removeTask} onClick={() => {handleTaskRemove(task._id)}} key={task._id}>{task.description}</li>
               ) 
             })}
             </ul>
