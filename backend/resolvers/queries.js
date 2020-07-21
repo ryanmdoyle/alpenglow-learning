@@ -188,6 +188,17 @@ const queries = {
 		return await Score.find({ playlist: { $in: playlistIds } });
 	},
 
+	async getScoresForEnrolledClass(parent, args, context, info) {
+		const parentCourse = await Course.findOne({ classes: { $in: { _id: args.classId } } });
+		const playlists = [
+			...parentCourse.essentialPlaylists,
+			...parentCourse.corePlaylists,
+			...parentCourse.challengePlaylists,
+		];
+		const playlistIds = playlists.map(playlist => playlist._id);
+		return await Score.find({ playlist: { $in: playlistIds }, user: context.currentUser._id });
+	},
+
 	async getTasks(parent, args, context, info) {
 		const { userId, playlistId, classId } = args;
 		const query = {};

@@ -106,7 +106,7 @@ const grading = () => {
           </div>
         </div>
         <h4>Pending Scores</h4>
-        {(scoreData.length == 0) && (
+        {(scoreData?.length == 0) && (
           <em>All quizzes have been scored.</em>
         )}
         {scoreData && scoreData.map(score => (

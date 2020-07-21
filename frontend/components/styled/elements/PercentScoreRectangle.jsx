@@ -38,7 +38,7 @@ const PercentScoreRectangle = ({ percent }) => {
   return (
     <div css={[scoreStyle, scoreColorCoded]}>
       {percent ?
-        `${percent}%`
+        `${percent.toFixed(0)}%`
         :
         '-'
       }
