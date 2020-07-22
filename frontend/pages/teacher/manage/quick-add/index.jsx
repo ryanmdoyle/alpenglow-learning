@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 
 import PageTitle from '../../../../components/styled/PageTitle';
-import CreateContentNav from '../../../../components/CreateContentNav';
+import CreateContentNav from '../../../../components/Nav/CreateContentNav';
 import CreatePlaylistForm from '../../../../components/forms/create/CreatePlaylistForm';
 import CreateCourseForm from '../../../../components/forms/create/CreateCourseForm';
 import CreateObjectiveForm from '../../../../components/forms/create/CreateObjectiveForm';
