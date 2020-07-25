@@ -159,7 +159,7 @@ function createApolloClient(initialState = {}) {
     connectToDevTools: true, //or isBrowser
     ssrMode: !isBrowser, // Disables forceFetch on the server (so queries are only run once)
     // link,
-    httpLink,
+    link: httpLink,
     cache: new InMemoryCache().restore(initialState)
   })
 }
