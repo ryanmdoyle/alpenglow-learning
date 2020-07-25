@@ -63,7 +63,7 @@ const HomePage = ({ }) => {
   if (user != null && !user) return <Loading />
 
   // user context returns null if no user is logged in, in this case, render the welcome.
-  if (user === null) return (
+  return (
     <div>
       <h1>Welcome!</h1>
       <h3>Get started as a{signupType ? ` ${signupType.toLowerCase()}:` : '...'}</h3>
