@@ -46,6 +46,7 @@ const layout = css`
 `
 
 function MyApp({ Component, pageProps }) {
+  console.log('_app')
   return (
     <ThemeProvider theme={theme}>
       <UserProvider>

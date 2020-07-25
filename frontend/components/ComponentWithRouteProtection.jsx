@@ -9,7 +9,7 @@ import { Role } from '../lib/enums';
 const ComponentWithRouteProtection = ({ Component, pageProps }) => {
   const user = useContext(UserContext);
   const router = useRouter();
-
+  console.log('ComponentWithRouteProtection')
   if (!user && router.pathname != '/') {
     router.push('/');
   }
