@@ -53,7 +53,7 @@ function MyApp({ Component, pageProps }) {
           <ModalProvider>
             <Global styles={global} />
             <Head>
-              <script src="https://apis.google.com/js/platform.js" async defer></script>
+              {/* <script src="https://apis.google.com/js/platform.js" async defer></script> */}
             </Head>
             <LayoutController Component={Component} pageProps={pageProps} />
           </ModalProvider>
