@@ -56,7 +56,7 @@ const HomePage = ({ }) => {
     <div>
       <h1>Welcome!</h1>
       <h3>Get started as a{signupType ? ` ${signupType.toLowerCase()}:` : '...'}</h3>
-      <div className='buttons'>
+      {/* <div className='buttons'>
         <GoogleLogin
           clientId="740708519996-jckm5svthu1lh5fv35jc55pp54kam9br.apps.googleusercontent.com"
           buttonText="Teacher"
@@ -79,7 +79,7 @@ const HomePage = ({ }) => {
         // onSuccess={gqlLogin}
         // onFailure={loginFail}
         />
-      </div>
+      </div> */}
     </div>
   )
 

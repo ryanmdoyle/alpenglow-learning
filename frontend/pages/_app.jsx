@@ -10,7 +10,7 @@ import { theme } from '../styles/theme';
 
 // Components
 import LayoutController from '../components/styled/blocks/LayoutController';
-import { UserProvider, UserContext } from '../components/context/UserContext';
+import { UserProvider } from '../components/context/UserContext';
 import { AlertProvider } from '../components/context/AlertContext';
 import { ModalProvider } from '../components/context/ModalContext';
 

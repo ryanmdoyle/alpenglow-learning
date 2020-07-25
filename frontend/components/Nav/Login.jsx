@@ -50,13 +50,13 @@ const Login = (props) => {
 
   return (
     <div {...props}>
-      <GoogleLogin
+      {/* <GoogleLogin
         clientId="740708519996-jckm5svthu1lh5fv35jc55pp54kam9br.apps.googleusercontent.com"
         buttonText="Login"
         onSuccess={gqlLogin}
         onFailure={loginFail}
         disabled={props.disabled}
-      />
+      /> */}
     </div>
   );
 };

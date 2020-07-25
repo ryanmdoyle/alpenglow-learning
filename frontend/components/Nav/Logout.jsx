@@ -38,12 +38,12 @@ const Logout = () => {
   }
 
 
-  return (
-    <GoogleLogout
-      clientId="740708519996-jckm5svthu1lh5fv35jc55pp54kam9br.apps.googleusercontent.com"
-      buttonText="Logout"
-      onLogoutSuccess={gqlLogout}
-    />
+  return (<div></div>
+    // <GoogleLogout
+    //   clientId="740708519996-jckm5svthu1lh5fv35jc55pp54kam9br.apps.googleusercontent.com"
+    //   buttonText="Logout"
+    //   onLogoutSuccess={gqlLogout}
+    // />
   );
 };
 
