@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import gql from 'graphql-tag';
-import { css } from '@emotion/core';
 import { useRouter } from 'next/router';
 import { GoogleLogin } from 'react-google-login';
 import { useMutation } from '@apollo/react-hooks'
@@ -8,7 +7,6 @@ import { useMutation } from '@apollo/react-hooks'
 import Loading from '../components/Loading';
 import UserContext from '../components/context/UserContext';
 import hasPermission from '../lib/hasPermission';
-import TextButton from '../components/styled/elements/TextButton';
 import { Role } from '../lib/enums';
 
 const CREATE_ACCOUNT = gql`
@@ -35,7 +33,7 @@ const HomePage = ({ }) => {
 
   const newTeacher = async (response) => {
     const login = await createUser({
-      variables: { 
+      variables: {
         authToken: response.tokenId,
         userType: 'TEACHER',
       },
@@ -45,7 +43,7 @@ const HomePage = ({ }) => {
 
   const newStudent = async (response) => {
     const login = await createUser({
-      variables: { 
+      variables: {
         authToken: response.tokenId,
         userType: 'STUDENT',
       },
@@ -53,46 +51,45 @@ const HomePage = ({ }) => {
     window.location.href = '/';
   }
 
-  // a valid user should have either a teacher role or student (by default)
+  // When a user is logged in, route to appropriate area
   if (hasPermission(user, [Role.Teacher, Role.Admin, Role.SuperAdmin])) {
     router.push('/teacher')
   }
   if (hasPermission(user, [Role.Student])) {
     router.push('/student')
   }
+
   // if the user is undefined because it has not returned a valid user or returned null, show loading
   if (user != null && !user) return <Loading />
+
   // user context returns null if no user is logged in, in this case, render the welcome.
   if (user === null) return (
     <div>
       <h1>Welcome!</h1>
       <h3>Get started as a{signupType ? ` ${signupType.toLowerCase()}:` : '...'}</h3>
       <div className='buttons'>
-        {/* <TextButton css={css`width: 150px;`} onClick={() => { setSignupType('TEACHER') }}>Teacher</TextButton>
-        <TextButton css={css`width: 150px;`} onClick={() => { setSignupType('STUDENT') }}>Student</TextButton>
-        <TextButton css={css`width: 150px;`} onClick={() => { setSignupType('PARENT') }}>Parent</TextButton> */}
         <GoogleLogin
-        clientId="740708519996-jckm5svthu1lh5fv35jc55pp54kam9br.apps.googleusercontent.com"
-        buttonText="Teacher"
-        theme='dark'
-        onSuccess={newTeacher}
+          clientId="740708519996-jckm5svthu1lh5fv35jc55pp54kam9br.apps.googleusercontent.com"
+          buttonText="Teacher"
+          theme='dark'
+          onSuccess={newTeacher}
         // onFailure={loginFail}
-      />
-      <GoogleLogin
-        clientId="740708519996-jckm5svthu1lh5fv35jc55pp54kam9br.apps.googleusercontent.com"
-        buttonText="Student"
-        theme='dark'
-        onSuccess={newStudent}
+        />
+        <GoogleLogin
+          clientId="740708519996-jckm5svthu1lh5fv35jc55pp54kam9br.apps.googleusercontent.com"
+          buttonText="Student"
+          theme='dark'
+          onSuccess={newStudent}
         // onFailure={loginFail}
-      />
-      <GoogleLogin
-        clientId="740708519996-jckm5svthu1lh5fv35jc55pp54kam9br.apps.googleusercontent.com"
-        buttonText="Parent"
-        theme='dark'
-        disabled={true}
+        />
+        <GoogleLogin
+          clientId="740708519996-jckm5svthu1lh5fv35jc55pp54kam9br.apps.googleusercontent.com"
+          buttonText="Parent"
+          theme='dark'
+          disabled={true}
         // onSuccess={gqlLogin}
         // onFailure={loginFail}
-      />
+        />
       </div>
     </div>
   )
