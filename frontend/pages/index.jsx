@@ -8,6 +8,7 @@ import Loading from '../components/Loading';
 import UserContext from '../components/context/UserContext';
 import hasPermission from '../lib/hasPermission';
 import { Role } from '../lib/enums';
+import { nonInputTypeOnVarMessage } from 'graphql/validation/rules/VariablesAreInputTypes';
 
 const CREATE_ACCOUNT = gql`
   mutation CREATE_ACCOUNT(
@@ -51,19 +52,8 @@ const HomePage = ({ }) => {
     window.location.href = '/';
   }
 
-  // When a user is logged in, route to appropriate area
-  if (hasPermission(user, [Role.Teacher, Role.Admin, Role.SuperAdmin])) {
-    router.push('/teacher')
-  }
-  if (hasPermission(user, [Role.Student])) {
-    router.push('/student')
-  }
-
-  // if the user is undefined because it has not returned a valid user or returned null, show loading
-  if (user != null && !user) return <Loading />
-
-  // user context returns null if no user is logged in, in this case, render the welcome.
-  return (
+  // No user (undefined, or null because not yet fetched from context)
+  if (!user) return (
     <div>
       <h1>Welcome!</h1>
       <h3>Get started as a{signupType ? ` ${signupType.toLowerCase()}:` : '...'}</h3>
@@ -93,6 +83,22 @@ const HomePage = ({ }) => {
       </div>
     </div>
   )
+
+  // When a user is logged in, route to appropriate area
+  if (hasPermission(user, [Role.Teacher, Role.Admin, Role.SuperAdmin])) {
+    router.push('/teacher')
+  }
+  if (hasPermission(user, [Role.Student])) {
+    router.push('/student')
+  }
+  if (hasPermission(user, [])) {
+    router.push('/student'); // should route to student if user has corrupt permissions (or none)
+  }
+
+  // defaults to return loading.
+  // If there is no user (not logged in) the above welcoem will return
+  // If there IS a user, it will route above to the appropriate area with it's own welcome page
+  return <Loading />
 }
 
 export default HomePage;
