@@ -123,7 +123,7 @@ function createApolloClient(initialState = {}) {
   const isBrowser = typeof window !== 'undefined'
 
   // Create an http link:
-  const httpAddress = (process.env.NODE_ENV === 'production') ? process.env.BACKEND_URL : 'localhost:4000';
+  const httpAddress = (process.env.NODE_ENV === 'production') ? '64.227.80.165' : 'localhost:4000';
   const httpLink = new HttpLink({
     uri: `http://${httpAddress}/graphql`, // Server URL
     credentials: 'include', // Additional fetch() options like `credentials` or `headers`
