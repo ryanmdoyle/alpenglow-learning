@@ -93,7 +93,6 @@ const landing = css`
 
 const LayoutController = ({ Component, pageProps }) => {
   const user = useContext(UserContext);
-  console.log('layout controller')
 
   if (user) return (
     <div css={dashboard}>

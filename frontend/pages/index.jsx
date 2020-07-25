@@ -24,7 +24,6 @@ const CREATE_ACCOUNT = gql`
 `;
 
 const HomePage = ({ }) => {
-  console.log('index')
   // home should render index/welcome page, or push logged in users to appropriate page
   const user = useContext(UserContext);
   const [signupType, setSignupType] = useState(null);
