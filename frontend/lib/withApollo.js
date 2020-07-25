@@ -130,35 +130,36 @@ function createApolloClient(initialState = {}) {
     // Use fetch() polyfill on the server
     fetch: !isBrowser && fetch
   });
-  const wsAddress = (process.env.NODE_ENV === 'production') ? process.env.BACKEND_URL : 'localhost:4000';
-  // Create a WebSocket link:  return null if on server
-  const wsLink = process.browser ? new WebSocketLink({
-    uri: `ws://${wsAddress}/subscriptions`,
-    options: {
-      reconnect: true
-    }
-  }) : null;
+  // const wsAddress = (process.env.NODE_ENV === 'production') ? process.env.BACKEND_URL : 'localhost:4000';
+  // // Create a WebSocket link:  return null if on server
+  // const wsLink = process.browser ? new WebSocketLink({
+  //   uri: `ws://${wsAddress}/subscriptions`,
+  //   options: {
+  //     reconnect: true
+  //   }
+  // }) : null;
 
   // using the ability to split links, you can send data to each link
   // depending on what kind of operation is being sent
   // use process.browser return ws only from client when SSR.
-  const link = process.browser ? split(
-    // split based on operation type
-    ({ query }) => {
-      const definition = getMainDefinition(query);
-      return (
-        definition.kind === 'OperationDefinition' &&
-        definition.operation === 'subscription'
-      );
-    },
-    wsLink,
-    httpLink,
-  ) : httpLink;
+  // const link = process.browser ? split(
+  //   // split based on operation type
+  //   ({ query }) => {
+  //     const definition = getMainDefinition(query);
+  //     return (
+  //       definition.kind === 'OperationDefinition' &&
+  //       definition.operation === 'subscription'
+  //     );
+  //   },
+  //   wsLink,
+  //   httpLink,
+  // ) : httpLink;
 
   return new ApolloClient({
     connectToDevTools: true, //or isBrowser
     ssrMode: !isBrowser, // Disables forceFetch on the server (so queries are only run once)
-    link,
+    // link,
+    httpLink,
     cache: new InMemoryCache().restore(initialState)
   })
 }
