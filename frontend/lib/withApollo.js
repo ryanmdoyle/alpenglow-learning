@@ -123,36 +123,37 @@ function createApolloClient(initialState = {}) {
   const isBrowser = typeof window !== 'undefined'
 
   // Create an http link:
-const httpLink = new HttpLink({
-  uri: 'http://localhost:4000/graphql', // Server URL (must be absolute)
-  credentials: 'include', // Additional fetch() options like `credentials` or `headers`
-  // Use fetch() polyfill on the server
-  fetch: !isBrowser && fetch
-});
+  const httpAddress = (process.env.NODE_ENV === 'production') ? process.env.BACKEND_URL : 'localhost:4000';
+  const httpLink = new HttpLink({
+    uri: `http://${httpAddress}/graphql`, // Server URL
+    credentials: 'include', // Additional fetch() options like `credentials` or `headers`
+    // Use fetch() polyfill on the server
+    fetch: !isBrowser && fetch
+  });
+  const wsAddress = (process.env.NODE_ENV === 'production') ? process.env.BACKEND_URL : 'localhost:4000';
+  // Create a WebSocket link:  return null if on server
+  const wsLink = process.browser ? new WebSocketLink({
+    uri: `ws://${wsAddress}/subscriptions`,
+    options: {
+      reconnect: true
+    }
+  }) : null;
 
-// Create a WebSocket link:  return null if on server
-const wsLink = process.browser ? new WebSocketLink({
-  uri: `ws://localhost:4000/subscriptions`,
-  options: {
-    reconnect: true
-  }
-}) : null;
-
-// using the ability to split links, you can send data to each link
-// depending on what kind of operation is being sent
-// use process.browser return ws only from client when SSR.
-const link = process.browser ? split(
-  // split based on operation type
-  ({ query }) => {
-    const definition = getMainDefinition(query);
-    return (
-      definition.kind === 'OperationDefinition' &&
-      definition.operation === 'subscription'
-    );
-  },
-  wsLink,
-  httpLink,
-) : httpLink;
+  // using the ability to split links, you can send data to each link
+  // depending on what kind of operation is being sent
+  // use process.browser return ws only from client when SSR.
+  const link = process.browser ? split(
+    // split based on operation type
+    ({ query }) => {
+      const definition = getMainDefinition(query);
+      return (
+        definition.kind === 'OperationDefinition' &&
+        definition.operation === 'subscription'
+      );
+    },
+    wsLink,
+    httpLink,
+  ) : httpLink;
 
   return new ApolloClient({
     connectToDevTools: true, //or isBrowser
