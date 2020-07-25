@@ -8,7 +8,6 @@ import Loading from '../components/Loading';
 import UserContext from '../components/context/UserContext';
 import hasPermission from '../lib/hasPermission';
 import { Role } from '../lib/enums';
-import { nonInputTypeOnVarMessage } from 'graphql/validation/rules/VariablesAreInputTypes';
 
 const CREATE_ACCOUNT = gql`
   mutation CREATE_ACCOUNT(
