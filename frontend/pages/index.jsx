@@ -51,12 +51,24 @@ const HomePage = ({ }) => {
     window.location.href = '/';
   }
 
-  // No user (undefined, or null because not yet fetched from context)
-  if (!user) return (
+  if (hasPermission(user, [Role.Teacher, Role.Admin, Role.SuperAdmin])) {
+    router.push('/teacher')
+  }
+  if (hasPermission(user, [Role.Student])) {
+    router.push('/student')
+  }
+  if (hasPermission(user, [])) {
+    router.push('/student'); // should route to student if user has corrupt permissions (or none)
+  }
+
+  // defaults to return loading.
+  // If there is no user (not logged in) the above welcoem will return
+  // If there IS a user, it will route above to the appropriate area with it's own welcome page
+  return (
     <div>
       <h1>Welcome!</h1>
       <h3>Get started as a{signupType ? ` ${signupType.toLowerCase()}:` : '...'}</h3>
-      {/* <div className='buttons'>
+      <div className='buttons'>
         <GoogleLogin
           clientId="740708519996-jckm5svthu1lh5fv35jc55pp54kam9br.apps.googleusercontent.com"
           buttonText="Teacher"
@@ -79,25 +91,8 @@ const HomePage = ({ }) => {
         // onSuccess={gqlLogin}
         // onFailure={loginFail}
         />
-      </div> */}
-    </div>
-  )
-
-  // When a user is logged in, route to appropriate area
-  if (hasPermission(user, [Role.Teacher, Role.Admin, Role.SuperAdmin])) {
-    router.push('/teacher')
-  }
-  if (hasPermission(user, [Role.Student])) {
-    router.push('/student')
-  }
-  if (hasPermission(user, [])) {
-    router.push('/student'); // should route to student if user has corrupt permissions (or none)
-  }
-
-  // defaults to return loading.
-  // If there is no user (not logged in) the above welcoem will return
-  // If there IS a user, it will route above to the appropriate area with it's own welcome page
-  return <Loading />
+      </div>
+    </div>)
 }
 
 export default HomePage;

@@ -94,10 +94,21 @@ const landing = css`
 const LayoutController = ({ Component, pageProps }) => {
   const user = useContext(UserContext);
 
-  if (!user && user !== null) return <Loading />
-  
+  if (user?.loading) return <Loading /> // user exists, but is loading
+
+  if (user) return (
+    <div css={dashboard}>
+      <NavPanel />
+      <main>
+        <ComponentWithRouteProtection Component={Component} pageProps={pageProps} />
+        <Alert />
+        <Modal />
+      </main>
+    </div>
+  );
+
   // Renders a different layout based on user being logged in or out
-  if (user == null) return ( // once context fetches user, it will be null if loaidng is complete and there is no user
+  return ( // once context fetches user, it will be null if loaidng is complete and there is no user
     <div css={landing}>
       <nav>
         <div className='content-container'>
@@ -111,17 +122,6 @@ const LayoutController = ({ Component, pageProps }) => {
       </main>
     </div>
   )
-  if (user.loading) return <Loading /> // user exists, but is loading
-  return (
-    <div css={dashboard}>
-      <NavPanel />
-      <main>
-        <ComponentWithRouteProtection Component={Component} pageProps={pageProps} />
-        <Alert />
-        <Modal />
-      </main>
-    </div>
-  );
 };
 
 export default LayoutController;
