@@ -67,7 +67,6 @@ server.applyMiddleware({
 });
 // server.installSubscriptionHandlers(httpServer); // was for subscriptions
 app.listen({ port: process.env.PORT || 4000 }, (res) => {
-  s
   console.log(`🚀 Server ready at ${process.env.PORT ? process.env.PORT : 'localhost:4000'}${server.graphqlPath}`);
 });
 
