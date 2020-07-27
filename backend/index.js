@@ -55,7 +55,9 @@ const server = new ApolloServer({
   },
   subscriptions: {
     path: '/subscriptions'
-  }
+  },
+  introspetion: true,
+  playground: true,
 });
 
 server.applyMiddleware({
