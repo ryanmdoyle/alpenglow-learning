@@ -45,7 +45,7 @@ const server = new ApolloServer({
   subscriptions: {
     path: '/subscriptions'
   },
-  introspetion: true,
+  introspection: true,
   playground: true,
 });
 
