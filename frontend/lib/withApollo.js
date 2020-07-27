@@ -123,9 +123,9 @@ function createApolloClient(initialState = {}) {
   const isBrowser = typeof window !== 'undefined'
 
   // Create an http link:
-  const httpAddress = (process.env.NODE_ENV === 'production') ? 'https://alpenglow-backend-production.herokuapp.com' : 'localhost:4000';
+  const httpAddress = (process.env.NODE_ENV === 'production') ? 'https://alpenglow-backend-production.herokuapp.com/graphql' : 'http://localhost:4000/graphql';
   const httpLink = new HttpLink({
-    uri: `http://${httpAddress}/graphql`, // Server URL
+    uri: httpAddress, // Server URL
     credentials: 'include', // Additional fetch() options like `credentials` or `headers`
     // Use fetch() polyfill on the server
     fetch: !isBrowser && fetch
