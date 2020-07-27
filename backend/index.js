@@ -1,9 +1,10 @@
+require('dotenv').config();
+require('./db');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 const { ApolloServer } = require('apollo-server-express');
 const cors = require('cors');
-require('dotenv').config();
 
 const typeDefs = require('./gqlSchema');
 const queries = require('./resolvers/queries');
@@ -41,9 +42,6 @@ const server = new ApolloServer({
       req.currentUser = null;
     }
     return { ...req }
-  },
-  subscriptions: {
-    path: '/subscriptions'
   },
   introspection: true,
   playground: true,
