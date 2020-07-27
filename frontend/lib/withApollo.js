@@ -123,7 +123,7 @@ function createApolloClient(initialState = {}) {
   const isBrowser = typeof window !== 'undefined'
 
   // Create an http link:
-  const httpAddress = (process.env.NODE_ENV === 'production') ? '64.227.80.165' : 'localhost:4000';
+  const httpAddress = (process.env.NODE_ENV === 'production') ? 'https://alpenglow-backend-production.herokuapp.com' : 'localhost:4000';
   const httpLink = new HttpLink({
     uri: `http://${httpAddress}/graphql`, // Server URL
     credentials: 'include', // Additional fetch() options like `credentials` or `headers`
@@ -158,7 +158,6 @@ function createApolloClient(initialState = {}) {
   return new ApolloClient({
     connectToDevTools: true, //or isBrowser
     ssrMode: !isBrowser, // Disables forceFetch on the server (so queries are only run once)
-    // link,
     link: httpLink,
     cache: new InMemoryCache().restore(initialState)
   })
