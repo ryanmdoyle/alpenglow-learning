@@ -66,8 +66,9 @@ server.applyMiddleware({
   cors: false,
 });
 // server.installSubscriptionHandlers(httpServer); // was for subscriptions
-server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
-  console.log(`🚀 Server ready at ${url}`);
+app.listen({ port: process.env.PORT || 4000 }, (res) => {
+  s
+  console.log(`🚀 Server ready at ${process.env.PORT ? process.env.PORT : 'localhost:4000'}${server.graphqlPath}`);
 });
 
 // httpServer.listen({ port: process.env.PORT || 4000 }, () => { // for subscriptions
