@@ -37,7 +37,7 @@ const SiteTitle = () => {
     <Link href='/'>
       <div css={mainContainer}>
         <div className='logo'>
-          <img src='/alpenglow.svg' width='60px' />
+          <img src='/alpenglow.svg' width='60px' alt='Alpenglow mountain logo' />
         </div>
         <div className='title'>
           <h1>Alpenglow Learning</h1>
