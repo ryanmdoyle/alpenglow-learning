@@ -15,17 +15,19 @@ const welcome = css`
   text-align: center;
   .buttons {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
     button { 
+      margin: 0.5rem;
       width: 110px;
     }
-    button:nth-of-type(n+2) {
-      margin-top: 0.5rem;
-    }
+    
   }
   @media (max-width: 500px) {
     font-size: 0.7rem;
+    .buttons {
+      flex-direction: column;
+    }
   }
   @media (max-width: 350px) {
     font-size: 0.5rem;
@@ -115,8 +117,8 @@ const HomePage = ({ }) => {
           // onSuccess={gqlLogin}
           // onFailure={loginFail}
           />
-          <small css={css`font-size: 0.7rem;`}>Coming soon!</small>
         </div>
+        <small css={css`font-size: 0.7rem;`}>Parent access coming soon!</small>
       </div>
     )
   }
