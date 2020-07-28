@@ -97,7 +97,7 @@ const ProgressCoursesTable = () => {
   const students = data?.getStudentsInstructing;
 
   if (loading) return <Loading />
-
+  console.log(students)
   return (
     <table css={tableStyles}>
       <thead>
@@ -111,82 +111,92 @@ const ProgressCoursesTable = () => {
         </tr>
       </thead>
 
-      <tbody>
-        {students && (
-          students.map(student => {
-            // filter all scores for only current student;
-            const studentScores = scores.filter(score => score.user._id === student._id);
+      {students.length === 0 ?
+        <tbody>
+          <tr>
+            <td>
+              No students currently enrolled.
+            </td>
+          </tr>
+        </tbody> : (
+          <tbody>
+            {students && (
+              students.map(student => {
+                // filter all scores for only current student;
+                const studentScores = scores.filter(score => score.user._id === student._id);
 
-            // return row of student progress
-            return (
-              <Link href='/teacher/progress/student/[studentId]' as={`/teacher/progress/student/${student._id}`}>
-                <tr key={student._id}>
-                  <th scope='row'>{student.name}</th>
-                  {courses.map(course => {
-                    // if student not in course, don't return a progress bar
-                    const studentsInCourse = [];
-                    course.classes.forEach(classs => {
-                      classs.enrolled.forEach(student => {
-                        if (!studentsInCourse.includes(student._id)) {
-                          studentsInCourse.push(student._id)
-                        }
-                      })
-                    })
-                    
-                  // return if the the student is not enrolled in the class/course
-                  if (!studentsInCourse.includes(student._id)) return (
-                    <td><small>n/a</small></td>
-                  )
+                // return row of student progress
+                return (
+                  <Link href='/teacher/progress/student/[studentId]' as={`/teacher/progress/student/${student._id}`}>
+                    <tr key={student._id}>
+                      <th scope='row'>{student.name}</th>
+                      {courses.map(course => {
+                        // if student not in course, don't return a progress bar
+                        const studentsInCourse = [];
+                        course.classes.forEach(classs => {
+                          classs.enrolled.forEach(student => {
+                            if (!studentsInCourse.includes(student._id)) {
+                              studentsInCourse.push(student._id)
+                            }
+                          })
+                        })
 
-                  // if student is on course, calculate progress and show bar
-                  const { essentialPlaylists, corePlaylists, challengePlaylists, name, _id } = course;
-                  // Make array of playlists in current course
-                  const coursePlaylists = [...essentialPlaylists, ...corePlaylists, ...challengePlaylists];
-                  const coursePlaylistIds = coursePlaylists.map(course => course._id);
-                  // filter scores to only includes ones for current 
-                  const studentsCourseScores = studentScores.filter(score => coursePlaylistIds.includes(score.playlist._id));
-                  // make new array of playlist Id's and score percents, then sort greatest to least
-                  const studentPlaylistPercents = studentsCourseScores.map(score => {
-                    const percent = parseInt(score.score / score.possibleScore * 100);
-                    return {
-                      playlistId: score.playlist._id,
-                      percent: percent,
-                    }
-                  })
-                  studentPlaylistPercents.sort((a, b) => b.percent - a.percent);
+                        // return if the the student is not enrolled in the class/course
+                        if (!studentsInCourse.includes(student._id)) return (
+                          <td><small>n/a</small></td>
+                        )
 
-                  let complete = 0;
-                  let partial = 0;
-                  let low = 0;
-                  const checkedPlaylists = [];
+                        // if student is on course, calculate progress and show bar
+                        const { essentialPlaylists, corePlaylists, challengePlaylists, name, _id } = course;
+                        // Make array of playlists in current course
+                        const coursePlaylists = [...essentialPlaylists, ...corePlaylists, ...challengePlaylists];
+                        const coursePlaylistIds = coursePlaylists.map(course => course._id);
+                        // filter scores to only includes ones for current 
+                        const studentsCourseScores = studentScores.filter(score => coursePlaylistIds.includes(score.playlist._id));
+                        // make new array of playlist Id's and score percents, then sort greatest to least
+                        const studentPlaylistPercents = studentsCourseScores.map(score => {
+                          const percent = parseInt(score.score / score.possibleScore * 100);
+                          return {
+                            playlistId: score.playlist._id,
+                            percent: percent,
+                          }
+                        })
+                        studentPlaylistPercents.sort((a, b) => b.percent - a.percent);
 
-                  studentPlaylistPercents.forEach(score => {
-                    if (!checkedPlaylists.includes(score.playlistId)) {
-                      checkedPlaylists.push(score.playlistId);
-                      if (score.percent >= 80) { complete += 1; }
-                      else if (score.percent >= 70) { partial += 1; }
-                      else if (score.percent >= 0) { low += 1; }
-                    }
-                  })
+                        let complete = 0;
+                        let partial = 0;
+                        let low = 0;
+                        const checkedPlaylists = [];
 
-                  return (
-                    <td key={course._id}>
-                      <ProgressCourseBox
-                        totalPlaylists={essentialPlaylists.length + corePlaylists.length + challengePlaylists.length}
-                        totalAttempts={checkedPlaylists.length}
-                        completeAttempts={complete}
-                        partialAttempts={partial}
-                        lowAttempts={low}
-                      />
-                    </td>
-                  )
-                  })}
-                </tr>
-              </Link>
-            )
-          })
+                        studentPlaylistPercents.forEach(score => {
+                          if (!checkedPlaylists.includes(score.playlistId)) {
+                            checkedPlaylists.push(score.playlistId);
+                            if (score.percent >= 80) { complete += 1; }
+                            else if (score.percent >= 70) { partial += 1; }
+                            else if (score.percent >= 0) { low += 1; }
+                          }
+                        })
+
+                        return (
+                          <td key={course._id}>
+                            <ProgressCourseBox
+                              totalPlaylists={essentialPlaylists.length + corePlaylists.length + challengePlaylists.length}
+                              totalAttempts={checkedPlaylists.length}
+                              completeAttempts={complete}
+                              partialAttempts={partial}
+                              lowAttempts={low}
+                            />
+                          </td>
+                        )
+                      })}
+                    </tr>
+                  </Link>
+                )
+              })
+            )}
+          </tbody>
         )}
-      </tbody>
+
     </table>
   );
 };
