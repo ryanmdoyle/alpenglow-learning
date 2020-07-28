@@ -13,7 +13,7 @@ const NavManageDashboard = () => {
         <NavItem href='/teacher/manage/courses' as='/teacher/manage/courses'>Courses</NavItem>
         <NavItem href='/teacher/manage/classes' as='/teacher/manage/classes'>Classes</NavItem>
         <NavItem href='/teacher/manage/students' as='/teacher/manage/students'>Students</NavItem>
-        <NavItem href='/teacher/manage/quick-add' as='/teacher/manage/quick-add'>Quick Add Content</NavItem>
+        {/* <NavItem href='/teacher/manage/quick-add' as='/teacher/manage/quick-add'>Quick Add Content</NavItem> */}
       </ul>
     </NavSectionPadding>
   );
