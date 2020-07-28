@@ -53,40 +53,33 @@ const landing = css`
     padding: 0 1rem;
     background-color: var(--blueDark);
     display: flex;
-    align-content: center;
-    .content-container {
-      width: 100%;
-      max-width: 1000px;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      h2 {
-        margin: 0;
-        color: var(--pink);
-        flex-grow: 1;
-      }
-      img {
-        padding:0 1rem;
-      }
+    align-items: center;
+    justify-content: space-between;
+    h2 {
+      margin: 0;
+      color: var(--pink);
+      flex-grow: 1;
+    }
+    img {
+      padding-right:1rem;
+    }
+    @media (max-width: 500px) {
+      font-size: 0.6rem;
+      img { width: 70px}
+    }
+    @media (max-width: 350px) {
+      font-size: 0.5rem;
     }
   }
 
   main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     width: 100%;
+    height: 100vh;
     max-width: 1000px;
     margin: auto;
     padding: calc(120px + 2rem) 2rem 2rem 3rem;
-    h1, h3 {
-      text-align: center;
-    }
-    .buttons {
-      width: 500px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    @media (max-width: 500px) {
+      padding: calc(120px + 2rem) 1rem 1rem 1rem;
     }
   }
 `;
@@ -109,11 +102,9 @@ const LayoutController = ({ Component, pageProps }) => {
   return ( // once context fetches user, it will be null if loaidng is complete and there is no user
     <div css={landing}>
       <nav>
-        <div className='content-container'>
-          <img src='/alpenglow.svg' height='80px'></img>
-          <h2>Alpenglow Learning</h2>
-          <Login css={css`justify-self: flex-end;`} />
-        </div>
+        <img src='/alpenglow.svg' height='80px'></img>
+        <h2>Alpenglow Learning</h2>
+        <Login css={css`justify-self: flex-end;`} />
       </nav>
       <main>
         <ComponentWithRouteProtection Component={Component} pageProps={pageProps} />

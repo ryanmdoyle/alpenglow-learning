@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import gql from 'graphql-tag';
 import Head from 'next/head';
+import { css } from '@emotion/core';
 import { useRouter } from 'next/router';
 import { GoogleLogin } from 'react-google-login';
 import { useMutation } from '@apollo/react-hooks'
@@ -9,6 +10,27 @@ import Loading from '../components/Loading';
 import UserContext from '../components/context/UserContext';
 import hasPermission from '../lib/hasPermission';
 import { Role } from '../lib/enums';
+
+const welcome = css`
+  text-align: center;
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    button { 
+      width: 110px;
+    }
+    button:nth-of-type(n+2) {
+      margin-top: 0.5rem;
+    }
+  }
+  @media (max-width: 500px) {
+    font-size: 0.7rem;
+  }
+  @media (max-width: 350px) {
+    font-size: 0.5rem;
+  }
+`;
 
 const CREATE_ACCOUNT = gql`
   mutation CREATE_ACCOUNT(
@@ -63,7 +85,7 @@ const HomePage = ({ }) => {
 
   if (!user || user === null) {
     return (
-      <div>
+      <div css={welcome}>
         <Head>
           <title>Alpenglow Learning - Login</title>
           <meta name='description' content='A platform for student driven learning'></meta>
@@ -93,6 +115,7 @@ const HomePage = ({ }) => {
           // onSuccess={gqlLogin}
           // onFailure={loginFail}
           />
+          <small css={css`font-size: 0.7rem;`}>Coming soon!</small>
         </div>
       </div>
     )
