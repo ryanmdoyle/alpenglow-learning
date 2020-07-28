@@ -28,7 +28,6 @@ const HomePage = ({ }) => {
   const user = useContext(UserContext);
   const [signupType, setSignupType] = useState(null);
   const router = useRouter();
-
   const [createUser, { data }] = useMutation(CREATE_ACCOUNT);
 
   const newTeacher = async (response) => {
@@ -61,38 +60,41 @@ const HomePage = ({ }) => {
     router.push('/student'); // should route to student if user has corrupt permissions (or none)
   }
 
-  // defaults to return loading.
-  // If there is no user (not logged in) the above welcoem will return
-  // If there IS a user, it will route above to the appropriate area with it's own welcome page
-  return (
-    <div>
-      <h1>Welcome!</h1>
-      <h3>Get started as a{signupType ? ` ${signupType.toLowerCase()}:` : '...'}</h3>
-      <div className='buttons'>
-        <GoogleLogin
-          clientId="740708519996-jckm5svthu1lh5fv35jc55pp54kam9br.apps.googleusercontent.com"
-          buttonText="Teacher"
-          theme='dark'
-          onSuccess={newTeacher}
-        // onFailure={loginFail}
-        />
-        <GoogleLogin
-          clientId="740708519996-jckm5svthu1lh5fv35jc55pp54kam9br.apps.googleusercontent.com"
-          buttonText="Student"
-          theme='dark'
-          onSuccess={newStudent}
-        // onFailure={loginFail}
-        />
-        <GoogleLogin
-          clientId="740708519996-jckm5svthu1lh5fv35jc55pp54kam9br.apps.googleusercontent.com"
-          buttonText="Parent"
-          theme='dark'
-          disabled={true}
-        // onSuccess={gqlLogin}
-        // onFailure={loginFail}
-        />
+  if (!user || user === null) {
+    return (
+      <div>
+        <h1>Welcome!</h1>
+        <h3>Get started as a{signupType ? ` ${signupType.toLowerCase()}:` : '...'}</h3>
+        <div className='buttons'>
+          <GoogleLogin
+            clientId="740708519996-jckm5svthu1lh5fv35jc55pp54kam9br.apps.googleusercontent.com"
+            buttonText="Teacher"
+            theme='dark'
+            onSuccess={newTeacher}
+          // onFailure={loginFail}
+          />
+          <GoogleLogin
+            clientId="740708519996-jckm5svthu1lh5fv35jc55pp54kam9br.apps.googleusercontent.com"
+            buttonText="Student"
+            theme='dark'
+            onSuccess={newStudent}
+          // onFailure={loginFail}
+          />
+          <GoogleLogin
+            clientId="740708519996-jckm5svthu1lh5fv35jc55pp54kam9br.apps.googleusercontent.com"
+            buttonText="Parent"
+            theme='dark'
+            disabled={true}
+          // onSuccess={gqlLogin}
+          // onFailure={loginFail}
+          />
+        </div>
       </div>
-    </div>)
+    )
+  }
+
+  return <Loading />
+
 }
 
 export default HomePage;

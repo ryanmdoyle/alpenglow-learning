@@ -9,6 +9,8 @@ import { Role } from '../lib/enums';
 const ComponentWithRouteProtection = ({ Component, pageProps }) => {
   const user = useContext(UserContext);
   const router = useRouter();
+  if (user?.loading) return <Loading />
+
   if (!user && router.pathname != '/') {
     router.push('/');
   }
@@ -19,7 +21,6 @@ const ComponentWithRouteProtection = ({ Component, pageProps }) => {
       router.push('/student');
     }
   }
-
   return <Component {...pageProps} />
 };
 

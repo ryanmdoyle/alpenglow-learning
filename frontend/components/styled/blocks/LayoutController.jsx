@@ -93,7 +93,7 @@ const landing = css`
 
 const LayoutController = ({ Component, pageProps }) => {
   const user = useContext(UserContext);
-
+  if (user?.loading) return <Loading />
   if (user) return (
     <div css={dashboard}>
       <NavPanel />
