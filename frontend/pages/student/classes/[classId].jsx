@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import gql from 'graphql-tag';
 import Link from 'next/link';
+import Head from 'next/head';
 import { css } from '@emotion/core';
 import { useRouter } from 'next/router';
 import { useQuery, useMutation } from '@apollo/react-hooks';
@@ -95,57 +96,61 @@ const studentClass = () => {
 
   const handleTaskRemove = (taskId) => {
     deleteTask({
-      variables: { taskId: taskId}
+      variables: { taskId: taskId }
     })
   }
-  
+
   const addGoal = () => {
     modal.setChildComponent(
       <CreateTaskForm
-      classId={classId}
-      taskType='Goal'
+        classId={classId}
+        taskType='Goal'
       />
-      )
-      modal.open();
+    )
+    modal.open();
   }
-  
+
   const addTodo = () => {
     modal.setChildComponent(
       <CreateTaskForm
-      classId={classId}
-      taskType='Todo'
+        classId={classId}
+        taskType='Todo'
       />
-      )
-      modal.open();
-    }
-    
+    )
+    modal.open();
+  }
+
   if (loading) return <Loading />
 
   const { name } = data?.getClass;
   return (
     <>
+      <Head>
+        <title>Alpenglow Learning - {name}</title>
+        <meta name='description' content={`Goals and Progress for ${name}`}></meta>
+      </Head>
       <PageTitle>{name}</PageTitle>
       <PagePadding>
         <div css={doubleHeader}>
           <div>
             <h4>Weekly Goals</h4>
             <ul>
-            {data?.getTasks.map(task => {
-              if (task.type == 'GOAL') return (
-              <li css={removeTask} onClick={() => {handleTaskRemove(task._id)}} key={task._id}>{task.description}</li>
-              ) 
-            })}
+              {data?.getTasks.map(task => {
+                if (task.type == 'GOAL') return (
+                  <li css={removeTask} onClick={() => { handleTaskRemove(task._id) }} key={task._id}>{task.description}</li>
+                )
+              })}
             </ul>
             <PlusButtonWithText onClick={addGoal}>Add Goal</PlusButtonWithText>
           </div>
           <div>
             <h4>To-Do's</h4>
             <ul>
-            {data?.getTasks.map(task => {
-              if (task.type == 'TODO') return (
-              <li css={removeTask} onClick={() => {handleTaskRemove(task._id)}} key={task._id}>{task.description}</li>
-              ) 
-            })}
+              {data?.getTasks.map(task => {
+                if (task.type == 'TODO') return (
+                  <li css={removeTask} onClick={() => { handleTaskRemove(task._id) }} key={task._id}>{task.description}</li>
+                )
+              })}
             </ul>
             <PlusButtonWithText onClick={addTodo}>Add Todo</PlusButtonWithText>
           </div>
@@ -159,17 +164,18 @@ const studentClass = () => {
                 <li key={score._id}>
                   <div css={css`width: 30%;`}>
                     <strong>
-                    {score.playlist.name}
+                      {score.playlist.name}
                     </strong>
                   </div>
                   <div className='scores'>
                     <span>{date}</span>
                     <span>{score.score}/{score.possibleScore}</span>
-                    <PercentScoreRectangle percent={score.score/score.possibleScore*100} />
+                    <PercentScoreRectangle percent={score.score / score.possibleScore * 100} />
                   </div>
                 </li>
               </Link>
-            )}
+            )
+          }
           )}
         </ul>
       </PagePadding>

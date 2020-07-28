@@ -1,5 +1,6 @@
 import React from 'react';
 import gql from 'graphql-tag';
+import Head from 'next/head';
 import { useQuery } from '@apollo/react-hooks'
 
 import PageTitle from '../../../components/styled/PageTitle';
@@ -82,6 +83,10 @@ const studentClasses = () => {
 
   return (
     <div>
+      <Head>
+        <title>Alpenglow Learning - All Class Progress</title>
+        <meta name='description' content={`All Class Progress`}></meta>
+      </Head>
       <PageTitle>All Classes</PageTitle>
       {coursesWithScores && (
         coursesWithScores.map(course => {

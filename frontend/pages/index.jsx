@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import gql from 'graphql-tag';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { GoogleLogin } from 'react-google-login';
 import { useMutation } from '@apollo/react-hooks'
@@ -63,6 +64,10 @@ const HomePage = ({ }) => {
   if (!user || user === null) {
     return (
       <div>
+        <Head>
+          <title>Alpenglow Learning - Login</title>
+          <meta name='description' content='A platform for student driven learning'></meta>
+        </Head>
         <h1>Welcome!</h1>
         <h3>Get started as a{signupType ? ` ${signupType.toLowerCase()}:` : '...'}</h3>
         <div className='buttons'>
