@@ -97,7 +97,7 @@ const ProgressCoursesTable = () => {
   const students = data?.getStudentsInstructing;
 
   if (loading) return <Loading />
-  console.log(students)
+
   return (
     <table css={tableStyles}>
       <thead>
