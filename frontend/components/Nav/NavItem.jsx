@@ -37,13 +37,14 @@ const activeLink = css`
     }
 `;
 
-const NavItem = ({ children, href, as }) => {
+const NavItem = (props) => {
+  const { children, href, as } = props;
   const router = useRouter();
   const isActiveLink = router.asPath === as ? [item, activeLink] : [item];
 
   return (
     <Link href={href} as={as}>
-      <li css={isActiveLink}>
+      <li css={isActiveLink} {...props}>
         <a>{children}</a>
       </li>
     </Link>
