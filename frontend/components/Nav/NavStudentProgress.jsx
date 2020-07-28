@@ -8,8 +8,6 @@ import NavSectionHeader from '../styled/elements/NavSectionHeader';
 import NavItem from './NavItem';
 import Loading from '../Loading';
 
-const innerPadding = css`padding-left: 1rem;`;
-
 const INSTRUCTING_CLASSES_QUERY = gql`
   query INSTRUCTING_CLASSES_QUERY {
     getClassesInstructing {
@@ -26,11 +24,16 @@ const NavStudentProgress = () => {
     <NavSectionPadding>
       <NavSectionHeader title='Student Progress' />
       <ul css={css`list-style:none;margin:1rem 0.2rem;padding:0;`}>
-        <NavItem href='/teacher/progress/students' as='/teacher/progress/students' css={css`padding-left: 2rem;`}>All Students</NavItem>
+        <NavItem href='/teacher/progress/students' as='/teacher/progress/students'>All Students</NavItem>
         {data?.getClassesInstructing?.map(c => (
-          <div css={innerPadding} key={c._id}>
-            <NavItem href='/teacher/progress/students/[classId]' as={`/teacher/progress/students/${c._id}`}>{c.name}</NavItem>
-          </div>
+
+          <NavItem
+            href='/teacher/progress/students/[classId]'
+            as={`/teacher/progress/students/${c._id}`}
+            key={c._id}
+            css={css`margin-left: 1rem;`}
+          >{c.name}</NavItem>
+
         ))}
         <NavItem href='/teacher/progress/grading' as='/teacher/progress/grading'>Grading</NavItem>
       </ul>
