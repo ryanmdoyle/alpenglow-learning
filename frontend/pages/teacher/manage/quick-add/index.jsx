@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import PageTitle from '../../../../components/styled/PageTitle';
@@ -16,6 +17,10 @@ const createContent = () => {
   }
   return (
     <div>
+      <Head>
+        <title>Alpenglow Learning - Quick Add</title>
+        <meta name='description' content='Quick Add Content'></meta>
+      </Head>
       <PageTitle>Create New Content</PageTitle>
       <CreateContentNav changeForm={changeForm} currentForm={activeForm} />
       {(activeForm === 'objective') && <CreateObjectiveForm />}

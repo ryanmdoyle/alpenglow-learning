@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import gql from 'graphql-tag';
+import Head from 'next/head';
 import { css } from '@emotion/core';
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import { useRouter } from 'next/router';
@@ -104,6 +105,10 @@ const manageClass = () => {
 
   return (
     <>
+      <Head>
+        <title>Alpenglow Learning - Class Page</title>
+        <meta name='description' content='Page for a single class'></meta>
+      </Head>
       <PageTitle>{`Manage ${name}`}</PageTitle>
       <PagePadding>
         <h4>Class Info</h4>

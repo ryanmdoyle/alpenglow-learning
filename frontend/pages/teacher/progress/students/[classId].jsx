@@ -1,5 +1,6 @@
 import React from 'react';
 import gql from 'graphql-tag';
+import Head from 'next/head';
 import { useQuery } from '@apollo/react-hooks';
 import { useRouter } from 'next/router';
 
@@ -22,9 +23,13 @@ const classProgress = () => {
     variables: { classId },
   })
   const name = data?.getClassInstructing?.name;
-  const title = name ? `Student Progress - ${name}` : `Student Progress`
+  const title = name ? `Class Progress - ${name}` : `Class Progress`
   return (
     <div>
+      <Head>
+        <title>Alpenglow Learning - Class Progress for {name}</title>
+        <meta name='description' content={`Class Progress for ${name}`}></meta>
+      </Head>
       <PageTitle>{title}</PageTitle>
       <PagePadding>
         <ClassProgressTable />

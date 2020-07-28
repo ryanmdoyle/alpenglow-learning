@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import gql from 'graphql-tag';
+import Head from 'next/head';
 import { css } from '@emotion/core';
 import { useQuery } from '@apollo/react-hooks';
 
@@ -65,7 +66,11 @@ const grading = () => {
 
   if (loading) return <Loading />
   return (
-    <div>
+    <>
+      <Head>
+        <title>Alpenglow Learning - Grading</title>
+        <meta name='description' content='Grading and Quiz Requests'></meta>
+      </Head>
       <PageTitle>Grades</PageTitle>
       <PagePadding>
         <div css={css`display: flex;`}>
@@ -138,7 +143,7 @@ const grading = () => {
           }
         })}
       </PagePadding>
-    </div>
+    </>
   );
 };
 

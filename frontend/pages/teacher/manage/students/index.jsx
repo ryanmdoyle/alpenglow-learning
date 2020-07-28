@@ -1,8 +1,6 @@
 import React, { useContext } from 'react';
-import Link from 'next/link';
-import gql from 'graphql-tag';
+import Head from 'next/head'
 import { useQuery } from '@apollo/react-hooks'
-import { css } from '@emotion/core';
 
 import PageTitle from '../../../../components/styled/PageTitle';
 import PagePadding from '../../../../components/styled/blocks/PagePadding';
@@ -38,6 +36,10 @@ const studentList = () => {
   if (loading) return <Loading />;
   return (
     <>
+      <Head>
+        <title>Alpenglow Learning - Manage Students</title>
+        <meta name='description' content='Manage Students'></meta>
+      </Head>
       <PageTitle>Manage Your Students</PageTitle>
       <PagePadding>
         <h4>All Students Enrolled in Classes</h4>

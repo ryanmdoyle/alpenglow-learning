@@ -1,4 +1,5 @@
 import React from 'react';
+import Head from 'next/head';
 import PageTitle from '../../components/styled/PageTitle';
 import gql from 'graphql-tag';
 import { css } from '@emotion/core';
@@ -54,6 +55,10 @@ const studentGrades = () => {
   const scores = data?.getScores;
   return (
     <div>
+      <Head>
+        <title>Alpenglow Learning - Grades</title>
+        <meta name='description' content='Grades Summary'></meta>
+      </Head>
       <PageTitle>Your Grades</PageTitle>
       <PagePadding>
         {classes && classes.map(clas => (

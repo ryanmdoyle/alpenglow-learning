@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import Head from 'next/head';
 import { css } from '@emotion/core';
 import { useQuery } from '@apollo/react-hooks'
 import {useRouter} from 'next/router';
@@ -31,6 +32,10 @@ const teacherClasses = () => {
   if (loading) return <Loading />
   return (
     <div>
+      <Head>
+        <title>Alpenglow Learning - Manage Class</title>
+        <meta name='description' content='Class Management'></meta>
+      </Head>
       <PageTitle>Manage Your Classes</PageTitle>
       <PagePadding>
         {data?.getCoursesInstructing?.map(course => (

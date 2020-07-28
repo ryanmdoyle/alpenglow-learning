@@ -1,5 +1,6 @@
 import React from 'react';
 import gql from 'graphql-tag';
+import Head from 'next/head';
 import { css } from '@emotion/core';
 import { useQuery } from '@apollo/react-hooks';
 import { useRouter } from 'next/router';
@@ -65,7 +66,11 @@ const studentProgress = () => {
   const scores = data?.getScores;
   if (loading) return <Loading />
   return (
-    <div>
+    <>
+      <Head>
+        <title>Alpenglow Learning - Progress for {data.getUser.name}</title>
+        <meta name='description' content={`Progress for ${data.getUser.name}`}></meta>
+      </Head>
       <PageTitle>Progress for {data.getUser.name}</PageTitle>
       <PagePadding>
         {classes && classes.map(clas => (
@@ -123,7 +128,7 @@ const studentProgress = () => {
         }
 
       </PagePadding>
-    </div>
+    </>
   );
 };
 

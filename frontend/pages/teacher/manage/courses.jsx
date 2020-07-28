@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import Head from 'next/head';
 import { css } from '@emotion/core';
 import { useQuery } from '@apollo/react-hooks'
 
@@ -31,7 +32,11 @@ const teacherCourses = () => {
   if (error) return null;
   if (loading) return <Loading />;
   return (
-    <div>
+    <>
+      <Head>
+        <title>Alpenglow Learning - Manage Courses</title>
+        <meta name='description' content='Manage Courses'></meta>
+      </Head>
       <PageTitle>Manage Course Curriculum</PageTitle>
       {data.getCoursesInstructing && (
         data.getCoursesInstructing.map(course => (
@@ -51,7 +56,7 @@ const teacherCourses = () => {
         <h4>Add Course</h4>
         <PlusButtonWithText onClick={addCourse}>Create a New Course</PlusButtonWithText>
       </div>
-    </div >
+    </>
   );
 };
 
