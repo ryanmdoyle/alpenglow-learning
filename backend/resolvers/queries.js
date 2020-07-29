@@ -10,6 +10,7 @@ const Request = require('../models/Request');
 const Quiz = require('../models/Quiz');
 const Score = require('../models/Score');
 const Task = require('../models/Task');
+const { ApolloError } = require('apollo-server-express');
 
 const queries = {
 	async getUserCurrent(parent, args, context, info) {
@@ -24,7 +25,7 @@ const queries = {
 	},
 
 	async getClass(parent, args, context, info) {
-    return await Class.findById(args.classId);
+		return await Class.findById(args.classId);
 	},
 
 	async getUsersAll(parent, args, context, info) {
