@@ -97,38 +97,38 @@ const HomePage = ({ }) => {
         <h3>Get started as a{signupType ? ` ${signupType.toLowerCase()}:` : '...'}</h3>
         <div className='buttons'>
           <div
-            onMouseEnter={() => {setSignupType('teacher')}}
-            onMouseLeave={() => {setSignupType(null)}}
+            onMouseEnter={() => { setSignupType('teacher') }}
+            onMouseLeave={() => { setSignupType(null) }}
           >
-          <GoogleLogin
-            clientId="740708519996-jckm5svthu1lh5fv35jc55pp54kam9br.apps.googleusercontent.com"
-            buttonText="Teacher"
-            theme='dark'
-            onSuccess={newTeacher}
-          // onFailure={loginFail}
-          />
+            <GoogleLogin
+              clientId="740708519996-jckm5svthu1lh5fv35jc55pp54kam9br.apps.googleusercontent.com"
+              buttonText="Teacher"
+              theme='dark'
+              onSuccess={newTeacher}
+            // onFailure={loginFail}
+            />
           </div>
           <div
-            onMouseEnter={() => {setSignupType('student')}}
-            onMouseLeave={() => {setSignupType(null)}}
+            onMouseEnter={() => { setSignupType('student') }}
+            onMouseLeave={() => { setSignupType(null) }}
           >
-          <GoogleLogin
-            clientId="740708519996-jckm5svthu1lh5fv35jc55pp54kam9br.apps.googleusercontent.com"
-            buttonText="Student"
-            theme='dark'
-            onSuccess={newStudent}
-          // onFailure={loginFail}
-          />
+            <GoogleLogin
+              clientId="740708519996-jckm5svthu1lh5fv35jc55pp54kam9br.apps.googleusercontent.com"
+              buttonText="Student"
+              theme='dark'
+              onSuccess={newStudent}
+            // onFailure={loginFail}
+            />
           </div>
           <div>
-          <GoogleLogin
-            clientId="740708519996-jckm5svthu1lh5fv35jc55pp54kam9br.apps.googleusercontent.com"
-            buttonText="Parent"
-            theme='dark'
-            disabled={true}
-          // onSuccess={gqlLogin}
-          // onFailure={loginFail}
-          />
+            <GoogleLogin
+              clientId="740708519996-jckm5svthu1lh5fv35jc55pp54kam9br.apps.googleusercontent.com"
+              buttonText="Parent"
+              theme='dark'
+              disabled={true}
+            // onSuccess={gqlLogin}
+            // onFailure={loginFail}
+            />
           </div>
         </div>
         <small css={css`font-size: 0.7rem;`}>Parent access coming soon!</small>

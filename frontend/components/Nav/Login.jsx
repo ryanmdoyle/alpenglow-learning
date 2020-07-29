@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import fetch from 'isomorphic-unfetch';
+import React from 'react';
 import gql from 'graphql-tag';
 import { GoogleLogin } from 'react-google-login';
 import { useRouter } from 'next/router';
@@ -7,16 +6,13 @@ import { useMutation } from '@apollo/react-hooks';
 
 const LOGIN = gql`
   mutation LOGIN($authToken: String!) {
-    login(authToken: $authToken) {
-      _id
-    }
+    login(authToken: $authToken)
   }
 `;
 
 const Login = (props) => {
   const router = useRouter();
-
-  const [googleLogin, { data }] = useMutation(LOGIN)
+  const [googleLogin, { data }] = useMutation(LOGIN);
 
   const gqlLogin = async (response) => {
     const login = await googleLogin({

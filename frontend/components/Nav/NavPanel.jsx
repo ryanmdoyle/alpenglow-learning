@@ -48,7 +48,7 @@ const NavPanel = () => {
                 <NavStudentDashboard />
               </NavSection>
             )}
-            {hasPermission(user, [Role.Admin, Role.SuperAdmin]) && (
+            {hasPermission(user, [Role.Admin, Role.SuperAdmin, Role.Teacher]) && (
               <>
                 <NavSection>
                   <NavStudentProgress />
