@@ -46,6 +46,7 @@ const studentClasses = () => {
   if (error) return null;
   if (loading) return <Loading />;
 
+  // iterates through all course playlists and adds the best score
   const coursesWithScores = data.getCoursesEnrolled.map(course => {
     // for essential playlists
     course.essentialPlaylists.map(playlist => {
@@ -58,6 +59,7 @@ const studentClasses = () => {
       })
       return playlist;
     })
+    // for core playlists
     course.corePlaylists.map(playlist => {
       playlist.best = null;
       data.getScores.forEach(score => {
@@ -68,6 +70,7 @@ const studentClasses = () => {
       })
       return playlist;
     })
+    //for chalengePlaylists
     course.challengePlaylists.map(playlist => {
       playlist.best = null;
       data.getScores.forEach(score => {
