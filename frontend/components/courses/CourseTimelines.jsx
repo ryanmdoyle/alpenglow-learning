@@ -38,7 +38,8 @@ const courseContainer = css`
   }
 `;
 
-const CourseTimelines = ({ name, essentialPlaylists, corePlaylists, challengePlaylists, courseId, subject, owner }) => {
+const CourseTimelines = (props) => {
+  const { name, essentialPlaylists, corePlaylists, challengePlaylists, courseId, subject, owner } = props;
   const alert = useContext(AlertContext);
   const modal = useContext(ModalContext);
   const user = useContext(UserContext);
@@ -57,7 +58,7 @@ const CourseTimelines = ({ name, essentialPlaylists, corePlaylists, challengePla
 
 
   return (
-    <section css={courseContainer}>
+    <section css={courseContainer} {...props}>
       <Header4Settings onClick={() => { toggleCourseSettings(courseId) }}>{name}</Header4Settings>
       <CoursePlaylistTimeline courseId={courseId} subject={subject} type='Essential' playlists={essentialPlaylists} />
       <CoursePlaylistTimeline courseId={courseId} subject={subject} type='Core' playlists={corePlaylists} />

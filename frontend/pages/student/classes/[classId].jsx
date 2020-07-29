@@ -14,6 +14,7 @@ import ModalContext from '../../../components/context/ModalContext';
 import CreateTaskForm from '../../../components/forms/create/CreateTaskForm';
 import PlusButtonWithText from '../../../components/styled/elements/PlusButtonWithText';
 import PercentScoreRectangle from '../../../components/styled/elements/PercentScoreRectangle';
+import CourseTimelines from '../../../components/courses/CourseTimelines';
 import { GET_STUDENT_CLASS } from '../../../gql/queries';
 
 const doubleHeader = css`
@@ -61,6 +62,31 @@ const REMOVE_TASK = gql`
   }
 `;
 
+const GET_COURSE_OF_CLASS = gql`
+  query GET_COURSE_OF_CLASS($classId: ID!) {
+    getCourseOfClass(classId: $classId) {
+      _id
+      name
+      subject
+      essentialPlaylists {
+        _id
+        name
+        type
+      }
+      corePlaylists {
+        _id
+        name
+        type
+      }
+      challengePlaylists {
+        _id
+        name
+        type
+      }
+    }
+  }
+`;
+
 const GET_STUDENT_CLASS_SCORES = gql`
   query GET_STUDENT_CLASS_SCORES($classId: ID!) {
     getScoresForEnrolledClass(classId: $classId) {
@@ -81,6 +107,10 @@ const studentClass = () => {
   const { classId } = router.query;
   const alert = useContext(AlertContext);
   const modal = useContext(ModalContext);
+
+  const { loading: courseLoading, data: courseData } = useQuery(GET_COURSE_OF_CLASS, {
+    variables: { classId: classId },
+  })
 
   const { loading, error, data } = useQuery(GET_STUDENT_CLASS, {
     variables: { classId: classId },
@@ -119,8 +149,39 @@ const studentClass = () => {
     )
     modal.open();
   }
+  const course = courseData?.getCourseOfClass;
+  const essential = courseData?.getCourseOfClass?.essentialPlaylists.map(playlist => {
+    playlist.best = null;
+    scoreData?.getScoresForEnrolledClass.forEach(score => {
+      if (score.playlist._id === playlist._id) {
+        const percent = parseInt(score.score / score.possibleScore * 100);
+        if (percent > playlist.best) { playlist.best = percent }
+      }
+    })
+    return playlist;
+  })
+  const core = courseData?.getCourseOfClass?.corePlaylists.map(playlist => {
+    playlist.best = null;
+    scoreData?.getScoresForEnrolledClass.forEach(score => {
+      if (score.playlist._id === playlist._id) {
+        const percent = parseInt(score.score / score.possibleScore * 100);
+        if (percent > playlist.best) { playlist.best = percent }
+      }
+    })
+    return playlist;
+  })
+  const challenge = courseData?.getCourseOfClass?.challengePlaylists.map(playlist => {
+    playlist.best = null;
+    scoreData?.getScoresForEnrolledClass.forEach(score => {
+      if (score.playlist._id === playlist._id) {
+        const percent = parseInt(score.score / score.possibleScore * 100);
+        if (percent > playlist.best) { playlist.best = percent }
+      }
+    })
+    return playlist;
+  });
 
-  if (loading) return <Loading />
+  if (loading || courseLoading) return <Loading />
 
   const { name } = data?.getClass;
   return (
@@ -131,6 +192,22 @@ const studentClass = () => {
       </Head>
       <PageTitle>{name}</PageTitle>
       <PagePadding>
+        <CourseTimelines
+          name={`Class at a Glance`}
+          courseId={course._id}
+          essentialPlaylists={course.essentialPlaylists}
+          corePlaylists={course.corePlaylists}
+          challengePlaylists={course.challengePlaylists}
+          subject={course.subject}
+          key={course._id}
+          css={css`
+            margin-left: 0;
+            margin-right: 0;
+            padding-left: 0;
+            padding-right: 0;
+            :hover { box-shadow: none;} 
+          `}
+        />
         <div css={doubleHeader}>
           <div>
             <h4>Weekly Goals</h4>
@@ -160,8 +237,8 @@ const studentClass = () => {
           {scoreData?.getScoresForEnrolledClass.map(score => {
             const date = new Date(score.timeScored).toLocaleDateString();
             return (
-              <Link href='/student/playlists/[playlistId]' as={`/student/playlists/${score.playlist._id}`}>
-                <li key={score._id}>
+              <Link href='/student/playlists/[playlistId]' as={`/student/playlists/${score.playlist._id}`} key={score._id}>
+                <li>
                   <div css={css`width: 30%;`}>
                     <strong>
                       {score.playlist.name}
