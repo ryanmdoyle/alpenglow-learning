@@ -76,7 +76,7 @@ const grading = () => {
         <div css={css`display: flex;`}>
           <div css={css`width: 49%;`}>
             <h4>Pending Quiz Requests</h4>
-            {(requestData && pending.length == 0) && (
+            {(requestData && pending?.length == 0) && (
               <em>No current quiz requests.</em>
             )}
             {requestData && (
@@ -125,7 +125,7 @@ const grading = () => {
           />
         ))}
         <h4>Recently Scored</h4>
-        {(recentScores.length == 0) && (
+        {(recentScores?.length == 0) && (
           <em>No scores from the last day.</em>
         )}
         {recentScores && recentScores.map(score => {
