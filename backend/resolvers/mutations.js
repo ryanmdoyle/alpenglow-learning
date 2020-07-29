@@ -37,8 +37,11 @@ const mutations = {
         roles: user.roles,
         _id: user._id,
       }, process.env.SECRET)
-      const cookie = await context.res.cookie('token', alpenglowToken);
-      return user;
+      const cookie = await context.res.cookie('token', alpenglowToken, {
+        httpOnly: true,
+        expires: new Date(Date.now() + 604800000),
+      });
+      return alpenglowToken;
     }
 
     // if user does not exists, add user to db and login
@@ -65,8 +68,11 @@ const mutations = {
               _id: newUserRes._id,
             }, process.env.SECRET);
 
-            const cookie = await context.res.cookie('token', alpenglowToken);
-            return newUser;
+            const cookie = await context.res.cookie('token', alpenglowToken, {
+              httpOnly: true,
+              expires: new Date(Date.now() + 604800000),
+            });
+            return alpenglowToken;
           })
         })
         .catch((err) => { console.error('error in user creation', err) })
@@ -539,7 +545,7 @@ const mutations = {
       playlist: args.playlistId || null,
       class: args.classId || null,
     })
-    const saved = await task.save().catch(err => { return new ApolloError('Problem saving!')});
+    const saved = await task.save().catch(err => { return new ApolloError('Problem saving!') });
     return task;
   },
 

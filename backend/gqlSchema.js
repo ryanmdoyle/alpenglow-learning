@@ -232,7 +232,7 @@ const typeDefs = gql`
 
     acceptQuizApproval(requestId: ID!): Request!,
 
-    login(authToken: String!): User!,
+    login(authToken: String!): String!,
     logout: String!,
     createAccount(authToken: String!, userType: String!): User!,
   }
