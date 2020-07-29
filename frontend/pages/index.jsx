@@ -51,8 +51,9 @@ const CREATE_ACCOUNT = gql`
 const HomePage = ({ }) => {
   // home should render index/welcome page, or push logged in users to appropriate page
   const user = useContext(UserContext);
-  const [signupType, setSignupType] = useState(null);
   const router = useRouter();
+  const isCookie = navigator.cookieEnabled
+  const [signupType, setSignupType] = useState(null);
   const [createUser, { data }] = useMutation(CREATE_ACCOUNT);
 
   const newTeacher = async (response) => {
@@ -95,6 +96,10 @@ const HomePage = ({ }) => {
         <h1>Welcome!</h1>
         <h3>Get started as a{signupType ? ` ${signupType.toLowerCase()}:` : '...'}</h3>
         <div className='buttons'>
+          <div
+            onMouseEnter={() => {setSignupType('teacher')}}
+            onMouseLeave={() => {setSignupType(null)}}
+          >
           <GoogleLogin
             clientId="740708519996-jckm5svthu1lh5fv35jc55pp54kam9br.apps.googleusercontent.com"
             buttonText="Teacher"
@@ -102,6 +107,11 @@ const HomePage = ({ }) => {
             onSuccess={newTeacher}
           // onFailure={loginFail}
           />
+          </div>
+          <div
+            onMouseEnter={() => {setSignupType('student')}}
+            onMouseLeave={() => {setSignupType(null)}}
+          >
           <GoogleLogin
             clientId="740708519996-jckm5svthu1lh5fv35jc55pp54kam9br.apps.googleusercontent.com"
             buttonText="Student"
@@ -109,6 +119,8 @@ const HomePage = ({ }) => {
             onSuccess={newStudent}
           // onFailure={loginFail}
           />
+          </div>
+          <div>
           <GoogleLogin
             clientId="740708519996-jckm5svthu1lh5fv35jc55pp54kam9br.apps.googleusercontent.com"
             buttonText="Parent"
@@ -117,6 +129,7 @@ const HomePage = ({ }) => {
           // onSuccess={gqlLogin}
           // onFailure={loginFail}
           />
+          </div>
         </div>
         <small css={css`font-size: 0.7rem;`}>Parent access coming soon!</small>
       </div>
