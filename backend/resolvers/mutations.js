@@ -444,6 +444,7 @@ const mutations = {
         playlist: args.playlistId,
         type: args.type,
         externalLink: args.externalLink,
+        externalResponsesLink: args.externalResponsesLink,
         possibleScore: args.possibleScore,
       })
       return await newQuiz.save();
@@ -453,7 +454,9 @@ const mutations = {
 
   async updateQuiz(parent, args, context, info) {
     return await Quiz.updateOne({ playlist: args.playlistId }, {
+      type: args.type,
       externalLink: args.externalLink,
+      externalResponsesLink: args.externalResponsesLink,
       possibleScore: args.possibleScore,
     });
   },

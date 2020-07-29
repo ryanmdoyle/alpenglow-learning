@@ -85,7 +85,9 @@ query GET_QUIZ_FOR_PLAYLIST($playlistId: ID!) {
   getQuizForPlaylist(playlistId: $playlistId) {
     _id
     externalLink
+    externalResponsesLink
     possibleScore
+    type
   }
 }
 `;

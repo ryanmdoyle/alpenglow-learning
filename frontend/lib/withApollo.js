@@ -4,10 +4,7 @@ import React, { useMemo } from 'react'
 import Head from 'next/head'
 import fetch from 'isomorphic-unfetch'
 import { ApolloProvider } from '@apollo/react-hooks'
-import { ApolloClient, InMemoryCache, HttpLink } from 'apollo-boost'
-import { WebSocketLink } from 'apollo-link-ws';
-import { split } from 'apollo-link';
-import { getMainDefinition } from 'apollo-utilities';
+import { ApolloClient, InMemoryCache, HttpLink, ApolloLink, concat } from 'apollo-boost'
 
 let apolloClient = null
 

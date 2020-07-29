@@ -14,10 +14,11 @@ const quizSchema = new Schema({
   }],
   type: {
     type: String,
-    enum: ['CREATED', 'EXTERNAL'],
+    enum: ['CREATED', 'EXTERNAL', 'PAPER'],
     default: 'EXTERNAL'
   },
   externalLink: String,
+  externalResponsesLink: String,
   possibleScore: Number,
 })
 

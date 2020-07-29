@@ -99,7 +99,8 @@ const typeDefs = gql`
     createQuiz(
       playlistId: ID!,
       type: String!,
-      externalLink: String!,
+      externalLink: String,
+      externalResponsesLink: String,
       possibleScore: Int,
     ): Quiz,
 
@@ -190,7 +191,8 @@ const typeDefs = gql`
     updateQuiz(
       playlistId: ID!,
       type: String!,
-      externalLink: String!,
+      externalLink: String,
+      externalResponsesLink: String,
       possibleScore: Int,
     ): Quiz,
 
@@ -321,7 +323,8 @@ const typeDefs = gql`
     playlist: ID!,
     questions: [Question],
     type: String!,
-    externalLink: String!,
+    externalLink: String,
+    externalResponsesLink: String,
     possibleScore: Int,
   }
 

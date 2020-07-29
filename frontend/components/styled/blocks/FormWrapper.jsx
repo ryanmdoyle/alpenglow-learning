@@ -45,6 +45,15 @@ justify-content: center;
     height: 2.2rem;
   }
 
+  small {
+    color: var(--pink);
+  }
+
+  label > small {
+    font-weight: 200;
+    text-transform: lowercase;
+  }
+
   button[type=submit] {
     margin-top: 1.5rem;
     align-self: flex-end;
