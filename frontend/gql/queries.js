@@ -114,3 +114,37 @@ query GET_STUDENT_CLASS($classId: ID!) {
   }
 }
 `;
+
+export const GET_ENROLLED_COURSES = gql`
+query GET_ENROLLED_COURSES {
+  getCoursesEnrolled {
+    _id
+    name
+    subject
+    essentialPlaylists {
+      _id
+      name
+      type
+    }
+    corePlaylists {
+      _id
+      name
+      type
+    }
+    challengePlaylists {
+      _id
+      name
+      type
+    }
+  }
+  getScores {
+    score
+    possibleScore
+    _id
+    playlist {
+      _id
+      name
+    }
+  }
+}
+`;

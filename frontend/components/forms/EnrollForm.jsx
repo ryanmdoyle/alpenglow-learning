@@ -8,7 +8,7 @@ import ModalContext from '../context/ModalContext';
 import PagePadding from '../styled/PagePadding';
 import { useMutation } from '@apollo/react-hooks';
 import { useForm } from 'react-hook-form';
-import { GET_ENROLLED_CLASSES } from '../../gql/queries';
+import { GET_ENROLLED_CLASSES, GET_ENROLLED_COURSES } from '../../gql/queries';
 
 const ENROLL_MUTATION = gql`
   mutation ENROLL($enrollId: String!) {
@@ -25,7 +25,7 @@ const EnrollForm = () => {
   const router = useRouter();
 
   const [enroll, { data }] = useMutation(ENROLL_MUTATION, {
-    refetchQueries: [{ query: GET_ENROLLED_CLASSES }],
+    refetchQueries: [{ query: GET_ENROLLED_CLASSES }, { query: GET_ENROLLED_COURSES }],
     onCompleted: (data) => {
       if (modal.isOpen) {
         reset();

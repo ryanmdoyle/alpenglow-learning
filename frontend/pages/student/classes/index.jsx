@@ -6,43 +6,10 @@ import { useQuery } from '@apollo/react-hooks'
 import PageTitle from '../../../components/styled/PageTitle';
 import Loading from '../../../components/Loading';
 import CourseTimelines from '../../../components/courses/CourseTimelines';
-
-const ENROLLED_COURSES_QUERY = gql`
-  query ENROLLED_COURSES_QUERY {
-    getCoursesEnrolled {
-      _id
-      name
-      subject
-      essentialPlaylists {
-        _id
-        name
-        type
-      }
-      corePlaylists {
-        _id
-        name
-        type
-      }
-      challengePlaylists {
-        _id
-        name
-        type
-      }
-    }
-    getScores {
-      score
-      possibleScore
-      _id
-      playlist {
-        _id
-        name
-      }
-    }
-  }
-`;
+import { GET_ENROLLED_COURSES } from '../../../gql/queries';
 
 const studentClasses = () => {
-  const { loading, error, data } = useQuery(ENROLLED_COURSES_QUERY);
+  const { loading, error, data } = useQuery(GET_ENROLLED_COURSES);
   if (error) return null;
   if (loading) return <Loading />;
 
