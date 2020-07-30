@@ -132,7 +132,10 @@ const grading = () => {
           <em>No scores from the last day.</em>
         )}
         {recentScores && recentScores.map(score => {
-          if (score.timeScored) {
+          const now = Date.now();
+          const lastThree = 1000 * 60 * 60 * 24 * 3; //ms * sec/min * min/hr * hr/day * 3days 
+
+          if (score.timeScored > (now - lastThree)) {
             return (
               <ProgressScoreEntry
                 scoreId={score._id}
