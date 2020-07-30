@@ -217,17 +217,18 @@ const mutations = {
     const { currentUser } = context;
     const requestExists = await Request.exists({ playlist: args.playlistId });
     if (!requestExists) {
+      const quiz = await Quiz.findOne({ playlist: args.playlistId });
       const currentTime = Date.now();
       const request = new Request({
         approved: false,
         approvalAccepted: false,
         user: currentUser._id,
         playlist: args.playlistId,
+        type: quiz.type,
         timeRequested: currentTime,
         ...args,
       })
-      const newRequest = await request.save().catch(err => { console.log(err) });
-      return request;
+      return await request.save().catch(err => { console.log(err) });
     }
     return new ApolloError('Request has already been submitted.');
   },

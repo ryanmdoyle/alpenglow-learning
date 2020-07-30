@@ -157,8 +157,8 @@ ProgressScoreEntry.propTypes = {
   scoreId: PropTypes.string.isRequired,
   studentName: PropTypes.string.isRequired,
   playlistName: PropTypes.string.isRequired,
-  score: PropTypes.oneOf([PropTypes.number, null]),
-  possibleScore: PropTypes.oneOf([PropTypes.number, null]),
+  // score: PropTypes.oneOf([PropTypes.number, null]),
+  // possibleScore: PropTypes.oneOf([PropTypes.number, null]),
 }
 
 export default ProgressScoreEntry;

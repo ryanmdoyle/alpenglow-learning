@@ -20,6 +20,10 @@ const requestContainer = css`
   }
   span { color: var(--blueDark);}
   small { color: var(--pink);}
+  i {
+    color: var(--pink);
+    margin-right: 0.25rem;
+  }
 `;
 
 const oneWide = css`
@@ -69,7 +73,7 @@ const DENY_QUIZ_REQUEST = gql`
   }
 `;
 
-const QuizRequest = ({ requestId, name, playlistName, approved, approvalAccepted }) => {
+const QuizRequest = ({ requestId, name, playlistName, approved, approvalAccepted, type }) => {
   const [approve, { data: approveData }] = useMutation(APPROVE_QUIZ_REQUEST, {
     variables: { requestId: requestId },
     refetchQueries: [{ query: GET_STUDENT_REQS_AND_PENDING_SCORES }],
@@ -83,12 +87,27 @@ const QuizRequest = ({ requestId, name, playlistName, approved, approvalAccepted
     refetchQueries: [{ query: GET_STUDENT_REQS_AND_PENDING_SCORES }],
   })
 
+  const icon = (type) => {
+    switch (type) {
+      case 'EXTERNAL':
+        return 'link'
+        break;
+      case 'PAPER':
+        return 'article'
+        break;
+      default:
+        return 'link';
+    }
+  }
+
   return (
     <div css={requestContainer}>
       <div>
-        <span>{name}</span>
-        <span css={css`margin-left: 1rem;color: var(--blueMedium);`}><small>{playlistName}</small></span>
-        <span>{approved}</span>
+        <span>{name}</span><br></br>
+        <div css={css`display: flex; align-items: center;`}>
+          <i className="material-icons icon">{icon(type)}</i>
+          <span><small>{playlistName}</small></span>
+        </div>
       </div>
       <div>
         {approved ?
@@ -116,11 +135,12 @@ const CancelButton = ({ approvalAccepted, cancel, deny }) => {
 }
 
 QuizRequest.propTypes = {
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  playlist: PropTypes.string.isRequired,
-  approved: PropTypes.bool.isRequired,
-  approvalAccepted: PropTypes.bool.isRequired,
+  id: PropTypes.string,
+  name: PropTypes.string,
+  playlist: PropTypes.string,
+  type: PropTypes.string,
+  approved: PropTypes.bool,
+  approvalAccepted: PropTypes.bool,
 }
 
 export default QuizRequest;

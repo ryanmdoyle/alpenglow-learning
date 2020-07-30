@@ -349,6 +349,7 @@ const typeDefs = gql`
     _id: ID,
     user: User,
     playlist: Playlist,
+    type: String,
     approved: Boolean,
     approvalAccepted: Boolean,
     timeRequested: Date,

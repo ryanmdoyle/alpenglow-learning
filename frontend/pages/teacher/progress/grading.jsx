@@ -16,6 +16,7 @@ const GET_STUDENT_REQS_AND_PENDING_SCORES = gql`
       _id
       approved
       approvalAccepted
+      type
       user {
         name
       }
@@ -63,6 +64,7 @@ const grading = () => {
   const pending = requestData?.filter(request => request.approvalAccepted == false)
   const inProgress = requestData?.filter(request => request.approvalAccepted)
   const three = Date.now() - (1000 * 60 * 60 * 24 * 3);
+  console.log('pending', pending)
 
   if (loading) return <Loading />
   return (
@@ -85,6 +87,7 @@ const grading = () => {
                   requestId={request._id}
                   name={request.user.name}
                   playlistName={request.playlist.name}
+                  type={request.type}
                   approved={request.approved}
                   approvalAccepted={request.approvalAccepted}
                   key={request._id}

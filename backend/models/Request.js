@@ -12,6 +12,11 @@ const requestSchema = new Schema({
     ref: 'Playlist',
     autopopulate: { maxDepth: 1 },
   },
+  type: {
+    type: String,
+    enum: ['CREATED', 'EXTERNAL', 'PAPER'],
+    default: 'EXTERNAL'
+  },
   approved: Boolean,
   approvalAccepted: Boolean,
   timeRequested: Date,
