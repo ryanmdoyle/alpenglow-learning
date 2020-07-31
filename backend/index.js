@@ -3,20 +3,20 @@ require('./db');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
-const { ApolloServer } = require('apollo-server-express');
+const { ApolloServer, AuthenticationError } = require('apollo-server-express');
 const cors = require('cors');
 
 const typeDefs = require('./gqlSchema');
 const queries = require('./resolvers/queries');
 const mutations = require('./resolvers/mutations');
-const subscriptions = require('./resolvers/subscriptions');
 const dateScalar = require('./resolvers/dateScaler');
+const Auth = require('./lib/Auth');
+const authorizeUser = require('./lib/authMiddleware');
 
 const resolvers = {
   Mutation: mutations,
   Query: queries,
   Date: dateScalar,
-  Subscription: subscriptions,
 }
 
 const app = express();
@@ -31,18 +31,46 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(cookieParser());
 
+// middleware to check/refresh tokens
+app.use((req, res, next) => {
+  const { ALPS_AT, ALPS_RT } = req.cookies;
+  if (ALPS_AT || ALPS_RT) {
+    try {
+      if (!ALPS_AT) throw new Error;
+      // try to validate token, if it's validated set user on req
+      const tokenData = jwt.verify(ALPS_AT, process.env.AUTH_SECRET);
+      req.currentUser = tokenData;
+    } catch {
+      // if token invalid, try to refresh using refresh token
+      try {
+        if (!ALPS_RT) throw new Error;
+        const refresh = jwt.verify(ALPS_RT, process.env.REF_SECRET); // if invalid exits to catch block
+        const verifiedUser = Auth.verifyUserInDb(refresh._id);
+        const newAuthToken = Auth.createAuthToken(verifiedUser);
+        const newRefreshToken = Auth.createRefreshToken(verifiedUser);
+        res.cookie('ALPS_AT', newAuthToken, {
+          httpOnly: true,
+          expires: new Date(Date.now() + 900000), // 1000 * 60 * 15
+        });
+        res.cookie('ALPS_RT', newRefreshToken, {
+          httpOnly: true,
+          expires: new Date(Date.now() + 604800000), // 1000 * 60 * 60 * 24 * 7
+        });
+        req.currentUser = refresh;
+      } catch {
+        req.currentUser = null;
+      }
+    }
+  } else {
+    req.currentUser = null;
+  }
+  next();
+})
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: async ({ req, connection }) => {
-    if (connection) return connection.context;
-    const { token } = req.cookies;
-    if (token) {
-      const tokenData = jwt.verify(token, process.env.SECRET);
-      req.currentUser = tokenData;
-    } else {
-      req.currentUser = null;
-    }
+  context: async ({ req }) => {
     return { ...req }
   },
   introspection: true,

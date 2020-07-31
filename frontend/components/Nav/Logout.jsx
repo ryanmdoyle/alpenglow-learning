@@ -11,7 +11,6 @@ const LOGOUT = gql`
   }
 `;
 
-
 const Logout = () => {
   const [alpenLogout, { data }] = useMutation(LOGOUT);
 

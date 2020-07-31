@@ -2,8 +2,6 @@ const { ApolloError } = require('apollo-server-express')
 const ShortUniqueId = require('short-unique-id').default;
 const { OAuth2Client } = require('google-auth-library');
 
-const { pubsub } = require('./pubsub');
-
 // Mongoose Models
 const User = require('../models/User');
 const Course = require('../models/Course');
@@ -17,6 +15,7 @@ const Question = require('../models/Question');
 const Score = require('../models/Score');
 const Task = require('../models/Task');
 const jwt = require('jsonwebtoken');
+const Auth = require('../lib/Auth');
 
 const mutations = {
   async login(parent, args, context, info) {
@@ -31,17 +30,17 @@ const mutations = {
 
     // If user already exists, authorize login
     if (user !== null) {
-      const alpenglowToken = jwt.sign({
-        firstName: user.firstName,
-        lastName: user.lastName,
-        roles: user.roles,
-        _id: user._id,
-      }, process.env.SECRET)
-      const cookie = await context.res.cookie('token', alpenglowToken, {
+      const authToken = Auth.createAuthToken(user);
+      const refreshToken = Auth.createRefreshToken(user);
+      context.res.cookie('ALPS_AT', authToken, {
         httpOnly: true,
-        expires: new Date(Date.now() + 604800000),
+        expires: new Date(Date.now() + 900000), // 1000 * 60 * 15
       });
-      return alpenglowToken;
+      context.res.cookie('ALPS_RT', refreshToken, {
+        httpOnly: true,
+        expires: new Date(Date.now() + 604800000), // 1000 * 60 * 60 * 24 * 7
+      });
+      return authToken;
     }
 
     // if user does not exists, add user to db and login
@@ -61,18 +60,18 @@ const mutations = {
 
           const newUser = User.findOne({ googleId: payload.sub }, async (err, newUserRes) => {
 
-            const alpenglowToken = jwt.sign({
-              firstName: newUserRes.firstName,
-              lastName: newUserRes.lastName,
-              roles: newUserRes.roles,
-              _id: newUserRes._id,
-            }, process.env.SECRET);
+            const authToken = Auth.createAuthToken(newUser);
+            const refreshToken = Auth.createRefreshToken(newUser);
 
-            const cookie = await context.res.cookie('token', alpenglowToken, {
+            context.res.cookie('ALPS_AT', authToken, {
               httpOnly: true,
               expires: new Date(Date.now() + 604800000),
             });
-            return alpenglowToken;
+            context.res.cookie('ALPS_RT', refreshToken, {
+              httpOnly: true,
+              expires: new Date(Date.now() + 604800000),
+            });
+            return authToken;
           })
         })
         .catch((err) => { console.error('error in user creation', err) })
@@ -89,11 +88,9 @@ const mutations = {
     });
     const payload = ticket.getPayload();
     const userCheck = await User.findOne({ googleId: payload.sub });
-
     if (userCheck) {
       return new ApolloError('Account already exists, please log in to your account.')
     }
-
     const user = new User({
       firstName: payload.given_name,
       lastName: payload.family_name,
@@ -105,20 +102,22 @@ const mutations = {
     })
     const newUser = await user.save()
     const createdUser = await User.findOne({ googleId: payload.sub });
-
-    const alpenglowToken = jwt.sign({
-      firstName: createdUser.firstName,
-      lastName: createdUser.lastName,
-      roles: createdUser.roles,
-      _id: createdUser._id,
-    }, process.env.SECRET);
-
-    const cookie = await context.res.cookie('token', alpenglowToken);
+    const authToken = Auth.createAuthToken(createdUser);
+    const refreshToken = Auth.createRefreshToken(createdUser);
+    context.res.cookie('ALPS_AT', authToken, {
+      httpOnly: true,
+      expires: new Date(Date.now() + 604800000),
+    });
+    context.res.cookie('ALPS_RT', refreshToken, {
+      httpOnly: true,
+      expires: new Date(Date.now() + 604800000),
+    });
     return newUser;
   },
 
   async logout(parent, args, context, info) {
-    const clearCookie = await context.res.clearCookie('token');
+    context.res.clearCookie('ALPS_AT');
+    context.res.clearCookie('ALPS_RT');
     return 'Bye!'
   },
 
