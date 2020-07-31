@@ -347,12 +347,10 @@ const mutations = {
   async updateResource(parent, args, context, info) {
     const { resourceId, name, description, type, href } = args;
     const resource = await Resource.findOne({ _id: resourceId });
-    resource.name = name,
-      resource.description = description,
-      resource.type = type,
-      resource.href = href,
-      resource.timeScored = Date.now(),
-      resource.markModified('timeScored')
+    resource.name = name;
+    resource.description = description;
+    resource.type = type;
+    resource.href = href;
     return await resource.save();
   },
 
@@ -362,6 +360,7 @@ const mutations = {
       score: score,
       possibleScore: possibleScore,
       timeScored: Date.now(),
+      scoredBy: context.currentUser._id,
     });
   },
 

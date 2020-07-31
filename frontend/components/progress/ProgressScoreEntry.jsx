@@ -41,20 +41,17 @@ const pendingScoreStyle = css`
   }
   .studentInfo {
     height: 100%;
-    width: 20%;
   }
   .scoreEntry {
     position: relative;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    width: 80%;
     overflow: hidden;
     form {
       width: 100%;
       display: flex;
-      justify-content: flex-end;
+      justify-self: flex-end;
       align-items: center;
       flex-wrap: wrap;
       .inputContainer {
@@ -97,7 +94,7 @@ const DELETE_SCORE = gql`
   }
 `;
 
-const ProgressScoreEntry = ({ scoreId, studentName, playlistName, score, possibleScore }) => {
+const ProgressScoreEntry = ({ scoreId, studentName, playlistName, score, possibleScore, timeScored }) => {
   const { register, handleSubmit, errors } = useForm();
   const alert = useContext(AlertContext);
 
@@ -127,11 +124,14 @@ const ProgressScoreEntry = ({ scoreId, studentName, playlistName, score, possibl
     })
   }
 
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat
+  const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' }
+  const scoredDate = new Date(timeScored);
   return (
     <div css={pendingScoreStyle}>
       <div className='studentInfo'>
         <p>{studentName}</p>
-        <small>{playlistName}</small>
+        <small>{playlistName} - {scoredDate.toLocaleDateString(undefined, options)}</small>
       </div>
       <div className='scoreEntry'>
         <form onSubmit={handleSubmit(onSubmit)}>

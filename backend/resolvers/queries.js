@@ -118,9 +118,6 @@ const queries = {
 		} else {
 			query.user = currentUser._id;
 		}
-		if (args.fromDate) {
-			query.timeScored = { $gt: args.timeFrom };
-		}
 		return await Score.find(query);
 	},
 
@@ -208,6 +205,10 @@ const queries = {
 		if (classId) query.class = classId;
 		if (playlistId) query.playlist = playlistId;
 		return await Task.find(query);
+	},
+
+	async getScorePendingForEnrolledPlaylist(parent, args, context, info) {
+    return await Score.findOne({playlist: args.playlistId, user: context.currentUser._id});
 	},
 }
 module.exports = queries;

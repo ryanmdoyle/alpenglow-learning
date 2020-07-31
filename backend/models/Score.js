@@ -16,6 +16,10 @@ const scoreSchema = new Schema({
   score: Number,
   timeCreated: Date,
   timeScored: Date,
+  scoredBy: {
+    type: mongoose.ObjectId,
+    ref: 'Playlist',
+  },
 })
 
 scoreSchema.plugin(require('mongoose-autopopulate'));

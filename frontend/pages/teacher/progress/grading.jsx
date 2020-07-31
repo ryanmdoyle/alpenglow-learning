@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import gql from 'graphql-tag';
 import Head from 'next/head';
 import { css } from '@emotion/core';
@@ -9,9 +9,10 @@ import Loading from '../../../components/Loading';
 import PagePadding from '../../../components/styled/blocks/PagePadding';
 import QuizRequest from '../../../components/progress/QuizRequest';
 import ProgressScoreEntry from '../../../components/progress/ProgressScoreEntry';
+import UserContext from '../../../components/context/UserContext';
 
 const GET_STUDENT_REQS_AND_PENDING_SCORES = gql`
-  query GET_STUDENT_REQS_AND_PENDING_SCORES($timeFrom: Date) {
+  query GET_STUDENT_REQS_AND_PENDING_SCORES {
     getRequests {
       _id
       approved
@@ -35,11 +36,12 @@ const GET_STUDENT_REQS_AND_PENDING_SCORES = gql`
       score
       possibleScore
     }
-    getScores(timeFrom: $timeFrom) {
+    getScoresInstructing {
       _id
       score
       possibleScore
       timeScored
+      scoredBy
       user {
         name
       }
@@ -51,20 +53,16 @@ const GET_STUDENT_REQS_AND_PENDING_SCORES = gql`
 `;
 
 const grading = () => {
+  const user = useContext(UserContext);
   const { loading, data } = useQuery(GET_STUDENT_REQS_AND_PENDING_SCORES, {
     pollInterval: 3000,
-    variables: {
-      timeFrom: three,
-    }
   })
 
   const scoreData = data?.getScoresPending;
   const requestData = data?.getRequests;
-  const recentScores = data?.getScores;
+  const recentScores = data?.getScoresInstructing?.filter(score => score.scoredBy == user._id);;
   const pending = requestData?.filter(request => request.approvalAccepted == false)
   const inProgress = requestData?.filter(request => request.approvalAccepted)
-  const three = Date.now() - (1000 * 60 * 60 * 24 * 3);
-  console.log('pending', pending)
 
   if (loading) return <Loading />
   return (
@@ -143,6 +141,7 @@ const grading = () => {
                 playlistName={score?.playlist?.name}
                 score={score.score}
                 possibleScore={score.possibleScore}
+                timeScored={score.timeScored}
                 key={score._id}
               />
             )

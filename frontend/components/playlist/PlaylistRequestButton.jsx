@@ -24,7 +24,11 @@ const GET_PLAYLIST_REQUEST = gql`
     }
     getQuizForPlaylist(playlistId: $playlistId) {
       _id
-  }
+    }
+    getScorePendingForEnrolledPlaylist(playlistId: $playlistId) {
+      score
+      possibleScore
+    }
   }
 `;
 

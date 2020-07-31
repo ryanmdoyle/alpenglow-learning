@@ -32,15 +32,13 @@ const typeDefs = gql`
     getClassInstructing(classId: ID!): Class,
     getClassesInstructing(userId: ID): [Class],
     getInstructingPlaylists(userId: ID): [Playlist],
-    getScoresInstructing(userId: ID): [Score],
 
     getCourseOfClass(classId: ID!): Course!,
 
-    getScores(
-      userId: ID,
-      timeFrom: Date,
-    ): [Score],
+    getScores(userId: ID): [Score],
+    getScoresInstructing(scoredBy: ID): [Score],
     getScoresPending: [Score],
+    getScorePendingForEnrolledPlaylist(playlistId: ID!): [Score],
     getScoresForPlaylist(playlistId: ID!): [Score],
     getScoresForClass(classId: ID!): [Score],
     getScoresForEnrolledClass(classId: ID!): [Score],
@@ -336,6 +334,7 @@ const typeDefs = gql`
     score: Int,
     timeCreated: Date,
     timeScored: Date,
+    scoredBy: ID,
   }
 
   type Question {
