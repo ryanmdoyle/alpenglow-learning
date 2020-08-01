@@ -5,6 +5,7 @@ import Head from 'next/head'
 import fetch from 'isomorphic-unfetch'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { ApolloClient, InMemoryCache, HttpLink, ApolloLink, concat } from 'apollo-boost'
+import { onError } from 'apollo-link-error';
 
 let apolloClient = null
 
@@ -128,10 +129,20 @@ function createApolloClient(initialState = {}) {
     fetch: !isBrowser && fetch
   });
 
+  const link = onError(({ graphQLErrors, networkError }) => {
+    if (graphQLErrors)
+      graphQLErrors.forEach(({ message, locations, path }) =>
+        console.log(
+          `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+        )
+      );
+    if (networkError) console.log(`[Network error]: ${networkError}`);
+  });
+
   return new ApolloClient({
     connectToDevTools: true, //or isBrowser
     ssrMode: !isBrowser, // Disables forceFetch on the server (so queries are only run once)
-    link: httpLink,
+    link: concat(link, httpLink),
     cache: new InMemoryCache().restore(initialState)
   })
 }
