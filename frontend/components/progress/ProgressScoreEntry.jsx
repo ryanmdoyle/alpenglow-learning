@@ -7,7 +7,7 @@ import { useMutation } from '@apollo/react-hooks';
 
 import AlertContext from '../context/AlertContext';
 import TrashCanButton from '../styled/elements/TrashCanButton';
-import { GET_STUDENT_REQS_AND_PENDING_SCORES } from '../../pages/teacher/progress/grading';
+import { GET_STUDENT_REQS_AND_PENDING_SCORES } from '../../gql/queries';
 
 const pendingScoreStyle = css`
   width: 100%;
@@ -131,7 +131,7 @@ const ProgressScoreEntry = ({ scoreId, studentName, playlistName, score, possibl
     <div css={pendingScoreStyle}>
       <div className='studentInfo'>
         <p>{studentName}</p>
-        <small>{playlistName} - {scoredDate.toLocaleDateString(undefined, options)}</small>
+        <small>{playlistName}{timeScored ? ` - ${scoredDate.toLocaleDateString(undefined, options)}` : null}</small>
       </div>
       <div className='scoreEntry'>
         <form onSubmit={handleSubmit(onSubmit)}>

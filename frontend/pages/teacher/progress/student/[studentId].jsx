@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import gql from 'graphql-tag';
 import Head from 'next/head';
 import { css } from '@emotion/core';
@@ -9,6 +9,8 @@ import PageTitle from '../../../../components/styled/PageTitle';
 import PagePadding from '../../../../components/styled/PagePadding';
 import GradesPlaylistScore from '../../../../components/grades/GradesPlaylistScore';
 import Loading from '../../../../components/Loading';
+import ModalContext from '../../../../components/context/ModalContext';
+import StudentProgressPlaylistScores from '../../../../components/progress/studentProgress/StudentProgressPlaylistScores';
 
 const playlistColumns = css`
   width: 100%;
@@ -32,6 +34,7 @@ const GET_STUDENT_PROGRESS = gql`
       _id
       score
       possibleScore
+      timeScored
       playlist {
         _id
       }
@@ -56,6 +59,7 @@ const GET_STUDENT_PROGRESS = gql`
 `;
 
 const studentProgress = () => {
+  const modal = useContext(ModalContext);
   const { query: { studentId } } = useRouter();
   const { loading, error, data } = useQuery(GET_STUDENT_PROGRESS, {
     variables: {
@@ -64,6 +68,19 @@ const studentProgress = () => {
   });
   const classes = data?.getCoursesEnrolled;
   const scores = data?.getScores;
+
+  const openScores = (name, id) => {
+    modal.setChildComponent(
+      <StudentProgressPlaylistScores
+        studentName={data.getUser.name}
+        playlistName={name}
+        playlistId={id}
+        scores={scores}
+      />
+    )
+    modal.open()
+  }
+  
   if (loading) return <Loading />
   return (
     <>
@@ -71,7 +88,7 @@ const studentProgress = () => {
         <title>Alpenglow Learning - Progress for {data.getUser.name}</title>
         <meta name='description' content={`Progress for ${data.getUser.name}`}></meta>
       </Head>
-      <PageTitle>Progress for {data.getUser.name}</PageTitle>
+      <PageTitle>{`Progress for ${data.getUser.name}`}</PageTitle>
       <PagePadding>
         {classes && classes.map(clas => (
           <div key={clas._id}>
@@ -84,11 +101,12 @@ const studentProgress = () => {
                   const percents = matchingScores.map(score => parseInt(score.score / score.possibleScore * 100))
                   percents.sort((a, b) => b - a);
                   return (
-                    <GradesPlaylistScore
-                      name={playlist.name}
-                      percent={percents[0]}
-                      key={playlist._id}
-                    />
+                    <div onClick={() => {openScores(playlist.name, playlist._id)}} key={playlist._id}>
+                      <GradesPlaylistScore
+                        name={playlist.name}
+                        percent={percents[0]}
+                      />
+                    </div>
                   )
                 })}
               </div>
@@ -99,11 +117,12 @@ const studentProgress = () => {
                   const percents = matchingScores.map(score => parseInt(score.score / score.possibleScore * 100))
                   percents.sort((a, b) => b - a);
                   return (
-                    <GradesPlaylistScore
-                      name={playlist.name}
-                      percent={percents[0]}
-                      key={playlist._id}
-                    />
+                    <div onClick={() => {openScores(playlist.name, playlist._id)}} key={playlist._id}>
+                      <GradesPlaylistScore
+                        name={playlist.name}
+                        percent={percents[0]}
+                      />
+                    </div>
                   )
                 })}
               </div>
@@ -114,11 +133,12 @@ const studentProgress = () => {
                   const percents = matchingScores.map(score => parseInt(score.score / score.possibleScore * 100))
                   percents.sort((a, b) => b - a);
                   return (
-                    <GradesPlaylistScore
-                      name={playlist.name}
-                      percent={percents[0]}
-                      key={playlist._id}
-                    />
+                    <div onClick={() => {openScores(playlist.name, playlist._id)}} key={playlist._id}>
+                      <GradesPlaylistScore
+                        name={playlist.name}
+                        percent={percents[0]}
+                      />
+                    </div>
                   )
                 })}
               </div>

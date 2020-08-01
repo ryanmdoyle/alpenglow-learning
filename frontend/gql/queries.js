@@ -150,3 +150,50 @@ query GET_ENROLLED_COURSES {
   }
 }
 `;
+
+export const GET_STUDENT_REQS_AND_PENDING_SCORES = gql`
+  query GET_STUDENT_REQS_AND_PENDING_SCORES {
+    getRequests {
+      _id
+      approved
+      approvalAccepted
+      type
+      user {
+        _id
+        name
+      }
+      playlist {
+        _id
+        name
+      }
+    }
+    getScoresPending {
+      _id
+      user {
+        _id
+        name
+      }
+      playlist {
+        _id
+        name
+      }
+      score
+      possibleScore
+    }
+    getScoresInstructing {
+      _id
+      score
+      possibleScore
+      timeScored
+      scoredBy
+      user {
+        _id
+        name
+      }
+      playlist {
+        _id
+        name
+      }
+    }
+  }
+`;

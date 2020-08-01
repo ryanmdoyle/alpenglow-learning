@@ -10,47 +10,7 @@ import PagePadding from '../../../components/styled/blocks/PagePadding';
 import QuizRequest from '../../../components/progress/QuizRequest';
 import ProgressScoreEntry from '../../../components/progress/ProgressScoreEntry';
 import UserContext from '../../../components/context/UserContext';
-
-const GET_STUDENT_REQS_AND_PENDING_SCORES = gql`
-  query GET_STUDENT_REQS_AND_PENDING_SCORES {
-    getRequests {
-      _id
-      approved
-      approvalAccepted
-      type
-      user {
-        name
-      }
-      playlist {
-        name
-      }
-    }
-    getScoresPending {
-      _id
-      user {
-        name
-      }
-      playlist {
-        name
-      }
-      score
-      possibleScore
-    }
-    getScoresInstructing {
-      _id
-      score
-      possibleScore
-      timeScored
-      scoredBy
-      user {
-        name
-      }
-      playlist {
-        name
-      }
-    }
-  }
-`;
+import { GET_STUDENT_REQS_AND_PENDING_SCORES } from '../../../gql/queries';
 
 const grading = () => {
   const user = useContext(UserContext);
@@ -60,7 +20,7 @@ const grading = () => {
 
   const scoreData = data?.getScoresPending;
   const requestData = data?.getRequests;
-  const recentScores = data?.getScoresInstructing?.filter(score => score.scoredBy == user._id);;
+  const recentScores = data?.getScoresInstructing?.filter(score => score.scoredBy == user._id).sort((a, b) => b.timeScored - a.timeScored);
   const pending = requestData?.filter(request => request.approvalAccepted == false)
   const inProgress = requestData?.filter(request => request.approvalAccepted)
 

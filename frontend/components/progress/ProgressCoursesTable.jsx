@@ -127,8 +127,8 @@ const ProgressCoursesTable = () => {
 
                 // return row of student progress
                 return (
-                  <Link href='/teacher/progress/student/[studentId]' as={`/teacher/progress/student/${student._id}`}>
-                    <tr key={student._id}>
+                  <Link href='/teacher/progress/student/[studentId]' as={`/teacher/progress/student/${student._id}`} key={student._id}>
+                    <tr>
                       <th scope='row'>{student.name}</th>
                       {courses.map(course => {
                         // if student not in course, don't return a progress bar
@@ -143,7 +143,7 @@ const ProgressCoursesTable = () => {
 
                         // return if the the student is not enrolled in the class/course
                         if (!studentsInCourse.includes(student._id)) return (
-                          <td><small>n/a</small></td>
+                          <td key={course._id}><small>n/a</small></td>
                         )
 
                         // if student is on course, calculate progress and show bar
