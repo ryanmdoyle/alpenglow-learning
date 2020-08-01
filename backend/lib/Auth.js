@@ -10,7 +10,7 @@ const Auth = {
       lastName: user.lastName,
       roles: user.roles,
       _id: user._id,
-    }, process.env.AUTH_SECRET, { expiresIn: '15m' });
+    }, process.env.AUTH_SECRET, { expiresIn: '7d' });
     return authToken;
   },
 
