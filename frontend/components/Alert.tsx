@@ -51,14 +51,14 @@ const text = css`
   align-items: center;
 `;
 
-const Alert = () => {
+const Alert = (props) => {
   return (
     <AlertContext.Consumer>
       {(context) => {
         const { alert, clear, alertText } = context;
         if (alert !== AlertStatus.None) {
           return (
-            <div css={(alert === AlertStatus.Success) ? [coreStyle] : [coreStyle, errorStyle]} >
+            <div css={(alert === AlertStatus.Success) ? [coreStyle] : [coreStyle, errorStyle]} {...props}>
               <div css={text}>
                 {alert === AlertStatus.Success ?
                   <i className='material-icons'>check_circle</i>

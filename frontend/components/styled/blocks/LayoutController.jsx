@@ -109,6 +109,7 @@ const LayoutController = ({ Component, pageProps }) => {
       <main>
         <ComponentWithRouteProtection Component={Component} pageProps={pageProps} />
       </main>
+      <Alert css={css`width: 100%;`}/>
     </div>
   )
 };

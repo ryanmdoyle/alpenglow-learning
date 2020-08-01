@@ -8,6 +8,7 @@ import { useMutation } from '@apollo/react-hooks'
 
 import Loading from '../components/Loading';
 import UserContext from '../components/context/UserContext';
+import AlertContext from '../components/context/AlertContext';
 import hasPermission from '../lib/hasPermission';
 import { Role } from '../lib/enums';
 
@@ -51,10 +52,15 @@ const CREATE_ACCOUNT = gql`
 const HomePage = ({ }) => {
   // home should render index/welcome page, or push logged in users to appropriate page
   const user = useContext(UserContext);
+  const alert = useContext(AlertContext);
   const router = useRouter();
-  const isCookie = navigator.cookieEnabled
   const [signupType, setSignupType] = useState(null);
-  const [createUser, { data }] = useMutation(CREATE_ACCOUNT);
+  const [createUser, { data }] = useMutation(CREATE_ACCOUNT, {
+    onError: (error) => {
+      alert.error('Account already exists. Please log in.', 10);
+    },
+    onSuccess: () => { window.location.href = '/' }
+  });
 
   const newTeacher = async (response) => {
     const login = await createUser({
@@ -63,7 +69,6 @@ const HomePage = ({ }) => {
         userType: 'TEACHER',
       },
     });
-    window.location.href = '/';
   }
 
   const newStudent = async (response) => {
