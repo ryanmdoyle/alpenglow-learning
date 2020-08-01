@@ -16,9 +16,7 @@ const GET_CURRENT_USER = gql`
 `;
 
 const UserProvider = ({ children }) => {
-  const { loading, error, data } = useQuery(GET_CURRENT_USER, {
-    pollInterval: 1000 * 60 * 5, //check for user every 5 min on frontend
-  });
+  const { loading, error, data } = useQuery(GET_CURRENT_USER);
   const contextValue = (!data) ? null : data;
   const userData = loading ? { loading: true } : contextValue?.getUserCurrent;
   return (
