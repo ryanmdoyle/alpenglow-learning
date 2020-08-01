@@ -1,4 +1,4 @@
-const { ApolloError } = require('apollo-server-express')
+const { ApolloError, AuthenticationError } = require('apollo-server-express')
 const ShortUniqueId = require('short-unique-id').default;
 const { OAuth2Client } = require('google-auth-library');
 
@@ -45,36 +45,7 @@ const mutations = {
 
     // if user does not exists, add user to db and login
     if (user === null) {
-      const newUser = new User({
-        firstName: payload.given_name,
-        lastName: payload.family_name,
-        name: payload.name,
-        email: payload.email,
-        googleId: payload.sub,
-        picture: payload.picture,
-        roles: ['STUDENT'],
-      })
-      newUser
-        .save()
-        .then(async () => {
-
-          const newUser = User.findOne({ googleId: payload.sub }, async (err, newUserRes) => {
-
-            const authToken = Auth.createAuthToken(newUser);
-            const refreshToken = Auth.createRefreshToken(newUser);
-
-            context.res.cookie('ALPS_AT', authToken, {
-              httpOnly: true,
-              expires: new Date(Date.now() + 604800000),
-            });
-            context.res.cookie('ALPS_RT', refreshToken, {
-              httpOnly: true,
-              expires: new Date(Date.now() + 604800000),
-            });
-            return authToken;
-          })
-        })
-        .catch((err) => { console.error('error in user creation', err) })
+      return new AuthenticationError('User does not exist!. Please create an account first.')
     }
   },
 
@@ -89,7 +60,7 @@ const mutations = {
     const payload = ticket.getPayload();
     const userCheck = await User.findOne({ googleId: payload.sub });
     if (userCheck) {
-      return new ApolloError('Account already exists, please log in to your account.')
+      return new AuthenticationError('Account already exists, please log in to your account.')
     }
     const user = new User({
       firstName: payload.given_name,

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import gql from 'graphql-tag';
 import { GoogleLogin } from 'react-google-login';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/router'
 import { useMutation } from '@apollo/react-hooks';
+
+import AlertContext from '../context/AlertContext';
 
 const LOGIN = gql`
   mutation LOGIN($authToken: String!) {
@@ -11,18 +13,23 @@ const LOGIN = gql`
 `;
 
 const Login = (props) => {
+  const alert = useContext(AlertContext);
   const router = useRouter();
-  const [googleLogin, { data }] = useMutation(LOGIN);
+  const [googleLogin, { data }] = useMutation(LOGIN, {
+    onCompleted: () => {window.location.href = '/'},
+    onError: () => {
+      alert.error('No account with that email address!  Please create an account first.')
+    }
+  });
 
   const gqlLogin = async (response) => {
     const login = await googleLogin({
       variables: { authToken: response.tokenId },
     });
-    window.location.href = '/';
   }
 
   const loginFail = (response) => {
-    console.error("Failed to sign-in");
+    alert.error('Unable to sign in to your Google account.')
   }
 
   return (

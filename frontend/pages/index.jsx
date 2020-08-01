@@ -59,7 +59,7 @@ const HomePage = ({ }) => {
     onError: (error) => {
       alert.error('Account already exists. Please log in.', 10);
     },
-    onSuccess: () => { window.location.href = '/' }
+    onCompleted: () => { window.location.href = '/' }
   });
 
   const newTeacher = async (response) => {
@@ -78,7 +78,6 @@ const HomePage = ({ }) => {
         userType: 'STUDENT',
       },
     });
-    window.location.href = '/';
   }
 
   if (hasPermission(user, [Role.Teacher, Role.Admin, Role.SuperAdmin])) {
