@@ -141,8 +141,6 @@ const clipTitle = (text) => {
   return shortString + '...';
 }
 
-const longname = 'Hello this is a playlist name that is way too long for the purposes of the name.'
-
 const ClassProgressTable = () => {
   const { query: { classId } } = useRouter();
   const { loading, error, data } = useQuery(GET_CLASS_PROGRESS, {
@@ -151,6 +149,7 @@ const ClassProgressTable = () => {
       classId
     }
   });
+
   if (loading) return <Loading />
   const essential = data?.getCourseOfClass?.essentialPlaylists;
   const core = data?.getCourseOfClass?.corePlaylists;

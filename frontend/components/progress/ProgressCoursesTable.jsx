@@ -64,15 +64,20 @@ const GET_ALL_PROGRESS = gql`
         _id
         name
       }
-      classes {
+    }
+    # this gets the classes instructing, but we really need the students classes
+    getClassesInstructing {
+      _id
+      course {
         _id
-        enrolled {
-          _id
-          name
-        }
+      }
+      name
+      enrollId
+      enrolled {
+        _id
       }
     }
-    getStudentsInstructing {
+    getUsersInstructing {
       _id
       name
     }
@@ -92,9 +97,11 @@ const GET_ALL_PROGRESS = gql`
 
 const ProgressCoursesTable = () => {
   const { loading, error, data } = useQuery(GET_ALL_PROGRESS);
+  console.log(data)
   const courses = data?.getCoursesInstructing;
+  const classes = data?.getClassesInstructing;
   const scores = data?.getScoresInstructing;
-  const students = data?.getStudentsInstructing;
+  const students = data?.getUsersInstructing;
 
   if (loading) return <Loading />
 
@@ -124,6 +131,8 @@ const ProgressCoursesTable = () => {
               students.map(student => {
                 // filter all scores for only current student;
                 const studentScores = scores.filter(score => score.user._id === student._id);
+                const studentCourses = classes.map(classs => classs.course);
+                console.log('studentCourses', studentCourses)
 
                 // return row of student progress
                 return (
@@ -133,13 +142,14 @@ const ProgressCoursesTable = () => {
                       {courses.map(course => {
                         // if student not in course, don't return a progress bar
                         const studentsInCourse = [];
-                        course.classes.forEach(classs => {
+                        classes.forEach(classs => {
                           classs.enrolled.forEach(student => {
                             if (!studentsInCourse.includes(student._id)) {
                               studentsInCourse.push(student._id)
                             }
                           })
                         })
+                        console.log(course.name, studentsInCourse)
 
                         // return if the the student is not enrolled in the class/course
                         if (!studentsInCourse.includes(student._id)) return (

@@ -43,7 +43,9 @@ const GET_CLASS_TO_MANAGE = gql`
         name
         email
       }
-      course
+      course {
+        _id
+      }
     }
   }
 `;

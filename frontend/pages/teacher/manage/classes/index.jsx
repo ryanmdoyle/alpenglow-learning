@@ -22,7 +22,6 @@ const teacherClasses = () => {
   const router = useRouter();
 
   const handleLink = (classId) => {
-    console.log(event.target.className)
     if (event.target.className != 'enrollId') {
       router.push(`/teacher/manage/classes/${classId}`)
     }
@@ -38,39 +37,42 @@ const teacherClasses = () => {
       </Head>
       <PageTitle>Manage Your Classes</PageTitle>
       <PagePadding>
-        {data?.getCoursesInstructing?.map(course => (
-          <div key={course._id}>
-            <h4>{course.name}</h4>
-            {course.classes.length === 0 && (
-              <em>You currently don't have any classes enrolled in {course.name}. Click below to add your first class!</em>
-            )}
-            {course.classes.length !== 0 && (
-              <TextTableContainer>
-                <TextTableHeader>
-                  <span>Class</span>
-                  <span>Enroll ID</span>
-                  <span>Students Enrolled</span>
-                </TextTableHeader>
-                {course.classes.map(c => {
-                  return (
-                      <TextTableRow key={c._id} onClick={() => {handleLink(c._id)}}>
-                        <span className='first-column'>{c.name}</span>
-                        <span className='enrollId'>{c.enrollId}</span>
-                        <span>{c.enrolled.length}</span>
-                    </TextTableRow>
-                  )
-                })}
-              </TextTableContainer>
-            )}
-            <div css={css`display: flex; justify-content: flex-end;`}>
-            <TextButton onClick={() => {
-                  modal.setChildComponent(<CreateClassForm courseId={course._id} />);
-                  modal.open();
-                }}>{`Add class to ${course.name}`}</TextButton>
+        {data?.getCoursesInstructing?.map(course => {
+          const classesInCourse = data.getClassesInstructing.filter(clas => clas.course._id == course._id)
+          return (
+            <div key={course._id}>
+              <h4>{course.name}</h4>
+              {classesInCourse.length === 0 && (
+                <em>You currently don't have any classes enrolled in {course.name}. Click below to add your first class!</em>
+              )}
+              {classesInCourse.length !== 0 && (
+                <TextTableContainer>
+                  <TextTableHeader>
+                    <span>Class</span>
+                    <span>Enroll ID</span>
+                    <span>Students Enrolled</span>
+                  </TextTableHeader>
+                  {classesInCourse.map(c => {
+                    return (
+                        <TextTableRow key={c._id} onClick={() => {handleLink(c._id)}}>
+                          <span className='first-column'>{c.name}</span>
+                          <span className='enrollId'>{c.enrollId}</span>
+                          <span>{c.enrolled.length}</span>
+                      </TextTableRow>
+                    )
+                  })}
+                </TextTableContainer>
+              )}
+              <div css={css`display: flex; justify-content: flex-end;`}>
+              <TextButton onClick={() => {
+                    modal.setChildComponent(<CreateClassForm courseId={course._id} />);
+                    modal.open();
+                  }}>{`Add class to ${course.name}`}</TextButton>
 
+              </div>
             </div>
-          </div>
-        ))}
+          )
+        })}
 
       </PagePadding>
     </div >

@@ -171,30 +171,3 @@ PlaylistResourceListItem.propTypes = {
 }
 
 export default PlaylistResourceListItem;
-
-
-
-{/* <a
-  href={`http://${resource.href}`}
-  target="_blank"
-  referrerPolicy='no-referrer'
-  rel='external'
-  css={link}
-  onClick={(event) => { console.log(event.target) }}
->
-  <li>
-    <div className='info'>
-      <i className="material-icons icon">{icon(resource.type)}</i>
-      <div className='info-text'>
-        <span>{resource?.name}</span>
-        <small>{resource?.description}</small>
-      </div>
-    </div>
-    {!pathname.startsWith('./students') && (
-      <div className='controls'>
-        <i className="material-icons edit">create</i>
-        <i className="material-icons delete" onClick={() => { removeResource(resource._id) }}>delete</i>
-      </div>
-    )}
-  </li >
-</a > */}

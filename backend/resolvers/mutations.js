@@ -129,19 +129,14 @@ const mutations = {
   async createClass(parent, args, context, info) {
     const { currentUser } = context;
     if (!currentUser.roles.includes('STUDENT')) {
-      const parentCourse = await Course.findById(args.course);
+      // const parentCourse = await Course.findById(args.course);
       const shortuid = new ShortUniqueId();
       const newClass = new Class({
         primaryInstructor: currentUser._id,
         enrollId: await shortuid.randomUUID(8),
         ...args //spread incomming data from form
       })
-      const createdClass = await newClass.save().catch((err) => { console.error(err) });
-      if (!parentCourse.classes.includes(createdClass._id)) {
-        parentCourse.classes.push(createdClass._id);
-        await parentCourse.save();
-      }
-      return createdClass;
+      return await newClass.save().catch((err) => { console.error(err) });
     }
     return 'Cannot create as student!';
   },

@@ -43,7 +43,7 @@ const queries = {
 		return await Course.findById(args.courseId);
 	},
 
-	async getStudentsInstructing(parent, args, context, info) {
+	async getUsersInstructing(parent, args, context, info) {
 		const userId = args.userId ? args.userId : context.currentUser._id;
 		const classes = await Class.find({ primaryInstructor: userId });
 		let students = [];
@@ -74,8 +74,9 @@ const queries = {
 
 	async getCoursesEnrolled(parent, args, context, info) {
 		const userId = args.userId ? args.userId : context.currentUser._id;
-		const enrolledClasses = await Class.find({ enrolled: { $in: userId } }).select('_id');
-		return await Course.find({ classes: { $in: enrolledClasses } });
+		const enrolledClasses = await Class.find({ enrolled: { $in: userId } }).select('_id course');
+		const courseIds = enrolledClasses.map(clas => clas.course);
+		return await Course.find({ _id: { $in: courseIds } });
 	},
 
 	async getClassesInstructing(parent, args, context, info) {
@@ -172,11 +173,13 @@ const queries = {
 	},
 
 	async getCourseOfClass(parent, args, context, info) {
-		return await Course.findOne({ classes: { $in: { _id: args.classId } } });
+		const clas = await Class.findById(args.classId);
+		return await Course.findById(clas.course);
 	},
 
 	async getScoresForClass(parent, args, context, info) {
-		const parentCourse = await Course.findOne({ classes: { $in: { _id: args.classId } } });
+		const classForScores = await Class.findById(args.classId);
+		const parentCourse = await Course.findById(classForScores.course);
 		const playlists = [
 			...parentCourse.essentialPlaylists,
 			...parentCourse.corePlaylists,
@@ -187,7 +190,8 @@ const queries = {
 	},
 
 	async getScoresForEnrolledClass(parent, args, context, info) {
-		const parentCourse = await Course.findOne({ classes: { $in: { _id: args.classId } } });
+		const classForScores = await Class.findById(args.classId);
+		const parentCourse = await Course.findById(classForScores.course);
 		const playlists = [
 			...parentCourse.essentialPlaylists,
 			...parentCourse.corePlaylists,
@@ -207,8 +211,8 @@ const queries = {
 		return await Task.find(query);
 	},
 
-	async getScorePendingForEnrolledPlaylist(parent, args, context, info) {
-    return await Score.findOne({playlist: args.playlistId, user: context.currentUser._id});
+	async getScorePendingOfEnrolledPlaylist(parent, args, context, info) {
+		return await Score.findOne({ playlist: args.playlistId, user: context.currentUser._id });
 	},
 }
 module.exports = queries;

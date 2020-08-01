@@ -44,7 +44,6 @@ const UpdateQuizForm = ({ playlistId }) => {
       setQuizType(queryData.getQuizForPlaylist.type)
     }
   })
-  console.log(queryData);
 
   const [updateQuiz, { data }] = useMutation(UPDATE_QUIZ, {
     refetchQueries: [{ query: GET_QUIZ_FOR_PLAYLIST, variables: { playlistId: playlistId } }],

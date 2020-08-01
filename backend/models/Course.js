@@ -5,7 +5,16 @@ const subjectsEnum = require('../lib/subjectsEnum');
 
 const courseSchema = new Schema({
   name: String,
-  owner: mongoose.ObjectId,
+  owner: {
+    type: mongoose.ObjectId,
+    ref: 'User',
+  },
+  editors: [
+    {
+      type: mongoose.ObjectId,
+      ref: 'User',
+    }
+  ],
   subject: {
     type: String,
     enum: subjectsEnum,
@@ -36,13 +45,13 @@ const courseSchema = new Schema({
       autopopulate: { maxDepth: 1 },
     }
   ],
-  classes: [
-    {
-      type: mongoose.ObjectId,
-      ref: 'Class',
-      autopopulate: { maxDepth: 2 },
-    }
-  ],
+  // classes: [
+  //   {
+  //     type: mongoose.ObjectId,
+  //     ref: 'Class',
+  //     autopopulate: { maxDepth: 2 },
+  //   }
+  // ],
 })
 
 courseSchema.plugin(require('mongoose-autopopulate'));

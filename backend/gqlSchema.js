@@ -10,38 +10,38 @@ const typeDefs = gql`
     getUserCurrent: User,
     getUser(userId: ID): User!,
     getUsersAll: [User]!,
+    getUsersInstructing: [User],
+
     getCourse(courseId: ID): Course,
+    getCoursesEnrolled(userId: ID): [Course],
+    getCourseInstructing(userId: ID!): Course,
+    getCoursesInstructing(userId: ID): [Course],
+    getCourseOfClass(classId: ID!): Course!,
+    
+    getClass(classId: ID!): Class,
+    getClassesEnrolled(userId: ID): [Class],
+    getClassInstructing(classId: ID!): Class,
+    getClassesInstructing(userId: ID): [Class],
 
     getPlaylist(playlistId: ID): Playlist!,
+
     getRequest(playlistId: ID): Request,
     getRequests: [Request],
-    getClass(classId: ID!): Class,
+    
+    getScores(userId: ID): [Score],
+    getScoresInstructing(scoredBy: ID): [Score],
+    getScoresPending: [Score],
+    getScorePendingOfEnrolledPlaylist(playlistId: ID!): [Score],
+    getScoresForPlaylist(playlistId: ID!): [Score],
+    getScoresForClass(classId: ID!): [Score],
+    getScoresForEnrolledClass(classId: ID!): [Score],
+    
     getTasks(
       userId: ID,
       classId: ID,
       playlistId: ID,
     ): [Task],
     
-    getCoursesEnrolled(userId: ID): [Course],
-    getClassesEnrolled(userId: ID): [Class],
-    getEnrolledPlaylists(userId: ID): [Playlist],
-    
-    getStudentsInstructing: [User],
-    getCourseInstructing(userId: ID!): Course,
-    getCoursesInstructing(userId: ID): [Course],
-    getClassInstructing(classId: ID!): Class,
-    getClassesInstructing(userId: ID): [Class],
-    getInstructingPlaylists(userId: ID): [Playlist],
-
-    getCourseOfClass(classId: ID!): Course!,
-
-    getScores(userId: ID): [Score],
-    getScoresInstructing(scoredBy: ID): [Score],
-    getScoresPending: [Score],
-    getScorePendingForEnrolledPlaylist(playlistId: ID!): [Score],
-    getScoresForPlaylist(playlistId: ID!): [Score],
-    getScoresForClass(classId: ID!): [Score],
-    getScoresForEnrolledClass(classId: ID!): [Score],
     getQuizForPlaylist(playlistId: ID!): Quiz,
   }
 
@@ -264,6 +264,7 @@ const typeDefs = gql`
     _id: ID,
     name: String!,
     owner: String!,
+    editors: [ID],
     subject: String!,
     section: String,
     grade: Int!,
@@ -274,14 +275,13 @@ const typeDefs = gql`
     essentialPlaylists: [ Playlist ],
     corePlaylists: [ Playlist ],
     challengePlaylists: [ Playlist ],
-    classes: [ Class ],
   }
 
   type Class {
     _id: ID,
     name: String!,
     enrollId: String,
-    course: String!,
+    course: Course!,
     primaryInstructor: User!,
     secondaryInstructors: [User],
     enrolled: [User],

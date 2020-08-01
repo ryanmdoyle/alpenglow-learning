@@ -25,7 +25,7 @@ const GET_PLAYLIST_REQUEST = gql`
     getQuizForPlaylist(playlistId: $playlistId) {
       _id
     }
-    getScorePendingForEnrolledPlaylist(playlistId: $playlistId) {
+    getScorePendingOfEnrolledPlaylist(playlistId: $playlistId) {
       score
       possibleScore
     }

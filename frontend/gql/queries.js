@@ -2,12 +2,24 @@ import gql from 'graphql-tag';
 
 export const GET_INSTRUCTING_COURSES = gql`
   query GET_INSTRUCTING_COURSES {
+    getClassesInstructing {
+      _id
+      course {
+        _id
+      }
+      name
+      enrollId
+      enrolled {
+        _id
+      }
+    }
     getCoursesInstructing {
       _id
       name
       subject
       description
       owner
+      editors
       essentialPlaylists {
         _id
         name
@@ -46,7 +58,7 @@ query GET_ENROLLED_CLASSES {
 
 export const GET_INSTRUCTING_STUDENTS = gql`
   query GET_INSTRUCTING_STUDENTS {
-    getStudentsInstructing {
+    getUsersInstructing {
       _id
       name
       email
