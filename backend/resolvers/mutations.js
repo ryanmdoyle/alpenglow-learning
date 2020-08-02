@@ -31,15 +31,15 @@ const mutations = {
     // If user already exists, authorize login
     if (user !== null) {
       const authToken = Auth.createAuthToken(user);
-      const refreshToken = Auth.createRefreshToken(user);
+      // const refreshToken = Auth.createRefreshToken(user);
       context.res.cookie('ALPS_AT', authToken, {
         httpOnly: true,
-        expires: new Date(Date.now() + 900000), // 1000 * 60 * 15
+        expires: new Date(Date.now() + 604800000), // 1000ms * 60s * 60m * 24h * 7d
       });
-      context.res.cookie('ALPS_RT', refreshToken, {
-        httpOnly: true,
-        expires: new Date(Date.now() + 604800000), // 1000 * 60 * 60 * 24 * 7
-      });
+      // context.res.cookie('ALPS_RT', refreshToken, {
+      //   httpOnly: true,
+      //   expires: new Date(Date.now() + 604800000), // 1000 * 60 * 60 * 24 * 7
+      // });
       return authToken;
     }
 
