@@ -56,9 +56,9 @@ const CourseTimelines = (props) => {
     modal.open();
   }
 
-
   return (
-    <section css={courseContainer} {...props}>
+    // className prop is passed down for emotion css. passing {...props} throws error for other passed props
+    <section css={courseContainer} className={props.className}>
       <Header4Settings onClick={() => { toggleCourseSettings(courseId) }}>{name}</Header4Settings>
       <CoursePlaylistTimeline courseId={courseId} subject={subject} type='Essential' playlists={essentialPlaylists} />
       <CoursePlaylistTimeline courseId={courseId} subject={subject} type='Core' playlists={corePlaylists} />
