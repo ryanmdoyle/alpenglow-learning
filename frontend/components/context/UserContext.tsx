@@ -16,14 +16,18 @@ const GET_CURRENT_USER = gql`
 `;
 
 const UserProvider = ({ children }) => {
-  const { loading, error, data } = useQuery(GET_CURRENT_USER);
+  const { loading, error, data, refetch } = useQuery(GET_CURRENT_USER);
   const contextValue = (!data) ? null : data;
   const userData = loading ? { loading: true } : contextValue?.getUserCurrent;
   return (
     <UserContext.Provider
       value={
-        // contextValue?.getUserCurrent
-        userData
+        {
+          firstName: userData.firstName,
+          roles: userData.roles,
+          _id: userData._id,
+          refetch: refetch
+        }
       }
     >
       {children}

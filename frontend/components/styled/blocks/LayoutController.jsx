@@ -86,6 +86,8 @@ const landing = css`
 
 const LayoutController = ({ Component, pageProps }) => {
   const user = useContext(UserContext);
+  user.refetch(); //refetches user on all requests (mimick sessions and ssr)
+
   if (user?.loading) return <Loading />
   if (user) return (
     <div css={dashboard}>
@@ -109,7 +111,7 @@ const LayoutController = ({ Component, pageProps }) => {
       <main>
         <ComponentWithRouteProtection Component={Component} pageProps={pageProps} />
       </main>
-      <Alert css={css`width: 100%;`}/>
+      <Alert css={css`width: 100%;`} />
     </div>
   )
 };
