@@ -35,14 +35,6 @@ export const GET_INSTRUCTING_COURSES = gql`
         name
         type
       }
-      classes {
-        _id
-        name
-        enrollId
-        enrolled {
-          _id
-        }
-      }
     }
   }
 `;
