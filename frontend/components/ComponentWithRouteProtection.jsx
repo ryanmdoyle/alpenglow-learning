@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 
 import UserContext from './context/UserContext';
 import hasPermission from '../lib/hasPermission';
-import HomePage from '../pages/index';
 import { Role } from '../lib/enums';
 
 const ComponentWithRouteProtection = ({ Component, pageProps }) => {
@@ -11,7 +10,7 @@ const ComponentWithRouteProtection = ({ Component, pageProps }) => {
   const router = useRouter();
   if (user?.loading) return <Loading />
 
-  if (!user && router.pathname != '/') {
+  if (!user._id && router.pathname != '/') {
     router.push('/');
   }
 

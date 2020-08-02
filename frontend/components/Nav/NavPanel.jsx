@@ -39,7 +39,7 @@ const NavPanel = () => {
         <NavSection>
           <SiteTitle />
         </NavSection>
-        {user && (
+        {user._id && (
           <>
             {hasPermission(user, [Role.SuperAdmin, Role.Student]) && (
               <NavSection>

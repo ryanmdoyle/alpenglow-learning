@@ -89,7 +89,7 @@ const LayoutController = ({ Component, pageProps }) => {
   user.refetch(); //refetches user on all requests (mimick sessions and ssr)
 
   if (user?.loading) return <Loading />
-  if (user) return (
+  if (user._id) return (
     <div css={dashboard}>
       <NavPanel />
       <main>

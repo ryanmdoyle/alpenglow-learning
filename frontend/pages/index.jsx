@@ -90,7 +90,7 @@ const HomePage = ({ }) => {
     router.push('/student'); // should route to student if user has corrupt permissions (or none)
   }
 
-  if (!user || user === null) {
+  if (!user._id || user._id === null) {
     return (
       <div css={welcome}>
         <Head>
