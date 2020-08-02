@@ -65,7 +65,6 @@ const GET_ALL_PROGRESS = gql`
         name
       }
     }
-    # this gets the classes instructing, but we really need the students classes
     getClassesInstructing {
       _id
       course {
@@ -97,11 +96,15 @@ const GET_ALL_PROGRESS = gql`
 
 const ProgressCoursesTable = () => {
   const { loading, error, data } = useQuery(GET_ALL_PROGRESS);
-  console.log(data)
   const courses = data?.getCoursesInstructing;
-  const classes = data?.getClassesInstructing;
   const scores = data?.getScoresInstructing;
   const students = data?.getUsersInstructing;
+  const classesInstructing = data?.getClassesInstructing;
+  // takes the enrolled array of objects and mutates into array of single ids 
+  classesInstructing?.forEach(classs => {
+    const flatEnrolled = classs.enrolled.map(student => student._id);
+    classs.enrolled = flatEnrolled;
+  })
 
   if (loading) return <Loading />
 
@@ -131,8 +134,10 @@ const ProgressCoursesTable = () => {
               students.map(student => {
                 // filter all scores for only current student;
                 const studentScores = scores.filter(score => score.user._id === student._id);
-                const studentCourses = classes.map(classs => classs.course);
-                console.log('studentCourses', studentCourses)
+                const studentCourses = []
+                classesInstructing.forEach(classs => {
+                  if (classs.enrolled.includes(student._id)) studentCourses.push(classs.course._id);
+                })
 
                 // return row of student progress
                 return (
@@ -141,20 +146,9 @@ const ProgressCoursesTable = () => {
                       <th scope='row'>{student.name}</th>
                       {courses.map(course => {
                         // if student not in course, don't return a progress bar
-                        const studentsInCourse = [];
-                        classes.forEach(classs => {
-                          classs.enrolled.forEach(student => {
-                            if (!studentsInCourse.includes(student._id)) {
-                              studentsInCourse.push(student._id)
-                            }
-                          })
-                        })
-                        console.log(course.name, studentsInCourse)
-
-                        // return if the the student is not enrolled in the class/course
-                        if (!studentsInCourse.includes(student._id)) return (
-                          <td key={course._id}><small>n/a</small></td>
-                        )
+                        if (!studentCourses.includes(course._id)) {
+                          return <td key={course._id}><small>n/a</small></td>
+                        }
 
                         // if student is on course, calculate progress and show bar
                         const { essentialPlaylists, corePlaylists, challengePlaylists, name, _id } = course;
