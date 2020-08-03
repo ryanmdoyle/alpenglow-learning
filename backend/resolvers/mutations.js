@@ -17,6 +17,9 @@ const Task = require('../models/Task');
 const jwt = require('jsonwebtoken');
 const Auth = require('../lib/Auth');
 
+const authExpire = 1000 * 60 * 15; // 15 min - 900,000ms
+const refreshExpire = 1000 * 60 * 60 * 24 * 7; // 7 days - 604,800,000ms
+
 const mutations = {
   async login(parent, args, context, info) {
     const client = new OAuth2Client('740708519996-jckm5svthu1lh5fv35jc55pp54kam9br');
@@ -31,15 +34,15 @@ const mutations = {
     // If user already exists, authorize login
     if (user !== null) {
       const authToken = Auth.createAuthToken(user);
-      // const refreshToken = Auth.createRefreshToken(user);
+      const refreshToken = Auth.createRefreshToken(user);
       context.res.cookie('ALPS_AT', authToken, {
         httpOnly: true,
-        expires: new Date(Date.now() + 604800000), // 1000ms * 60s * 60m * 24h * 7d
+        expires: new Date(Date.now() + authExpire), // 1000ms * 60s * 15m
       });
-      // context.res.cookie('ALPS_RT', refreshToken, {
-      //   httpOnly: true,
-      //   expires: new Date(Date.now() + 604800000), // 1000 * 60 * 60 * 24 * 7
-      // });
+      context.res.cookie('ALPS_RT', refreshToken, {
+        httpOnly: true,
+        expires: new Date(Date.now() + refreshExpire), // 1000 * 60 * 60 * 24 * 7
+      });
       return authToken;
     }
 
@@ -77,11 +80,11 @@ const mutations = {
     const refreshToken = Auth.createRefreshToken(createdUser);
     context.res.cookie('ALPS_AT', authToken, {
       httpOnly: true,
-      expires: new Date(Date.now() + 604800000),
+      expires: new Date(Date.now() + authExpire),
     });
     context.res.cookie('ALPS_RT', refreshToken, {
       httpOnly: true,
-      expires: new Date(Date.now() + 604800000),
+      expires: new Date(Date.now() + refreshExpire),
     });
     return newUser;
   },
@@ -129,7 +132,6 @@ const mutations = {
   async createClass(parent, args, context, info) {
     const { currentUser } = context;
     if (!currentUser.roles.includes('STUDENT')) {
-      // const parentCourse = await Course.findById(args.course);
       const shortuid = new ShortUniqueId();
       const newClass = new Class({
         primaryInstructor: currentUser._id,
