@@ -155,7 +155,8 @@ const ClassProgressTable = () => {
   const core = data?.getCourseOfClass?.corePlaylists;
   const challenge = data?.getCourseOfClass?.challengePlaylists;
   const students = data?.getClassInstructing?.enrolled;
-  if (students.length === 0) return (
+
+  if (!students || students?.length === 0) return (
     <p>There are currently no students enrolled in this class.</p>
   )
   return (
