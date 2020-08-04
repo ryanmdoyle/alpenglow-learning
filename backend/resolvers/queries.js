@@ -212,7 +212,7 @@ const queries = {
 	},
 
 	async getScorePendingOfEnrolledPlaylist(parent, args, context, info) {
-		return await Score.findOne({ playlist: args.playlistId, user: context.currentUser._id });
+		return await Score.findOne({ playlist: args.playlistId, user: context.currentUser._id, score: null });
 	},
 }
 module.exports = queries;

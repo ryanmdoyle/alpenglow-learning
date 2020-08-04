@@ -44,6 +44,7 @@ const grading = () => {
                 <QuizRequest
                   requestId={request._id}
                   name={request.user.name}
+                  playlistId={request.playlist._id}
                   playlistName={request.playlist.name}
                   type={request.type}
                   approved={request.approved}
@@ -63,6 +64,7 @@ const grading = () => {
               <QuizRequest
                 requestId={request._id}
                 name={request.user.name}
+                playlistId={request.playlist._id}
                 playlistName={request.playlist.name}
                 approved={request.approved}
                 approvalAccepted={request.approvalAccepted}

@@ -31,7 +31,7 @@ const typeDefs = gql`
     getScores(userId: ID): [Score],
     getScoresInstructing(scoredBy: ID): [Score],
     getScoresPending: [Score],
-    getScorePendingOfEnrolledPlaylist(playlistId: ID!): [Score],
+    getScorePendingOfEnrolledPlaylist(playlistId: ID!): Score,
     getScoresForPlaylist(playlistId: ID!): [Score],
     getScoresForClass(classId: ID!): [Score],
     getScoresForEnrolledClass(classId: ID!): [Score],

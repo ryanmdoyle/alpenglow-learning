@@ -51,11 +51,23 @@ const twoWide = css`
   }
 `;
 
-const APPROVE_QUIZ_REQUEST = gql`
-  mutation APPROVE_QUIZ_REQUEST($requestId: ID!) {
+const APPROVE_ONLINE_QUIZ_REQUEST = gql`
+  mutation APPROVE_ONLINE_QUIZ_REQUEST($requestId: ID!) {
     approveRequest(requestId: $requestId) {
       _id
     }
+  }
+`;
+
+const APPROVE_PAPER_QUIZ_REQUEST = gql`
+  mutation APPROVE_PAPER_QUIZ_REQUEST(
+    $playlistId: ID!,
+    $requestId: ID!,
+  ) {
+    createScore(playlistId: $playlistId) {
+      _id
+    }
+    deleteRequest(requestId: $requestId)
   }
 `;
 
@@ -73,8 +85,15 @@ const DENY_QUIZ_REQUEST = gql`
   }
 `;
 
-const QuizRequest = ({ requestId, name, playlistName, approved, approvalAccepted, type }) => {
-  const [approve, { data: approveData }] = useMutation(APPROVE_QUIZ_REQUEST, {
+const QuizRequest = ({ requestId, name, playlistId, playlistName, approved, approvalAccepted, type }) => {
+  const [approvePaper, { data: approvePaperData }] = useMutation(APPROVE_PAPER_QUIZ_REQUEST, {
+    variables: { 
+      playlistId: playlistId,
+      requestId: requestId,
+     },
+    refetchQueries: [{ query: GET_STUDENT_REQS_AND_PENDING_SCORES }],
+  })
+  const [approveOnline, { data: approveOnlineData }] = useMutation(APPROVE_ONLINE_QUIZ_REQUEST, {
     variables: { requestId: requestId },
     refetchQueries: [{ query: GET_STUDENT_REQS_AND_PENDING_SCORES }],
   })
@@ -100,6 +119,15 @@ const QuizRequest = ({ requestId, name, playlistName, approved, approvalAccepted
     }
   }
 
+  const handleApproval = (type) => {
+    if (type == "EXTERNAL") {
+      approveOnline();
+    }
+    if (type == "PAPER") {
+      approvePaper();
+    }
+  }
+
   return (
     <div css={requestContainer}>
       <div>
@@ -114,7 +142,7 @@ const QuizRequest = ({ requestId, name, playlistName, approved, approvalAccepted
           <CancelButton approvalAccepted={approvalAccepted} cancel={cancel} deny={deny} />
           :
           <div css={twoWide}>
-            <TextButton onClick={approve}
+            <TextButton onClick={() => {handleApproval(type)}}
               css={css`:hover{background-color: var(--green);border-color: var(--green);}`}
             >Approve</TextButton>
             <TextButton onClick={deny}

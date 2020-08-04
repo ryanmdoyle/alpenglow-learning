@@ -54,7 +54,8 @@ const PlaylistRequestButton = ({ playlistId }) => {
     variables: { playlistId: playlistId },
     pollInterval: 3000,
   });
-
+  
+  const pendingScore = requestData?.getScorePendingOfEnrolledPlaylist;
   const requestId = requestData?.getRequest?._id;
   const approvalAccepted = requestData?.getRequest?.approvalAccepted;
 
@@ -87,6 +88,7 @@ const PlaylistRequestButton = ({ playlistId }) => {
   const isApproved = isRequested && requestData?.getRequest.approved;
 
   if (!isQuiz) return <em css={css`color: var(--pink);`}>Quiz has not been created for this playlist.</em>
+  if (pendingScore) return <em css={css`color: var(--pink);`}>You recently took a quiz for this playlist. You must wait for the result before requesting another quiz.</em>
 
   if (isApproved) {
     return (
