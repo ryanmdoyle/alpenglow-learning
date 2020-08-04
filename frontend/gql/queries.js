@@ -19,7 +19,6 @@ export const GET_INSTRUCTING_COURSES = gql`
       subject
       description
       owner
-      editors
       essentialPlaylists {
         _id
         name
@@ -200,4 +199,18 @@ export const GET_STUDENT_REQS_AND_PENDING_SCORES = gql`
       }
     }
   }
+`;
+
+export const GET_COURSE_DETAILS = gql`
+query GET_COURSE_DETAILS($courseId: ID!) {
+  getCourse(courseId: $courseId) {
+    name
+    subject
+    grade
+    section
+    description
+    startDate
+    endDate
+  }
+}
 `;

@@ -17,6 +17,8 @@ const Task = require('../models/Task');
 const jwt = require('jsonwebtoken');
 const Auth = require('../lib/Auth');
 
+const hasPermission = require('../lib/hasPermission')
+
 const authExpire = 1000 * 60 * 15; // 15 min - 900,000ms
 const refreshExpire = 1000 * 60 * 60 * 24 * 7; // 7 days - 604,800,000ms
 
@@ -527,5 +529,21 @@ const mutations = {
       return new ApolloError('Unable to delete task.');
     }
   },
+
+  async createCourseContributor(parent, args, context, info) {
+    const { currentUser } = context;
+    const course = await Course.findById(args.courseId);
+    // if current user is owner or contributor, add contributor
+    if (course.owner == currentUser._id || course.contributors.indexOf(currentUser._id) > -1) {
+      const newContributor = await User.findOne({ email: args.contributorEmail });
+      if (hasPermission(newContributor, ['TEACHER', 'ADMIN', 'SUPER_ADMIN'])) {
+        course.contributors.push(newContributor._id)
+        await course.save();
+        return course;
+      }
+      return new ApolloError('Unable to add contributor unless user is Teacher or Admin.')
+    }
+    return new ApolloError('Unable to add contributor.')
+  }
 }
 module.exports = mutations;

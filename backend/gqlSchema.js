@@ -17,6 +17,7 @@ const typeDefs = gql`
     getCourseInstructing(userId: ID!): Course,
     getCoursesInstructing(userId: ID): [Course],
     getCourseOfClass(classId: ID!): Course!,
+    getCourseContributors(courseId: ID!): [User],
     
     getClass(classId: ID!): Class,
     getClassesEnrolled(userId: ID): [Class],
@@ -235,6 +236,11 @@ const typeDefs = gql`
     login(authToken: String!): String!,
     logout: String!,
     createAccount(authToken: String!, userType: String!): User!,
+
+    createCourseContributor(
+      courseId: ID!,
+      contributorEmail: String!,
+    ): Course!,
   }
 
   # # # # # # # # # # # #
@@ -264,7 +270,7 @@ const typeDefs = gql`
     _id: ID,
     name: String!,
     owner: String!,
-    editors: [ID],
+    contributors: [User],
     subject: String!,
     section: String,
     grade: Int!,

@@ -64,7 +64,8 @@ const queries = {
 
 	async getCoursesInstructing(parent, args, context, info) {
 		const userId = args.userId ? args.userId : context.currentUser._id;
-		return await Course.find({ owner: userId });
+		// return await Course.find({ owner: userId });
+		return await Course.find({ $or: [{ owner: userId }, { contributors: userId }] })
 	},
 
 	async getClassesEnrolled(parent, args, context, info) {
@@ -214,5 +215,11 @@ const queries = {
 	async getScorePendingOfEnrolledPlaylist(parent, args, context, info) {
 		return await Score.findOne({ playlist: args.playlistId, user: context.currentUser._id, score: null });
 	},
+
+	async getCourseContributors(parent, args, context, info) {
+		const course = await Course.findById(args.courseId);
+		console.log(course.contributors);
+		return course.contributors;
+	}
 }
 module.exports = queries;

@@ -11,7 +11,7 @@ import PagePadding from '../../styled/PagePadding';
 import Loading from '../../Loading';
 import gradeLevels from '../../../lib/gradeLevels';
 import subjects from '../../../lib/subjects';
-import { GET_INSTRUCTING_COURSES } from '../../../gql/queries';
+import { GET_INSTRUCTING_COURSES, GET_COURSE_DETAILS } from '../../../gql/queries';
 
 const UPDATE_COURSE = gql`
     mutation UPDATE_COURSE(
@@ -38,20 +38,6 @@ const UPDATE_COURSE = gql`
       }
     }
   `;
-
-const GET_COURSE_DETAILS = gql`
-  query GET_COURSE_DETAILS($courseId: ID!) {
-    getCourse(courseId: $courseId) {
-      name
-      subject
-      grade
-      section
-      description
-      startDate
-      endDate
-    }
-  }
-`;
 
 const UpdateCourseForm = ({ courseId }) => {
   const { register, handleSubmit, errors } = useForm();

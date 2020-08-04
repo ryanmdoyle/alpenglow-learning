@@ -9,10 +9,11 @@ const courseSchema = new Schema({
     type: mongoose.ObjectId,
     ref: 'User',
   },
-  editors: [
+  contributors: [
     {
       type: mongoose.ObjectId,
       ref: 'User',
+      autopopulate: { maxDepth: 1 },
     }
   ],
   subject: {

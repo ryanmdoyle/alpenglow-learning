@@ -74,10 +74,10 @@ justify-content: center;
   }
 `;
 
-const FormWrapper = ({ children }) => {
+const FormWrapper = (props) => {
   return (
-    <div css={StyledForm}>
-      {children}
+    <div css={StyledForm} {...props}>
+      {props.children}
     </div>
   );
 };
