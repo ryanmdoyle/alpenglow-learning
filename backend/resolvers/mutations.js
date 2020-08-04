@@ -37,11 +37,11 @@ const mutations = {
     if (user !== null) {
       const authToken = Auth.createAuthToken(user);
       const refreshToken = Auth.createRefreshToken(user);
-      context.res.cookie('ALPS_AT', authToken, {
+      await context.res.cookie('ALPS_AT', authToken, {
         httpOnly: true,
         expires: new Date(Date.now() + authExpire), // 1000ms * 60s * 15m
       });
-      context.res.cookie('ALPS_RT', refreshToken, {
+      await context.res.cookie('ALPS_RT', refreshToken, {
         httpOnly: true,
         expires: new Date(Date.now() + refreshExpire), // 1000 * 60 * 60 * 24 * 7
       });
@@ -80,11 +80,11 @@ const mutations = {
     const createdUser = await User.findOne({ googleId: payload.sub });
     const authToken = Auth.createAuthToken(createdUser);
     const refreshToken = Auth.createRefreshToken(createdUser);
-    context.res.cookie('ALPS_AT', authToken, {
+    await context.res.cookie('ALPS_AT', authToken, {
       httpOnly: true,
       expires: new Date(Date.now() + authExpire),
     });
-    context.res.cookie('ALPS_RT', refreshToken, {
+    await context.res.cookie('ALPS_RT', refreshToken, {
       httpOnly: true,
       expires: new Date(Date.now() + refreshExpire),
     });
