@@ -18,12 +18,12 @@ const navStyles = css`
   justify-content: space-between;
   overflow-y: scroll;
   z-index: 100;
-  #nav-bottom {
+  /* #nav-bottom {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-bottom: 5px;
-  }
+  } */
 `;
 
 const NavSection = styled.section`
@@ -32,8 +32,10 @@ const NavSection = styled.section`
 `;
 
 const UserSection = styled.section`
-  padding: 1rem 1rem;
+  padding: 0 1rem;
   display: flex;
+  flex-direction: column;
+    align-items: center;
   justify-content: space-evenly;
 `;
 
@@ -68,10 +70,10 @@ const NavPanel = () => {
       <div id='nav-bottom'>
         <UserSection>
           <Logout />
+          <Link href='/privacy'>
+            <small css={css`color: var(--blueMedium);padding:0.25rem;`}>Privacy Policy</small>
+          </Link>
         </UserSection>
-        <Link href='/privacy'>
-          <small css={css`color: var(--blueLight);`}>Privacy Policy</small>
-        </Link>
       </div>
     </nav>
   );

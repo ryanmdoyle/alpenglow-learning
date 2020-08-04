@@ -3,7 +3,7 @@ require('./db');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
-const { ApolloServer, AuthenticationError } = require('apollo-server-express');
+const { ApolloServer } = require('apollo-server-express');
 const cors = require('cors');
 
 const typeDefs = require('./gqlSchema');
@@ -20,8 +20,6 @@ const resolvers = {
 }
 
 const app = express();
-
-const origins = (process.env.NODE_ENV === 'production') ? [`https://${process.env.FRONTEND_URL}`, `https://www.${process.env.FRONTEND_URL}`] : 'http://localhost:3000'
 
 const corsOptions = {
   origin: true,

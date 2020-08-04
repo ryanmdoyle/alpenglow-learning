@@ -10,7 +10,7 @@ const ComponentWithRouteProtection = ({ Component, pageProps }) => {
   const router = useRouter();
   if (user?.loading) return <Loading />
 
-  if (!user._id && router.pathname != '/') {
+  if (!user._id && router.pathname.startsWith('/teacher') || !user._id && router.pathname.startsWith('/student')) {
     router.push('/');
   }
 
