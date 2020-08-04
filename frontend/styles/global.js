@@ -73,7 +73,6 @@ const global = css`
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
     line-height: 1.15;
-    /* color: var(--blueDark); */
   }
 
   h1 {
@@ -94,6 +93,7 @@ const global = css`
   a {
     margin-bottom: 1.15rem;
     text-decoration: none;
+    color: var(--pink);
   }
 
   h3, h4 {
