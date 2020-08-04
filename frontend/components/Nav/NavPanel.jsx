@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/core';
+import Link from 'next/link';
 
-import NavStudent from './NavStudentDashboard';
 import NavManageDashboard from './NavManageDashboard';
 import NavStudentProgress from './NavStudentProgress';
 import SiteTitle from './SiteTitle';
@@ -18,6 +18,12 @@ const navStyles = css`
   justify-content: space-between;
   overflow-y: scroll;
   z-index: 100;
+  #nav-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 5px;
+  }
 `;
 
 const NavSection = styled.section`
@@ -63,6 +69,9 @@ const NavPanel = () => {
         <UserSection>
           <Logout />
         </UserSection>
+        <Link href='/privacy'>
+          <small css={css`color: var(--blueLight);`}>Privacy Policy</small>
+        </Link>
       </div>
     </nav>
   );
