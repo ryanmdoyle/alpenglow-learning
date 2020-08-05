@@ -10,7 +10,7 @@ const a = css`
 
 const NavLanding = () => {
   return (
-    <nav>
+    <nav css={css`z-index:1;`}>
       <div css={css`display: flex;align-items:center;`}>
         <Link href='/'>
           <a css={a}>
