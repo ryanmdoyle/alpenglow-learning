@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import Link from 'next/link';
 import { css } from '@emotion/core';
 
 import NavPanel from '../../Nav/NavPanel';
@@ -6,8 +7,8 @@ import Alert from '../../Alert';
 import Modal from '../../Modal'
 import ComponentWithRouteProtection from '../../ComponentWithRouteProtection';
 import UserContext from '../../context/UserContext';
-import Login from '../../Nav/Login';
 import Loading from '../../Loading';
+import NavLanding from '../../Nav/NavLanding';
 
 
 const dashboard = css`
@@ -103,11 +104,7 @@ const LayoutController = ({ Component, pageProps }) => {
   // Renders a different layout based on user being logged in or out
   return ( // once context fetches user, it will be null if loaidng is complete and there is no user
     <div css={landing}>
-      <nav>
-        <img src='/alpenglow.svg' height='80px'></img>
-        <h2>Alpenglow Learning</h2>
-        <Login css={css`justify-self: flex-end;`} />
-      </nav>
+      <NavLanding />
       <main>
         <ComponentWithRouteProtection Component={Component} pageProps={pageProps} />
       </main>

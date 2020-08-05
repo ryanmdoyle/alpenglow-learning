@@ -18,12 +18,6 @@ const navStyles = css`
   justify-content: space-between;
   overflow-y: scroll;
   z-index: 100;
-  /* #nav-bottom {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-bottom: 5px;
-  } */
 `;
 
 const NavSection = styled.section`
