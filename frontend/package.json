@@ -20,6 +20,7 @@
     "@tanem/svg-injector": "^8.0.45",
     "apollo-boost": "^0.4.7",
     "apollo-link-http": "^1.5.16",
+    "apollo-link-retry": "^2.2.16",
     "apollo-link-ws": "^1.0.20",
     "axios": "^0.19.2",
     "babel-plugin-emotion": "^10.0.27",

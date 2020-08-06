@@ -6,6 +6,7 @@ import fetch from 'isomorphic-unfetch'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { ApolloClient, InMemoryCache, HttpLink, ApolloLink, concat } from 'apollo-boost'
 import { onError } from 'apollo-link-error';
+import { RetryLink } from 'apollo-link-retry';
 
 let apolloClient = null
 
@@ -122,6 +123,7 @@ function createApolloClient(initialState = {}) {
 
   // Create an http link:
   const httpAddress = (process.env.NODE_ENV === 'production') ? 'https://alpenglow-backend-production.herokuapp.com/graphql' : 'http://localhost:4000/graphql';
+
   const httpLink = new HttpLink({
     uri: httpAddress, // Server URL
     credentials: 'include', // Additional fetch() options like `credentials` or `headers`
@@ -129,7 +131,7 @@ function createApolloClient(initialState = {}) {
     fetch: !isBrowser && fetch
   });
 
-  const link = onError(({ graphQLErrors, networkError }) => {
+  const errors = onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors)
       graphQLErrors.forEach(({ message, locations, path }) =>
         console.log(
@@ -139,10 +141,28 @@ function createApolloClient(initialState = {}) {
     if (networkError) console.log(`[Network error]: ${networkError}`);
   });
 
+  const retry = new RetryLink({
+    delay: {
+      initial: 200,
+      max: Infinity,
+      jitter: true
+    },
+    attempts: {
+      max: 5,
+      retryIf: (error, _operation) => !!error
+    }
+  })
+
+  const link = ApolloLink.from([
+    errors,
+    retry,
+    httpLink,
+  ])
+
   return new ApolloClient({
-    connectToDevTools: true, //or isBrowser
+    connectToDevTools: isBrowser,
     ssrMode: !isBrowser, // Disables forceFetch on the server (so queries are only run once)
-    link: concat(link, httpLink),
+    link: link,
     cache: new InMemoryCache().restore(initialState)
   })
 }
