@@ -127,6 +127,7 @@ const PlaylistResourceListItem = ({ resource, index, playlistId }) => {
     )
     modal.open();
   }
+  const withHttp = resource.href.startsWith('http://') || resource.href.startsWith('https://')
 
   return (
     <Draggable draggableId={resource._id} index={index} isDragDisabled={studentView}>
@@ -138,7 +139,7 @@ const PlaylistResourceListItem = ({ resource, index, playlistId }) => {
         >
           <li css={item}>
             <a
-              href={`http://${resource.href}`}
+              href={withHttp ? resource.href : `http://${resource.href}`}
               target="_blank"
               referrerPolicy='no-referrer'
               rel='external'
