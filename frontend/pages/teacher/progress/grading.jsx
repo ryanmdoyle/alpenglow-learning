@@ -14,7 +14,7 @@ import { GET_STUDENT_REQS_AND_PENDING_SCORES } from '../../../gql/queries';
 const grading = () => {
   const user = useContext(UserContext);
   const { loading, data } = useQuery(GET_STUDENT_REQS_AND_PENDING_SCORES, {
-    pollInterval: 3000,
+    pollInterval: 5000,
   })
 
   const scoreData = data?.getScoresPending;
