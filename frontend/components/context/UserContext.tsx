@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import gql from 'graphql-tag';
-import { useQuery } from '@apollo/client';
+import { gql, useQuery } from '@apollo/client';
 
 const UserContext = React.createContext(null);
 UserContext.displayName = 'UserContext';
@@ -17,18 +16,18 @@ const GET_CURRENT_USER = gql`
 
 const UserProvider = ({ children }) => {
   const { loading, error, data, refetch } = useQuery(GET_CURRENT_USER);
-  
+
   const userValue = {
     firstName: data?.getUserCurrent?.firstName || null,
     roles: data?.getUserCurrent?.roles || null,
     loading: loading ? true : false,
     _id: data?.getUserCurrent?._id || null,
     refetch: refetch || null,
-  } 
-  
+  }
+
   return (
     <UserContext.Provider
-      value={ userValue }
+      value={userValue}
     >
       {children}
     </UserContext.Provider>

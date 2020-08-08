@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
-import gql from 'graphql-tag';
-import { useQuery, useMutation } from '@apollo/client';
+import { gql, useQuery, useMutation } from '@apollo/client';
 import { css } from '@emotion/core';
 
 import TextButton from '../styled/elements/TextButton';
@@ -54,7 +53,7 @@ const PlaylistRequestButton = ({ playlistId }) => {
     variables: { playlistId: playlistId },
     pollInterval: 3000,
   });
-  
+
   const pendingScore = requestData?.getScorePendingOfEnrolledPlaylist;
   const requestId = requestData?.getRequest?._id;
   const approvalAccepted = requestData?.getRequest?.approvalAccepted;

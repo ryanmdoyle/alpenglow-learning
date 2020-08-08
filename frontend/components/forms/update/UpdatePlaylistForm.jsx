@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
-import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
-import { useQuery, useMutation } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
 
 import FormWrapper from '../../styled/blocks/FormWrapper';
 import AlertContext from '../../context/AlertContext';

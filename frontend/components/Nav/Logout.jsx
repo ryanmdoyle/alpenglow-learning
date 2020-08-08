@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import gql from 'graphql-tag';
-import { useMutation } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
 import { GoogleLogout } from 'react-google-login';
 
 const LOGOUT = gql`

@@ -1,10 +1,9 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
 import { css } from '@emotion/core';
 import { Draggable } from 'react-beautiful-dnd';
 import { useRouter } from 'next/router';
-import { useMutation } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
 
 import AlertContext from '../context/AlertContext';
 import ModalContext from '../context/ModalContext';

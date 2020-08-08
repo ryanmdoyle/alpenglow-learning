@@ -1,10 +1,8 @@
 import React, { useContext, useState } from 'react';
-import gql from 'graphql-tag';
-import Head from 'next/head';
 import { css } from '@emotion/core';
 import { useRouter } from 'next/router';
 import { GoogleLogin } from 'react-google-login';
-import { useMutation } from '@apollo/client'
+import { gql, useMutation } from '@apollo/client'
 
 import UserContext from './context/UserContext';
 import AlertContext from './context/AlertContext';

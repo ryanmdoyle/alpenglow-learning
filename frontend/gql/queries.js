@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 
 export const GET_INSTRUCTING_COURSES = gql`
   query GET_INSTRUCTING_COURSES {

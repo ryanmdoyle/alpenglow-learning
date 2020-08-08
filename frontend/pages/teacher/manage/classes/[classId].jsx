@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
-import gql from 'graphql-tag';
 import Head from 'next/head';
 import { css } from '@emotion/core';
-import { useQuery, useMutation } from '@apollo/client'
+import { gql, useQuery, useMutation } from '@apollo/client'
 import { useRouter } from 'next/router';
 
 import PageTitle from '../../../../components/styled/PageTitle';

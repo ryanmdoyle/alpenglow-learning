@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import gql from 'graphql-tag';
-import { useMutation } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
 
 import FormWrapper from '../../styled/blocks/FormWrapper';
 import PagePadding from '../../styled/PagePadding';

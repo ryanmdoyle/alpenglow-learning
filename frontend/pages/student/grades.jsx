@@ -1,9 +1,8 @@
 import React from 'react';
 import Head from 'next/head';
 import PageTitle from '../../components/styled/PageTitle';
-import gql from 'graphql-tag';
 import { css } from '@emotion/core';
-import { useQuery } from '@apollo/client';
+import { gql, useQuery } from '@apollo/client';
 
 import PagePadding from '../../components/styled/PagePadding';
 import GradesPlaylistScore from '../../components/grades/GradesPlaylistScore';

@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
 import Link from 'next/link';
 import _ from 'lodash';
 import { css } from '@emotion/core';
-import { useQuery } from '@apollo/client';
+import { gql, useQuery } from '@apollo/client';
 
 import Loading from '../Loading';
 import ProgressCourseBox from './ProgressCourseBox';

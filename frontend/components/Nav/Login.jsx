@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
-import gql from 'graphql-tag';
 import { GoogleLogin } from 'react-google-login';
 import { useRouter } from 'next/router'
-import { useMutation } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
 
 import AlertContext from '../context/AlertContext';
 
@@ -16,7 +15,7 @@ const Login = (props) => {
   const alert = useContext(AlertContext);
   const router = useRouter();
   const [googleLogin, { data }] = useMutation(LOGIN, {
-    onCompleted: () => {window.location.href = '/'},
+    onCompleted: () => { window.location.href = '/' },
     onError: () => {
       alert.error('No account with that email address!  Please create an account first.')
     }

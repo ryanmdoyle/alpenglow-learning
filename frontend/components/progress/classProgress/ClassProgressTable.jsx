@@ -1,8 +1,7 @@
 import React from 'react';
-import gql from 'graphql-tag';
 import Link from 'next/link';
 import { css } from '@emotion/core';
-import { useQuery } from '@apollo/client';
+import { gql, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 
 import PercentScoreRectangle from '../../styled/elements/PercentScoreRectangle';

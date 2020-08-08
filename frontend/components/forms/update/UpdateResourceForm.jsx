@@ -1,13 +1,12 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
+import { gql, useMutation } from '@apollo/client';
+import { useForm } from 'react-hook-form';
 
 import FormWrapper from '../../styled/blocks/FormWrapper';
 import AlertContext from '../../context/AlertContext';
 import ModalContext from '../../context/ModalContext';
 import PagePadding from '../../styled/PagePadding';
-import { useMutation } from '@apollo/client';
-import { useForm } from 'react-hook-form';
 import { GET_PLAYLIST } from '../../../gql/queries';
 
 const UPDATE_RESOURCE = gql`

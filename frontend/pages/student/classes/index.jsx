@@ -1,7 +1,6 @@
 import React from 'react';
-import gql from 'graphql-tag';
 import Head from 'next/head';
-import { useQuery } from '@apollo/client'
+import { gql, useQuery } from '@apollo/client'
 import _ from 'lodash'
 
 import PageTitle from '../../../components/styled/PageTitle';

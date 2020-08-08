@@ -1,11 +1,10 @@
 import React, { useContext } from 'react';
-import gql from 'graphql-tag';
 import Link from 'next/link';
 import Head from 'next/head';
+import _ from 'lodash';
 import { css } from '@emotion/core';
 import { useRouter } from 'next/router';
-import { useQuery, useMutation } from '@apollo/client';
-import _ from 'lodash';
+import { gql, useQuery, useMutation } from '@apollo/client';
 
 import PageTitle from '../../../components/styled/PageTitle';
 import PagePadding from '../../../components/styled/PagePadding';

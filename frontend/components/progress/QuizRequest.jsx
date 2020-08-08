@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
 import { css } from '@emotion/core';
-import { useMutation } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
 
 import TextButton from '../../components/styled/elements/TextButton';
 import { GET_STUDENT_REQS_AND_PENDING_SCORES } from '../../pages/teacher/progress/grading';
@@ -87,10 +86,10 @@ const DENY_QUIZ_REQUEST = gql`
 
 const QuizRequest = ({ requestId, name, playlistId, playlistName, approved, approvalAccepted, type }) => {
   const [approvePaper, { data: approvePaperData }] = useMutation(APPROVE_PAPER_QUIZ_REQUEST, {
-    variables: { 
+    variables: {
       playlistId: playlistId,
       requestId: requestId,
-     },
+    },
     refetchQueries: [{ query: GET_STUDENT_REQS_AND_PENDING_SCORES }],
   })
   const [approveOnline, { data: approveOnlineData }] = useMutation(APPROVE_ONLINE_QUIZ_REQUEST, {
@@ -142,7 +141,7 @@ const QuizRequest = ({ requestId, name, playlistId, playlistName, approved, appr
           <CancelButton approvalAccepted={approvalAccepted} cancel={cancel} deny={deny} />
           :
           <div css={twoWide}>
-            <TextButton onClick={() => {handleApproval(type)}}
+            <TextButton onClick={() => { handleApproval(type) }}
               css={css`:hover{background-color: var(--green);border-color: var(--green);}`}
             >Approve</TextButton>
             <TextButton onClick={deny}

@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
 import { css } from '@emotion/core';
 import { useRouter } from 'next/router';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import { useMutation } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
 
 import CoursePlaylistBox from './CoursePlaylistBox';
 import PlusButton from '../styled/elements/PlusButton';
