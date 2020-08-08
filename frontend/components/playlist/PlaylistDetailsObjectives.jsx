@@ -4,7 +4,7 @@ import gql from 'graphql-tag'
 import { css } from '@emotion/core';
 import { useRouter } from 'next/router';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/client';
 
 import PlaylistNewObjectiveButton from './PlaylistNewObjectiveButton';
 import AlertContext from '../context/AlertContext';

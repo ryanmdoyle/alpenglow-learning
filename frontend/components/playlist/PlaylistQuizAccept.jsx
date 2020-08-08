@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import { css } from '@emotion/core';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/client';
 
 import PagePadding from '../styled/blocks/PagePadding';
 import TextButton from '../styled/elements/TextButton';

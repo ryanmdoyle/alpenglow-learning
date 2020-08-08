@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Head from 'next/head';
 import { css } from '@emotion/core';
 import { useRouter } from 'next/router';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/client';
 
 import PageTitle from '../../../components/styled/PageTitle';
 import PagePadding from '../../../components/styled/PagePadding';

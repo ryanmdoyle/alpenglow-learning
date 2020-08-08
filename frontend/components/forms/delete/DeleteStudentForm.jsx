@@ -7,7 +7,7 @@ import FormWrapper from '../../styled/blocks/FormWrapper';
 import AlertContext from '../../context/AlertContext';
 import ModalContext from '../../context/ModalContext';
 import PagePadding from '../../styled/PagePadding';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
 import { GET_INSTRUCTING_STUDENTS, GET_INSTRUCTING_CLASSES } from '../../../gql/queries';
 

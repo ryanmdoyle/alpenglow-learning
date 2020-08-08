@@ -3,10 +3,9 @@
 import React, { useMemo } from 'react'
 import Head from 'next/head'
 import fetch from 'isomorphic-unfetch'
-import { ApolloProvider } from '@apollo/react-hooks'
-import { ApolloClient, InMemoryCache, HttpLink, ApolloLink, concat } from 'apollo-boost'
-import { onError } from 'apollo-link-error';
-import { RetryLink } from 'apollo-link-retry';
+import { ApolloProvider, ApolloClient, InMemoryCache, HttpLink, ApolloLink } from '@apollo/client';
+import { onError } from '@apollo/client/link/error';
+import { RetryLink } from '@apollo/client/link/retry';
 
 let apolloClient = null
 
@@ -60,7 +59,7 @@ export function withApollo(PageComponent, { ssr = true } = {}) {
 
         try {
           // Run all GraphQL queries
-          await require('@apollo/react-ssr').getDataFromTree(
+          await require('@apollo/client/react/ssr').getDataFromTree(
             <AppTree
               pageProps={{
                 ...pageProps,
@@ -154,15 +153,16 @@ function createApolloClient(initialState = {}) {
   })
 
   const link = ApolloLink.from([
-    errors,
-    retry,
+    // errors,
+    // retry,
     httpLink,
   ])
 
   return new ApolloClient({
+    uri: httpAddress,
+    credentials: 'include',
+    cache: new InMemoryCache().restore(initialState),
     connectToDevTools: isBrowser,
     ssrMode: !isBrowser, // Disables forceFetch on the server (so queries are only run once)
-    link: link,
-    cache: new InMemoryCache().restore(initialState)
   })
 }

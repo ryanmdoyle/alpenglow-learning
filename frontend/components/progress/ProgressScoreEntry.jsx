@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import { css } from '@emotion/core';
 import { useForm } from 'react-hook-form';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/client';
 
 import AlertContext from '../context/AlertContext';
 import TrashCanButton from '../styled/elements/TrashCanButton';

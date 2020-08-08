@@ -1,7 +1,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import Head from 'next/head';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 
 import PageTitle from '../../../../components/styled/PageTitle';

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import Head from 'next/head'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/client'
 
 import PageTitle from '../../../../components/styled/PageTitle';
 import PagePadding from '../../../../components/styled/blocks/PagePadding';

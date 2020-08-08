@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Head from 'next/head';
 import { css } from '@emotion/core';
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/client'
 import {useRouter} from 'next/router';
 
 import PageTitle from '../../../../components/styled/PageTitle';

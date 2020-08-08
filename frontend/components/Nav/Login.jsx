@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import gql from 'graphql-tag';
 import { GoogleLogin } from 'react-google-login';
 import { useRouter } from 'next/router'
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/client';
 
 import AlertContext from '../context/AlertContext';
 
