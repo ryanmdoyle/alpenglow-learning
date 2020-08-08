@@ -94,6 +94,7 @@ const global = css`
     margin-bottom: 1.15rem;
     text-decoration: none;
     color: var(--pink);
+    cursor: pointer;
   }
 
   h3, h4 {

@@ -89,7 +89,7 @@ const typeDefs = gql`
 
     createResource(
       name: String!,
-      description: String!,
+      description: String,
       href: String!,
       type: String!,
       objective: String!
@@ -182,7 +182,7 @@ const typeDefs = gql`
     updateResource(
       resourceId: ID!,
       name: String!,
-      description: String!,
+      description: String,
       type: String!,
       href: String!,
     ): Resource!,

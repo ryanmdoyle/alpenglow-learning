@@ -12,7 +12,7 @@ import { GET_PLAYLIST } from '../../../gql/queries';
 const CREATE_RESOURCE_MUTATION = gql`
   mutation CREATE_RESOURCE(
     $name: String!,
-    $description: String!,
+    $description: String,
     $href: String!,
     $type: String!,
     $objective: String!,
@@ -66,8 +66,7 @@ const CreateResourceForm = ({ objectiveName, objectiveId, playlistId }) => {
           {errors.name && "Name is required"}
 
           <label htmlFor='description'>description</label>
-          <textarea name="description" ref={register({ required: true, maxLength: 255 })} />
-          {errors.description?.type === "required" && "Description is required."}
+          <textarea name="description" ref={register({ maxLength: 255 })} />
           {errors.description?.type === "maxLength" && "Maximum description length is 255 characters."}
 
           <label htmlFor='href'>link</label>

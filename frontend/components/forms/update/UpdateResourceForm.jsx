@@ -14,7 +14,7 @@ const UPDATE_RESOURCE = gql`
   mutation UPDATE_RESOURCE(
     $resourceId: ID!,
     $name: String!,
-    $description: String!,
+    $description: String,
     $type: String!,
     $href: String!,
   ) {
@@ -65,8 +65,7 @@ const UpdateResourceForm = ({ resourceId, playlistId, name, description, type, h
           {errors.name && "Name is required"}
 
           <label htmlFor='description'>description</label>
-          <textarea name="description" defaultValue={description} ref={register({ required: true, maxLength: 255 })} />
-          {errors.description?.type === "required" && "Description is required."}
+          <textarea name="description" defaultValue={description} ref={register({ maxLength: 255 })} />
           {errors.description?.type === "maxLength" && "Maximum description length is 255 characters."}
 
           <label htmlFor='href'>link</label>
@@ -94,7 +93,7 @@ UpdateResourceForm.propTypes = {
   resourceId: PropTypes.string.isRequired,
   playlistId: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  description: PropTypes.string,
   type: PropTypes.string.isRequired,
   href: PropTypes.string.isRequired,
 }
