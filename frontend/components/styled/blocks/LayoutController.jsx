@@ -9,6 +9,7 @@ import ComponentWithRouteProtection from '../../ComponentWithRouteProtection';
 import UserContext from '../../context/UserContext';
 import Loading from '../../Loading';
 import NavLanding from '../../Nav/NavLanding';
+import PageEndPadding from './PageEndPadding';
 
 
 const dashboard = css`
@@ -97,6 +98,7 @@ const LayoutController = ({ Component, pageProps }) => {
         <ComponentWithRouteProtection Component={Component} pageProps={pageProps} />
         <Alert />
         <Modal />
+        <PageEndPadding />
       </main>
     </div>
   );
