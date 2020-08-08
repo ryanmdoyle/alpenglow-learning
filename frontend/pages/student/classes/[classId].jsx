@@ -5,6 +5,7 @@ import Head from 'next/head';
 import { css } from '@emotion/core';
 import { useRouter } from 'next/router';
 import { useQuery, useMutation } from '@apollo/client';
+import _ from 'lodash';
 
 import PageTitle from '../../../components/styled/PageTitle';
 import PagePadding from '../../../components/styled/PagePadding';
@@ -150,7 +151,11 @@ const studentClass = () => {
     modal.open();
   }
   const course = courseData?.getCourseOfClass;
-  const essential = courseData?.getCourseOfClass?.essentialPlaylists.map(playlist => {
+  const essentialPlaylists = _.cloneDeep(courseData?.getCourseOfClass?.essentialPlaylists);
+  const corePlaylists = _.cloneDeep(courseData?.getCourseOfClass?.corePlaylists);
+  const challengePlaylists = _.cloneDeep(courseData?.getCourseOfClass?.challengePlaylists);
+
+  const essential = essentialPlaylists?.map(playlist => {
     playlist.best = null;
     scoreData?.getScoresForEnrolledClass.forEach(score => {
       if (score.playlist._id === playlist._id) {
@@ -160,7 +165,7 @@ const studentClass = () => {
     })
     return playlist;
   })
-  const core = courseData?.getCourseOfClass?.corePlaylists.map(playlist => {
+  const core = corePlaylists?.map(playlist => {
     playlist.best = null;
     scoreData?.getScoresForEnrolledClass.forEach(score => {
       if (score.playlist._id === playlist._id) {
@@ -170,7 +175,7 @@ const studentClass = () => {
     })
     return playlist;
   })
-  const challenge = courseData?.getCourseOfClass?.challengePlaylists.map(playlist => {
+  const challenge = challengePlaylists?.map(playlist => {
     playlist.best = null;
     scoreData?.getScoresForEnrolledClass.forEach(score => {
       if (score.playlist._id === playlist._id) {
