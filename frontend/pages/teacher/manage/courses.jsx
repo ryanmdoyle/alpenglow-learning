@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { css } from '@emotion/core';
 import { useQuery } from '@apollo/client'
 
+import PageFade from '../../../components/styled/blocks/PageFade';
 import PageTitle from '../../../components/styled/PageTitle';
 import Loading from '../../../components/Loading';
 import CourseTimelines from '../../../components/courses/CourseTimelines';
@@ -32,7 +33,7 @@ const teacherCourses = () => {
   if (error) return null;
   if (loading) return <Loading />;
   return (
-    <>
+    <PageFade>
       <Head>
         <title>Alpenglow Learning - Manage Courses</title>
         <meta name='description' content='Manage Courses'></meta>
@@ -56,7 +57,7 @@ const teacherCourses = () => {
         <h4>Add Course</h4>
         <PlusButtonWithText onClick={addCourse}>Create a New Course</PlusButtonWithText>
       </div>
-    </>
+    </PageFade>
   );
 };
 

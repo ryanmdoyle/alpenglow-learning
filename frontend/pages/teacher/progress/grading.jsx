@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 import Head from 'next/head';
 import { css } from '@emotion/core';
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 
+import PageFade from '../../../components/styled/blocks/PageFade';
 import PageTitle from '../../../components/styled/PageTitle';
 import Loading from '../../../components/Loading';
 import PagePadding from '../../../components/styled/blocks/PagePadding';
@@ -25,7 +26,7 @@ const grading = () => {
 
   if (loading) return <Loading />
   return (
-    <>
+    <PageFade>
       <Head>
         <title>Alpenglow Learning - Grading</title>
         <meta name='description' content='Grading and Quiz Requests'></meta>
@@ -109,7 +110,7 @@ const grading = () => {
           }
         })}
       </PagePadding>
-    </>
+    </PageFade>
   );
 };
 

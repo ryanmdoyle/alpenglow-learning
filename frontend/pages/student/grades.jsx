@@ -4,6 +4,7 @@ import PageTitle from '../../components/styled/PageTitle';
 import { css } from '@emotion/core';
 import { gql, useQuery } from '@apollo/client';
 
+import PageFade from '../../components/styled/blocks/PageFade';
 import PagePadding from '../../components/styled/PagePadding';
 import GradesPlaylistScore from '../../components/grades/GradesPlaylistScore';
 
@@ -53,7 +54,7 @@ const studentGrades = () => {
   const classes = data?.getCoursesEnrolled;
   const scores = data?.getScores;
   return (
-    <div>
+    <PageFade>
       <Head>
         <title>Alpenglow Learning - Grades</title>
         <meta name='description' content='Grades Summary'></meta>
@@ -115,7 +116,7 @@ const studentGrades = () => {
         }
 
       </PagePadding>
-    </div>
+    </PageFade>
   );
 };
 

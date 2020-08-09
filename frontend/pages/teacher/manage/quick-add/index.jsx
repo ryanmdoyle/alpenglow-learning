@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
+import PageFade from '../../../../components/styled/blocks/PageFade';
 import PageTitle from '../../../../components/styled/PageTitle';
 import CreateContentNav from '../../../../components/Nav/CreateContentNav';
 import CreatePlaylistForm from '../../../../components/forms/create/CreatePlaylistForm';
@@ -16,7 +17,7 @@ const createContent = () => {
     setActiveForm(courseString);
   }
   return (
-    <div>
+    <PageFade>
       <Head>
         <title>Alpenglow Learning - Quick Add</title>
         <meta name='description' content='Quick Add Content'></meta>
@@ -27,7 +28,7 @@ const createContent = () => {
       {(activeForm === 'playlist') && <CreatePlaylistForm />}
       {(activeForm === 'course') && <CreateCourseForm />}
       {/* {(activeForm === 'question') && <CreateQuestionForm />} */}
-    </div>
+    </PageFade>
   );
 };
 

@@ -4,6 +4,7 @@ import { css } from '@emotion/core';
 import { gql, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 
+import PageFade from '../../../../components/styled/blocks/PageFade';
 import PageTitle from '../../../../components/styled/PageTitle';
 import PagePadding from '../../../../components/styled/PagePadding';
 import GradesPlaylistScore from '../../../../components/grades/GradesPlaylistScore';
@@ -82,7 +83,7 @@ const studentProgress = () => {
 
   if (loading) return <Loading />
   return (
-    <>
+    <PageFade>
       <Head>
         <title>Alpenglow Learning - Progress for {data.getUser.name}</title>
         <meta name='description' content={`Progress for ${data.getUser.name}`}></meta>
@@ -147,7 +148,7 @@ const studentProgress = () => {
         }
 
       </PagePadding>
-    </>
+    </PageFade>
   );
 };
 

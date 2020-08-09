@@ -6,6 +6,7 @@ import { css } from '@emotion/core';
 import { useRouter } from 'next/router';
 import { gql, useQuery, useMutation } from '@apollo/client';
 
+import PageFade from '../../../components/styled/blocks/PageFade';
 import PageTitle from '../../../components/styled/PageTitle';
 import PagePadding from '../../../components/styled/PagePadding';
 import Loading from '../../../components/Loading';
@@ -189,7 +190,7 @@ const studentClass = () => {
 
   const { name } = data?.getClass;
   return (
-    <>
+    <PageFade>
       <Head>
         <title>Alpenglow Learning - {name}</title>
         <meta name='description' content={`Goals and Progress for ${name}`}></meta>
@@ -260,7 +261,7 @@ const studentClass = () => {
           )}
         </ul>
       </PagePadding>
-    </>
+    </PageFade>
   );
 };
 

@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { gql, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 
+import PageFade from '../../../../components/styled/blocks/PageFade';
 import PageTitle from '../../../../components/styled/PageTitle';
 import PagePadding from '../../../../components/styled/PagePadding';
 import ClassProgressTable from '../../../../components/progress/classProgress/ClassProgressTable';
@@ -24,7 +25,7 @@ const classProgress = () => {
   const name = data?.getClassInstructing?.name;
   const title = name ? `Class Progress - ${name}` : `Class Progress`
   return (
-    <div>
+    <PageFade>
       <Head>
         <title>Alpenglow Learning - Class Progress for {name}</title>
         <meta name='description' content={`Class Progress for ${name}`}></meta>
@@ -33,7 +34,7 @@ const classProgress = () => {
       <PagePadding>
         <ClassProgressTable />
       </PagePadding>
-    </div>
+    </PageFade>
   );
 };
 

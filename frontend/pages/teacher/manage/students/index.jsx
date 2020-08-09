@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import Head from 'next/head'
 import { useQuery } from '@apollo/client'
 
+import PageFade from '../../../../components/styled/blocks/PageFade';
 import PageTitle from '../../../../components/styled/PageTitle';
 import PagePadding from '../../../../components/styled/blocks/PagePadding';
 import Loading from '../../../../components/Loading';
@@ -35,7 +36,7 @@ const studentList = () => {
   if (error) return null;
   if (loading) return <Loading />;
   return (
-    <>
+    <PageFade>
       <Head>
         <title>Alpenglow Learning - Manage Students</title>
         <meta name='description' content='Manage Students'></meta>
@@ -67,7 +68,7 @@ const studentList = () => {
           })}
         </ListContainer>
       </PagePadding>
-    </>
+    </PageFade>
   );
 };
 

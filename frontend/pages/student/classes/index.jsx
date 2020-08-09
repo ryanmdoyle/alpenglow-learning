@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { gql, useQuery } from '@apollo/client'
 import _ from 'lodash'
 
+import PageFade from '../../../components/styled/blocks/PageFade';
 import PageTitle from '../../../components/styled/PageTitle';
 import Loading from '../../../components/Loading';
 import CourseTimelines from '../../../components/courses/CourseTimelines';
@@ -55,7 +56,7 @@ const studentClasses = () => {
   })
 
   return (
-    <div>
+    <PageFade>
       <Head>
         <title>Alpenglow Learning - All Class Progress</title>
         <meta name='description' content={`All Class Progress`}></meta>
@@ -78,7 +79,7 @@ const studentClasses = () => {
           }
         })
       )}
-    </div >
+    </PageFade>
   );
 };
 

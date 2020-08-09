@@ -4,6 +4,7 @@ import { css } from '@emotion/core';
 import { useQuery } from '@apollo/client'
 import {useRouter} from 'next/router';
 
+import PageFade from '../../../../components/styled/blocks/PageFade';
 import PageTitle from '../../../../components/styled/PageTitle';
 import Loading from '../../../../components/Loading';
 import PagePadding from '../../../../components/styled/blocks/PagePadding';
@@ -30,7 +31,7 @@ const teacherClasses = () => {
   if (error) return null;
   if (loading) return <Loading />
   return (
-    <div>
+    <PageFade>
       <Head>
         <title>Alpenglow Learning - Manage Class</title>
         <meta name='description' content='Class Management'></meta>
@@ -75,7 +76,7 @@ const teacherClasses = () => {
         })}
 
       </PagePadding>
-    </div >
+    </PageFade>
   );
 };
 
