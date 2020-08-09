@@ -3,10 +3,9 @@
 import React, { useMemo } from 'react'
 import Head from 'next/head'
 import fetch from 'isomorphic-unfetch'
-import { ApolloProvider } from '@apollo/react-hooks'
-import { ApolloClient, InMemoryCache, HttpLink, ApolloLink, concat } from 'apollo-boost'
-import { onError } from 'apollo-link-error';
-import { RetryLink } from 'apollo-link-retry';
+import { ApolloProvider, ApolloClient, InMemoryCache, HttpLink, ApolloLink } from '@apollo/client';
+import { onError } from '@apollo/client/link/error';
+import { RetryLink } from '@apollo/client/link/retry';
 
 let apolloClient = null
 
@@ -60,7 +59,7 @@ export function withApollo(PageComponent, { ssr = true } = {}) {
 
         try {
           // Run all GraphQL queries
-          await require('@apollo/react-ssr').getDataFromTree(
+          await require('@apollo/client/react/ssr').getDataFromTree(
             <AppTree
               pageProps={{
                 ...pageProps,
@@ -123,7 +122,6 @@ function createApolloClient(initialState = {}) {
 
   // Create an http link:
   const httpAddress = (process.env.NODE_ENV === 'production') ? 'https://alpenglow-backend-production.herokuapp.com/graphql' : 'http://localhost:4000/graphql';
-
   const httpLink = new HttpLink({
     uri: httpAddress, // Server URL
     credentials: 'include', // Additional fetch() options like `credentials` or `headers`
@@ -160,9 +158,9 @@ function createApolloClient(initialState = {}) {
   ])
 
   return new ApolloClient({
+    link: link,
+    cache: new InMemoryCache(),// .restore(initialState),
     connectToDevTools: isBrowser,
     ssrMode: !isBrowser, // Disables forceFetch on the server (so queries are only run once)
-    link: link,
-    cache: new InMemoryCache().restore(initialState)
   })
 }

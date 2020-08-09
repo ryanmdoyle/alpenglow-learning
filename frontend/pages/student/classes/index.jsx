@@ -1,20 +1,24 @@
 import React from 'react';
-import gql from 'graphql-tag';
 import Head from 'next/head';
-import { useQuery } from '@apollo/react-hooks'
+import { gql, useQuery } from '@apollo/client'
+import _ from 'lodash'
 
+import PageFade from '../../../components/styled/blocks/PageFade';
 import PageTitle from '../../../components/styled/PageTitle';
 import Loading from '../../../components/Loading';
 import CourseTimelines from '../../../components/courses/CourseTimelines';
 import { GET_ENROLLED_COURSES } from '../../../gql/queries';
+
 
 const studentClasses = () => {
   const { loading, error, data } = useQuery(GET_ENROLLED_COURSES);
   if (error) return null;
   if (loading) return <Loading />;
 
+  const coursesEnrolled = _.cloneDeep(data.getCoursesEnrolled);
+
   // iterates through all course playlists and adds the best score
-  const coursesWithScores = data.getCoursesEnrolled.map(course => {
+  const coursesWithScores = coursesEnrolled.map(course => {
     // for essential playlists
     course.essentialPlaylists.map(playlist => {
       playlist.best = null;
@@ -52,7 +56,7 @@ const studentClasses = () => {
   })
 
   return (
-    <div>
+    <PageFade>
       <Head>
         <title>Alpenglow Learning - All Class Progress</title>
         <meta name='description' content={`All Class Progress`}></meta>
@@ -75,7 +79,7 @@ const studentClasses = () => {
           }
         })
       )}
-    </div >
+    </PageFade>
   );
 };
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { css } from '@emotion/core';
 
+import PageFade from '../components/styled/blocks/PageFade'
 import PageTitle from '../components/styled/PageTitle';
 import PagePadding from '../components/styled/PagePadding';
 
@@ -10,7 +11,7 @@ const info = css`
 
 const privacytos = () => {
   return (
-    <>
+    <PageFade>
       <PageTitle>Privacy Policy</PageTitle>
       <PagePadding>
         <h4>About Alpenglow Learning</h4>
@@ -69,7 +70,7 @@ const privacytos = () => {
         <div css={info}>
           <p>Personal Profile information is collected from Google accounts used to create an account. Accounts may have access revoked for futher authentication from Google's Profile Settings directly.  Accounts created with Google are at this time unable to update their email address.</p>
           <p>We may not be able to delete data in all instances, such as information retained in technical support logs and other business records. We will not be required to delete any information which has been de-identified or disassociated with personal identifiers such that it can no longer be used to reasonably identify a particular individual.</p>
-          <p>Unless we receive a deletion request, we will retain your information for as long as your account is active or as is reasonably useful for operational purposes. For example, we may retain certain data as necessary to prevent fraud or future abuse, for recordkeeping or other legitimate business purposes, or if required by law. We may also retain information which has been de-identified or aggregated such that it can no longer reasonably identify a particular individual. All retained personal information will remain subject to the terms of this Privacy Policy.</p>   
+          <p>Unless we receive a deletion request, we will retain your information for as long as your account is active or as is reasonably useful for operational purposes. For example, we may retain certain data as necessary to prevent fraud or future abuse, for recordkeeping or other legitimate business purposes, or if required by law. We may also retain information which has been de-identified or aggregated such that it can no longer reasonably identify a particular individual. All retained personal information will remain subject to the terms of this Privacy Policy.</p>
         </div>
         <h5 id='Our approach to Data Security'>Our approach to Data Security</h5>
         <div css={info}>
@@ -79,7 +80,7 @@ const privacytos = () => {
         <div css={info}>
           <p>Alpenglow Learning does not permit children under the age of 13 (a “Child” or “Children”) to create an account without the consent and at the direction of a Parent or School. Please contact us at <a href='mailto:alpenglowlearning@gmail.com'>alpenglowlearning@gmail.com</a> if you believe we have inadvertently collected information from a child under 13 without parental consent so that we may delete the information as soon as possible.
           <p>Children under 13 may create an account with the parent's consent. Please see the Children's Privacy Policy to learn more about how Alpenglow Learning collects, uses and shares information associated with Child accounts.</p>
-          <p>When Alpenglow Learning is used by a School in an educational setting, we may rely on the School to provide the requisite consent for Alpenglow Learning to collect information from a School User under the age of 13, in lieu of parental consent.</p></p>
+            <p>When Alpenglow Learning is used by a School in an educational setting, we may rely on the School to provide the requisite consent for Alpenglow Learning to collect information from a School User under the age of 13, in lieu of parental consent.</p></p>
         </div>
         <h5 id='Links to other sites'>Links to other sites</h5>
         <div css={info}>
@@ -91,7 +92,7 @@ const privacytos = () => {
         </div>
         <p>Last Updated August 4, 2020</p>
       </PagePadding>
-    </>
+    </PageFade>
   );
 };
 

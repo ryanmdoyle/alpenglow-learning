@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
-import gql from 'graphql-tag';
 import Head from 'next/head';
 import { css } from '@emotion/core';
-import { useQuery, useMutation } from '@apollo/react-hooks'
+import { gql, useQuery, useMutation } from '@apollo/client'
 import { useRouter } from 'next/router';
 
+import PageFade from '../../../../components/styled/blocks/PageFade';
 import PageTitle from '../../../../components/styled/PageTitle';
 import Loading from '../../../../components/Loading';
 import PagePadding from '../../../../components/styled/blocks/PagePadding';
@@ -106,7 +106,7 @@ const manageClass = () => {
   const { course, enrolled, name, primaryInstructor, enrollId } = data?.getClassInstructing;
 
   return (
-    <>
+    <PageFade>
       <Head>
         <title>Alpenglow Learning - Class Page</title>
         <meta name='description' content='Page for a single class'></meta>
@@ -135,7 +135,7 @@ const manageClass = () => {
         </ListContainer>
         <TextButton css={editButton} onClick={toggleEdit}>Edit Class</TextButton>
       </PagePadding>
-    </>
+    </PageFade>
   );
 };
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
 import Link from 'next/link';
+import _ from 'lodash';
 import { css } from '@emotion/core';
-import { useQuery } from '@apollo/react-hooks';
+import { gql, useQuery } from '@apollo/client';
 
 import Loading from '../Loading';
 import ProgressCourseBox from './ProgressCourseBox';
@@ -95,18 +95,18 @@ const GET_ALL_PROGRESS = gql`
 `;
 
 const ProgressCoursesTable = () => {
-  const { loading, error, data } = useQuery(GET_ALL_PROGRESS);
+  const { loading, data } = useQuery(GET_ALL_PROGRESS);
   const courses = data?.getCoursesInstructing;
   const scores = data?.getScoresInstructing;
   const students = data?.getUsersInstructing;
-  const classesInstructing = data?.getClassesInstructing;
+  const classesInstructing = _.cloneDeep(data?.getClassesInstructing);
   // takes the enrolled array of objects and mutates into array of single ids 
   classesInstructing?.forEach(classs => {
     const flatEnrolled = classs.enrolled.map(student => student._id);
     classs.enrolled = flatEnrolled;
   })
 
-  if (loading) return <Loading />
+  if (loading || !data) return <Loading />
 
   return (
     <table css={tableStyles}>

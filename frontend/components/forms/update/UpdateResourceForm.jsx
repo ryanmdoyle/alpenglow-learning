@@ -1,20 +1,19 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
+import { gql, useMutation } from '@apollo/client';
+import { useForm } from 'react-hook-form';
 
 import FormWrapper from '../../styled/blocks/FormWrapper';
 import AlertContext from '../../context/AlertContext';
 import ModalContext from '../../context/ModalContext';
 import PagePadding from '../../styled/PagePadding';
-import { useMutation } from '@apollo/react-hooks';
-import { useForm } from 'react-hook-form';
 import { GET_PLAYLIST } from '../../../gql/queries';
 
 const UPDATE_RESOURCE = gql`
   mutation UPDATE_RESOURCE(
     $resourceId: ID!,
     $name: String!,
-    $description: String!,
+    $description: String,
     $type: String!,
     $href: String!,
   ) {
@@ -65,8 +64,7 @@ const UpdateResourceForm = ({ resourceId, playlistId, name, description, type, h
           {errors.name && "Name is required"}
 
           <label htmlFor='description'>description</label>
-          <textarea name="description" defaultValue={description} ref={register({ required: true, maxLength: 255 })} />
-          {errors.description?.type === "required" && "Description is required."}
+          <textarea name="description" defaultValue={description} ref={register({ maxLength: 255 })} />
           {errors.description?.type === "maxLength" && "Maximum description length is 255 characters."}
 
           <label htmlFor='href'>link</label>
@@ -94,7 +92,7 @@ UpdateResourceForm.propTypes = {
   resourceId: PropTypes.string.isRequired,
   playlistId: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  description: PropTypes.string,
   type: PropTypes.string.isRequired,
   href: PropTypes.string.isRequired,
 }

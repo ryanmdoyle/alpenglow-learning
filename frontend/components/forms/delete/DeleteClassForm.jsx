@@ -1,14 +1,13 @@
 import React, { useContext } from 'react';
-import gql from 'graphql-tag';
 import { css } from '@emotion/core'
 import { useRouter } from 'next/router';
+import { gql, useMutation } from '@apollo/client';
+import { useForm } from 'react-hook-form';
 
 import FormWrapper from '../../styled/blocks/FormWrapper';
 import AlertContext from '../../context/AlertContext';
 import ModalContext from '../../context/ModalContext';
 import PagePadding from '../../styled/PagePadding';
-import { useMutation } from '@apollo/react-hooks';
-import { useForm } from 'react-hook-form';
 import { GET_INSTRUCTING_COURSES } from '../../../gql/queries';
 
 const DELETE_CLASS = gql`

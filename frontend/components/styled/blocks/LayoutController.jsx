@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
-import Link from 'next/link';
+import React, { useContext, useEffect } from 'react';
 import { css } from '@emotion/core';
+import { useRouter } from 'next/router';
 
 import NavPanel from '../../Nav/NavPanel';
 import Alert from '../../Alert';
@@ -87,7 +87,12 @@ const landing = css`
 
 const LayoutController = ({ Component, pageProps }) => {
   const user = useContext(UserContext);
-  user.refetch(); //refetches user on all requests (mimick sessions and ssr)
+  const router = useRouter();
+
+  useEffect(() => {
+    //refetches user on all page changes (mimick sessions and ssr)
+    user.refetch();
+  }, [router])
 
   if (user?.loading) return <Loading />
   if (user._id) return (

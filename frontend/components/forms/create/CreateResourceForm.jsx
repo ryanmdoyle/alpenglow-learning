@@ -1,18 +1,17 @@
 import React, { useContext } from 'react';
-import gql from 'graphql-tag';
+import { gql, useMutation } from '@apollo/client';
+import { useForm } from 'react-hook-form';
 
 import FormWrapper from '../../styled/blocks/FormWrapper';
 import AlertContext from '../../context/AlertContext';
 import ModalContext from '../../context/ModalContext';
 import PagePadding from '../../styled/PagePadding';
-import { useMutation } from '@apollo/react-hooks';
-import { useForm } from 'react-hook-form';
 import { GET_PLAYLIST } from '../../../gql/queries';
 
 const CREATE_RESOURCE_MUTATION = gql`
   mutation CREATE_RESOURCE(
     $name: String!,
-    $description: String!,
+    $description: String,
     $href: String!,
     $type: String!,
     $objective: String!,
@@ -66,8 +65,7 @@ const CreateResourceForm = ({ objectiveName, objectiveId, playlistId }) => {
           {errors.name && "Name is required"}
 
           <label htmlFor='description'>description</label>
-          <textarea name="description" ref={register({ required: true, maxLength: 255 })} />
-          {errors.description?.type === "required" && "Description is required."}
+          <textarea name="description" ref={register({ maxLength: 255 })} />
           {errors.description?.type === "maxLength" && "Maximum description length is 255 characters."}
 
           <label htmlFor='href'>link</label>

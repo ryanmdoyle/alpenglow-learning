@@ -1,14 +1,13 @@
 import React, { useContext } from 'react';
-import gql from 'graphql-tag';
 import { css } from '@emotion/core'
 import { useRouter } from 'next/router';
+import { gql, useMutation } from '@apollo/client';
+import { useForm } from 'react-hook-form';
 
 import FormWrapper from '../../styled/blocks/FormWrapper';
 import AlertContext from '../../context/AlertContext';
 import ModalContext from '../../context/ModalContext';
 import PagePadding from '../../styled/PagePadding';
-import { useMutation } from '@apollo/react-hooks';
-import { useForm } from 'react-hook-form';
 import { GET_INSTRUCTING_STUDENTS, GET_INSTRUCTING_CLASSES } from '../../../gql/queries';
 
 const DELETE_STUDENT = gql`
@@ -27,7 +26,7 @@ const DeleteStudentForm = ({ studentId, studentName }) => {
 
   const [deleteStudent, { data }] = useMutation(DELETE_STUDENT, {
     awaitRefetchQueries: true,
-    refetchQueries: [{query: GET_INSTRUCTING_STUDENTS}, { query: GET_INSTRUCTING_CLASSES }],
+    refetchQueries: [{ query: GET_INSTRUCTING_STUDENTS }, { query: GET_INSTRUCTING_CLASSES }],
     onCompleted: (data) => {
       if (modal.isOpen) {
         modal.close();

@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
 import { useRouter } from 'next/router';
-import { useQuery } from '@apollo/react-hooks';
+import { gql, useQuery } from '@apollo/client';
 
 import PlaylistRequestButton from './PlaylistRequestButton';
 import PlaylistManageQuizButton from './PlaylistManageQuizButton';

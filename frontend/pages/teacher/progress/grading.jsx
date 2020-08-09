@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import gql from 'graphql-tag';
 import Head from 'next/head';
 import { css } from '@emotion/core';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 
+import PageFade from '../../../components/styled/blocks/PageFade';
 import PageTitle from '../../../components/styled/PageTitle';
 import Loading from '../../../components/Loading';
 import PagePadding from '../../../components/styled/blocks/PagePadding';
@@ -15,7 +15,7 @@ import { GET_STUDENT_REQS_AND_PENDING_SCORES } from '../../../gql/queries';
 const grading = () => {
   const user = useContext(UserContext);
   const { loading, data } = useQuery(GET_STUDENT_REQS_AND_PENDING_SCORES, {
-    pollInterval: 3000,
+    pollInterval: 5000,
   })
 
   const scoreData = data?.getScoresPending;
@@ -26,7 +26,7 @@ const grading = () => {
 
   if (loading) return <Loading />
   return (
-    <>
+    <PageFade>
       <Head>
         <title>Alpenglow Learning - Grading</title>
         <meta name='description' content='Grading and Quiz Requests'></meta>
@@ -110,7 +110,7 @@ const grading = () => {
           }
         })}
       </PagePadding>
-    </>
+    </PageFade>
   );
 };
 

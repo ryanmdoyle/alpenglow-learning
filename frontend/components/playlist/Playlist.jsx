@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { css } from "@emotion/core";
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 
 import Loading from '../../components/Loading';

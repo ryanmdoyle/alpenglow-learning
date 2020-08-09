@@ -1,6 +1,5 @@
 import React from 'react';
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
+import { gql, useQuery, useMutation } from '@apollo/client';
 import { css } from '@emotion/core';
 
 import PlusButtonWithText from '../styled/elements/PlusButtonWithText';

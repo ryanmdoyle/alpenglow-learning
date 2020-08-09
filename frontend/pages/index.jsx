@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { css } from '@emotion/core';
 import { useRouter } from 'next/router';
 
+import PageFade from '../components/styled/blocks/PageFade';
 import Welcome from '../components/welcome/Welcome';
 import Loading from '../components/Loading';
 import CreateAccount from '../components/CreateAccount';
@@ -51,14 +52,16 @@ const HomePage = ({ }) => {
 
   if (!user._id || user._id === null) {
     return (
-      <div css={welcome}>
-        <Head>
-          <title>Alpenglow Learning - Login</title>
-          <meta name='description' content='A platform for student driven learning'></meta>
-        </Head>
-        <Welcome />
-        <CreateAccount />
-      </div>
+      <PageFade>
+        <div css={welcome}>
+          <Head>
+            <title>Alpenglow Learning - Login</title>
+            <meta name='description' content='A platform for student driven learning'></meta>
+          </Head>
+          <Welcome />
+          <CreateAccount />
+        </div>
+      </PageFade>
     )
   }
 

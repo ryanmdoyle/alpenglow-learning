@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import styled from '@emotion/styled';
 import { css } from '@emotion/core';
 import Link from 'next/link';
 
@@ -20,16 +19,16 @@ const navStyles = css`
   z-index: 100;
 `;
 
-const NavSection = styled.section`
+const navSection = css`
   width: 100%;
   padding: 1rem 0 0.25rem 0;
 `;
 
-const UserSection = styled.section`
+const lower = css`
   padding: 0 1rem;
   display: flex;
   flex-direction: column;
-    align-items: center;
+  align-items: center;
   justify-content: space-evenly;
 `;
 
@@ -38,36 +37,34 @@ const NavPanel = () => {
   return (
     <nav css={navStyles}>
       <div id='nav-top'>
-        <NavSection>
+        <div css={navSection}>
           <SiteTitle />
-        </NavSection>
+        </div>
         {user._id && (
           <>
             {hasPermission(user, [Role.SuperAdmin, Role.Student]) && (
-              <NavSection>
+              <div css={navSection}>
                 <NavStudentDashboard />
-              </NavSection>
+              </div>
             )}
             {hasPermission(user, [Role.Admin, Role.SuperAdmin, Role.Teacher]) && (
               <>
-                <NavSection>
+                <div css={navSection}>
                   <NavStudentProgress />
-                </NavSection>
-                <NavSection>
+                </div>
+                <div css={navSection}>
                   <NavManageDashboard />
-                </NavSection>
+                </div>
               </>
             )}
           </>
         )}
       </div>
-      <div id='nav-bottom'>
-        <UserSection>
-          <Logout />
-          <Link href='/privacy'>
-            <small css={css`color: var(--blueMedium);padding:0.25rem;`}>Privacy Policy</small>
-          </Link>
-        </UserSection>
+      <div css={lower}>
+        <Logout />
+        <Link href='/privacy'>
+          <small css={css`color: var(--blueMedium);padding:0.25rem;`}>Privacy Policy</small>
+        </Link>
       </div>
     </nav>
   );

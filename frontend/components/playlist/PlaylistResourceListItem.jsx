@@ -1,10 +1,9 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
 import { css } from '@emotion/core';
 import { Draggable } from 'react-beautiful-dnd';
 import { useRouter } from 'next/router';
-import { useMutation } from '@apollo/react-hooks';
+import { gql, useMutation } from '@apollo/client';
 
 import AlertContext from '../context/AlertContext';
 import ModalContext from '../context/ModalContext';
@@ -127,6 +126,7 @@ const PlaylistResourceListItem = ({ resource, index, playlistId }) => {
     )
     modal.open();
   }
+  const withHttp = resource.href.startsWith('http://') || resource.href.startsWith('https://')
 
   return (
     <Draggable draggableId={resource._id} index={index} isDragDisabled={studentView}>
@@ -138,7 +138,7 @@ const PlaylistResourceListItem = ({ resource, index, playlistId }) => {
         >
           <li css={item}>
             <a
-              href={`http://${resource.href}`}
+              href={withHttp ? resource.href : `http://${resource.href}`}
               target="_blank"
               referrerPolicy='no-referrer'
               rel='external'
