@@ -22,6 +22,9 @@ const hasPermission = require('../lib/hasPermission')
 const authExpire = 1000 * 60 * 15; // 15 min - 900,000ms
 const refreshExpire = 1000 * 60 * 60 * 24 * 7; // 7 days - 604,800,000ms
 
+const sameSite = process.env.NODE_ENV == 'production' ? 'none' : false;
+const secure = process.env.NODE_ENV == 'production';
+
 const mutations = {
   async login(parent, args, context, info) {
     const client = new OAuth2Client('740708519996-jckm5svthu1lh5fv35jc55pp54kam9br');
@@ -40,10 +43,14 @@ const mutations = {
       await context.res.cookie('ALPS_AT', authToken, {
         httpOnly: true,
         expires: new Date(Date.now() + authExpire), // 1000ms * 60s * 15m
+        sameSite: sameSite,
+        secure: secure,
       });
       await context.res.cookie('ALPS_RT', refreshToken, {
         httpOnly: true,
         expires: new Date(Date.now() + refreshExpire), // 1000 * 60 * 60 * 24 * 7
+        sameSite: sameSite,
+        secure: secure,
       });
       return authToken;
     }
@@ -83,10 +90,14 @@ const mutations = {
     await context.res.cookie('ALPS_AT', authToken, {
       httpOnly: true,
       expires: new Date(Date.now() + authExpire),
+      sameSite: sameSite,
+      secure: secure,
     });
     await context.res.cookie('ALPS_RT', refreshToken, {
       httpOnly: true,
       expires: new Date(Date.now() + refreshExpire),
+      sameSite: sameSite,
+      secure: secure,
     });
     return newUser;
   },
