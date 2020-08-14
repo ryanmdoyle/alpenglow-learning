@@ -103,8 +103,14 @@ const mutations = {
   },
 
   async logout(parent, args, context, info) {
-    context.res.clearCookie('ALPS_AT');
-    context.res.clearCookie('ALPS_RT');
+    context.res.clearCookie('ALPS_AT', {
+      sameSite: sameSite,
+      secure: secure,
+    });
+    context.res.clearCookie('ALPS_RT', {
+      sameSite: sameSite,
+      secure: secure,
+    });
     return 'Bye!'
   },
 
