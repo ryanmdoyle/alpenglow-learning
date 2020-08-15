@@ -100,7 +100,7 @@ const CoursePlaylistTimeline = ({ type, playlists: queriedPlaylists, courseId, s
   if (playlists.length > 0) return (
     <>
       <h5>{type}</h5>
-      <div css={playlistsContainer}>
+      <div>
         <DragDropContext onDragEnd={handleDrag}>
           <Droppable droppableId={type} direction='horizontal' isDropDisabled={studentView} >
             {provided => (
@@ -114,16 +114,14 @@ const CoursePlaylistTimeline = ({ type, playlists: queriedPlaylists, courseId, s
                   return <CoursePlaylistBox name={playlist.name} playlistId={playlist._id} best={playlist.best} key={playlist._id} index={index} />
                 })}
                 {provided.placeholder}
+                {/* If a teacher/admin is viewing, show button to add playlist */}
+                {!studentView && (
+                  <PlusButton onClick={toggleModal} />
+                )}
               </div>
             )}
           </Droppable>
         </DragDropContext>
-        {/* If a teacher/admin is viewing, show button to add playlist */}
-        {!studentView && (
-          <div css={css`min-width: 3rem;display: flex;align-items:center;`}>
-            <PlusButton onClick={toggleModal} />
-          </div>
-        )}
       </div>
     </>
   );
