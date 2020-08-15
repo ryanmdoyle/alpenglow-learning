@@ -314,20 +314,24 @@ const mutations = {
     const { currentUser } = context;
     const { playlistId, name, description, type } = args;
     const playlist = await Playlist.findById(playlistId);
-    const course = await Course.findById(playlist.course._id)
-    if (currentUser._id != course.owner) return new ApolloError('You do not hav permission to edit this playlist');
+    const course = await Course.findById(playlist.course._id);
+    const contributors = course.contributors.map(user => user._id);
 
-    if (playlist.type != type) {
-      const oldTypeArray = `${playlist.type.toLowerCase()}Playlists`;
-      const oldTypeArrayIndex = course[oldTypeArray].findIndex(playlist => playlist._id == playlistId);
-      course[oldTypeArray].splice(oldTypeArrayIndex, 1);
-      course[`${type.toLowerCase()}Playlists`].push(playlistId);
-      await course.save();
+    if (currentUser._id == course.owner || contributors.includes(currentUser._id)) {
+      if (playlist.type != type) {
+        const oldTypeArray = `${playlist.type.toLowerCase()}Playlists`;
+        const oldTypeArrayIndex = course[oldTypeArray].findIndex(playlist => playlist._id == playlistId);
+        course[oldTypeArray].splice(oldTypeArrayIndex, 1);
+        course[`${type.toLowerCase()}Playlists`].push(playlistId);
+        await course.save();
+      }
+      playlist.name = name;
+      playlist.description = description;
+      playlist.type = type;
+      return await playlist.save()
+    } else {
+      return new ApolloError('You do not have permission to edit this playlist');
     }
-    playlist.name = name;
-    playlist.description = description;
-    playlist.type = type;
-    return await playlist.save()
   },
 
   async updateResource(parent, args, context, info) {
