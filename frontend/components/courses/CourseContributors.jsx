@@ -35,7 +35,6 @@ const CourseContributors = ({ courseId }) => {
       courseId: courseId,
     }
   })
-  console.log('contributor data', data)
   return (
     <>
       {loading ? <Loading /> : (

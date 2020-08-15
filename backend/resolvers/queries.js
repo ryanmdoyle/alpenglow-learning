@@ -223,7 +223,6 @@ const queries = {
 
 	async getCourseContributors(parent, args, context, info) {
 		const course = await Course.findById(args.courseId);
-		console.log(course.contributors);
 		return course.contributors;
 	}
 }

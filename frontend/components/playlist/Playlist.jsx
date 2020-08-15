@@ -29,7 +29,6 @@ const Playlist = ({ playlistId }) => {
   const { loading, error, data } = useQuery(GET_PLAYLIST, {
     variables: { playlistId },
   })
-  console.log('playlist data', data)
 
   const editPlaylist = () => {
     modal.setChildComponent(
