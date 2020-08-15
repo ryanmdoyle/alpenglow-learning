@@ -73,10 +73,11 @@ const UpdateResourceForm = ({ resourceId, playlistId, name, description, type, h
 
           <label htmlFor='type'>Type</label>
           <select type='radio' name="type" defaultValue={type} ref={register({ required: true })}>
-            <option value='Article'>Article</option>
-            <option value='Image'>Image</option>
-            <option value='Practice'>Practice</option>
+            <option value='Article'>Article/Text</option>
             <option value='Video'>Video</option>
+            <option value='Presentation'>Presentation</option>
+            <option value='Practice'>Practice</option>
+            <option value='Image'>Image</option>
             <option value='Audio'>Audio</option>
           </select>
           {errors.type && 'You must add a resource type to show the class what kind of resource this is.'}

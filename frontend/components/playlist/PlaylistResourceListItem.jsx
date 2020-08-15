@@ -92,14 +92,17 @@ const PlaylistResourceListItem = ({ resource, index, playlistId }) => {
       case 'Article':
         return 'article'
         break;
-      case 'Image':
-        return 'image'
-        break;
-      case 'Practice':
-        return 'assignment'
+      case 'Presentation':
+        return 'cast'
         break;
       case 'Video':
-        return 'videocam'
+        return 'slideshow'
+        break;
+      case 'Practice':
+        return 'content_paste'
+        break;
+      case 'Image':
+        return 'image'
         break;
       case 'Audio':
         return 'mic'
@@ -144,7 +147,7 @@ const PlaylistResourceListItem = ({ resource, index, playlistId }) => {
               rel='external'
             >
               <div className='info'>
-                <i className="material-icons icon">{icon(resource.type)}</i>
+                <i className="material-icons-outlined icon">{icon(resource.type)}</i>
                 <div className='info-text'>
                   <span>{resource?.name}</span>
                   <small>{resource?.description}</small>
@@ -153,8 +156,8 @@ const PlaylistResourceListItem = ({ resource, index, playlistId }) => {
             </a>
             {!studentView && (
               <div css={controls}>
-                <i className="material-icons edit" onClick={() => { editResource(resource._id) }}>create</i>
-                <i className="material-icons delete" onClick={() => { removeResource(resource._id) }}>delete</i>
+                <i className="material-icons-outlined edit" onClick={() => { editResource(resource._id) }}>create</i>
+                <i className="material-icons-outlined delete" onClick={() => { removeResource(resource._id) }}>delete</i>
               </div>
             )}
           </li>

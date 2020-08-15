@@ -7,7 +7,7 @@ const global = css`
   @import url('https://fonts.googleapis.com/css2?family=Hind+Madurai:wght@400;700&display=swap');
   
   /* Google Icon Usage --> https://google.github.io/material-design-icons/ */
-  @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+  @import url('https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined');
   
   :root {
     /* CUSTOM PROPS */

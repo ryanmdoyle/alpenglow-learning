@@ -4,6 +4,7 @@ const Resources = [
   'Practice',
   'Video',
   'Audio',
+  'Presentation'
 ];
 
 module.exports = Resources;
