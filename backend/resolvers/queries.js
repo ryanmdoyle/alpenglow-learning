@@ -57,6 +57,11 @@ const queries = {
 		return students;
 	},
 
+	async getCourseOfPlaylist(parent, args, context, info) {
+		const playlist = await Playlist.findById(args.playlistId);
+		return await Course.findById(playlist.course);
+	},
+
 	async getCourseInstructing(parent, args, context, info) {
 		const userId = args.userId ? args.userId : context.currentUser._id;
 		return await Course.findOne({ owner: userId });

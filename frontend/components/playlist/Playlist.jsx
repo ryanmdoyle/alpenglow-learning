@@ -12,6 +12,7 @@ import TextButton from '../styled/elements/TextButton';
 import ModalContext from '../context/ModalContext';
 import DeletePlaylistForm from '../forms/delete/DeletePlaylistForm';
 import UpdatePlaylistForm from '../forms/update/UpdatePlaylistForm';
+import PlaylistEdit from './PlaylistEdit';
 import { GET_PLAYLIST } from '../../gql/queries';
 
 const editButton = css`
@@ -28,13 +29,15 @@ const Playlist = ({ playlistId }) => {
   const { loading, error, data } = useQuery(GET_PLAYLIST, {
     variables: { playlistId },
   })
+  console.log('playlist data', data)
 
   const editPlaylist = () => {
     modal.setChildComponent(
-      <>
-        <UpdatePlaylistForm playlistData={data.getPlaylist} />
-        <DeletePlaylistForm playlistId={playlistId} playlistName={data.getPlaylist.name} />
-      </>
+      <PlaylistEdit
+        playlistId={playlistId}
+        playlistName={data.getPlaylist.name}
+        playlistData={data.getPlaylist}
+      />
     );
     modal.open();
   }
