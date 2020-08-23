@@ -61,7 +61,18 @@ const NavPanel = () => {
         )}
       </div>
       <div css={lower}>
-        <Logout />
+        <div css={css`display: flex;align-items: center;`}>
+          <img
+            src={user.picture}
+            title={user.email}
+            css={css`
+              width: 45px;
+              border-radius:45px;
+              margin-right: 1rem;    
+          `}></img>
+          <Logout />
+        </div>
+
         <Link href='/privacy'>
           <small css={css`color: var(--blueMedium);padding:0.25rem;`}>Privacy Policy</small>
         </Link>
