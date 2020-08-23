@@ -71,7 +71,7 @@ const CoursePlaylistBox = ({ name, playlistId, index, best }) => {
           {...provided.dragHandleProps}
         >
           <Link href={`${path}/playlists/[playlistId]`} as={`${path}/playlists/${playlistId}`}>
-            <div css={spreadNameAndScore}>
+            <div css={spreadNameAndScore} title={name}>
               <span>{name}</span>
               {best && <span className='percent'>{best}%</span>}
             </div>
