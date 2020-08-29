@@ -35,7 +35,7 @@ const queries = {
 	async getClassInstructing(parent, args, context, info) {
 		const { currentUser } = context;
 		const aClass = await Class.findById(args.classId);
-		if (aClass.primaryInstructor._id != currentUser._id) return ApolloError('Must be owner of class to view.')
+		if (aClass.primaryInstructor._id.toString() !== currentUser._id) return new ApolloError('Must be owner of class to view.')
 		return aClass;
 	},
 
