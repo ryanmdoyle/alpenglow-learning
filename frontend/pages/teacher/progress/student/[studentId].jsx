@@ -39,7 +39,7 @@ const GET_STUDENT_PROGRESS = gql`
         _id
       }
     }
-    getCoursesEnrolled {
+    getCoursesEnrolled(userId: $studentId) {
       _id
       name
       essentialPlaylists {
