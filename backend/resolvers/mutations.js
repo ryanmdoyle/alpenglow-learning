@@ -523,7 +523,6 @@ const mutations = {
 
   async deleteScore(parent, args, context, info) {
     const deleted = await Score.deleteOne({ _id: args.scoreId });
-    console.log('deleted', deleted);
     if (deleted.n == 1) {
       return args.scoreId
     } else {
