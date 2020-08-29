@@ -237,9 +237,10 @@ const mutations = {
 
   async createScore(parent, args, context, info) {
     const { currentUser } = context;
+    const userId = args.userId ? args.userId : context.currentUser._id;
     const quiz = await Quiz.findOne({ playlist: args.playlistId });
     const score = new Score({
-      user: currentUser._id,
+      user: userId,
       playlist: args.playlistId,
       score: null,
       possibleScore: quiz.possibleScore,
@@ -522,7 +523,8 @@ const mutations = {
 
   async deleteScore(parent, args, context, info) {
     const deleted = await Score.deleteOne({ _id: args.scoreId });
-    if (deleted == 1) {
+    console.log('deleted', deleted);
+    if (deleted.n == 1) {
       return args.scoreId
     } else {
       return new ApolloError('Unable to delete score.')

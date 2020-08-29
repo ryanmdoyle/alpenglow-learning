@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { css } from '@emotion/core';
 import { gql, useQuery, useMutation } from '@apollo/client';
 
-import PagePadding from '../styled/blocks/PagePadding';
 import TextButton from '../styled/elements/TextButton';
 import ModalContext from '../context/ModalContext';
 import { GET_QUIZ_FOR_PLAYLIST } from '../../gql/queries';
@@ -40,7 +39,7 @@ const PlaylistQuizAccept = ({ playlistId, requestId, approvalAccepted }) => {
   const [markQuizComplete, { data: completedData }] = useMutation(MARK_QUIZ_COMPLETE);
 
   const beginQuiz = () => {
-    window.open(`http://${quizLink}`, '_blank');
+    window.open(quizLink, '_blank');
     acceptQuizApproval({
       variables: { requestId: requestId }
     })

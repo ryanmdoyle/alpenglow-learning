@@ -84,7 +84,23 @@ const DENY_QUIZ_REQUEST = gql`
   }
 `;
 
-const QuizRequest = ({ requestId, name, playlistId, playlistName, approved, approvalAccepted, type }) => {
+const MARK_QUIZ_COMPLETE = gql`
+  mutation MARK_QUIZ_COMPLETE(
+    $playlistId: ID!,
+    $requestId: ID!,
+    $userId: ID,
+  ) {
+    createScore(
+      playlistId: $playlistId,
+      userId: $userId,
+    ) {
+      _id
+    }
+    deleteRequest(requestId: $requestId)
+  }
+`;
+
+const QuizRequest = ({ requestId, userName, userId, playlistId, playlistName, approved, approvalAccepted, type }) => {
   const [approvePaper, { data: approvePaperData }] = useMutation(APPROVE_PAPER_QUIZ_REQUEST, {
     variables: {
       playlistId: playlistId,
@@ -104,6 +120,7 @@ const QuizRequest = ({ requestId, name, playlistId, playlistName, approved, appr
     variables: { requestId: requestId },
     refetchQueries: [{ query: GET_STUDENT_REQS_AND_PENDING_SCORES }],
   })
+  const [markQuizComplete, { data: completedData }] = useMutation(MARK_QUIZ_COMPLETE);
 
   const icon = (type) => {
     switch (type) {
@@ -127,10 +144,20 @@ const QuizRequest = ({ requestId, name, playlistId, playlistName, approved, appr
     }
   }
 
+  const endQuiz = () => {
+    markQuizComplete({
+      variables: {
+        playlistId: playlistId,
+        requestId: requestId,
+        userId: userId,
+      }
+    })
+  }
+
   return (
     <div css={requestContainer}>
       <div>
-        <span>{name}</span><br></br>
+        <span>{userName}</span><br></br>
         <div css={css`display: flex; align-items: center;`}>
           <i className="material-icons icon">{icon(type)}</i>
           <span><small>{playlistName}</small></span>
@@ -138,7 +165,12 @@ const QuizRequest = ({ requestId, name, playlistId, playlistName, approved, appr
       </div>
       <div>
         {approved ?
-          <CancelButton approvalAccepted={approvalAccepted} cancel={cancel} deny={deny} />
+          <CancelButton
+            approvalAccepted={approvalAccepted}
+            cancel={cancel}
+            deny={deny}
+            endQuiz={endQuiz}
+          />
           :
           <div css={twoWide}>
             <TextButton onClick={() => { handleApproval(type) }}
@@ -154,16 +186,22 @@ const QuizRequest = ({ requestId, name, playlistId, playlistName, approved, appr
   );
 };
 
-const CancelButton = ({ approvalAccepted, cancel, deny }) => {
+const CancelButton = ({ approvalAccepted, cancel, deny, endQuiz }) => {
   if (approvalAccepted) {
-    return <TextButton onClick={deny} css={[oneWide, css`:hover{background-color: var(--red);border-color: var(--red);}`]}>Stop Quiz</TextButton>
+    return (
+      <div css={twoWide}>
+        <TextButton onClick={deny} css={[oneWide, css`:hover{background-color: var(--red);border-color: var(--red);}`]}>Cancel</TextButton>
+        <TextButton onClick={endQuiz} css={[css`:hover{background-color: var(--green);border-color: var(--green);}`]}>Finish</TextButton>
+      </div>
+    )
   }
   return <TextButton onClick={cancel} css={[oneWide, css`:hover{background-color: var(--red);border-color: var(--red);}`]}>Cancel Quiz Approval</TextButton>
 }
 
 QuizRequest.propTypes = {
   id: PropTypes.string,
-  name: PropTypes.string,
+  userName: PropTypes.string,
+  userId: PropTypes.string,
   playlist: PropTypes.string,
   type: PropTypes.string,
   approved: PropTypes.bool,

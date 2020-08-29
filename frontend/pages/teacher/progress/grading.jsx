@@ -43,7 +43,8 @@ const grading = () => {
               pending?.map(request => (
                 <QuizRequest
                   requestId={request._id}
-                  name={request.user.name}
+                  userName={request.user.name}
+                  userId={request.user._id}
                   playlistId={request.playlist._id}
                   playlistName={request.playlist.name}
                   type={request.type}
@@ -63,7 +64,8 @@ const grading = () => {
             {inProgress?.map(request => (
               <QuizRequest
                 requestId={request._id}
-                name={request.user.name}
+                userName={request.user.name}
+                userId={request.user._id}
                 playlistId={request.playlist._id}
                 playlistName={request.playlist.name}
                 approved={request.approved}

@@ -105,7 +105,8 @@ const typeDefs = gql`
     ): Quiz,
 
     createScore(
-      playlistId: ID!
+      playlistId: ID!,
+      userId: ID,
     ): Score,
 
     createTask(
