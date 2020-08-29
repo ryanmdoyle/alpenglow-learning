@@ -185,8 +185,8 @@ const ClassProgressTable = () => {
           {students.map(student => {
             const studentScores = data?.getScoresForClass?.filter(score => score.user._id == student._id);
             return (
-              <Link href='/teacher/progress/student/[studentId]' as={`/teacher/progress/student/${student._id}`}>
-                <tr key={student._id}>
+              <Link href='/teacher/progress/student/[studentId]' as={`/teacher/progress/student/${student._id}`} key={student._id}>
+                <tr>
                   <td>{student.name}</td>
                   {essential.map(essentialPl => {
                     const score = studentScores?.filter(score => score.playlist._id == essentialPl._id);
