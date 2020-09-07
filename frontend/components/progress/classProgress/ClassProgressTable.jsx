@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 
 import PercentScoreRectangle from '../../styled/elements/PercentScoreRectangle';
 import Loading from '../../Loading';
+import ClassProgressTableHeader from './ClassProgressTableHeader';
 
 const tableWrapper = css`
   position: relative;
@@ -71,7 +72,7 @@ const tableWrapper = css`
 
   small {
     display: flex;
-    height: 60px;
+    height: 40px;
     width: 100%;
     justify-content: center;
     align-items: center;
@@ -127,19 +128,6 @@ const GET_CLASS_PROGRESS = gql`
   }
 `;
 
-const clipTitle = (text) => {
-  const textArr = text.split('');
-  if (textArr.length <= 45) {
-    return text
-  };
-  const shortArr = [];
-  textArr.forEach((char, index) => {
-    if (index <= 44) shortArr.push(char);
-  })
-  const shortString = shortArr.join('');
-  return shortString + '...';
-}
-
 const ClassProgressTable = () => {
   const { query: { classId } } = useRouter();
   const { loading, error, data } = useQuery(GET_CLASS_PROGRESS, {
@@ -165,19 +153,31 @@ const ClassProgressTable = () => {
           <tr>
             <th>Student</th>
             {essential.map(essential => (
-              <th key={essential._id}>
-                <small title={essential.name}>{clipTitle(essential.name)}</small>
-              </th>
+              <ClassProgressTableHeader
+                playlistId={essential._id}
+                key={essential._id}
+                playlistName={essential.name}
+                students={students}
+                scores={data.getScoresForClass?.filter(score => score.playlist._id == essential._id)}
+              />
             ))}
             {core.map(core => (
-              <th key={core._id}>
-                <small title={core.name}>{clipTitle(core.name)}</small>
-              </th>
+              <ClassProgressTableHeader
+                playlistId={core._id}
+                key={core._id}
+                playlistName={core.name}
+                students={students}
+                scores={data.getScoresForClass?.filter(score => score.playlist._id == core._id)}
+              />
             ))}
             {challenge.map(challenge => (
-              <th key={challenge._id}>
-                <small title={challenge.name}>{clipTitle(challenge.name)}</small>
-              </th>
+              <ClassProgressTableHeader
+                playlistId={challenge._id}
+                key={challenge._id}
+                playlistName={challenge.name}
+                students={students}
+                scores={data.getScoresForClass?.filter(score => score.playlist._id == challenge._id)}
+              />
             ))}
           </tr>
         </thead>

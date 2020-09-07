@@ -107,6 +107,8 @@ const typeDefs = gql`
     createScore(
       playlistId: ID!,
       userId: ID,
+      score: Int,
+      possibleScore: Int,
     ): Score,
 
     createTask(
