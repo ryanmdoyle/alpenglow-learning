@@ -88,6 +88,7 @@ const ClassProgressPlaylistStudentScore = ({ student, studentScore, possibleScor
   const { register, handleSubmit, errors } = useForm();
   const alert = useContext(AlertContext);
   const modal = useContext(ModalContext);
+  console.log('classID in student score', classId)
 
   const [createScore, { data: createScoreData }] = useMutation(CREATE_SCORE, {
     onError: () => {

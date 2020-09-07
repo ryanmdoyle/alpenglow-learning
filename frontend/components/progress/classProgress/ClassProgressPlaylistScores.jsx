@@ -20,7 +20,7 @@ const PLAYLIST_QUIZ_FOR_CLASS = gql`
   }
 `;
 
-const ClassProgressPlaylistScores = ({ playlistId, playlistName, students }) => {
+const ClassProgressPlaylistScores = ({ playlistId, playlistName, students, classId }) => {
 
   const { data, error, loading } = useQuery(PLAYLIST_QUIZ_FOR_CLASS, {
     variables: {
@@ -46,6 +46,7 @@ const ClassProgressPlaylistScores = ({ playlistId, playlistName, students }) => 
             return (
               <ClassProgressPlaylistStudentScore
                 key={student._id}
+                classId={classId}
                 student={student}
                 studentScore={studentScore}
                 possibleScore={possibleScore}
