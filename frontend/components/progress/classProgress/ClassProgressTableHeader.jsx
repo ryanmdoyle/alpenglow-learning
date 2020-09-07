@@ -29,7 +29,7 @@ const ClassProgressTableHeader = ({ playlistId, playlistName, students, scores, 
 
   return (
     <th key={playlistId}>
-      <small title={name}>{clipTitle(name)}</small>
+      <small title={playlistName}>{clipTitle(playlistName)}</small>
       <TextButton css={css`height: 25px; padding: 0 0.5rem;`} onClick={() => { openScores() }}>Enter Scores</TextButton>
     </th>
   );
