@@ -19,11 +19,11 @@ const clipTitle = (text) => {
   return shortString + '...';
 }
 
-const ClassProgressTableHeader = ({ playlistId, playlistName, students, scores }) => {
+const ClassProgressTableHeader = ({ playlistId, playlistName, students, scores, classId }) => {
   const modal = useContext(ModalContext);
 
   const openScores = () => {
-    modal.setChildComponent(<ClassProgressPlaylistScores playlistId={playlistId} playlistName={playlistName} students={students} scores={scores} />)
+    modal.setChildComponent(<ClassProgressPlaylistScores playlistId={playlistId} playlistName={playlistName} students={students} scores={scores} classId={classId} />)
     modal.open()
   }
 

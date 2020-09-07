@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import PercentScoreRectangle from '../../styled/elements/PercentScoreRectangle';
 import Loading from '../../Loading';
 import ClassProgressTableHeader from './ClassProgressTableHeader';
+import { GET_CLASS_PROGRESS } from '../../../gql/queries';
 
 const tableWrapper = css`
   position: relative;
@@ -88,50 +89,10 @@ const tableWrapper = css`
   }
 `;
 
-const GET_CLASS_PROGRESS = gql`
-  query GET_CLASS_PROGRESS($classId: ID!) {
-    getClassInstructing(classId: $classId) {
-      _id
-      name
-      enrolled {
-        _id
-        name
-      }
-    }
-    getCourseOfClass(classId: $classId) {
-      _id
-      name
-      essentialPlaylists {
-        _id
-        name
-      }
-      corePlaylists {
-        _id
-        name
-      }
-      challengePlaylists {
-        _id
-        name
-      }
-    }
-    getScoresForClass(classId: $classId) {
-      _id
-      score
-      possibleScore
-      user {
-        _id
-      }
-      playlist {
-        _id
-      }
-    }
-  }
-`;
-
 const ClassProgressTable = () => {
   const { query: { classId } } = useRouter();
-  const { loading, error, data } = useQuery(GET_CLASS_PROGRESS, {
-    pollInterval: 60000,
+  const { loading, data } = useQuery(GET_CLASS_PROGRESS, {
+    pollInterval: 10000,
     variables: {
       classId
     }
@@ -155,6 +116,7 @@ const ClassProgressTable = () => {
             {essential.map(essential => (
               <ClassProgressTableHeader
                 playlistId={essential._id}
+                classId={classId}
                 key={essential._id}
                 playlistName={essential.name}
                 students={students}
@@ -164,6 +126,7 @@ const ClassProgressTable = () => {
             {core.map(core => (
               <ClassProgressTableHeader
                 playlistId={core._id}
+                classId={classId}
                 key={core._id}
                 playlistName={core.name}
                 students={students}
@@ -173,6 +136,7 @@ const ClassProgressTable = () => {
             {challenge.map(challenge => (
               <ClassProgressTableHeader
                 playlistId={challenge._id}
+                classId={classId}
                 key={challenge._id}
                 playlistName={challenge.name}
                 students={students}
@@ -189,7 +153,8 @@ const ClassProgressTable = () => {
                 <tr>
                   <td>{student.name}</td>
                   {essential.map(essentialPl => {
-                    const score = studentScores?.filter(score => score.playlist._id == essentialPl._id);
+                    const scores = studentScores?.filter(score => score.playlist._id == essentialPl._id);
+                    const score = scores.map(score => score).sort((a, b) => b.score - a.score);
                     const percent = score.length > 0 ? (score[0].score / score[0].possibleScore * 100) : null;
                     return (
                       <td key={essentialPl._id}>

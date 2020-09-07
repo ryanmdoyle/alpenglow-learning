@@ -5,7 +5,7 @@ import { gql, useMutation } from '@apollo/client';
 
 import AlertContext from '../../context/AlertContext'
 import ModalContext from '../../context/ModalContext'
-import { GET_STUDENT_REQS_AND_PENDING_SCORES } from '../../../gql/queries';
+import { GET_CLASS_PROGRESS } from '../../../gql/queries';
 
 const newScoreStyle = css`
   width: 100%;
@@ -84,7 +84,7 @@ const CREATE_SCORE = gql`
   }
 `;
 
-const ClassProgressPlaylistStudentScore = ({ student, studentScore, possibleScore, playlistId, queryLoading }) => {
+const ClassProgressPlaylistStudentScore = ({ student, studentScore, possibleScore, playlistId, queryLoading, classId }) => {
   const { register, handleSubmit, errors } = useForm();
   const alert = useContext(AlertContext);
   const modal = useContext(ModalContext);
@@ -94,7 +94,7 @@ const ClassProgressPlaylistStudentScore = ({ student, studentScore, possibleScor
       modal.close();
       alert.error('Sorry, there was an issue, try again later!', 2)
     },
-    refetchQueries: [{ query: GET_STUDENT_REQS_AND_PENDING_SCORES }],
+    refetchQueries: [{ query: GET_CLASS_PROGRESS, variables: { classId: classId } }],
   });
 
   const saveScore = data => {

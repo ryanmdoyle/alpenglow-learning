@@ -214,3 +214,43 @@ query GET_COURSE_DETAILS($courseId: ID!) {
   }
 }
 `;
+
+export const GET_CLASS_PROGRESS = gql`
+query GET_CLASS_PROGRESS($classId: ID!) {
+  getClassInstructing(classId: $classId) {
+    _id
+    name
+    enrolled {
+      _id
+      name
+    }
+  }
+  getCourseOfClass(classId: $classId) {
+    _id
+    name
+    essentialPlaylists {
+      _id
+      name
+    }
+    corePlaylists {
+      _id
+      name
+    }
+    challengePlaylists {
+      _id
+      name
+    }
+  }
+  getScoresForClass(classId: $classId) {
+    _id
+    score
+    possibleScore
+    user {
+      _id
+    }
+    playlist {
+      _id
+    }
+  }
+}
+`;
