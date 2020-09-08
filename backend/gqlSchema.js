@@ -109,6 +109,7 @@ const typeDefs = gql`
       userId: ID,
       score: Int,
       possibleScore: Int,
+      timeScored: Date,
     ): Score,
 
     createTask(

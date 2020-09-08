@@ -245,6 +245,7 @@ const mutations = {
       score: args.score || null,
       possibleScore: args.possibleScore || quiz.possibleScore,
       timeCreated: Date.now(),
+      timeScored: args.timeScored || null,
     })
     return await score.save().catch(() => { return new ApolloError('Unable to create a new score') });
   },

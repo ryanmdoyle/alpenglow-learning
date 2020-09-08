@@ -73,11 +73,15 @@ const CREATE_SCORE = gql`
     $playlistId: ID!,
     $userId: ID,
     $score: Int,
+    $possibleScore: Int,
+    $timeScored: Date,
   ) {
     createScore(
       playlistId: $playlistId,
       userId: $userId,
       score: $score,
+      possibleScore: $possibleScore,
+      timeScored: $timeScored,
     ) {
       _id
     }
@@ -88,7 +92,6 @@ const ClassProgressPlaylistStudentScore = ({ student, studentScore, possibleScor
   const { register, handleSubmit, errors } = useForm();
   const alert = useContext(AlertContext);
   const modal = useContext(ModalContext);
-  console.log('classID in student score', classId)
 
   const [createScore, { data: createScoreData }] = useMutation(CREATE_SCORE, {
     onError: () => {
@@ -105,6 +108,7 @@ const ClassProgressPlaylistStudentScore = ({ student, studentScore, possibleScor
         userId: student._id,
         score: parseInt(data.score) || null,
         possibleScore: parseInt(data.possibleScore) || null,
+        timeScored: Date.now(),
       }
     })
   }
