@@ -120,6 +120,7 @@ const studentClass = () => {
   const { data: scoreData } = useQuery(GET_STUDENT_CLASS_SCORES, {
     variables: { classId: classId },
   })
+  console.log(scoreData);
 
   const [deleteTask, { data: removeTaskData }] = useMutation(REMOVE_TASK, {
     refetchQueries: [{ query: GET_STUDENT_CLASS, variables: { classId: classId } }],
@@ -163,6 +164,7 @@ const studentClass = () => {
         if (percent > playlist.best) { playlist.best = percent }
       }
     })
+    console.log('ess', playlist);
     return playlist;
   })
   const core = corePlaylists?.map(playlist => {
@@ -173,6 +175,7 @@ const studentClass = () => {
         if (percent > playlist.best) { playlist.best = percent }
       }
     })
+    console.log('core', playlist);
     return playlist;
   })
   const challenge = challengePlaylists?.map(playlist => {
@@ -200,9 +203,9 @@ const studentClass = () => {
         <CourseTimelines
           name={`Class at a Glance`}
           courseId={course._id}
-          essentialPlaylists={course.essentialPlaylists}
-          corePlaylists={course.corePlaylists}
-          challengePlaylists={course.challengePlaylists}
+          essentialPlaylists={essential}
+          corePlaylists={core}
+          challengePlaylists={challenge}
           subject={course.subject}
           key={course._id}
           css={css`
