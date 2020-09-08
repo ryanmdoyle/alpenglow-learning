@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { css } from '@emotion/core';
 import { useForm } from 'react-hook-form';
 import { gql, useMutation } from '@apollo/client';
@@ -27,6 +27,14 @@ const newScoreStyle = css`
     padding: 0 1rem;
     color: white;
     background-color: var(--blueMedium);
+  }
+  input[type=submit]:disabled {
+    padding: 0 1rem;
+    opacity: 0.5;
+    cursor: disable;
+    :hover {
+      background-color: var(--red);
+    }
   }
   input[type=submit]:hover {
     background-color: var(--pink);
@@ -101,6 +109,10 @@ const ClassProgressPlaylistStudentScore = ({ student, studentScore, possibleScor
     refetchQueries: [{ query: GET_CLASS_PROGRESS, variables: { classId: classId } }],
   });
 
+  useEffect(() => {
+    console.log(queryLoading);
+  }, [queryLoading])
+
   const saveScore = data => {
     createScore({
       variables: {
@@ -130,7 +142,7 @@ const ClassProgressPlaylistStudentScore = ({ student, studentScore, possibleScor
             <input type='number' min='0' name='possibleScore' placeholder='Possible Score' defaultValue={possibleScore} ref={register({ required: true, min: 0 })} />
             {errors.score && 'Score must be a numerical value'}
           </div>
-          <input type='submit' disabled={queryLoading} value={"Save Score"} css={css`margin-right: 0.5rem;`} ></input>
+          <input type='submit' disabled={queryLoading} value={queryLoading ? "Saving..." : "Save"} css={css`margin-right: 0.5rem;`} ></input>
         </form>
       </div>
     </div>
