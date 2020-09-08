@@ -19,7 +19,7 @@ const tableStyles = css`
       border-radius: var(--borderRadius);
     }
   }
-
+  /* Table Header */
   thead > tr > th {
     text-align: center;
     font-family: var(--headerFontFamily);
@@ -31,14 +31,16 @@ const tableStyles = css`
   thead > tr > th:first-of-type {
     padding-left: 1rem;
     text-align: left;
+    width: 150px;
   }
-  
+  /* Table Rows */
   tbody > tr > th {
     text-align: left;
     font-family: var(--headerFontFamily);
     font-size: 0.9rem;
     vertical-align: center;
     padding: 1rem 0 1rem 1rem;
+    width: 150px;
   }
   
   tbody > tr > td {
