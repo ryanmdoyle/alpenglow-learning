@@ -60,10 +60,8 @@ const UpdateClassForm = ({ classId, courseId, name }) => {
     })
 
   };
-
   if (courseQuery.loading) return <Loading />;
-
-  const currentCourse = courseQuery?.data?.getCoursesInstructing.filter(course => course._id == courseId)[0]
+  const currentCourse = courseQuery?.data?.getCoursesInstructing.filter(course => course._id === courseId._id)[0]
   return (
     <PagePadding>
       <h4>Update Class</h4>
@@ -76,7 +74,7 @@ const UpdateClassForm = ({ classId, courseId, name }) => {
           <label htmlFor='courseId'>course*</label>
           <select name='courseId' ref={register({ required: true })}>
             <option value={currentCourse._id}>{currentCourse.name}</option>
-            {courseQuery.data.getCoursesInstructing.filter(course => course._id != courseId).map(course => (
+            {courseQuery.data.getCoursesInstructing.filter(course => course._id !== courseId._id).map(course => (
               <option value={course._id} key={course._id}>{course.name}</option>
             ))}
           </select>
