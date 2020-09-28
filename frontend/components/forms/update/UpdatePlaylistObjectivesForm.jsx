@@ -31,20 +31,26 @@ const UpdatePlaylistObjectivesForm = ({ playlistId, objectives }) => {
   const alert = useContext(AlertContext);
   const modal = useContext(ModalContext);
   const [selectedObjective, setSelectedObjective] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
 
   const [updateObjective, { data }] = useMutation(UPDATE_OBJECTIVE, {
     refetchQueries: [{ query: GET_PLAYLIST, variables: { playlistId: playlistId } }],
     onCompleted: (data) => {
+      setSubmitting(false);
       if (modal.isOpen) {
         modal.close();
       }
       alert.success(`Successfully updated playlist objectives.`)
     },
-    onError: (data) => (alert.error(`Ooops, looks like there was a problem. ${data}`)),
+    onError: (data) => {
+      setSubmitting(false);
+      alert.error(`Ooops, looks like there was a problem. ${data}`)
+    },
   }
   )
 
   const onSubmit = data => {
+    setSubmitting(true);
     updateObjective({
       variables: {
         objectiveId: data.objective,
@@ -89,7 +95,7 @@ const UpdatePlaylistObjectivesForm = ({ playlistId, objectives }) => {
               </>
             )}
 
-            <button type="submit">Update Description</button>
+            <button type="submit" disabled={submitting}>{submitting ? 'Saving...' : 'Update Description'}</button>
           </form>
         </FormWrapper >
         {selectedObjective && (

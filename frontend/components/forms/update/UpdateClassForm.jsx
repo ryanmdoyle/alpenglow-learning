@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { gql, useQuery, useMutation } from '@apollo/client';
@@ -31,22 +31,26 @@ const UpdateClassForm = ({ classId, courseId, name }) => {
   const { register, handleSubmit, errors, reset } = useForm();
   const alert = useContext(AlertContext)
   const modal = useContext(ModalContext);
+  const [submitting, setSubmitting] = useState(false);
 
   const courseQuery = useQuery(GET_INSTRUCTING_COURSES)
   const [updateClass, { data }] = useMutation(UPDATE_CLASS, {
     refetchQueries: [{ query: INSTRUCTING_CLASSES_QUERY }, { query: GET_INSTRUCTING_COURSES }],
     onCompleted: data => {
       reset();
+      setSubmitting(false);
       modal.close();
       alert.success(`Successfully updated class ${data.updateClass.name}!`, 10);
     },
     onError: (error) => {
+      setSubmitting(false);
       alert.error('Sorry, there was a problem updating your class.');
       console.log(error);
     }
   });
 
   const onSubmit = data => {
+    setSubmitting(true);
     updateClass({
       variables: {
         classId: classId,
@@ -78,7 +82,7 @@ const UpdateClassForm = ({ classId, courseId, name }) => {
           </select>
           {errors.courseId && 'Class course is required. If course is not available, make sure you created the course first!'}
 
-          <button type='submit'>Update Class</button>
+          <button type='submit' disabled={submitting}>{submitting ? 'saving...' : 'Update Class'}</button>
         </form>
       </FormWrapper>
     </PagePadding>

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { gql, useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
@@ -33,16 +33,19 @@ const UpdateResourceForm = ({ resourceId, playlistId, name, description, type, h
   const { register, handleSubmit, errors } = useForm();
   const alert = useContext(AlertContext);
   const modal = useContext(ModalContext);
+  const [submitting, setSubmitting] = useState(false);
 
   const [update, { data: editData }] = useMutation(UPDATE_RESOURCE, {
     refetchQueries: [{ query: GET_PLAYLIST, variables: { playlistId: playlistId } }],
     onCompleted: editData => {
+      setSubmitting(false);
       modal.close();
       alert.success(`Sucessfully updated resource!`, 3);
     },
   });
 
   const onSubmit = data => {
+    setSubmitting(true);
     update({
       variables: {
         resourceId: resourceId,
@@ -82,7 +85,7 @@ const UpdateResourceForm = ({ resourceId, playlistId, name, description, type, h
           </select>
           {errors.type && 'You must add a resource type to show the class what kind of resource this is.'}
 
-          <button type="submit">Update Resource</button>
+          <button type="submit" disabled={submitting}>{submitting ? 'Saving...' : 'Update Resource'}</button>
         </form>
       </FormWrapper>
     </PagePadding>

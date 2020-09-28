@@ -33,6 +33,7 @@ const UPDATE_QUIZ = gql`
 const UpdateQuizForm = ({ playlistId }) => {
   const { register, handleSubmit, errors, reset } = useForm();
   const [quizType, setQuizType] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
   const alert = useContext(AlertContext)
   const modal = useContext(ModalContext);
 
@@ -48,15 +49,18 @@ const UpdateQuizForm = ({ playlistId }) => {
     refetchQueries: [{ query: GET_QUIZ_FOR_PLAYLIST, variables: { playlistId: playlistId } }],
     onCompleted: data => {
       reset();
+      setSubmitting(false);
       modal.close();
       alert.success(`Successfully updated quiz!`, 3);
     },
     onError: (error) => {
+      setSubmitting(false);
       alert.error('Sorry, there was a problem updating the quiz.');
     }
   });
 
   const onSubmit = data => {
+    setSubmitting(true);
     const possibleScore = data.possibleScore == '' ? null : parseInt(data.possibleScore);
     updateQuiz({
       variables: {
@@ -101,7 +105,7 @@ const UpdateQuizForm = ({ playlistId }) => {
           <input type='number' name='possibleScore' defaultValue={queryData?.getQuizForPlaylist?.possibleScore} ref={register()} />
           {errors.possibleScore && 'The possible score must be a interger value.'}
 
-          <button type='submit'>Save Quiz</button>
+          <button type='submit' disabled={submitting}>{submitting ? 'Saving...' : 'Save Quiz'}</button>
         </form>
       </FormWrapper>
     </PagePadding>

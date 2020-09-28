@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { gql, useQuery, useMutation } from '@apollo/client';
@@ -42,6 +42,7 @@ const UpdateCourseForm = ({ courseId }) => {
   const { register, handleSubmit, errors } = useForm();
   const alert = useContext(AlertContext);
   const modal = useContext(ModalContext);
+  const [submitting, setSubmitting] = useState(false);
 
   const { data: queryData, loading, error } = useQuery(GET_COURSE_DETAILS, {
     variables: { courseId: courseId }
@@ -53,16 +54,21 @@ const UpdateCourseForm = ({ courseId }) => {
       { query: GET_COURSE_DETAILS, variables: { courseId: courseId } }
     ],
     onCompleted: (data) => {
+      setSubmitting(false);
       if (modal.isOpen) {
         modal.close();
       }
       alert.success(`Successfully updated course.`)
     },
-    onError: (data) => (alert.error(`Ooops, looks like there was a problem. ${data}`)),
+    onError: (data) => {
+      setSubmitting(false);
+      alert.error(`Ooops, looks like there was a problem. ${data}`)
+    },
   }
   )
 
   const onSubmit = data => {
+    setSubmitting(true);
     updateCourse({
       variables: {
         courseId: courseId,
@@ -119,7 +125,7 @@ const UpdateCourseForm = ({ courseId }) => {
           <label htmlFor='endDate'>end Date</label>
           <input type="date" name="endDate" defaultValue={endDate} ref={register} />
 
-          <button type="submit">Update Description</button>
+          <button type="submit" disabled={submitting}>{submitting ? 'Saving...' : 'Update Description'}</button>
         </form>
       </FormWrapper>
     </PagePadding >

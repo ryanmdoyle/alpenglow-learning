@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useRouter } from 'next/router';
 import { gql, useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
@@ -18,26 +18,31 @@ const ENROLL_MUTATION = gql`
 `;
 
 const EnrollForm = () => {
-  const { register, handleSubmit, errors, reset } = useForm();
+  const { register, handleSubmit, } = useForm();
   const alert = useContext(AlertContext);
   const modal = useContext(ModalContext);
+  const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
 
   const [enroll, { data }] = useMutation(ENROLL_MUTATION, {
     refetchQueries: [{ query: GET_ENROLLED_CLASSES }, { query: GET_ENROLLED_COURSES }],
     onCompleted: (data) => {
+      setSubmitting(false);
       if (modal.isOpen) {
-        reset();
         modal.close();
       }
       router.push('/student/classes')
       alert.success(`Successfully enrolled in class!`)
     },
-    onError: (data) => (alert.error(`Ooops, looks like there was a problem. ${data}`)),
+    onError: (data) => {
+      alert.error(`Ooops, looks like there was a problem. ${data}`)
+      setSubmitting(false);
+    },
   }
   )
 
   const onSubmit = data => {
+    setSubmitting(true);
     enroll({ variables: { enrollId: data.enrollId } });
   }
 
@@ -47,7 +52,7 @@ const EnrollForm = () => {
       <FormWrapper>
         <form onSubmit={handleSubmit(onSubmit)}>
           <input placeholder='Enter Enroll ID' name='enrollId' ref={register({ required: true })}></input>
-          <button type="submit">Enroll</button>
+          <button type="submit" disabled={submitting}>{submitting ? 'Saving...' : 'Enroll'}</button>
         </form>
       </FormWrapper>
     </PagePadding>
