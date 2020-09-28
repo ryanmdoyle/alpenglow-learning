@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { gql, useMutation } from '@apollo/client';
@@ -28,7 +28,8 @@ const UPDATE_PLAYLIST = gql`
   `;
 
 const UpdatePlaylistForm = ({ playlistData }) => {
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit } = useForm();
+  const [submitting, setSubmitting] = useState(false);
   const alert = useContext(AlertContext);
   const modal = useContext(ModalContext);
 
@@ -37,15 +38,18 @@ const UpdatePlaylistForm = ({ playlistData }) => {
   const [updatePlaylist, { data }] = useMutation(UPDATE_PLAYLIST, {
     refetchQueries: [{ query: GET_PLAYLIST, variables: { playlistId: _id } }],
     onCompleted: (data) => {
-      if (modal.isOpen) {
-        modal.close();
-      }
+      setSubmitting(false);
+      modal.close();
       alert.success(`Successfully updated playlist.`)
     },
-    onError: (data) => (alert.error(`Ooops, looks like there was a problem. ${data}`)),
+    onError: (data) => {
+      setSubmitting(false);
+      alert.error(`Ooops, looks like there was a problem. ${data}`)
+    },
   })
 
   const onSubmit = data => {
+    setSubmitting(true);
     updatePlaylist({
       variables: {
         playlistId: _id,
@@ -74,8 +78,7 @@ const UpdatePlaylistForm = ({ playlistData }) => {
 
           <label htmlFor='description'>description</label>
           <textarea name="description" defaultValue={description} ref={register({ maxLength: 255 })} />
-
-          <button type="submit">Update Description</button>
+          <button type="submit" disabled={submitting}>{submitting ? "saving..." : 'Update Description'}</button>
         </form>
       </FormWrapper>
     </PagePadding >
