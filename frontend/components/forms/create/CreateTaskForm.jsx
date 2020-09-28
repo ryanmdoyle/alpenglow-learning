@@ -30,20 +30,26 @@ const CreateTaskForm = ({ classId, playlistId, taskType }) => {
   const { register, handleSubmit, errors } = useForm();
   const alert = useContext(AlertContext);
   const modal = useContext(ModalContext);
+  const [submitting, setSubmitting] = useState(false);
 
   const [addTask, { data }] = useMutation(CREATE_TASK, {
     refetchQueries: [{ query: GET_STUDENT_CLASS, variables: { classId: classId } }],
     onCompleted: (data) => {
+      setSubmitting(false)
       if (modal.isOpen) {
         modal.close();
       }
       alert.success(`Successfully added ${taskType}!`)
     },
-    onError: (data) => (alert.error(`Ooops, looks like there was a problem. ${data}`)),
+    onError: (data) => {
+      setSubmitting(false)
+      alert.error(`Ooops, looks like there was a problem. ${data}`)
+    },
   }
   )
 
   const onSubmit = data => {
+    setSubmitting(true)
     addTask({
       variables: {
         description: data.description,
@@ -64,7 +70,7 @@ const CreateTaskForm = ({ classId, playlistId, taskType }) => {
           {errors.description?.type === "required" && "Description is required."}
           {errors.description?.type === "maxLength" && "Maximum description length is 255 characters."}
 
-          <button type="submit">Add {taskType}</button>
+          <button type="submit" disabled={submitting}>{submitting ? 'Saving...' : `Add ${taskType}`}</button>
         </form>
       </FormWrapper>
     </PagePadding>

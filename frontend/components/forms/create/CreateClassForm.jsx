@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { gql, useQuery, useMutation } from '@apollo/client';
@@ -29,6 +29,7 @@ const CreateClassForm = ({ courseId }) => {
   const { register, handleSubmit, errors, reset } = useForm();
   const alert = useContext(AlertContext)
   const modal = useContext(ModalContext);
+  const [submitting, setSubmitting] = useState(false);
 
   const courseQuery = useQuery(GET_INSTRUCTING_COURSES)
   const [createClass, { data }] = useMutation(CREATE_CLASS, {
@@ -36,16 +37,19 @@ const CreateClassForm = ({ courseId }) => {
     refetchQueries: [{ query: INSTRUCTING_CLASSES_QUERY }, { query: GET_INSTRUCTING_COURSES }],
     onCompleted: data => {
       reset();
+      setSubmitting(false);
       modal.close();
       alert.success(`Successfully created course ${data.createClass.name}!`, 10);
     },
     onError: (error) => {
+      setSubmitting(false);
       alert.error('Sorry, there was a problem creating your class.');
       console.log(error);
     }
   });
 
   const onSubmit = data => {
+    setSubmitting(true);
     createClass({
       variables: {
         name: data.name,
@@ -79,7 +83,7 @@ const CreateClassForm = ({ courseId }) => {
           )}
 
 
-          <button type='submit'>Create Class</button>
+          <button type='submit' disabled={submitting}>{submitting ? 'Saving...' : 'Create Class'}</button>
         </form>
       </FormWrapper>
     </PagePadding>

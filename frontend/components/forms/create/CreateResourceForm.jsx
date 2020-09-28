@@ -33,20 +33,26 @@ const CreateResourceForm = ({ objectiveName, objectiveId, playlistId }) => {
   const { register, handleSubmit, errors } = useForm();
   const alert = useContext(AlertContext);
   const modal = useContext(ModalContext);
+  const [submitting, setSubmitting] = useState(false);
 
   const [addResource, { data }] = useMutation(CREATE_RESOURCE_MUTATION, {
     refetchQueries: [{ query: GET_PLAYLIST, variables: { playlistId: playlistId } }],
     onCompleted: (data) => {
+      setSubmitting(false)
       if (modal.isOpen) {
         modal.close();
       }
       alert.success(`Successfully added resource!`)
     },
-    onError: (data) => (alert.error(`Ooops, looks like there was a problem. ${data}`)),
+    onError: (data) => {
+      setSubmitting(false)
+      alert.error(`Ooops, looks like there was a problem. ${data}`)
+    },
   }
   )
 
   const onSubmit = data => {
+    setSubmitting(true)
     addResource({
       variables: {
         objective: objectiveId,
@@ -83,7 +89,7 @@ const CreateResourceForm = ({ objectiveName, objectiveId, playlistId }) => {
           </select>
           {errors.type && 'You must add a resource type to show the class what kind of resource this is.'}
 
-          <button type="submit">Add Resource</button>
+          <button type="submit" disabled={submitting}>{submitting ? 'Saving...' : 'Add Resource'}</button>
         </form>
       </FormWrapper>
     </PagePadding>

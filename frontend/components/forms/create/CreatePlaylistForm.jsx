@@ -45,6 +45,7 @@ const CREATE_PLAYLIST_MUTATION = gql`
 const CreatePlaylistForm = ({ course, subject, type }) => {
   const [courseSubject, setCourseSubject] = useState(null);
   const { register, handleSubmit, errors, reset } = useForm();
+  const [submitting, setSubmitting] = useState(false);
 
   // query (not destructured for data name conflicting with query/mutate)
   const query = useQuery(GET_USER_COURSES_QUERY);
@@ -58,17 +59,20 @@ const CreatePlaylistForm = ({ course, subject, type }) => {
     awaitRefetchQueries: true,
     refetchQueries: [{ query: GET_INSTRUCTING_COURSES }],
     onCompleted: (data) => {
+      setSubmitting(false)
       modal.close();
       alert.success(`Successfully created playlist: ${data.createPlaylist.name}`);
       reset(); //resets form values
     },
     onError: error => {
+      setSubmitting(false)
       alert.error('Sorry, there was an error creating your playlist.');
       console.error(error);
     }
   });
 
   const onSubmit = data => {
+    setSubmitting(true)
     createPlaylist({
       variables: {
         name: data.name,
@@ -138,7 +142,7 @@ const CreatePlaylistForm = ({ course, subject, type }) => {
           <label htmlFor='description'>description</label>
           <textarea name="description" ref={register({ maxLength: 255 })} />
 
-          <button type='submit'>Create Playlist</button>
+          <button type='submit' disabled={submitting}>{submitting ? 'Saving...' : 'Create Playlist'}</button>
         </form>
       </FormWrapper>
     </PagePadding>

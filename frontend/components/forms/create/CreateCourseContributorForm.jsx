@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { css } from '@emotion/core'
 import { useForm } from 'react-hook-form';
@@ -29,6 +29,7 @@ const CreateCourseContributorForm = ({ courseId }) => {
   const { register, handleSubmit, errors } = useForm();
   const alert = useContext(AlertContext);
   const modal = useContext(ModalContext);
+  const [submitting, setSubmitting] = useState(false);
 
   const { data: queryData, loading, error } = useQuery(GET_COURSE_DETAILS, {
     variables: { courseId: courseId }
@@ -40,16 +41,21 @@ const CreateCourseContributorForm = ({ courseId }) => {
       { query: GET_COURSE_DETAILS, variables: { courseId: courseId } }
     ],
     onCompleted: (data) => {
+      setSubmitting(false);
       if (modal.isOpen) {
         modal.close();
       }
       alert.success(`Successfully added contributor.`)
     },
-    onError: (data) => (alert.error(`Ooops, looks like there was a problem. ${data}`)),
+    onError: (data) => {
+      setSubmitting(false)
+      alert.error(`Ooops, looks like there was a problem. ${data}`)
+    },
   }
   )
 
   const onSubmit = data => {
+    setSubmitting(true);
     createContributor({
       variables: {
         courseId: courseId,
@@ -70,7 +76,7 @@ const CreateCourseContributorForm = ({ courseId }) => {
           <input type="email" name="contributorEmail" ref={register({ required: true })} />
           {errors.contributorEmail && 'You must provide and email to add a course contributor/co-instructor.'}
 
-          <button type="submit">Add Contributor/Co-Instructor</button>
+          <button type="submit" disabled={submitting}>{submitting ? 'Saving...' : 'Add Contributor/Co-Instructor'}</button>
         </form>
       </FormWrapper>
     </PagePadding >

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { gql, useMutation } from '@apollo/client';
 
@@ -38,21 +38,25 @@ const CreateCourseForm = () => {
   const { register, handleSubmit, errors, reset } = useForm();
   const alert = useContext(AlertContext);
   const modal = useContext(ModalContext);
+  const [submitting, setSubmitting] = useState(false);
 
   const [createCourse, { data }] = useMutation(CREATE_COURSE, {
     awaitRefetchQueries: true,
     refetchQueries: [{ query: GET_INSTRUCTING_COURSES }],
     onCompleted: data => {
       reset();
+      setSubmitting(false)
       if (modal.isOpen) { modal.close() };
       alert.success(`Successfully created course ${data.createCourse.name}!`, 10);
     },
     onError: () => {
+      setSubmitting(false)
       alert.error('Sorry, there was a problem creating your course.');
     }
   });
 
   const onSubmit = (data, e) => {
+    setSubmitting(true)
     createCourse({
       variables: {
         name: data.name,
@@ -106,7 +110,7 @@ const CreateCourseForm = () => {
           <label htmlFor='endDate'>end Date</label>
           <input type="date" name="endDate" ref={register} />
 
-          <button type='submit'>Create Course</button>
+          <button type='submit' disabled={submitting}>{submitting ? 'Saving...' : 'Create Course'}</button>
         </form>
       </FormWrapper>
     </PagePadding>

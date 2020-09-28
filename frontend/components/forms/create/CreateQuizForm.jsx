@@ -34,20 +34,24 @@ const CreateQuizForm = ({ playlistId }) => {
   const [quizType, setQuizType] = useState('EXTERNAL');
   const alert = useContext(AlertContext)
   const modal = useContext(ModalContext);
+  const [submitting, setSubmitting] = useState(false);
 
   const [createQuiz, { data }] = useMutation(CREATE_QUIZ, {
     refetchQueries: [{ query: GET_QUIZ_FOR_PLAYLIST, variables: { playlistId: playlistId } }],
     onCompleted: data => {
+      setSubmitting(false)
       reset();
       modal.close();
       alert.success(`Successfully created quiz!`, 10);
     },
     onError: (error) => {
+      setSubmitting(false)
       alert.error('Sorry, there was a problem creating the quiz.');
     }
   });
 
   const onSubmit = data => {
+    setSubmitting(true)
     const possibleScore = data.possibleScore == '' ? null : parseInt(data.possibleScore);
     createQuiz({
       variables: {
@@ -91,7 +95,7 @@ const CreateQuizForm = ({ playlistId }) => {
           <input type='number' name='possibleScore' ref={register()} />
           {errors.possibleScore && 'The possible score must be a interger value.'}
 
-          <button type='submit'>Save Quiz</button>
+          <button type='submit' disabled={submitting}>{submitting ? 'Saving...' : 'Save Quiz'}</button>
         </form>
       </FormWrapper>
     </PagePadding>

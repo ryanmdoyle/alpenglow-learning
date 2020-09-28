@@ -28,21 +28,25 @@ const CREATE_OBJECTIVE_MUTATION = gql`
 const CreateObjectiveForm = () => {
   const { register, handleSubmit, errors, reset } = useForm();
   const [coursePlaylists, setCoursePlaylists] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
   const alert = useContext(AlertContext);
   const courseQuery = useQuery(GET_INSTRUCTING_COURSES);
 
   const [createObjective, { data }] = useMutation(CREATE_OBJECTIVE_MUTATION, {
     onCompleted: data => {
+      setSubmitting(false)
       alert.success(`Successfully created objective: ${data.createObjective.name}`);
       reset();
     },
     onError: data => {
+      setSubmitting(false)
       alert.error('Sorry, there was a problem creating your objective.', 10);
       console.error(data);
     }
   });
 
   const onSubmit = data => {
+    setSubmitting(true)
     createObjective({
       variables: {
         name: data.name,
@@ -100,7 +104,7 @@ const CreateObjectiveForm = () => {
           {errors.description?.type === "required" && "Description is required."}
           {errors.description?.type === "maxLength" && "Maximum description length is 255 characters."}
 
-          <button type='submit'>Create Objective</button>
+          <button type='submit' disabled={submitting}>{submitting ? 'Saving...' : 'Create Objective'}</button>
         </form>
       </FormWrapper>
     </PagePadding>
