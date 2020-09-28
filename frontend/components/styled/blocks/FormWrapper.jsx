@@ -65,11 +65,16 @@ justify-content: center;
     background-color: white;
     transition: color 0.15s, background-color 0.15s;
     font-size: 0.8rem;
-    :hover, :focus {
+    :hover:not(:disabled), :focus:not(:disabled) {
       border: 2px solid var(--blueMedoum);
       color: white;
       background-color: var(--blueMedium);
       transition: color 0.15s, background-color 0.15s;
+    }
+    :disabled {
+      border: 1px solid lightgrey;
+      background-color: lightgrey;
+      color: var(--blueDark);
     }
   }
 `;
