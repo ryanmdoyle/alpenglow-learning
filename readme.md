@@ -1,21 +1,67 @@
-# 🏔️ Alpenglow Learning Platform 👨🏾‍🏫👩🏻‍🎓
-This project is for a teacher/student dashboard that will be for creating and managing independent playlists for students.
+# 🏔️ Alpenglow Learning
 
-## Purpose
-Unlike solutions such as Google Classroom, the primary purpose of this is not to manage class-wide assignments for students. The purpose of this dashboard is to create playlists for students which they can work through independently.  The plan is to have 3 types of playlists; "Essential", "Standard", and "Challenge."  A student will have a single page to show all subjects/classes, with a graphic showing progress in all of their playlists.
+A full-stack learning platform where teachers build self-paced **playlists** of
+resources and students work through them independently, with mastery checks
+along the way.
 
-### Essential Playlists
-From an academic persprctive, the essential playlists represent topics that would be the most important for a student to understand ot be successful moving forward academically. In terms of the academic "standards," these would be considered to be the ones a teacher would spend the majority of their time working on within the classroom and those that represent the greatest amount of [endurance, leverage, and readiness as discussed here](https://www.allthingsplc.info/files/uploads/identifying-essential-standards-presentation.pdf).
+Most classroom tools (like Google Classroom) are built around assigning the same
+work to the whole class on the same day. Alpenglow is built around students
+moving at their own pace: each student sees every course they're enrolled in,
+their progress through each playlist, and what to work on next.
 
-### Standard Playlists
-The standard playlists represent the standards that support the essential standards coveres in the essential playlists. While still representing state standards, these would represent those that have less endurance, leverage and readiness.
+## Features
 
-### Challenge Playlists
-These playlists represent those content areas beyond the current grade level, offering opportunities for student advancement beyond the given grade level.
+**For teachers**
+- Create courses and class sections, then share an enroll code with students
+- Build playlists of objectives and resources, and reorder them with drag-and-drop
+- Sort playlists by type:
+  - **Essential**: the highest-leverage standards
+  - **Standard**: supporting standards
+  - **Challenge**: material beyond grade level
+- Add co-teachers as course contributors
+- Review and approve students' quiz requests, then record scores
+- See class-wide and per-student progress views
 
-## Initial Goals
-The initial goals for this project are:
-  1. Student landing page. Shows all playlists sorted by type and class. Students add class by code.
-  2. Teacher landing page. Shows simplified version of all student progress, sorted by class.
-  3. Pages for playlists.  Playlists can have a series of content, sorted by objectives.
-  4. Teacher admin page to add classes, playlists, and resources.
+**For students**
+- Sign in with Google and join a class with a code
+- See progress bars across all playlists and courses
+- Request the end-of-playlist quiz when ready, and get notified in real time
+  when the teacher approves it
+- View grades by class
+
+## Architecture
+
+```
+frontend/   Next.js (React, TypeScript in places) + Apollo Client
+backend/    Express + Apollo Server (GraphQL) + MongoDB/Mongoose
+```
+
+- **GraphQL API** with ~25 queries and ~40 mutations covering courses, classes,
+  playlists, objectives, resources, quizzes, scores, and approval requests
+  (`backend/gqlSchema.js`)
+- **Real-time updates**: a GraphQL subscription (`requestApproved`) over
+  WebSockets pushes quiz approvals to the student
+- **Auth**: Google Sign-In ID tokens are verified server-side with
+  `google-auth-library`, then exchanged for app-issued JWT access and refresh
+  tokens in httpOnly cookies, with silent refresh in Express middleware
+- **Role-based permissions** for `STUDENT`, `TEACHER`, `ADMIN`, and `SUPER_ADMIN`
+  (`backend/lib/hasPermission.js`)
+- **UI**: Emotion for styling, Framer Motion for animation,
+  react-beautiful-dnd for reordering, react-hook-form for forms
+- Component tests with Jest
+
+## Running locally
+
+Requires Node and a MongoDB database (local or Atlas).
+
+```bash
+# backend: needs a .env with the Mongo connection string and JWT secrets
+cd backend && yarn && yarn dev
+
+# frontend
+cd frontend && yarn && yarn dev
+```
+
+## Status
+
+Built 2020–2021 and not currently deployed.
